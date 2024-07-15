@@ -13,6 +13,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Download DepotDownloader
         run: |
           if [ "${{ runner.arch }}" == "ARM64" ]; then
@@ -51,6 +54,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
+          context: .
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:latest, ghcr.io/${{ env.IMAGE_NAME }}:${{ env.RESONITE_VERSION }}
           platforms: linux/amd64,linux/arm64
