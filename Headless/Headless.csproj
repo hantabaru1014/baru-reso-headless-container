@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>70885a6e-8584-456f-beee-337931412754</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ResonitePath>../Resonite/Headless/net8.0</ResonitePath>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\headless.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="Lib.Harmony" Version="2.3.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FrooxEngine">
+      <HintPath>$(ResonitePath)/FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Store">
+      <HintPath>$(ResonitePath)/FrooxEngine.Store.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Core">
+      <HintPath>$(ResonitePath)/Elements.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Assets">
+      <HintPath>$(ResonitePath)/Elements.Assets.dll</HintPath>
+    </Reference>
+    <Reference Include="SkyFrost.Base">
+      <HintPath>$(ResonitePath)/SkyFrost.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="SkyFrost.Base.Models">
+      <HintPath>$(ResonitePath)/SkyFrost.Base.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.Core">
+      <HintPath>$(ResonitePath)/ProtoFlux.Nodes.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.FrooxEngine">
+      <HintPath>$(ResonitePath)/ProtoFlux.Nodes.FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFluxBindings">
+      <HintPath>$(ResonitePath)/ProtoFluxBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Hardware.Info">
+      <HintPath>$(ResonitePath)/Hardware.Info.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.SignalR.Client.Core">
+      <HintPath>$(ResonitePath)/Microsoft.AspNetCore.SignalR.Client.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>$(ResonitePath)/Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(ResonitePath)/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- <Content Include="$(ResonitePath)/*.so" CopyToOutputDirectory="PreserveNewest" /> -->
+    <None Include="$(ResonitePath)/*" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(ResonitePath)/RuntimeData/**" CopyToOutputDirectory="PreserveNewest" LinkBase="RuntimeData/" />
+    <Content Include="$(ResonitePath)/runtimes/**" CopyToOutputDirectory="PreserveNewest" LinkBase="runtimes/" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option csharp_namespace = "Headless.Rpc";
+
+package headless;
+
+service HeadlessControl {
+  rpc Shutdown (ShutdownRequest) returns (ShutdownReply);
+  rpc ListSessions (ListSessionsRequest) returns (ListSessionsReply);
+  rpc StartWorld (StartWorldRequest) returns (StartWorldReply);
+}
+
+message ShutdownRequest {
+}
+
+message ShutdownReply {
+}
+
+message ListSessionsRequest {
+}
+
+message ListSessionsReply {
+  repeated Session sessions = 1;
+}
+
+message StartWorldRequest {
+  WorldStartupParameters parameters = 1;
+}
+
+message StartWorldReply {
+  Session opened_session = 1;
+}
+
+// models
+
+message User {
+  string id = 1;
+  string name = 2;
+}
+
+enum AccessLevel {
+  Unknown = 0;
+  Private = 1;
+  LAN = 2;
+  Contacts = 3;
+  ContactsPlus = 4;
+  RegisteredUsers = 5;
+  Anyone = 6;
+}
+
+message Session {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  AccessLevel access_level = 4;
+  repeated User users = 5;
+  string thumbnail_url = 6;
+}
+
+message WorldStartupParameters {
+  string session_name = 1;
+  optional string custom_session_id = 2;
+  string description = 3;
+  int32 max_users = 4;
+  AccessLevel access_level = 5;
+  oneof load_world {
+    string load_world_url = 6;
+    string load_world_preset_name = 7;
+  }
+  repeated string auto_invite_usernames = 8;
+}

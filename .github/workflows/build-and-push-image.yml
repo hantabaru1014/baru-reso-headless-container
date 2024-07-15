@@ -1,0 +1,58 @@
+name: Build and Push Docker Image
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [ "main" ]
+
+env:
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download DepotDownloader
+        run: |
+          if [ "${{ runner.arch }}" == "ARM64" ]; then
+            wget https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.6.0/DepotDownloader-linux-arm64.zip -O ./DepotDownloader.zip
+          else
+            wget https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.6.0/DepotDownloader-linux-x64.zip -O ./DepotDownloader.zip
+          fi
+          unzip ./DepotDownloader.zip
+          chmod +x ./DepotDownloader
+
+      - name: Download Resonite
+        env:
+          STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+          STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+          HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
+        run: ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+
+      - name: Read Resonite Version
+        run: |
+          VERSION=$(cat ./Resonite/Build.version)
+          echo "RESONITE_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:latest, ghcr.io/${{ env.IMAGE_NAME }}:${{ env.RESONITE_VERSION }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
