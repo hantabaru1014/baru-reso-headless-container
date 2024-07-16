@@ -1,0 +1,8 @@
+services:
+  app:
+    image: ghcr.io/hantabaru1014/baru-reso-headless-container:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - HeadlessUserCredential=<YOUR_HEADLESS_CREDENTIAL_HERE>
+      - HeadlessUserPassword=<YOUR_HEADLESS_PASSWORD_HERE>
