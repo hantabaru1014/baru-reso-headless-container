@@ -1,62 +1,14 @@
-//
-//  SPDX-FileName: DisableSteamAPI.cs
-//  SPDX-FileCopyrightText: Copyright (c) Jarl Gullberg
-//  SPDX-License-Identifier: AGPL-3.0-or-later
-//
-
-using System.Reflection.Emit;
 using HarmonyLib;
 
 namespace Headless.Patches.SteamConnector;
 
-/// <summary>
-/// Bails out early of the Steam connection setup, depending on the configuration.
-/// </summary>
-[HarmonyPatch(typeof(FrooxEngine.SteamConnector), nameof(FrooxEngine.SteamConnector.InitializeSteamAPI))]
+[HarmonyPatch(typeof(FrooxEngine.SteamConnector), nameof(FrooxEngine.SteamConnector.Initialize))]
 public static class DisableSteamAPI
 {
-    /// <summary>
-    /// Gets a value indicating whether the patch applied cleanly.
-    /// </summary>
-    public static bool Applied { get; private set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether Steam API initialization should be attempted.
-    /// </summary>
-    public static bool ShouldAttemptSteamInitialization { get; set; }
-
-    /// <summary>
-    /// Bails out early of the Steam connection setup, depending on the configuration.
-    /// </summary>
-    /// <param name="instructions">The instructions of the method.</param>
-    /// <returns>The patched code.</returns>
-    [HarmonyTranspiler]
-    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    [HarmonyPrefix]
+    public static bool Prefix(ref Task<bool> __result)
     {
-        var initAttemptedSetter = AccessTools.PropertySetter
-        (
-            typeof(FrooxEngine.SteamConnector),
-            nameof(FrooxEngine.SteamConnector.InitializationAttempted)
-        );
-
-        foreach (var instruction in instructions)
-        {
-            if (instruction.Calls(initAttemptedSetter))
-            {
-                Applied = true;
-
-                yield return instruction;
-
-                if (ShouldAttemptSteamInitialization)
-                {
-                    continue;
-                }
-
-                yield return new CodeInstruction(OpCodes.Ret);
-                yield break;
-            }
-
-            yield return instruction;
-        }
+        __result = Task.FromResult(true);
+        return true;
     }
 }
