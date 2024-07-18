@@ -1,6 +1,5 @@
 using Elements.Core;
 using FrooxEngine;
-using HarmonyLib;
 using Headless.Configuration;
 using Headless.Services;
 
@@ -44,15 +43,7 @@ public class Program
         UniLog.OnWarning += msg => logger.LogWarning(msg);
         UniLog.OnError += msg => logger.LogError(msg);
 
-        ApplyPatches();
-
         var appConfigInstance = appConfig.Get<ApplicationConfig>() ?? new ApplicationConfig();
         app.Run(appConfigInstance.RpcHostUrl);
-    }
-
-    private static void ApplyPatches()
-    {
-        var harmony = new Harmony("dev.baru.resonite.headless");
-        harmony.PatchAllUncategorized();
     }
 }

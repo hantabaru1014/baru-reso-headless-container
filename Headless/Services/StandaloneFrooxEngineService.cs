@@ -1,6 +1,6 @@
+using System.Reflection;
 using System.Text.Json;
 using FrooxEngine;
-using HarmonyLib;
 using Headless.Configuration;
 using Headless.Extensions;
 using Microsoft.Extensions.Options;
@@ -78,9 +78,9 @@ public class StandaloneFrooxEngineService : BackgroundService
         if (ExecuteTask is null) return;
         try
         {
-            var fieldRef = AccessTools.FieldRefAccess<CancellationTokenSource>(typeof(BackgroundService), "_stoppingCts");
-            var tokenSource = fieldRef.Invoke(this);
-            await tokenSource.CancelAsync();
+            var fieldInfo = typeof(BackgroundService).GetField("_stoppingCts", BindingFlags.Instance | BindingFlags.NonPublic);
+            var tokenSource = fieldInfo!.GetValue(this) as CancellationTokenSource;
+            await tokenSource!.CancelAsync();
         }
         finally
         {

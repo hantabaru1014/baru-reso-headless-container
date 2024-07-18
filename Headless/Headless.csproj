@@ -17,7 +17,6 @@
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
-    <PackageReference Include="Lib.Harmony" Version="2.3.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="8.0.7" />
   </ItemGroup>
 
@@ -69,5 +68,9 @@
     <Content Include="$(ResonitePath)/RuntimeData/**" CopyToOutputDirectory="PreserveNewest" LinkBase="RuntimeData/" />
     <Content Include="$(ResonitePath)/runtimes/**" CopyToOutputDirectory="PreserveNewest" LinkBase="runtimes/" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet ../bin/prepatch/EnginePrePatcher.dll $(OutputPath)" />
+  </Target>
 
 </Project>
