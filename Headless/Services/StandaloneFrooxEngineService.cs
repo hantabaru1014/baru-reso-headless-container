@@ -148,6 +148,7 @@ public class StandaloneFrooxEngineService : BackgroundService
     {
         _type = typeof(ProtoFlux.Nodes.Core.Configuration);
         _type = typeof(FrooxEngine.ProtoFlux.ProtoFluxMapper);
+        _type = typeof(FrooxEngine.ProtoFlux.Runtimes.Execution.VoidNode<>);
         _type = typeof(ProtoFlux.Runtimes.Execution.Nodes.Math.TangentPointFloat);
         _type = typeof(FrooxEngine.Store.Record);
     }
