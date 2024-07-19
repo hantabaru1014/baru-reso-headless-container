@@ -2,7 +2,7 @@ using Mono.Cecil;
 
 namespace EnginePrePatcher.Patches;
 
-public class RemoveSteamworks : IAssemblyPatch
+public class RemoveUnusedConnectors : IAssemblyPatch
 {
     public string TargetAssemblyPath => "FrooxEngine.dll";
 
@@ -17,6 +17,7 @@ public class RemoveSteamworks : IAssemblyPatch
                 case "SteamListener":
                 case "SteamConnection":
                 case "SteamNetworkManager":
+                case "DiscordConnector":
                     return true;
             }
             return false;
@@ -24,7 +25,7 @@ public class RemoveSteamworks : IAssemblyPatch
         foreach (var t in removeTypes)
         {
             types.Remove(t);
-            Console.WriteLine($"Remove Steamworks : {t.FullName}");
+            Console.WriteLine($"Remove Type : {t.FullName}");
         }
         return true;
     }
