@@ -25,6 +25,12 @@ public class WorldService
         _runningWorlds = new();
     }
 
+    public RunningSession? GetSession(string id)
+    {
+        if (!_runningWorlds.ContainsKey(id)) return null;
+        return _runningWorlds[id];
+    }
+
     public IEnumerable<RunningSession> ListAll()
     {
         return _runningWorlds.Values.AsEnumerable();
@@ -94,6 +100,16 @@ public class WorldService
             });
         }
         return session;
+    }
+
+    public async Task StopWorldAsync(string sessionId)
+    {
+        if (!_runningWorlds.TryRemove(sessionId, out var runningSession))
+        {
+            return;
+        }
+        await runningSession.CancellationTokenSource.CancelAsync();
+        await (runningSession.Handler ?? Task.CompletedTask);
     }
 
     private string? SanitizeSessionID(string sessionId)

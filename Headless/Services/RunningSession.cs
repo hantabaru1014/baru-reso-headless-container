@@ -71,4 +71,14 @@ public record RunningSession
     public DateTimeOffset LastSaveTime { get; init; } = LastSaveTime == default
         ? DateTimeOffset.UtcNow
         : LastSaveTime;
+
+    public Task<bool> InviteUser(string userId) => WorldInstance.Coroutines.StartTask(async () => {
+        WorldInstance.AllowUserToJoin(userId);
+        var userMessages = WorldInstance.Engine.Cloud.Messages.GetUserMessages(userId);
+        if (!await userMessages.SendMessage(await userMessages.CreateInviteMessage(WorldInstance)))
+        {
+            return false;
+        }
+        return true;
+    });
 }

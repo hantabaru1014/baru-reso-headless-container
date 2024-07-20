@@ -37,7 +37,7 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         var reply = new ListSessionsReply();
         foreach (var session in _worldService.ListAll())
         {
-            reply.Sessions.Add(ConvertSession(session));
+            reply.Sessions.Add(ToRpcSession(session));
         }
         return Task.FromResult(reply);
     }
@@ -77,11 +77,57 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         }
         return new StartWorldReply
         {
-            OpenedSession = ConvertSession(session)
+            OpenedSession = ToRpcSession(session)
         };
     }
 
-    private Rpc.Session ConvertSession(RunningSession session)
+    public override async Task<StopSessionReply> StopSession(StopSessionRequest request, ServerCallContext context)
+    {
+        await _worldService.StopWorldAsync(request.SessionId);
+        return new StopSessionReply();
+    }
+
+    public override async Task<InviteUserReply> InviteUser(InviteUserRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        string? userId = null;
+        if (request.HasUserId)
+        {
+            userId = request.UserId;
+        }
+        else if (request.HasUserName)
+        {
+            userId = _engine.Cloud.Contacts.FindContact(c => c.ContactUsername.Equals(request.UserName, StringComparison.InvariantCultureIgnoreCase)).ContactUserId;
+        }
+        if (userId is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Require valid user_id or user_name"));
+        }
+        if (!await session.InviteUser(userId))
+        {
+            throw new RpcException(new Status(StatusCode.Internal, "Error sending invite!"));
+        }
+        return new InviteUserReply();
+    }
+
+    public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
+    {
+        return level switch {
+            SessionAccessLevel.Private => AccessLevel.Private,
+            SessionAccessLevel.LAN => AccessLevel.Lan,
+            SessionAccessLevel.Contacts => AccessLevel.Contacts,
+            SessionAccessLevel.ContactsPlus => AccessLevel.ContactsPlus,
+            SessionAccessLevel.RegisteredUsers => AccessLevel.RegisteredUsers,
+            SessionAccessLevel.Anyone => AccessLevel.Anyone,
+            _ => AccessLevel.Unknown
+        };
+    }
+
+    public static Rpc.Session ToRpcSession(RunningSession session)
     {
         var users = session.WorldInstance.AllUsers.Select(user => new Rpc.User{
             Id = user.UserID,
@@ -91,17 +137,40 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
             Id = session.WorldInstance.SessionId,
             Name = session.WorldInstance.Name ?? "<Empty Name>",
             Description = session.WorldInstance.Description ?? "",
-            AccessLevel = session.WorldInstance.AccessLevel switch {
-                SessionAccessLevel.Private => AccessLevel.Private,
-                SessionAccessLevel.LAN => AccessLevel.Lan,
-                SessionAccessLevel.Contacts => AccessLevel.Contacts,
-                SessionAccessLevel.ContactsPlus => AccessLevel.ContactsPlus,
-                SessionAccessLevel.RegisteredUsers => AccessLevel.RegisteredUsers,
-                SessionAccessLevel.Anyone => AccessLevel.Anyone,
-                _ => AccessLevel.Unknown
-            },
+            AccessLevel = ToRpcAccessLevel(session.WorldInstance.AccessLevel),
             Users = {users},
-            ThumbnailUrl = ""
+            ThumbnailUrl = "",
+            StartupParameters = ToRpcStartupParams(session.StartInfo)
         };
+    }
+
+    public static Rpc.WorldStartupParameters ToRpcStartupParams(SkyFrost.Base.WorldStartupParameters parameters)
+    {
+        var result = new Rpc.WorldStartupParameters{
+            MaxUsers = parameters.MaxUsers,
+            AccessLevel = ToRpcAccessLevel(parameters.AccessLevel),
+            AutoInviteUsernames = {parameters.AutoInviteUsernames ?? []}
+        };
+        if (parameters.SessionName is not null)
+        {
+            result.SessionName = parameters.SessionName;
+        }
+        if (parameters.CustomSessionId is not null)
+        {
+            result.CustomSessionId = parameters.CustomSessionId;
+        }
+        if (parameters.Description is not null)
+        {
+            result.Description = parameters.Description;
+        }
+        if (parameters.LoadWorldPresetName is not null)
+        {
+            result.LoadWorldPresetName = parameters.LoadWorldPresetName;
+        }
+        else
+        {
+            result.LoadWorldUrl = parameters.LoadWorldURL;
+        }
+        return result;
     }
 }
