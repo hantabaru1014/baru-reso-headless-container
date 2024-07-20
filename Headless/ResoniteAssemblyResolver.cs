@@ -7,7 +7,6 @@ namespace Headless;
 
 public class ResoniteAssemblyResolver : DefaultAssemblyResolver
 {
-    private readonly IReadOnlyList<string> _additionalSearchPaths;
     private readonly IReadOnlyDictionary<string, string[]> _knownNativeLibraryMappings = new Dictionary<string, string[]>
     {
         { "assimp", new[] { "libassimp.so.5", "Assimp64.so" } },
@@ -21,14 +20,8 @@ public class ResoniteAssemblyResolver : DefaultAssemblyResolver
 
     private bool _isDisposed;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ResoniteAssemblyResolver"/> class.
-    /// </summary>
-    /// <param name="additionalSearchPaths">The additional search paths to look in for native libraries.</param>
-    public ResoniteAssemblyResolver(IReadOnlyList<string> additionalSearchPaths)
+    public ResoniteAssemblyResolver()
     {
-        _additionalSearchPaths = additionalSearchPaths;
-
         foreach (var context in AssemblyLoadContext.All)
         {
             context.ResolvingUnmanagedDll += ResolveNativeAssembly;
@@ -45,7 +38,7 @@ public class ResoniteAssemblyResolver : DefaultAssemblyResolver
         // We only handle non-system assemblies
         return reference.FullName.StartsWith("System")
             ? null
-            : SearchDirectory(reference, _additionalSearchPaths, new ReaderParameters());
+            : SearchDirectory(reference, [AppDomain.CurrentDomain.BaseDirectory], new ReaderParameters());
     }
 
     private void AddResolverToAssembly(object? sender, AssemblyLoadEventArgs args)
@@ -74,17 +67,6 @@ public class ResoniteAssemblyResolver : DefaultAssemblyResolver
                     ? $"{assemblyName}.dll"
                     : assemblyName;
 
-        // first, try loading it verbatim from the additional paths
-        foreach (var additionalSearchPath in _additionalSearchPaths)
-        {
-            var libraryPath = Path.Combine(additionalSearchPath, filename);
-            if (NativeLibrary.TryLoad(libraryPath, out var additionalPathHandle))
-            {
-                return additionalPathHandle;
-            }
-        }
-
-        // then check through the normal system methods
         if (NativeLibrary.TryLoad(assemblyName, out var handle))
         {
             return handle;
@@ -119,31 +101,11 @@ public class ResoniteAssemblyResolver : DefaultAssemblyResolver
         }
 
         var filename = args.Name.Split(',')[0] + ".dll".ToLower();
+        var libraryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
 
-        // then, try loading it verbatim from the additional paths
-        Assembly? potentialAssembly = null;
-        foreach (var additionalSearchPath in _additionalSearchPaths)
-        {
-            var libraryPath = Path.Combine(additionalSearchPath, filename);
-            if (!File.Exists(libraryPath))
-            {
-                continue;
-            }
-
-            var assembly = Assembly.LoadFrom(libraryPath);
-            if (assembly.FullName == args.Name)
-            {
-                // exact match, prefer this to keep things like strong-naming consistent
-                return assembly;
-            }
-
-            potentialAssembly = assembly;
-        }
-
-        return potentialAssembly;
+        return Assembly.LoadFrom(libraryPath);
     }
 
-    /// <inheritdoc />
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);

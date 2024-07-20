@@ -14,7 +14,7 @@ public class Program
             .AddEnvironmentVariables()
             .Build();
         
-        var assemblyResolver = new ResoniteAssemblyResolver([AppDomain.CurrentDomain.BaseDirectory]);
+        var assemblyResolver = new ResoniteAssemblyResolver();
         
         builder.Logging.ClearProviders().AddConsole();
         
