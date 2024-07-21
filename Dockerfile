@@ -19,8 +19,10 @@ WORKDIR "/src/Headless"
 RUN dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
+ARG TARGETARCH
 RUN apt-get update && apt-get install -y --no-install-recommends libassimp5 libfreeimage3 libfreetype6 libopus0 libbrotli1 zlib1g && rm -rf /var/lib/apt/lists/*
 USER app
 WORKDIR /app
+COPY ./native-libs/${TARGETARCH}/* ./
 COPY --from=build --chown=app:app /app/publish .
 CMD ["dotnet", "Headless.dll"]
