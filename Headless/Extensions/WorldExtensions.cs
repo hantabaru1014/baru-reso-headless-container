@@ -281,6 +281,7 @@ public static class WorldExtensions
         }
 
         var record = world.CorrespondingRecord;
+        var originalOwnerId = record?.RecordId;
         if (record is null)
         {
             record = world.CreateNewRecord(ownerID);
@@ -292,14 +293,14 @@ public static class WorldExtensions
             record.RecordId = RecordHelper.GenerateRecordID();
         }
 
-        var transferer = new RecordOwnerTransferer(world.Engine, record.OwnerId, record.RecordId);
+        var transferer = new RecordOwnerTransferer(world.Engine, record.OwnerId, originalOwnerId);
         logger.LogInformation("Saving world under {SaveAs}", startupParameters.SaveAsOwner);
 
         var savedRecord = await Userspace.SaveWorld(world, record, transferer);
         logger.LogInformation("Saved successfully");
 
         startupParameters.SaveAsOwner = null;
-        startupParameters.LoadWorldURL = savedRecord.AssetURI;
+        startupParameters.LoadWorldURL = savedRecord.GetUrl(world.Engine.Cloud.Platform).ToString();
 
         return startupParameters;
     }

@@ -83,6 +83,8 @@ public class WorldService
         var session = new RunningSession(startupParameters, startedWorld, sessionCancellation);
         if (!_runningWorlds.TryAdd(startedWorld.SessionId, session))
         {
+            _ = session.CancellationTokenSource.CancelAsync();
+            // セッションIDはかぶらないはずなので、ひとつのセッションを2回入れようとしてる？ 起きないはず。
             throw new InvalidOperationException("Duplicate session ids");
         }
 
@@ -110,6 +112,19 @@ public class WorldService
         }
         await runningSession.CancellationTokenSource.CancelAsync();
         await (runningSession.Handler ?? Task.CompletedTask);
+    }
+
+    public async Task StopAllWorldsAsync(CancellationToken ct = default)
+    {
+        var snapshot = _runningWorlds.Values;
+        foreach (var runningSession in snapshot)
+        {
+            if (ct.IsCancellationRequested) break;
+
+            await runningSession.CancellationTokenSource.CancelAsync();
+            await (runningSession.Handler ?? Task.CompletedTask);
+            _runningWorlds.TryRemove(runningSession.WorldInstance.SessionId, out _);
+        }
     }
 
     private string? SanitizeSessionID(string sessionId)
@@ -145,6 +160,7 @@ public class WorldService
     {
         async Task RestartSessionAsync(RunningSession runningSession, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Restart Session");
             var world = runningSession.WorldInstance;
             world.WorldManager.WorldFailed -= MarkAutoRecoverRestart;
             if (!world.IsDestroyed)
@@ -160,15 +176,15 @@ public class WorldService
             var world = runningSession.WorldInstance;
             if (world.SaveOnExit && Userspace.CanSave(world))
             {
-                // wait for any pending syncs of this world
-                while (!world.CorrespondingRecord.IsSynced)
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(1), CancellationToken.None);
-                }
                 _logger.LogInformation("Saving {World}", world.RawName);
-                await Userspace.SaveWorldAuto(world, SaveType.Overwrite, true);
+                // TODO: 本来ならこのタイミングでサムネイルを撮影して world.CorrespondingRecord.ThumbnailURI に入れてる
+                // クライアントがいるなら撮影してもらうか、最後のセッションサムネイルをセットしてもいいかも？
+                // Memo: Userspace.SaveWorldAuto は サムネイル撮影 + SaveWorld + ExitWorld といった建付け
+                await Userspace.SaveWorld(world);
             }
             world.WorldManager.WorldFailed -= MarkAutoRecoverRestart;
+            // これを待機したら一生終わらないので待たない。 Userspace.SaveWorldAuto でも待ってない。
+            _ = Userspace.ExitWorld(world);
             if (!world.IsDestroyed)
             {
                 world.Destroy();

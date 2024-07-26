@@ -138,6 +138,7 @@ public class StandaloneFrooxEngineService : BackgroundService
             _logger.LogInformation($"Starting world : {world.SessionName ?? "NoName"} ({world.LoadWorldURL})");
             await _worldService.StartWorldAsync(world, ct);
         }
+        _configService.SaveConfig();
         
         _applicationStartupComplete = true;
         await engineLoop;
@@ -155,8 +156,16 @@ public class StandaloneFrooxEngineService : BackgroundService
 
     private async Task ShutdownEngineAsync()
     {
-        await _engine.RecordManager.WaitForPendingUploadsAsync();
-        await _engine.Cloud.FinalizeSession();
+        await _worldService.StopAllWorldsAsync();
+        if (_engine.Cloud.CurrentUser is not null)
+        {
+            var tokenSource = new CancellationTokenSource();
+            tokenSource.CancelAfter(60 * 1000);
+            await Task.WhenAll(
+                _engine.Cloud.FinalizeSession(),
+                _engine.RecordManager.WaitForPendingUploadsAsync(ct: tokenSource.Token)
+            );
+        }
 
         _engine.RequestShutdown();
     }
