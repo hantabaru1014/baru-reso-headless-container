@@ -39,11 +39,21 @@ public class Program
         app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
-        UniLog.OnLog += msg => logger.LogInformation(msg);
+        UniLog.OnLog += msg => FilterLogMsg(logger, msg);
         UniLog.OnWarning += msg => logger.LogWarning(msg);
         UniLog.OnError += msg => logger.LogError(msg);
 
         var appConfigInstance = appConfig.Get<ApplicationConfig>() ?? new ApplicationConfig();
         app.Run(appConfigInstance.RpcHostUrl);
+    }
+
+    private static void FilterLogMsg(ILogger logger, string message)
+    {
+        if (message == "Session updated, forcing status update")
+        {
+            // logger.LogDebug(message);
+            return;
+        }
+        logger.LogInformation(message);
     }
 }
