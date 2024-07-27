@@ -57,15 +57,7 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
             CustomSessionId = reqParam.CustomSessionId,
             Description = reqParam.Description,
             MaxUsers = reqParam.MaxUsers,
-            AccessLevel = reqParam.AccessLevel switch {
-                AccessLevel.Private => SessionAccessLevel.Private,
-                AccessLevel.Lan => SessionAccessLevel.LAN,
-                AccessLevel.Contacts => SessionAccessLevel.Contacts,
-                AccessLevel.ContactsPlus => SessionAccessLevel.ContactsPlus,
-                AccessLevel.RegisteredUsers => SessionAccessLevel.RegisteredUsers,
-                AccessLevel.Anyone => SessionAccessLevel.Anyone,
-                _ => SessionAccessLevel.Private
-            },
+            AccessLevel = ToSessionAccessLevel(reqParam.AccessLevel),
             LoadWorldURL = worldUrl,
             LoadWorldPresetName = presetName,
             AutoInviteUsernames = reqParam.AutoInviteUsernames.ToList()
@@ -127,6 +119,19 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         };
     }
 
+    public static SessionAccessLevel ToSessionAccessLevel(AccessLevel level)
+    {
+        return level switch {
+            AccessLevel.Private => SessionAccessLevel.Private,
+            AccessLevel.Lan => SessionAccessLevel.LAN,
+            AccessLevel.Contacts => SessionAccessLevel.Contacts,
+            AccessLevel.ContactsPlus => SessionAccessLevel.ContactsPlus,
+            AccessLevel.RegisteredUsers => SessionAccessLevel.RegisteredUsers,
+            AccessLevel.Anyone => SessionAccessLevel.Anyone,
+            _ => SessionAccessLevel.Private
+        };
+    }
+
     public static Rpc.Session ToRpcSession(RunningSession session)
     {
         var users = session.WorldInstance.AllUsers.Select(user => new Rpc.User{
@@ -163,13 +168,13 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         {
             result.Description = parameters.Description;
         }
-        if (parameters.LoadWorldPresetName is not null)
+        if (parameters.LoadWorldURL is not null)
         {
-            result.LoadWorldPresetName = parameters.LoadWorldPresetName;
+            result.LoadWorldUrl = parameters.LoadWorldURL;
         }
         else
         {
-            result.LoadWorldUrl = parameters.LoadWorldURL;
+            result.LoadWorldPresetName = parameters.LoadWorldPresetName;
         }
         return result;
     }
