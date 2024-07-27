@@ -94,7 +94,8 @@ public class WorldService
         var autoSpawnItems = _configService.Config.AutoSpawnItems;
         if (autoSpawnItems is not null)
         {
-            _ = startedWorld.Coroutines.StartTask(async () => {
+            _ = startedWorld.Coroutines.StartTask(async () =>
+            {
                 foreach (var item in autoSpawnItems)
                 {
                     await startedWorld.RootSlot.AddSlot("Headless Auto-Spawn").LoadObjectAsync(item);
@@ -130,7 +131,8 @@ public class WorldService
     private string? SanitizeSessionID(string sessionId)
     {
         var id = sessionId;
-        if (string.IsNullOrWhiteSpace(id)){
+        if (string.IsNullOrWhiteSpace(id))
+        {
             id = null;
         }
         if (id is not null)

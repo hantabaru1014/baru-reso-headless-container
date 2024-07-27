@@ -139,7 +139,7 @@ public class StandaloneFrooxEngineService : BackgroundService
             await _worldService.StartWorldAsync(world, ct);
         }
         _configService.SaveConfig();
-        
+
         _applicationStartupComplete = true;
         await engineLoop;
         _applicationLifetime.StopApplication();
@@ -158,10 +158,10 @@ public class StandaloneFrooxEngineService : BackgroundService
     {
         var tokenSource = new CancellationTokenSource();
         tokenSource.CancelAfter(_appConfig.ShutdownTimeoutSeconds * 1000);
-        
+
         await _worldService.StopAllWorldsAsync(tokenSource.Token);
         if (_engine.Cloud.CurrentUser is not null)
-        {    
+        {
             await Task.WhenAll(
                 _engine.Cloud.FinalizeSession(),
                 _engine.RecordManager.WaitForPendingUploadsAsync(ct: tokenSource.Token)
@@ -216,7 +216,8 @@ public class StandaloneFrooxEngineService : BackgroundService
     }
 
     private Task LoginAsync(string? credential, string? password, string? token = null) => _engine.GlobalCoroutineManager.StartTask(
-        async () => {
+        async () =>
+        {
             await default(NextUpdate);
 
             if (string.IsNullOrWhiteSpace(credential)) return;
@@ -243,7 +244,8 @@ public class StandaloneFrooxEngineService : BackgroundService
     );
 
     private Task AllowHosts(IEnumerable<string> hosts) => _engine.GlobalCoroutineManager.StartTask(
-        async () => {
+        async () =>
+        {
             await default(NextUpdate);
 
             foreach (string host in hosts)

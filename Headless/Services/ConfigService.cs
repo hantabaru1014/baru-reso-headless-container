@@ -25,7 +25,8 @@ public class ConfigService : IConfigService
 
     public ResoniteHeadlessConfig Config
     {
-        get {
+        get
+        {
             if (_config is null)
             {
                 var path = Path.Combine(_appConfig.DataDirectoryPath, "Config", "Config.json");

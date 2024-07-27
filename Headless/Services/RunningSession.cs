@@ -72,7 +72,8 @@ public record RunningSession
         ? DateTimeOffset.UtcNow
         : LastSaveTime;
 
-    public Task<bool> InviteUser(string userId) => WorldInstance.Coroutines.StartTask(async () => {
+    public Task<bool> InviteUser(string userId) => WorldInstance.Coroutines.StartTask(async () =>
+    {
         WorldInstance.AllowUserToJoin(userId);
         var userMessages = WorldInstance.Engine.Cloud.Messages.GetUserMessages(userId);
         if (!await userMessages.SendMessage(await userMessages.CreateInviteMessage(WorldInstance)))

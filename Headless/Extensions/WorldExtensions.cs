@@ -255,29 +255,29 @@ public static class WorldExtensions
         switch (startupParameters.SaveAsOwner)
         {
             case SaveAsOwner.LocalMachine:
-            {
-                ownerID = $"M-{world.Engine.LocalDB.MachineID}";
-                break;
-            }
-            case SaveAsOwner.CloudUser:
-            {
-                if (world.Engine.Cloud.CurrentUser is null)
                 {
-                    logger.LogWarning("World is set to be saved under cloud user, but not user is logged in");
+                    ownerID = $"M-{world.Engine.LocalDB.MachineID}";
+                    break;
+                }
+            case SaveAsOwner.CloudUser:
+                {
+                    if (world.Engine.Cloud.CurrentUser is null)
+                    {
+                        logger.LogWarning("World is set to be saved under cloud user, but not user is logged in");
+                        return startupParameters;
+                    }
+
+                    ownerID = world.Engine.Cloud.CurrentUser.Id;
+                    break;
+                }
+            case null:
+                {
                     return startupParameters;
                 }
-
-                ownerID = world.Engine.Cloud.CurrentUser.Id;
-                break;
-            }
-            case null:
-            {
-                return startupParameters;
-            }
             default:
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
         }
 
         var record = world.CorrespondingRecord;
