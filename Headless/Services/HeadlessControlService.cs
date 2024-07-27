@@ -106,6 +106,76 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         return new InviteUserReply();
     }
 
+    public override async Task<UpdateUserRoleReply> UpdateUserRole(UpdateUserRoleRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        var permissionSet = session.WorldInstance.Permissions.Roles.FirstOrDefault(r => r.RoleName.Value.Equals(request.Role, StringComparison.InvariantCultureIgnoreCase));
+        if (permissionSet is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid role name"));
+        }
+        FrooxEngine.User? user = null;
+        if (request.HasUserId)
+        {
+            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+        }
+        else if (request.HasUserName)
+        {
+            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+        }
+        if (user is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
+        }
+        session.WorldInstance.RunSynchronously(() => {
+            user.Role = permissionSet;
+            session.WorldInstance.Permissions.AssignDefaultRole(user, permissionSet);
+        });
+
+        await Task.CompletedTask;
+        return new UpdateUserRoleReply{
+            Role = user.Role.RoleName.Value
+        };
+    }
+
+    public override async Task<UpdateSessionParametersReply> UpdateSessionParameters(UpdateSessionParametersRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        foreach (var param in request.Parameters)
+        {
+            if (param.HasSessionName)
+            {
+                session.WorldInstance.Name = param.SessionName;
+                continue;
+            }
+            if (param.HasDescription)
+            {
+                session.WorldInstance.Description = param.Description;
+                continue;
+            }
+            if (param.HasMaxUsers)
+            {
+                session.WorldInstance.MaxUsers = param.MaxUsers;
+                continue;
+            }
+            if (param.HasAccessLevel)
+            {
+                session.WorldInstance.AccessLevel = ToSessionAccessLevel(param.AccessLevel);
+                continue;
+            }
+        }
+        await Task.CompletedTask;
+        return new UpdateSessionParametersReply();
+    }
+
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
     {
         return level switch {
@@ -134,19 +204,26 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
 
     public static Rpc.Session ToRpcSession(RunningSession session)
     {
-        var users = session.WorldInstance.AllUsers.Select(user => new Rpc.User{
+        var info = session.WorldInstance.GenerateSessionInfo();
+        var users = session.WorldInstance.AllUsers.Select(user => new Rpc.UserInSession{
             Id = user.UserID,
-            Name = user.UserName
+            Name = user.UserName,
+            Role = user.Role.RoleName.Value,
+            IsPresent = user.IsPresent
         });
-        return new Rpc.Session{
-            Id = session.WorldInstance.SessionId,
-            Name = session.WorldInstance.Name ?? "<Empty Name>",
-            Description = session.WorldInstance.Description ?? "",
-            AccessLevel = ToRpcAccessLevel(session.WorldInstance.AccessLevel),
+        var result = new Rpc.Session{
+            Id = info.SessionId,
+            Name = info.Name ?? "<Empty Name>",
+            Description = info.Description ?? "",
+            AccessLevel = ToRpcAccessLevel(info.AccessLevel),
             Users = {users},
-            ThumbnailUrl = "",
             StartupParameters = ToRpcStartupParams(session.StartInfo)
         };
+        if (info.ThumbnailUrl is not null)
+        {
+            result.ThumbnailUrl = info.ThumbnailUrl;
+        }
+        return result;
     }
 
     public static Rpc.WorldStartupParameters ToRpcStartupParams(SkyFrost.Base.WorldStartupParameters parameters)

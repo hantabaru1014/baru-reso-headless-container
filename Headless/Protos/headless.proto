@@ -10,6 +10,8 @@ service HeadlessControl {
   rpc StartWorld (StartWorldRequest) returns (StartWorldReply);
   rpc StopSession (StopSessionRequest) returns (StopSessionReply);
   rpc InviteUser (InviteUserRequest) returns (InviteUserReply);
+  rpc UpdateUserRole (UpdateUserRoleRequest) returns (UpdateUserRoleReply);
+  rpc UpdateSessionParameters (UpdateSessionParametersRequest) returns (UpdateSessionParametersReply);
 }
 
 message ShutdownRequest {
@@ -51,12 +53,29 @@ message InviteUserRequest {
 message InviteUserReply {
 }
 
-// models
-
-message User {
-  string id = 1;
-  string name = 2;
+message UpdateUserRoleRequest {
+  string session_id = 1;
+  oneof user {
+    string user_id = 2;
+    string user_name = 3;
+  }
+  string role = 4;
 }
+
+message UpdateUserRoleReply {
+  // 変更後のロール(無効なロールを指定した場合そのままの可能性)
+  string role = 1;
+}
+
+message UpdateSessionParametersRequest {
+  string session_id = 1;
+  repeated SessionParameter parameters = 2;
+}
+
+message UpdateSessionParametersReply {
+}
+
+// models
 
 enum AccessLevel {
   Unknown = 0;
@@ -68,13 +87,20 @@ enum AccessLevel {
   Anyone = 6;
 }
 
+message UserInSession {
+  string id = 1;
+  string name = 2;
+  string role = 3;
+  bool is_present = 4;
+}
+
 message Session {
   string id = 1;
   string name = 2;
   string description = 3;
   AccessLevel access_level = 4;
-  repeated User users = 5;
-  string thumbnail_url = 6;
+  repeated UserInSession users = 5;
+  optional string thumbnail_url = 6;
   WorldStartupParameters startup_parameters = 7;
 }
 
@@ -89,4 +115,13 @@ message WorldStartupParameters {
     string load_world_preset_name = 7;
   }
   repeated string auto_invite_usernames = 8;
+}
+
+message SessionParameter {
+  oneof param {
+    string session_name = 1;
+    string description = 2;
+    int32 max_users = 3;
+    AccessLevel access_level = 4;
+  }
 }
