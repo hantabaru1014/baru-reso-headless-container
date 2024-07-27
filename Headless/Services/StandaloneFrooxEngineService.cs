@@ -156,11 +156,12 @@ public class StandaloneFrooxEngineService : BackgroundService
 
     private async Task ShutdownEngineAsync()
     {
-        await _worldService.StopAllWorldsAsync();
+        var tokenSource = new CancellationTokenSource();
+        tokenSource.CancelAfter(_appConfig.ShutdownTimeoutSeconds * 1000);
+        
+        await _worldService.StopAllWorldsAsync(tokenSource.Token);
         if (_engine.Cloud.CurrentUser is not null)
-        {
-            var tokenSource = new CancellationTokenSource();
-            tokenSource.CancelAfter(60 * 1000);
+        {    
             await Task.WhenAll(
                 _engine.Cloud.FinalizeSession(),
                 _engine.RecordManager.WaitForPendingUploadsAsync(ct: tokenSource.Token)
