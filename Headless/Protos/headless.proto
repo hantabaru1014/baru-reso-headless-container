@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 option csharp_namespace = "Headless.Rpc";
+option go_package = "github.com/hantabaru1014/baru-reso-headless-container/proto/headless";
 
 package headless;
 
