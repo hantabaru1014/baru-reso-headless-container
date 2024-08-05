@@ -14,7 +14,7 @@ COPY ["Headless/Headless.csproj", "Headless/"]
 RUN dotnet restore "./Headless/Headless.csproj"
 COPY --from=build-patcher /app/publish ./bin/prepatch
 COPY ./Headless ./Headless
-COPY ./Resonite/Headless/net8.0 ./Resonite/Headless/net8.0
+COPY ./Resonite/Headless ./Resonite/Headless
 WORKDIR "/src/Headless"
 RUN dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 

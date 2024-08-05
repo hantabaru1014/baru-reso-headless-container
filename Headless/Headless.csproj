@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>70885a6e-8584-456f-beee-337931412754</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <ResonitePath>../Resonite/Headless/net8.0</ResonitePath>
+    <ResonitePath>../Resonite/Headless</ResonitePath>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
 
