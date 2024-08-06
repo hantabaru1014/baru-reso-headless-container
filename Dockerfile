@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build-patcher
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
@@ -14,9 +16,9 @@ COPY ["Headless/Headless.csproj", "Headless/"]
 RUN dotnet restore "./Headless/Headless.csproj"
 COPY --from=build-patcher /app/publish ./bin/prepatch
 COPY ./Headless ./Headless
-COPY ./Resonite/Headless ./Resonite/Headless
 WORKDIR "/src/Headless"
-RUN dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN --mount=type=bind,source=Resonite/Headless,target=../Resonite/Headless,rw \
+    dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 ARG TARGETARCH
