@@ -104,8 +104,8 @@ public class StandaloneFrooxEngineService : BackgroundService
             VerboseInit = true,
             NeverSaveSettings = true,
             NeverSaveDash = true,
-            BackgroundWorkerCount = _configService.Config.BackgroundWorkers,
-            PriorityWorkerCount = _configService.Config.PriorityWorkers,
+            BackgroundWorkerCount = _appConfig.BackgroundWorkers ?? _configService.Config.BackgroundWorkers,
+            PriorityWorkerCount = _appConfig.PriorityWorkers ?? _configService.Config.PriorityWorkers,
         };
 
         await _engine.Initialize(
