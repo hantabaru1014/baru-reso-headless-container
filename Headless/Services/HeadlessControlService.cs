@@ -5,7 +5,7 @@ using Headless.Rpc;
 
 namespace Headless.Services;
 
-public class HeadlessControlService : HeadlessControl.HeadlessControlBase
+public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControlServiceBase
 {
     private readonly ILogger<HeadlessControlService> _logger;
     private readonly IHostApplicationLifetime _applicationLifetime;
@@ -26,15 +26,15 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         _worldService = worldService;
     }
 
-    public override Task<ShutdownReply> Shutdown(ShutdownRequest request, ServerCallContext context)
+    public override Task<ShutdownResponse> Shutdown(ShutdownRequest request, ServerCallContext context)
     {
         _applicationLifetime.StopApplication();
-        return Task.FromResult(new ShutdownReply());
+        return Task.FromResult(new ShutdownResponse());
     }
 
-    public override Task<ListSessionsReply> ListSessions(ListSessionsRequest request, ServerCallContext context)
+    public override Task<ListSessionsResponse> ListSessions(ListSessionsRequest request, ServerCallContext context)
     {
-        var reply = new ListSessionsReply();
+        var reply = new ListSessionsResponse();
         foreach (var session in _worldService.ListAll())
         {
             reply.Sessions.Add(ToRpcSession(session));
@@ -42,7 +42,7 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         return Task.FromResult(reply);
     }
 
-    public override async Task<StartWorldReply> StartWorld(StartWorldRequest request, ServerCallContext context)
+    public override async Task<StartWorldResponse> StartWorld(StartWorldRequest request, ServerCallContext context)
     {
         var reqParam = request.Parameters;
         var worldUrl = string.IsNullOrWhiteSpace(reqParam.LoadWorldUrl) ? null : reqParam.LoadWorldUrl;
@@ -67,19 +67,19 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         {
             throw new RpcException(new Status(StatusCode.Internal, "Failed open world!"));
         }
-        return new StartWorldReply
+        return new StartWorldResponse
         {
             OpenedSession = ToRpcSession(session)
         };
     }
 
-    public override async Task<StopSessionReply> StopSession(StopSessionRequest request, ServerCallContext context)
+    public override async Task<StopSessionResponse> StopSession(StopSessionRequest request, ServerCallContext context)
     {
         await _worldService.StopWorldAsync(request.SessionId);
-        return new StopSessionReply();
+        return new StopSessionResponse();
     }
 
-    public override async Task<InviteUserReply> InviteUser(InviteUserRequest request, ServerCallContext context)
+    public override async Task<InviteUserResponse> InviteUser(InviteUserRequest request, ServerCallContext context)
     {
         var session = _worldService.GetSession(request.SessionId);
         if (session is null)
@@ -103,10 +103,10 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         {
             throw new RpcException(new Status(StatusCode.Internal, "Error sending invite!"));
         }
-        return new InviteUserReply();
+        return new InviteUserResponse();
     }
 
-    public override async Task<UpdateUserRoleReply> UpdateUserRole(UpdateUserRoleRequest request, ServerCallContext context)
+    public override async Task<UpdateUserRoleResponse> UpdateUserRole(UpdateUserRoleRequest request, ServerCallContext context)
     {
         var session = _worldService.GetSession(request.SessionId);
         if (session is null)
@@ -138,13 +138,13 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
         });
 
         await Task.CompletedTask;
-        return new UpdateUserRoleReply
+        return new UpdateUserRoleResponse
         {
             Role = user.Role.RoleName.Value
         };
     }
 
-    public override async Task<UpdateSessionParametersReply> UpdateSessionParameters(UpdateSessionParametersRequest request, ServerCallContext context)
+    public override async Task<UpdateSessionParametersResponse> UpdateSessionParameters(UpdateSessionParametersRequest request, ServerCallContext context)
     {
         var session = _worldService.GetSession(request.SessionId);
         if (session is null)
@@ -175,7 +175,7 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
             }
         }
         await Task.CompletedTask;
-        return new UpdateSessionParametersReply();
+        return new UpdateSessionParametersResponse();
     }
 
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
@@ -188,7 +188,7 @@ public class HeadlessControlService : HeadlessControl.HeadlessControlBase
             SessionAccessLevel.ContactsPlus => AccessLevel.ContactsPlus,
             SessionAccessLevel.RegisteredUsers => AccessLevel.RegisteredUsers,
             SessionAccessLevel.Anyone => AccessLevel.Anyone,
-            _ => AccessLevel.Unknown
+            _ => AccessLevel.Unspecified
         };
     }
 

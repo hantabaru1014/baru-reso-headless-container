@@ -30,7 +30,7 @@ public static class AssemblyPatcher
             }
             else
             {
-                patchesByAssemblies[patch.TargetAssemblyPath] = new List<IAssemblyPatch>(){ patch };
+                patchesByAssemblies[patch.TargetAssemblyPath] = new List<IAssemblyPatch>() { patch };
             }
         }
 

@@ -9,7 +9,8 @@ public class RemoveUnusedConnectors : IAssemblyPatch
     public bool Patch(AssemblyDefinition assembly)
     {
         var types = assembly.MainModule.Types;
-        var removeTypes = types.Where(t => {
+        var removeTypes = types.Where(t =>
+        {
             switch (t.Name)
             {
                 case "SteamConnector":

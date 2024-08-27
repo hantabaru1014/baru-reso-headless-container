@@ -3,13 +3,13 @@ inputs:
   - directory: proto-def
 plugins:
   - remote: buf.build/grpc/go
-    out: proto/headless
+    out: proto
     opt: paths=source_relative
   - remote: buf.build/grpc/csharp
     out: Headless/Protos
   # dependencies
   - remote: buf.build/protocolbuffers/go
-    out: proto/headless
+    out: proto
     opt: paths=source_relative
   - remote: buf.build/protocolbuffers/csharp:v27.3
     out: Headless/Protos

@@ -4,6 +4,9 @@ BIN_DIR := $(shell pwd)/bin
 # tools
 buf := go run github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION)
 
+.PHONY: lint
+lint: lint.proto lint.headless
+
 .PHONY: install.tools
 install.tools:
 	mkdir -p $(BIN_DIR);
@@ -14,6 +17,16 @@ build.proto:
 	rm -r ./proto/**
 	rm ./Headless/Protos/*
 	$(buf) generate
+
+.PHONY: lint.proto
+lint.proto:
+	$(buf) format -w
+	$(buf) lint
+
+.PHONY: lint.headless
+lint.headless:
+	cd Headless
+	dotnet format
 
 .PHONY: build.docker
 build.docker:

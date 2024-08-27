@@ -1,30 +1,27 @@
 syntax = "proto3";
 
+package headless.v1;
+
 option csharp_namespace = "Headless.Rpc";
 option go_package = "github.com/hantabaru1014/baru-reso-headless-container/proto/headless";
 
-package headless;
-
-service HeadlessControl {
-  rpc Shutdown (ShutdownRequest) returns (ShutdownReply);
-  rpc ListSessions (ListSessionsRequest) returns (ListSessionsReply);
-  rpc StartWorld (StartWorldRequest) returns (StartWorldReply);
-  rpc StopSession (StopSessionRequest) returns (StopSessionReply);
-  rpc InviteUser (InviteUserRequest) returns (InviteUserReply);
-  rpc UpdateUserRole (UpdateUserRoleRequest) returns (UpdateUserRoleReply);
-  rpc UpdateSessionParameters (UpdateSessionParametersRequest) returns (UpdateSessionParametersReply);
+service HeadlessControlService {
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+  rpc StartWorld(StartWorldRequest) returns (StartWorldResponse);
+  rpc StopSession(StopSessionRequest) returns (StopSessionResponse);
+  rpc InviteUser(InviteUserRequest) returns (InviteUserResponse);
+  rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse);
+  rpc UpdateSessionParameters(UpdateSessionParametersRequest) returns (UpdateSessionParametersResponse);
 }
 
-message ShutdownRequest {
-}
+message ShutdownRequest {}
 
-message ShutdownReply {
-}
+message ShutdownResponse {}
 
-message ListSessionsRequest {
-}
+message ListSessionsRequest {}
 
-message ListSessionsReply {
+message ListSessionsResponse {
   repeated Session sessions = 1;
 }
 
@@ -32,7 +29,7 @@ message StartWorldRequest {
   WorldStartupParameters parameters = 1;
 }
 
-message StartWorldReply {
+message StartWorldResponse {
   Session opened_session = 1;
 }
 
@@ -40,8 +37,7 @@ message StopSessionRequest {
   string session_id = 1;
 }
 
-message StopSessionReply {
-}
+message StopSessionResponse {}
 
 message InviteUserRequest {
   string session_id = 1;
@@ -51,8 +47,7 @@ message InviteUserRequest {
   }
 }
 
-message InviteUserReply {
-}
+message InviteUserResponse {}
 
 message UpdateUserRoleRequest {
   string session_id = 1;
@@ -63,7 +58,7 @@ message UpdateUserRoleRequest {
   string role = 4;
 }
 
-message UpdateUserRoleReply {
+message UpdateUserRoleResponse {
   // 変更後のロール(無効なロールを指定した場合そのままの可能性)
   string role = 1;
 }
@@ -73,19 +68,18 @@ message UpdateSessionParametersRequest {
   repeated SessionParameter parameters = 2;
 }
 
-message UpdateSessionParametersReply {
-}
+message UpdateSessionParametersResponse {}
 
 // models
 
 enum AccessLevel {
-  Unknown = 0;
-  Private = 1;
-  LAN = 2;
-  Contacts = 3;
-  ContactsPlus = 4;
-  RegisteredUsers = 5;
-  Anyone = 6;
+  ACCESS_LEVEL_UNSPECIFIED = 0;
+  ACCESS_LEVEL_PRIVATE = 1;
+  ACCESS_LEVEL_LAN = 2;
+  ACCESS_LEVEL_CONTACTS = 3;
+  ACCESS_LEVEL_CONTACTS_PLUS = 4;
+  ACCESS_LEVEL_REGISTERED_USERS = 5;
+  ACCESS_LEVEL_ANYONE = 6;
 }
 
 message UserInSession {
