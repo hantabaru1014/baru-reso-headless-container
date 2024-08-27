@@ -13,6 +13,7 @@ service HeadlessControlService {
   rpc InviteUser(InviteUserRequest) returns (InviteUserResponse);
   rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse);
   rpc UpdateSessionParameters(UpdateSessionParametersRequest) returns (UpdateSessionParametersResponse);
+  rpc ListUsersInSession(ListUsersInSessionRequest) returns (ListUsersInSessionResponse);
 }
 
 message ShutdownRequest {}
@@ -70,6 +71,14 @@ message UpdateSessionParametersRequest {
 
 message UpdateSessionParametersResponse {}
 
+message ListUsersInSessionRequest {
+  string session_id = 1;
+}
+
+message ListUsersInSessionResponse {
+  repeated UserInSession users = 1;
+}
+
 // models
 
 enum AccessLevel {
@@ -94,9 +103,8 @@ message Session {
   string name = 2;
   string description = 3;
   AccessLevel access_level = 4;
-  repeated UserInSession users = 5;
-  optional string thumbnail_url = 6;
-  WorldStartupParameters startup_parameters = 7;
+  optional string thumbnail_url = 5;
+  WorldStartupParameters startup_parameters = 6;
 }
 
 message WorldStartupParameters {

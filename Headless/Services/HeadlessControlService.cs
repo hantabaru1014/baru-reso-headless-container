@@ -178,6 +178,27 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         return new UpdateSessionParametersResponse();
     }
 
+    public override async Task<ListUsersInSessionResponse> ListUsersInSession(ListUsersInSessionRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        var users = session.WorldInstance.AllUsers.Select(user => new Rpc.UserInSession
+        {
+            Id = user.UserID,
+            Name = user.UserName,
+            Role = user.Role.RoleName.Value,
+            IsPresent = user.IsPresent
+        });
+        await Task.CompletedTask;
+        return new ListUsersInSessionResponse
+        {
+            Users = { users }
+        };
+    }
+
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
     {
         return level switch
@@ -209,20 +230,12 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
     public static Rpc.Session ToRpcSession(RunningSession session)
     {
         var info = session.WorldInstance.GenerateSessionInfo();
-        var users = session.WorldInstance.AllUsers.Select(user => new Rpc.UserInSession
-        {
-            Id = user.UserID,
-            Name = user.UserName,
-            Role = user.Role.RoleName.Value,
-            IsPresent = user.IsPresent
-        });
         var result = new Rpc.Session
         {
             Id = info.SessionId,
             Name = info.Name ?? "<Empty Name>",
             Description = info.Description ?? "",
             AccessLevel = ToRpcAccessLevel(info.AccessLevel),
-            Users = { users },
             StartupParameters = ToRpcStartupParams(session.StartInfo)
         };
         if (info.ThumbnailUrl is not null)

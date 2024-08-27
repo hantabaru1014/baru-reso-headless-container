@@ -73,6 +73,10 @@ namespace Headless.Rpc {
     static readonly grpc::Marshaller<global::Headless.Rpc.UpdateSessionParametersRequest> __Marshaller_headless_v1_UpdateSessionParametersRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.UpdateSessionParametersRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.UpdateSessionParametersResponse> __Marshaller_headless_v1_UpdateSessionParametersResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.UpdateSessionParametersResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.ListUsersInSessionRequest> __Marshaller_headless_v1_ListUsersInSessionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListUsersInSessionRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.ListUsersInSessionResponse> __Marshaller_headless_v1_ListUsersInSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListUsersInSessionResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.ShutdownRequest, global::Headless.Rpc.ShutdownResponse> __Method_Shutdown = new grpc::Method<global::Headless.Rpc.ShutdownRequest, global::Headless.Rpc.ShutdownResponse>(
@@ -130,6 +134,14 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_UpdateSessionParametersRequest,
         __Marshaller_headless_v1_UpdateSessionParametersResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.ListUsersInSessionRequest, global::Headless.Rpc.ListUsersInSessionResponse> __Method_ListUsersInSession = new grpc::Method<global::Headless.Rpc.ListUsersInSessionRequest, global::Headless.Rpc.ListUsersInSessionResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ListUsersInSession",
+        __Marshaller_headless_v1_ListUsersInSessionRequest,
+        __Marshaller_headless_v1_ListUsersInSessionResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -178,6 +190,12 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.UpdateSessionParametersResponse> UpdateSessionParameters(global::Headless.Rpc.UpdateSessionParametersRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.ListUsersInSessionResponse> ListUsersInSession(global::Headless.Rpc.ListUsersInSessionRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -351,6 +369,26 @@ namespace Headless.Rpc {
       {
         return CallInvoker.AsyncUnaryCall(__Method_UpdateSessionParameters, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.ListUsersInSessionResponse ListUsersInSession(global::Headless.Rpc.ListUsersInSessionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ListUsersInSession(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.ListUsersInSessionResponse ListUsersInSession(global::Headless.Rpc.ListUsersInSessionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ListUsersInSession, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.ListUsersInSessionResponse> ListUsersInSessionAsync(global::Headless.Rpc.ListUsersInSessionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ListUsersInSessionAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.ListUsersInSessionResponse> ListUsersInSessionAsync(global::Headless.Rpc.ListUsersInSessionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ListUsersInSession, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override HeadlessControlServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -371,7 +409,8 @@ namespace Headless.Rpc {
           .AddMethod(__Method_StopSession, serviceImpl.StopSession)
           .AddMethod(__Method_InviteUser, serviceImpl.InviteUser)
           .AddMethod(__Method_UpdateUserRole, serviceImpl.UpdateUserRole)
-          .AddMethod(__Method_UpdateSessionParameters, serviceImpl.UpdateSessionParameters).Build();
+          .AddMethod(__Method_UpdateSessionParameters, serviceImpl.UpdateSessionParameters)
+          .AddMethod(__Method_ListUsersInSession, serviceImpl.ListUsersInSession).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -388,6 +427,7 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_InviteUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.InviteUserRequest, global::Headless.Rpc.InviteUserResponse>(serviceImpl.InviteUser));
       serviceBinder.AddMethod(__Method_UpdateUserRole, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateUserRoleRequest, global::Headless.Rpc.UpdateUserRoleResponse>(serviceImpl.UpdateUserRole));
       serviceBinder.AddMethod(__Method_UpdateSessionParameters, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateSessionParametersRequest, global::Headless.Rpc.UpdateSessionParametersResponse>(serviceImpl.UpdateSessionParameters));
+      serviceBinder.AddMethod(__Method_ListUsersInSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListUsersInSessionRequest, global::Headless.Rpc.ListUsersInSessionResponse>(serviceImpl.ListUsersInSession));
     }
 
   }

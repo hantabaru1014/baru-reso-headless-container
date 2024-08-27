@@ -26,6 +26,7 @@ const (
 	HeadlessControlService_InviteUser_FullMethodName              = "/headless.v1.HeadlessControlService/InviteUser"
 	HeadlessControlService_UpdateUserRole_FullMethodName          = "/headless.v1.HeadlessControlService/UpdateUserRole"
 	HeadlessControlService_UpdateSessionParameters_FullMethodName = "/headless.v1.HeadlessControlService/UpdateSessionParameters"
+	HeadlessControlService_ListUsersInSession_FullMethodName      = "/headless.v1.HeadlessControlService/ListUsersInSession"
 )
 
 // HeadlessControlServiceClient is the client API for HeadlessControlService service.
@@ -39,6 +40,7 @@ type HeadlessControlServiceClient interface {
 	InviteUser(ctx context.Context, in *InviteUserRequest, opts ...grpc.CallOption) (*InviteUserResponse, error)
 	UpdateUserRole(ctx context.Context, in *UpdateUserRoleRequest, opts ...grpc.CallOption) (*UpdateUserRoleResponse, error)
 	UpdateSessionParameters(ctx context.Context, in *UpdateSessionParametersRequest, opts ...grpc.CallOption) (*UpdateSessionParametersResponse, error)
+	ListUsersInSession(ctx context.Context, in *ListUsersInSessionRequest, opts ...grpc.CallOption) (*ListUsersInSessionResponse, error)
 }
 
 type headlessControlServiceClient struct {
@@ -119,6 +121,16 @@ func (c *headlessControlServiceClient) UpdateSessionParameters(ctx context.Conte
 	return out, nil
 }
 
+func (c *headlessControlServiceClient) ListUsersInSession(ctx context.Context, in *ListUsersInSessionRequest, opts ...grpc.CallOption) (*ListUsersInSessionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListUsersInSessionResponse)
+	err := c.cc.Invoke(ctx, HeadlessControlService_ListUsersInSession_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HeadlessControlServiceServer is the server API for HeadlessControlService service.
 // All implementations must embed UnimplementedHeadlessControlServiceServer
 // for forward compatibility.
@@ -130,6 +142,7 @@ type HeadlessControlServiceServer interface {
 	InviteUser(context.Context, *InviteUserRequest) (*InviteUserResponse, error)
 	UpdateUserRole(context.Context, *UpdateUserRoleRequest) (*UpdateUserRoleResponse, error)
 	UpdateSessionParameters(context.Context, *UpdateSessionParametersRequest) (*UpdateSessionParametersResponse, error)
+	ListUsersInSession(context.Context, *ListUsersInSessionRequest) (*ListUsersInSessionResponse, error)
 	mustEmbedUnimplementedHeadlessControlServiceServer()
 }
 
@@ -160,6 +173,9 @@ func (UnimplementedHeadlessControlServiceServer) UpdateUserRole(context.Context,
 }
 func (UnimplementedHeadlessControlServiceServer) UpdateSessionParameters(context.Context, *UpdateSessionParametersRequest) (*UpdateSessionParametersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSessionParameters not implemented")
+}
+func (UnimplementedHeadlessControlServiceServer) ListUsersInSession(context.Context, *ListUsersInSessionRequest) (*ListUsersInSessionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsersInSession not implemented")
 }
 func (UnimplementedHeadlessControlServiceServer) mustEmbedUnimplementedHeadlessControlServiceServer() {
 }
@@ -309,6 +325,24 @@ func _HeadlessControlService_UpdateSessionParameters_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HeadlessControlService_ListUsersInSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersInSessionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HeadlessControlServiceServer).ListUsersInSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HeadlessControlService_ListUsersInSession_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HeadlessControlServiceServer).ListUsersInSession(ctx, req.(*ListUsersInSessionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HeadlessControlService_ServiceDesc is the grpc.ServiceDesc for HeadlessControlService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -343,6 +377,10 @@ var HeadlessControlService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSessionParameters",
 			Handler:    _HeadlessControlService_UpdateSessionParameters_Handler,
+		},
+		{
+			MethodName: "ListUsersInSession",
+			Handler:    _HeadlessControlService_ListUsersInSession_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
