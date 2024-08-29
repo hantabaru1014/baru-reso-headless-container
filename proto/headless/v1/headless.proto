@@ -3,7 +3,6 @@ syntax = "proto3";
 package headless.v1;
 
 option csharp_namespace = "Headless.Rpc";
-option go_package = "github.com/hantabaru1014/baru-reso-headless-container/proto/headless";
 
 service HeadlessControlService {
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);

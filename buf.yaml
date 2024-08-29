@@ -1,6 +1,6 @@
 version: v2
 modules:
-  - path: proto-def
+  - path: proto
 lint:
   use:
     - DEFAULT

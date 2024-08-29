@@ -14,8 +14,6 @@ install.tools:
 
 .PHONY: build.proto
 build.proto:
-	rm -r ./proto/**
-	rm ./Headless/Protos/*
 	$(buf) generate
 
 .PHONY: lint.proto

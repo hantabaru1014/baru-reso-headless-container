@@ -1,15 +1,9 @@
 version: v2
 inputs:
-  - directory: proto-def
+  - directory: proto
 plugins:
-  - remote: buf.build/grpc/go
-    out: proto
-    opt: paths=source_relative
-  - remote: buf.build/grpc/csharp
+  - remote: buf.build/grpc/csharp:v1.66.1
     out: Headless/Protos
   # dependencies
-  - remote: buf.build/protocolbuffers/go
-    out: proto
-    opt: paths=source_relative
-  - remote: buf.build/protocolbuffers/csharp:v27.3
+  - remote: buf.build/protocolbuffers/csharp:v27.4
     out: Headless/Protos
