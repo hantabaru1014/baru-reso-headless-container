@@ -40,59 +40,59 @@ namespace Headless.Rpc {
             "UmVxdWVzdBIdCgpzZXNzaW9uX2lkGAEgASgJUglzZXNzaW9uSWQSGQoHdXNl",
             "cl9pZBgCIAEoCUgAUgZ1c2VySWQSHQoJdXNlcl9uYW1lGAMgASgJSABSCHVz",
             "ZXJOYW1lEhIKBHJvbGUYBCABKAlSBHJvbGVCBgoEdXNlciIsChZVcGRhdGVV",
-            "c2VyUm9sZVJlc3BvbnNlEhIKBHJvbGUYASABKAlSBHJvbGUifgoeVXBkYXRl",
-            "U2Vzc2lvblBhcmFtZXRlcnNSZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlS",
-            "CXNlc3Npb25JZBI9CgpwYXJhbWV0ZXJzGAIgAygLMh0uaGVhZGxlc3MudjEu",
-            "U2Vzc2lvblBhcmFtZXRlclIKcGFyYW1ldGVycyIhCh9VcGRhdGVTZXNzaW9u",
-            "UGFyYW1ldGVyc1Jlc3BvbnNlIjoKGUxpc3RVc2Vyc0luU2Vzc2lvblJlcXVl",
-            "c3QSHQoKc2Vzc2lvbl9pZBgBIAEoCVIJc2Vzc2lvbklkIk4KGkxpc3RVc2Vy",
-            "c0luU2Vzc2lvblJlc3BvbnNlEjAKBXVzZXJzGAEgAygLMhouaGVhZGxlc3Mu",
-            "djEuVXNlckluU2Vzc2lvblIFdXNlcnMiZgoNVXNlckluU2Vzc2lvbhIOCgJp",
-            "ZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRISCgRyb2xlGAMgASgJ",
-            "UgRyb2xlEh0KCmlzX3ByZXNlbnQYBCABKAhSCWlzUHJlc2VudCKcAgoHU2Vz",
-            "c2lvbhIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIgCgtk",
-            "ZXNjcmlwdGlvbhgDIAEoCVILZGVzY3JpcHRpb24SOwoMYWNjZXNzX2xldmVs",
-            "GAQgASgOMhguaGVhZGxlc3MudjEuQWNjZXNzTGV2ZWxSC2FjY2Vzc0xldmVs",
-            "EigKDXRodW1ibmFpbF91cmwYBSABKAlIAFIMdGh1bWJuYWlsVXJsiAEBElIK",
-            "EnN0YXJ0dXBfcGFyYW1ldGVycxgGIAEoCzIjLmhlYWRsZXNzLnYxLldvcmxk",
-            "U3RhcnR1cFBhcmFtZXRlcnNSEXN0YXJ0dXBQYXJhbWV0ZXJzQhAKDl90aHVt",
-            "Ym5haWxfdXJsIsoDChZXb3JsZFN0YXJ0dXBQYXJhbWV0ZXJzEiYKDHNlc3Np",
-            "b25fbmFtZRgBIAEoCUgBUgtzZXNzaW9uTmFtZYgBARIvChFjdXN0b21fc2Vz",
-            "c2lvbl9pZBgCIAEoCUgCUg9jdXN0b21TZXNzaW9uSWSIAQESJQoLZGVzY3Jp",
-            "cHRpb24YAyABKAlIA1ILZGVzY3JpcHRpb26IAQESGwoJbWF4X3VzZXJzGAQg",
-            "ASgFUghtYXhVc2VycxI7CgxhY2Nlc3NfbGV2ZWwYBSABKA4yGC5oZWFkbGVz",
-            "cy52MS5BY2Nlc3NMZXZlbFILYWNjZXNzTGV2ZWwSJgoObG9hZF93b3JsZF91",
-            "cmwYBiABKAlIAFIMbG9hZFdvcmxkVXJsEjUKFmxvYWRfd29ybGRfcHJlc2V0",
-            "X25hbWUYByABKAlIAFITbG9hZFdvcmxkUHJlc2V0TmFtZRIyChVhdXRvX2lu",
-            "dml0ZV91c2VybmFtZXMYCCADKAlSE2F1dG9JbnZpdGVVc2VybmFtZXNCDAoK",
-            "bG9hZF93b3JsZEIPCg1fc2Vzc2lvbl9uYW1lQhQKEl9jdXN0b21fc2Vzc2lv",
-            "bl9pZEIOCgxfZGVzY3JpcHRpb24iwgEKEFNlc3Npb25QYXJhbWV0ZXISIwoM",
-            "c2Vzc2lvbl9uYW1lGAEgASgJSABSC3Nlc3Npb25OYW1lEiIKC2Rlc2NyaXB0",
-            "aW9uGAIgASgJSABSC2Rlc2NyaXB0aW9uEh0KCW1heF91c2VycxgDIAEoBUgA",
-            "UghtYXhVc2VycxI9CgxhY2Nlc3NfbGV2ZWwYBCABKA4yGC5oZWFkbGVzcy52",
-            "MS5BY2Nlc3NMZXZlbEgAUgthY2Nlc3NMZXZlbEIHCgVwYXJhbSrSAQoLQWNj",
-            "ZXNzTGV2ZWwSHAoYQUNDRVNTX0xFVkVMX1VOU1BFQ0lGSUVEEAASGAoUQUND",
-            "RVNTX0xFVkVMX1BSSVZBVEUQARIUChBBQ0NFU1NfTEVWRUxfTEFOEAISGQoV",
-            "QUNDRVNTX0xFVkVMX0NPTlRBQ1RTEAMSHgoaQUNDRVNTX0xFVkVMX0NPTlRB",
-            "Q1RTX1BMVVMQBBIhCh1BQ0NFU1NfTEVWRUxfUkVHSVNURVJFRF9VU0VSUxAF",
-            "EhcKE0FDQ0VTU19MRVZFTF9BTllPTkUQBjLeBQoWSGVhZGxlc3NDb250cm9s",
-            "U2VydmljZRJHCghTaHV0ZG93bhIcLmhlYWRsZXNzLnYxLlNodXRkb3duUmVx",
-            "dWVzdBodLmhlYWRsZXNzLnYxLlNodXRkb3duUmVzcG9uc2USUwoMTGlzdFNl",
-            "c3Npb25zEiAuaGVhZGxlc3MudjEuTGlzdFNlc3Npb25zUmVxdWVzdBohLmhl",
-            "YWRsZXNzLnYxLkxpc3RTZXNzaW9uc1Jlc3BvbnNlEk0KClN0YXJ0V29ybGQS",
-            "Hi5oZWFkbGVzcy52MS5TdGFydFdvcmxkUmVxdWVzdBofLmhlYWRsZXNzLnYx",
-            "LlN0YXJ0V29ybGRSZXNwb25zZRJQCgtTdG9wU2Vzc2lvbhIfLmhlYWRsZXNz",
-            "LnYxLlN0b3BTZXNzaW9uUmVxdWVzdBogLmhlYWRsZXNzLnYxLlN0b3BTZXNz",
-            "aW9uUmVzcG9uc2USTQoKSW52aXRlVXNlchIeLmhlYWRsZXNzLnYxLkludml0",
-            "ZVVzZXJSZXF1ZXN0Gh8uaGVhZGxlc3MudjEuSW52aXRlVXNlclJlc3BvbnNl",
-            "ElkKDlVwZGF0ZVVzZXJSb2xlEiIuaGVhZGxlc3MudjEuVXBkYXRlVXNlclJv",
-            "bGVSZXF1ZXN0GiMuaGVhZGxlc3MudjEuVXBkYXRlVXNlclJvbGVSZXNwb25z",
-            "ZRJ0ChdVcGRhdGVTZXNzaW9uUGFyYW1ldGVycxIrLmhlYWRsZXNzLnYxLlVw",
-            "ZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVxdWVzdBosLmhlYWRsZXNzLnYxLlVw",
-            "ZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVzcG9uc2USZQoSTGlzdFVzZXJzSW5T",
-            "ZXNzaW9uEiYuaGVhZGxlc3MudjEuTGlzdFVzZXJzSW5TZXNzaW9uUmVxdWVz",
-            "dBonLmhlYWRsZXNzLnYxLkxpc3RVc2Vyc0luU2Vzc2lvblJlc3BvbnNlQg+q",
-            "AgxIZWFkbGVzcy5ScGNiBnByb3RvMw=="));
+            "c2VyUm9sZVJlc3BvbnNlEhIKBHJvbGUYASABKAlSBHJvbGUisgIKHlVwZGF0",
+            "ZVNlc3Npb25QYXJhbWV0ZXJzUmVxdWVzdBIdCgpzZXNzaW9uX2lkGAEgASgJ",
+            "UglzZXNzaW9uSWQSJgoMc2Vzc2lvbl9uYW1lGAIgASgJSABSC3Nlc3Npb25O",
+            "YW1liAEBEiUKC2Rlc2NyaXB0aW9uGAMgASgJSAFSC2Rlc2NyaXB0aW9uiAEB",
+            "EiAKCW1heF91c2VycxgEIAEoBUgCUghtYXhVc2Vyc4gBARJACgxhY2Nlc3Nf",
+            "bGV2ZWwYBSABKA4yGC5oZWFkbGVzcy52MS5BY2Nlc3NMZXZlbEgDUgthY2Nl",
+            "c3NMZXZlbIgBAUIPCg1fc2Vzc2lvbl9uYW1lQg4KDF9kZXNjcmlwdGlvbkIM",
+            "CgpfbWF4X3VzZXJzQg8KDV9hY2Nlc3NfbGV2ZWwiIQofVXBkYXRlU2Vzc2lv",
+            "blBhcmFtZXRlcnNSZXNwb25zZSI6ChlMaXN0VXNlcnNJblNlc3Npb25SZXF1",
+            "ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25JZCJOChpMaXN0VXNl",
+            "cnNJblNlc3Npb25SZXNwb25zZRIwCgV1c2VycxgBIAMoCzIaLmhlYWRsZXNz",
+            "LnYxLlVzZXJJblNlc3Npb25SBXVzZXJzImYKDVVzZXJJblNlc3Npb24SDgoC",
+            "aWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSEgoEcm9sZRgDIAEo",
+            "CVIEcm9sZRIdCgppc19wcmVzZW50GAQgASgIUglpc1ByZXNlbnQinAIKB1Nl",
+            "c3Npb24SDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSIAoL",
+            "ZGVzY3JpcHRpb24YAyABKAlSC2Rlc2NyaXB0aW9uEjsKDGFjY2Vzc19sZXZl",
+            "bBgEIAEoDjIYLmhlYWRsZXNzLnYxLkFjY2Vzc0xldmVsUgthY2Nlc3NMZXZl",
+            "bBIoCg10aHVtYm5haWxfdXJsGAUgASgJSABSDHRodW1ibmFpbFVybIgBARJS",
+            "ChJzdGFydHVwX3BhcmFtZXRlcnMYBiABKAsyIy5oZWFkbGVzcy52MS5Xb3Js",
+            "ZFN0YXJ0dXBQYXJhbWV0ZXJzUhFzdGFydHVwUGFyYW1ldGVyc0IQCg5fdGh1",
+            "bWJuYWlsX3VybCLdAwoWV29ybGRTdGFydHVwUGFyYW1ldGVycxImCgxzZXNz",
+            "aW9uX25hbWUYASABKAlIAVILc2Vzc2lvbk5hbWWIAQESLwoRY3VzdG9tX3Nl",
+            "c3Npb25faWQYAiABKAlIAlIPY3VzdG9tU2Vzc2lvbklkiAEBEiUKC2Rlc2Ny",
+            "aXB0aW9uGAMgASgJSANSC2Rlc2NyaXB0aW9uiAEBEiAKCW1heF91c2VycxgE",
+            "IAEoBUgEUghtYXhVc2Vyc4gBARI7CgxhY2Nlc3NfbGV2ZWwYBSABKA4yGC5o",
+            "ZWFkbGVzcy52MS5BY2Nlc3NMZXZlbFILYWNjZXNzTGV2ZWwSJgoObG9hZF93",
+            "b3JsZF91cmwYBiABKAlIAFIMbG9hZFdvcmxkVXJsEjUKFmxvYWRfd29ybGRf",
+            "cHJlc2V0X25hbWUYByABKAlIAFITbG9hZFdvcmxkUHJlc2V0TmFtZRIyChVh",
+            "dXRvX2ludml0ZV91c2VybmFtZXMYCCADKAlSE2F1dG9JbnZpdGVVc2VybmFt",
+            "ZXNCDAoKbG9hZF93b3JsZEIPCg1fc2Vzc2lvbl9uYW1lQhQKEl9jdXN0b21f",
+            "c2Vzc2lvbl9pZEIOCgxfZGVzY3JpcHRpb25CDAoKX21heF91c2VycyrSAQoL",
+            "QWNjZXNzTGV2ZWwSHAoYQUNDRVNTX0xFVkVMX1VOU1BFQ0lGSUVEEAASGAoU",
+            "QUNDRVNTX0xFVkVMX1BSSVZBVEUQARIUChBBQ0NFU1NfTEVWRUxfTEFOEAIS",
+            "GQoVQUNDRVNTX0xFVkVMX0NPTlRBQ1RTEAMSHgoaQUNDRVNTX0xFVkVMX0NP",
+            "TlRBQ1RTX1BMVVMQBBIhCh1BQ0NFU1NfTEVWRUxfUkVHSVNURVJFRF9VU0VS",
+            "UxAFEhcKE0FDQ0VTU19MRVZFTF9BTllPTkUQBjLeBQoWSGVhZGxlc3NDb250",
+            "cm9sU2VydmljZRJHCghTaHV0ZG93bhIcLmhlYWRsZXNzLnYxLlNodXRkb3du",
+            "UmVxdWVzdBodLmhlYWRsZXNzLnYxLlNodXRkb3duUmVzcG9uc2USUwoMTGlz",
+            "dFNlc3Npb25zEiAuaGVhZGxlc3MudjEuTGlzdFNlc3Npb25zUmVxdWVzdBoh",
+            "LmhlYWRsZXNzLnYxLkxpc3RTZXNzaW9uc1Jlc3BvbnNlEk0KClN0YXJ0V29y",
+            "bGQSHi5oZWFkbGVzcy52MS5TdGFydFdvcmxkUmVxdWVzdBofLmhlYWRsZXNz",
+            "LnYxLlN0YXJ0V29ybGRSZXNwb25zZRJQCgtTdG9wU2Vzc2lvbhIfLmhlYWRs",
+            "ZXNzLnYxLlN0b3BTZXNzaW9uUmVxdWVzdBogLmhlYWRsZXNzLnYxLlN0b3BT",
+            "ZXNzaW9uUmVzcG9uc2USTQoKSW52aXRlVXNlchIeLmhlYWRsZXNzLnYxLklu",
+            "dml0ZVVzZXJSZXF1ZXN0Gh8uaGVhZGxlc3MudjEuSW52aXRlVXNlclJlc3Bv",
+            "bnNlElkKDlVwZGF0ZVVzZXJSb2xlEiIuaGVhZGxlc3MudjEuVXBkYXRlVXNl",
+            "clJvbGVSZXF1ZXN0GiMuaGVhZGxlc3MudjEuVXBkYXRlVXNlclJvbGVSZXNw",
+            "b25zZRJ0ChdVcGRhdGVTZXNzaW9uUGFyYW1ldGVycxIrLmhlYWRsZXNzLnYx",
+            "LlVwZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVxdWVzdBosLmhlYWRsZXNzLnYx",
+            "LlVwZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVzcG9uc2USZQoSTGlzdFVzZXJz",
+            "SW5TZXNzaW9uEiYuaGVhZGxlc3MudjEuTGlzdFVzZXJzSW5TZXNzaW9uUmVx",
+            "dWVzdBonLmhlYWRsZXNzLnYxLkxpc3RVc2Vyc0luU2Vzc2lvblJlc3BvbnNl",
+            "Qg+qAgxIZWFkbGVzcy5ScGNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Headless.Rpc.AccessLevel), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -108,14 +108,13 @@ namespace Headless.Rpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.InviteUserResponse), global::Headless.Rpc.InviteUserResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleRequest), global::Headless.Rpc.UpdateUserRoleRequest.Parser, new[]{ "SessionId", "UserId", "UserName", "Role" }, new[]{ "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleResponse), global::Headless.Rpc.UpdateUserRoleResponse.Parser, new[]{ "Role" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "Parameters" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "SessionName", "Description", "MaxUsers", "AccessLevel" }, new[]{ "SessionName", "Description", "MaxUsers", "AccessLevel" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersResponse), global::Headless.Rpc.UpdateSessionParametersResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionRequest), global::Headless.Rpc.ListUsersInSessionRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionResponse), global::Headless.Rpc.ListUsersInSessionResponse.Parser, new[]{ "Users" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UserInSession), global::Headless.Rpc.UserInSession.Parser, new[]{ "Id", "Name", "Role", "IsPresent" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.Session), global::Headless.Rpc.Session.Parser, new[]{ "Id", "Name", "Description", "AccessLevel", "ThumbnailUrl", "StartupParameters" }, new[]{ "ThumbnailUrl" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "SessionName", "CustomSessionId", "Description", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames" }, new[]{ "LoadWorld", "SessionName", "CustomSessionId", "Description" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.SessionParameter), global::Headless.Rpc.SessionParameter.Parser, new[]{ "SessionName", "Description", "MaxUsers", "AccessLevel" }, new[]{ "Param" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "SessionName", "CustomSessionId", "Description", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames" }, new[]{ "LoadWorld", "SessionName", "CustomSessionId", "Description", "MaxUsers" }, null, null, null)
           }));
     }
     #endregion
@@ -2651,6 +2650,7 @@ namespace Headless.Rpc {
   {
     private static readonly pb::MessageParser<UpdateSessionParametersRequest> _parser = new pb::MessageParser<UpdateSessionParametersRequest>(() => new UpdateSessionParametersRequest());
     private pb::UnknownFieldSet _unknownFields;
+    private int _hasBits0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<UpdateSessionParametersRequest> Parser { get { return _parser; } }
@@ -2678,8 +2678,12 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public UpdateSessionParametersRequest(UpdateSessionParametersRequest other) : this() {
+      _hasBits0 = other._hasBits0;
       sessionId_ = other.sessionId_;
-      parameters_ = other.parameters_.Clone();
+      sessionName_ = other.sessionName_;
+      description_ = other.description_;
+      maxUsers_ = other.maxUsers_;
+      accessLevel_ = other.accessLevel_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2701,15 +2705,110 @@ namespace Headless.Rpc {
       }
     }
 
-    /// <summary>Field number for the "parameters" field.</summary>
-    public const int ParametersFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Headless.Rpc.SessionParameter> _repeated_parameters_codec
-        = pb::FieldCodec.ForMessage(18, global::Headless.Rpc.SessionParameter.Parser);
-    private readonly pbc::RepeatedField<global::Headless.Rpc.SessionParameter> parameters_ = new pbc::RepeatedField<global::Headless.Rpc.SessionParameter>();
+    /// <summary>Field number for the "session_name" field.</summary>
+    public const int SessionNameFieldNumber = 2;
+    private readonly static string SessionNameDefaultValue = "";
+
+    private string sessionName_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Headless.Rpc.SessionParameter> Parameters {
-      get { return parameters_; }
+    public string SessionName {
+      get { return sessionName_ ?? SessionNameDefaultValue; }
+      set {
+        sessionName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "session_name" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasSessionName {
+      get { return sessionName_ != null; }
+    }
+    /// <summary>Clears the value of the "session_name" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearSessionName() {
+      sessionName_ = null;
+    }
+
+    /// <summary>Field number for the "description" field.</summary>
+    public const int DescriptionFieldNumber = 3;
+    private readonly static string DescriptionDefaultValue = "";
+
+    private string description_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Description {
+      get { return description_ ?? DescriptionDefaultValue; }
+      set {
+        description_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "description" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasDescription {
+      get { return description_ != null; }
+    }
+    /// <summary>Clears the value of the "description" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearDescription() {
+      description_ = null;
+    }
+
+    /// <summary>Field number for the "max_users" field.</summary>
+    public const int MaxUsersFieldNumber = 4;
+    private readonly static int MaxUsersDefaultValue = 0;
+
+    private int maxUsers_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MaxUsers {
+      get { if ((_hasBits0 & 1) != 0) { return maxUsers_; } else { return MaxUsersDefaultValue; } }
+      set {
+        _hasBits0 |= 1;
+        maxUsers_ = value;
+      }
+    }
+    /// <summary>Gets whether the "max_users" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasMaxUsers {
+      get { return (_hasBits0 & 1) != 0; }
+    }
+    /// <summary>Clears the value of the "max_users" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearMaxUsers() {
+      _hasBits0 &= ~1;
+    }
+
+    /// <summary>Field number for the "access_level" field.</summary>
+    public const int AccessLevelFieldNumber = 5;
+    private readonly static global::Headless.Rpc.AccessLevel AccessLevelDefaultValue = global::Headless.Rpc.AccessLevel.Unspecified;
+
+    private global::Headless.Rpc.AccessLevel accessLevel_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Headless.Rpc.AccessLevel AccessLevel {
+      get { if ((_hasBits0 & 2) != 0) { return accessLevel_; } else { return AccessLevelDefaultValue; } }
+      set {
+        _hasBits0 |= 2;
+        accessLevel_ = value;
+      }
+    }
+    /// <summary>Gets whether the "access_level" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAccessLevel {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "access_level" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAccessLevel() {
+      _hasBits0 &= ~2;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2728,7 +2827,10 @@ namespace Headless.Rpc {
         return true;
       }
       if (SessionId != other.SessionId) return false;
-      if(!parameters_.Equals(other.parameters_)) return false;
+      if (SessionName != other.SessionName) return false;
+      if (Description != other.Description) return false;
+      if (MaxUsers != other.MaxUsers) return false;
+      if (AccessLevel != other.AccessLevel) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2737,7 +2839,10 @@ namespace Headless.Rpc {
     public override int GetHashCode() {
       int hash = 1;
       if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
-      hash ^= parameters_.GetHashCode();
+      if (HasSessionName) hash ^= SessionName.GetHashCode();
+      if (HasDescription) hash ^= Description.GetHashCode();
+      if (HasMaxUsers) hash ^= MaxUsers.GetHashCode();
+      if (HasAccessLevel) hash ^= AccessLevel.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2760,7 +2865,22 @@ namespace Headless.Rpc {
         output.WriteRawTag(10);
         output.WriteString(SessionId);
       }
-      parameters_.WriteTo(output, _repeated_parameters_codec);
+      if (HasSessionName) {
+        output.WriteRawTag(18);
+        output.WriteString(SessionName);
+      }
+      if (HasDescription) {
+        output.WriteRawTag(26);
+        output.WriteString(Description);
+      }
+      if (HasMaxUsers) {
+        output.WriteRawTag(32);
+        output.WriteInt32(MaxUsers);
+      }
+      if (HasAccessLevel) {
+        output.WriteRawTag(40);
+        output.WriteEnum((int) AccessLevel);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2775,7 +2895,22 @@ namespace Headless.Rpc {
         output.WriteRawTag(10);
         output.WriteString(SessionId);
       }
-      parameters_.WriteTo(ref output, _repeated_parameters_codec);
+      if (HasSessionName) {
+        output.WriteRawTag(18);
+        output.WriteString(SessionName);
+      }
+      if (HasDescription) {
+        output.WriteRawTag(26);
+        output.WriteString(Description);
+      }
+      if (HasMaxUsers) {
+        output.WriteRawTag(32);
+        output.WriteInt32(MaxUsers);
+      }
+      if (HasAccessLevel) {
+        output.WriteRawTag(40);
+        output.WriteEnum((int) AccessLevel);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2789,7 +2924,18 @@ namespace Headless.Rpc {
       if (SessionId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
       }
-      size += parameters_.CalculateSize(_repeated_parameters_codec);
+      if (HasSessionName) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionName);
+      }
+      if (HasDescription) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
+      }
+      if (HasMaxUsers) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxUsers);
+      }
+      if (HasAccessLevel) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) AccessLevel);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -2805,7 +2951,18 @@ namespace Headless.Rpc {
       if (other.SessionId.Length != 0) {
         SessionId = other.SessionId;
       }
-      parameters_.Add(other.parameters_);
+      if (other.HasSessionName) {
+        SessionName = other.SessionName;
+      }
+      if (other.HasDescription) {
+        Description = other.Description;
+      }
+      if (other.HasMaxUsers) {
+        MaxUsers = other.MaxUsers;
+      }
+      if (other.HasAccessLevel) {
+        AccessLevel = other.AccessLevel;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -2830,7 +2987,19 @@ namespace Headless.Rpc {
             break;
           }
           case 18: {
-            parameters_.AddEntriesFrom(input, _repeated_parameters_codec);
+            SessionName = input.ReadString();
+            break;
+          }
+          case 26: {
+            Description = input.ReadString();
+            break;
+          }
+          case 32: {
+            MaxUsers = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            AccessLevel = (global::Headless.Rpc.AccessLevel) input.ReadEnum();
             break;
           }
         }
@@ -2857,7 +3026,19 @@ namespace Headless.Rpc {
             break;
           }
           case 18: {
-            parameters_.AddEntriesFrom(ref input, _repeated_parameters_codec);
+            SessionName = input.ReadString();
+            break;
+          }
+          case 26: {
+            Description = input.ReadString();
+            break;
+          }
+          case 32: {
+            MaxUsers = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            AccessLevel = (global::Headless.Rpc.AccessLevel) input.ReadEnum();
             break;
           }
         }
@@ -4136,6 +4317,7 @@ namespace Headless.Rpc {
   {
     private static readonly pb::MessageParser<WorldStartupParameters> _parser = new pb::MessageParser<WorldStartupParameters>(() => new WorldStartupParameters());
     private pb::UnknownFieldSet _unknownFields;
+    private int _hasBits0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<WorldStartupParameters> Parser { get { return _parser; } }
@@ -4163,6 +4345,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public WorldStartupParameters(WorldStartupParameters other) : this() {
+      _hasBits0 = other._hasBits0;
       sessionName_ = other.sessionName_;
       customSessionId_ = other.customSessionId_;
       description_ = other.description_;
@@ -4267,14 +4450,29 @@ namespace Headless.Rpc {
 
     /// <summary>Field number for the "max_users" field.</summary>
     public const int MaxUsersFieldNumber = 4;
+    private readonly static int MaxUsersDefaultValue = 0;
+
     private int maxUsers_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int MaxUsers {
-      get { return maxUsers_; }
+      get { if ((_hasBits0 & 1) != 0) { return maxUsers_; } else { return MaxUsersDefaultValue; } }
       set {
+        _hasBits0 |= 1;
         maxUsers_ = value;
       }
+    }
+    /// <summary>Gets whether the "max_users" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasMaxUsers {
+      get { return (_hasBits0 & 1) != 0; }
+    }
+    /// <summary>Clears the value of the "max_users" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearMaxUsers() {
+      _hasBits0 &= ~1;
     }
 
     /// <summary>Field number for the "access_level" field.</summary>
@@ -4407,7 +4605,7 @@ namespace Headless.Rpc {
       if (HasSessionName) hash ^= SessionName.GetHashCode();
       if (HasCustomSessionId) hash ^= CustomSessionId.GetHashCode();
       if (HasDescription) hash ^= Description.GetHashCode();
-      if (MaxUsers != 0) hash ^= MaxUsers.GetHashCode();
+      if (HasMaxUsers) hash ^= MaxUsers.GetHashCode();
       if (AccessLevel != global::Headless.Rpc.AccessLevel.Unspecified) hash ^= AccessLevel.GetHashCode();
       if (HasLoadWorldUrl) hash ^= LoadWorldUrl.GetHashCode();
       if (HasLoadWorldPresetName) hash ^= LoadWorldPresetName.GetHashCode();
@@ -4443,7 +4641,7 @@ namespace Headless.Rpc {
         output.WriteRawTag(26);
         output.WriteString(Description);
       }
-      if (MaxUsers != 0) {
+      if (HasMaxUsers) {
         output.WriteRawTag(32);
         output.WriteInt32(MaxUsers);
       }
@@ -4482,7 +4680,7 @@ namespace Headless.Rpc {
         output.WriteRawTag(26);
         output.WriteString(Description);
       }
-      if (MaxUsers != 0) {
+      if (HasMaxUsers) {
         output.WriteRawTag(32);
         output.WriteInt32(MaxUsers);
       }
@@ -4518,7 +4716,7 @@ namespace Headless.Rpc {
       if (HasDescription) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
       }
-      if (MaxUsers != 0) {
+      if (HasMaxUsers) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxUsers);
       }
       if (AccessLevel != global::Headless.Rpc.AccessLevel.Unspecified) {
@@ -4552,7 +4750,7 @@ namespace Headless.Rpc {
       if (other.HasDescription) {
         Description = other.Description;
       }
-      if (other.MaxUsers != 0) {
+      if (other.HasMaxUsers) {
         MaxUsers = other.MaxUsers;
       }
       if (other.AccessLevel != global::Headless.Rpc.AccessLevel.Unspecified) {
@@ -4668,412 +4866,6 @@ namespace Headless.Rpc {
           }
           case 66: {
             autoInviteUsernames_.AddEntriesFrom(ref input, _repeated_autoInviteUsernames_codec);
-            break;
-          }
-        }
-      }
-    }
-    #endif
-
-  }
-
-  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
-  public sealed partial class SessionParameter : pb::IMessage<SessionParameter>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<SessionParameter> _parser = new pb::MessageParser<SessionParameter>(() => new SessionParameter());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<SessionParameter> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[19]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public SessionParameter() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public SessionParameter(SessionParameter other) : this() {
-      switch (other.ParamCase) {
-        case ParamOneofCase.SessionName:
-          SessionName = other.SessionName;
-          break;
-        case ParamOneofCase.Description:
-          Description = other.Description;
-          break;
-        case ParamOneofCase.MaxUsers:
-          MaxUsers = other.MaxUsers;
-          break;
-        case ParamOneofCase.AccessLevel:
-          AccessLevel = other.AccessLevel;
-          break;
-      }
-
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public SessionParameter Clone() {
-      return new SessionParameter(this);
-    }
-
-    /// <summary>Field number for the "session_name" field.</summary>
-    public const int SessionNameFieldNumber = 1;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SessionName {
-      get { return HasSessionName ? (string) param_ : ""; }
-      set {
-        param_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-        paramCase_ = ParamOneofCase.SessionName;
-      }
-    }
-    /// <summary>Gets whether the "session_name" field is set</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool HasSessionName {
-      get { return paramCase_ == ParamOneofCase.SessionName; }
-    }
-    /// <summary> Clears the value of the oneof if it's currently set to "session_name" </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearSessionName() {
-      if (HasSessionName) {
-        ClearParam();
-      }
-    }
-
-    /// <summary>Field number for the "description" field.</summary>
-    public const int DescriptionFieldNumber = 2;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Description {
-      get { return HasDescription ? (string) param_ : ""; }
-      set {
-        param_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-        paramCase_ = ParamOneofCase.Description;
-      }
-    }
-    /// <summary>Gets whether the "description" field is set</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool HasDescription {
-      get { return paramCase_ == ParamOneofCase.Description; }
-    }
-    /// <summary> Clears the value of the oneof if it's currently set to "description" </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearDescription() {
-      if (HasDescription) {
-        ClearParam();
-      }
-    }
-
-    /// <summary>Field number for the "max_users" field.</summary>
-    public const int MaxUsersFieldNumber = 3;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int MaxUsers {
-      get { return HasMaxUsers ? (int) param_ : 0; }
-      set {
-        param_ = value;
-        paramCase_ = ParamOneofCase.MaxUsers;
-      }
-    }
-    /// <summary>Gets whether the "max_users" field is set</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool HasMaxUsers {
-      get { return paramCase_ == ParamOneofCase.MaxUsers; }
-    }
-    /// <summary> Clears the value of the oneof if it's currently set to "max_users" </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearMaxUsers() {
-      if (HasMaxUsers) {
-        ClearParam();
-      }
-    }
-
-    /// <summary>Field number for the "access_level" field.</summary>
-    public const int AccessLevelFieldNumber = 4;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Headless.Rpc.AccessLevel AccessLevel {
-      get { return HasAccessLevel ? (global::Headless.Rpc.AccessLevel) param_ : global::Headless.Rpc.AccessLevel.Unspecified; }
-      set {
-        param_ = value;
-        paramCase_ = ParamOneofCase.AccessLevel;
-      }
-    }
-    /// <summary>Gets whether the "access_level" field is set</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool HasAccessLevel {
-      get { return paramCase_ == ParamOneofCase.AccessLevel; }
-    }
-    /// <summary> Clears the value of the oneof if it's currently set to "access_level" </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearAccessLevel() {
-      if (HasAccessLevel) {
-        ClearParam();
-      }
-    }
-
-    private object param_;
-    /// <summary>Enum of possible cases for the "param" oneof.</summary>
-    public enum ParamOneofCase {
-      None = 0,
-      SessionName = 1,
-      Description = 2,
-      MaxUsers = 3,
-      AccessLevel = 4,
-    }
-    private ParamOneofCase paramCase_ = ParamOneofCase.None;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ParamOneofCase ParamCase {
-      get { return paramCase_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearParam() {
-      paramCase_ = ParamOneofCase.None;
-      param_ = null;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override bool Equals(object other) {
-      return Equals(other as SessionParameter);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(SessionParameter other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (SessionName != other.SessionName) return false;
-      if (Description != other.Description) return false;
-      if (MaxUsers != other.MaxUsers) return false;
-      if (AccessLevel != other.AccessLevel) return false;
-      if (ParamCase != other.ParamCase) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (HasSessionName) hash ^= SessionName.GetHashCode();
-      if (HasDescription) hash ^= Description.GetHashCode();
-      if (HasMaxUsers) hash ^= MaxUsers.GetHashCode();
-      if (HasAccessLevel) hash ^= AccessLevel.GetHashCode();
-      hash ^= (int) paramCase_;
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (HasSessionName) {
-        output.WriteRawTag(10);
-        output.WriteString(SessionName);
-      }
-      if (HasDescription) {
-        output.WriteRawTag(18);
-        output.WriteString(Description);
-      }
-      if (HasMaxUsers) {
-        output.WriteRawTag(24);
-        output.WriteInt32(MaxUsers);
-      }
-      if (HasAccessLevel) {
-        output.WriteRawTag(32);
-        output.WriteEnum((int) AccessLevel);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (HasSessionName) {
-        output.WriteRawTag(10);
-        output.WriteString(SessionName);
-      }
-      if (HasDescription) {
-        output.WriteRawTag(18);
-        output.WriteString(Description);
-      }
-      if (HasMaxUsers) {
-        output.WriteRawTag(24);
-        output.WriteInt32(MaxUsers);
-      }
-      if (HasAccessLevel) {
-        output.WriteRawTag(32);
-        output.WriteEnum((int) AccessLevel);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int CalculateSize() {
-      int size = 0;
-      if (HasSessionName) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionName);
-      }
-      if (HasDescription) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
-      }
-      if (HasMaxUsers) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxUsers);
-      }
-      if (HasAccessLevel) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) AccessLevel);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(SessionParameter other) {
-      if (other == null) {
-        return;
-      }
-      switch (other.ParamCase) {
-        case ParamOneofCase.SessionName:
-          SessionName = other.SessionName;
-          break;
-        case ParamOneofCase.Description:
-          Description = other.Description;
-          break;
-        case ParamOneofCase.MaxUsers:
-          MaxUsers = other.MaxUsers;
-          break;
-        case ParamOneofCase.AccessLevel:
-          AccessLevel = other.AccessLevel;
-          break;
-      }
-
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-      if ((tag & 7) == 4) {
-        // Abort on any end group tag.
-        return;
-      }
-      switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            SessionName = input.ReadString();
-            break;
-          }
-          case 18: {
-            Description = input.ReadString();
-            break;
-          }
-          case 24: {
-            MaxUsers = input.ReadInt32();
-            break;
-          }
-          case 32: {
-            param_ = input.ReadEnum();
-            paramCase_ = ParamOneofCase.AccessLevel;
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-      if ((tag & 7) == 4) {
-        // Abort on any end group tag.
-        return;
-      }
-      switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 10: {
-            SessionName = input.ReadString();
-            break;
-          }
-          case 18: {
-            Description = input.ReadString();
-            break;
-          }
-          case 24: {
-            MaxUsers = input.ReadInt32();
-            break;
-          }
-          case 32: {
-            param_ = input.ReadEnum();
-            paramCase_ = ParamOneofCase.AccessLevel;
             break;
           }
         }

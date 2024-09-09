@@ -45,23 +45,23 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
     public override async Task<StartWorldResponse> StartWorld(StartWorldRequest request, ServerCallContext context)
     {
         var reqParam = request.Parameters;
-        var worldUrl = string.IsNullOrWhiteSpace(reqParam.LoadWorldUrl) ? null : reqParam.LoadWorldUrl;
-        var presetName = string.IsNullOrWhiteSpace(reqParam.LoadWorldPresetName) ? null : reqParam.LoadWorldPresetName;
-        if (worldUrl is null && presetName is null)
+        if (!reqParam.HasLoadWorldUrl && !reqParam.HasLoadWorldPresetName)
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Require load_world_url or load_world_preset_name!"));
         }
         var parameters = new SkyFrost.Base.WorldStartupParameters
         {
-            SessionName = reqParam.SessionName,
-            CustomSessionId = reqParam.CustomSessionId,
-            Description = reqParam.Description,
-            MaxUsers = reqParam.MaxUsers,
+            SessionName = reqParam.HasSessionName ? reqParam.SessionName : null,
+            CustomSessionId = reqParam.HasCustomSessionId ? reqParam.CustomSessionId : null,
+            Description = reqParam.HasDescription ? reqParam.Description : null,
             AccessLevel = ToSessionAccessLevel(reqParam.AccessLevel),
-            LoadWorldURL = worldUrl,
-            LoadWorldPresetName = presetName,
+            LoadWorldURL = reqParam.HasLoadWorldUrl ? reqParam.LoadWorldUrl : null,
+            LoadWorldPresetName = reqParam.HasLoadWorldPresetName ? reqParam.LoadWorldPresetName : null,
             AutoInviteUsernames = reqParam.AutoInviteUsernames.ToList()
         };
+        if (reqParam.HasMaxUsers) {
+            parameters.MaxUsers = reqParam.MaxUsers;
+        }
         var session = await _worldService.StartWorldAsync(parameters);
         if (session is null)
         {
@@ -151,28 +151,21 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        foreach (var param in request.Parameters)
+        if (request.HasSessionName)
         {
-            if (param.HasSessionName)
-            {
-                session.WorldInstance.Name = param.SessionName;
-                continue;
-            }
-            if (param.HasDescription)
-            {
-                session.WorldInstance.Description = param.Description;
-                continue;
-            }
-            if (param.HasMaxUsers)
-            {
-                session.WorldInstance.MaxUsers = param.MaxUsers;
-                continue;
-            }
-            if (param.HasAccessLevel)
-            {
-                session.WorldInstance.AccessLevel = ToSessionAccessLevel(param.AccessLevel);
-                continue;
-            }
+            session.WorldInstance.Name = request.SessionName;
+        }
+        if (request.HasDescription)
+        {
+            session.WorldInstance.Description = request.Description;
+        }
+        if (request.HasMaxUsers)
+        {
+            session.WorldInstance.MaxUsers = request.MaxUsers;
+        }
+        if (request.HasAccessLevel)
+        {
+            session.WorldInstance.AccessLevel = ToSessionAccessLevel(request.AccessLevel);
         }
         await Task.CompletedTask;
         return new UpdateSessionParametersResponse();

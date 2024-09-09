@@ -65,7 +65,10 @@ message UpdateUserRoleResponse {
 
 message UpdateSessionParametersRequest {
   string session_id = 1;
-  repeated SessionParameter parameters = 2;
+  optional string session_name = 2;
+  optional string description = 3;
+  optional int32 max_users = 4;
+  optional AccessLevel access_level = 5;
 }
 
 message UpdateSessionParametersResponse {}
@@ -110,20 +113,11 @@ message WorldStartupParameters {
   optional string session_name = 1;
   optional string custom_session_id = 2;
   optional string description = 3;
-  int32 max_users = 4;
+  optional int32 max_users = 4;
   AccessLevel access_level = 5;
   oneof load_world {
     string load_world_url = 6;
     string load_world_preset_name = 7;
   }
   repeated string auto_invite_usernames = 8;
-}
-
-message SessionParameter {
-  oneof param {
-    string session_name = 1;
-    string description = 2;
-    int32 max_users = 3;
-    AccessLevel access_level = 4;
-  }
 }
