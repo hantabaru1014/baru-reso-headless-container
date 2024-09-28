@@ -2,6 +2,16 @@ name: Build and Push Docker Image
 
 on:
   workflow_dispatch:
+    inputs:
+      resonite_branch:
+        type: choice
+        required: false
+        description: "Resonite branch(beta)"
+        default: "headless"
+        options:
+          - "headless"
+          - "prerelease"
+          - "release"
   # push:
   #   branches: [ "main" ]
 
@@ -31,7 +41,14 @@ jobs:
           STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
           STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
           HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
-        run: ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+        run: |
+          if [ "${{ github.event.inputs.resonite_branch }}" == "release" ]; then
+            ./DepotDownloader -app 2519830 -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+          elif [ "${{ github.event.inputs.resonite_branch }}" == "prerelease" ]; then
+            ./DepotDownloader -app 2519830 -beta prerelease -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+          elif [ "${{ github.event.inputs.resonite_branch }}" == "headless" ]; then
+            ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+          fi
 
       - name: Read Resonite Version
         run: |
@@ -53,10 +70,22 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
+        if: github.event.inputs.resonite_branch == 'release' || github.event.github.inputs.resonite_branch == 'headless'
         with:
           context: .
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:latest, ghcr.io/${{ env.IMAGE_NAME }}:${{ env.RESONITE_VERSION }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Build and push Docker image (prerelease)
+        uses: docker/build-push-action@v5
+        if: github.event.inputs.resonite_branch == 'prerelease'
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:prerelease, ghcr.io/${{ env.IMAGE_NAME }}:${{ env.RESONITE_VERSION }}
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
