@@ -70,7 +70,7 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
-        if: github.event.inputs.resonite_branch == 'release' || github.event.github.inputs.resonite_branch == 'headless'
+        if: github.event.github.inputs.resonite_branch == 'headless'
         with:
           context: .
           push: true
