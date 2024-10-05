@@ -59,7 +59,8 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             LoadWorldPresetName = reqParam.HasLoadWorldPresetName ? reqParam.LoadWorldPresetName : null,
             AutoInviteUsernames = reqParam.AutoInviteUsernames.ToList()
         };
-        if (reqParam.HasMaxUsers) {
+        if (reqParam.HasMaxUsers)
+        {
             parameters.MaxUsers = reqParam.MaxUsers;
         }
         var session = await _worldService.StartWorldAsync(parameters);
