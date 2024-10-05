@@ -135,7 +135,7 @@ public class WorldService
         {
             throw new Exception("Not found world");
         }
-        if (world.SaveOnExit && Userspace.CanSave(world))
+        if (Userspace.CanSave(world))
         {
             _logger.LogInformation("Saving {World}", world.RawName);
             // TODO: 本来ならこのタイミングでサムネイルを撮影して world.CorrespondingRecord.ThumbnailURI に入れてる
@@ -193,7 +193,10 @@ public class WorldService
         async Task StopSessionAsync(RunningSession runningSession)
         {
             var world = runningSession.WorldInstance;
-            await SaveWorldAsync(runningSession);
+            if (world.SaveOnExit)
+            {
+                await SaveWorldAsync(runningSession);
+            }
             world.WorldManager.WorldFailed -= MarkAutoRecoverRestart;
             // これを待機したら一生終わらないので待たない。 Userspace.SaveWorldAuto でも待ってない。
             _ = Userspace.ExitWorld(world);
