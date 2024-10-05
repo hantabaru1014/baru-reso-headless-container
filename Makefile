@@ -29,3 +29,10 @@ lint.headless:
 .PHONY: build.docker
 build.docker:
 	docker build -t ghcr.io/hantabaru1014/baru-reso-headless-container .
+
+./DepotDownloader:
+	./scripts/download-depot-downloader.sh
+
+.PHONY: install.resonite
+install.resonite: ./DepotDownloader
+	./scripts/download-resonite.sh
