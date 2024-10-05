@@ -128,6 +128,23 @@ public class WorldService
         }
     }
 
+    public async Task SaveWorldAsync(RunningSession runningSession)
+    {
+        var world = runningSession.WorldInstance;
+        if (world is null)
+        {
+            throw new Exception("Not found world");
+        }
+        if (world.SaveOnExit && Userspace.CanSave(world))
+        {
+            _logger.LogInformation("Saving {World}", world.RawName);
+            // TODO: 本来ならこのタイミングでサムネイルを撮影して world.CorrespondingRecord.ThumbnailURI に入れてる
+            // クライアントがいるなら撮影してもらうか、最後のセッションサムネイルをセットしてもいいかも？
+            // Memo: Userspace.SaveWorldAuto は サムネイル撮影 + SaveWorld + ExitWorld といった建付け
+            await Userspace.SaveWorld(world);
+        }
+    }
+
     private string? SanitizeSessionID(string sessionId)
     {
         var id = sessionId;
@@ -176,14 +193,7 @@ public class WorldService
         async Task StopSessionAsync(RunningSession runningSession)
         {
             var world = runningSession.WorldInstance;
-            if (world.SaveOnExit && Userspace.CanSave(world))
-            {
-                _logger.LogInformation("Saving {World}", world.RawName);
-                // TODO: 本来ならこのタイミングでサムネイルを撮影して world.CorrespondingRecord.ThumbnailURI に入れてる
-                // クライアントがいるなら撮影してもらうか、最後のセッションサムネイルをセットしてもいいかも？
-                // Memo: Userspace.SaveWorldAuto は サムネイル撮影 + SaveWorld + ExitWorld といった建付け
-                await Userspace.SaveWorld(world);
-            }
+            await SaveWorldAsync(runningSession);
             world.WorldManager.WorldFailed -= MarkAutoRecoverRestart;
             // これを待機したら一生終わらないので待たない。 Userspace.SaveWorldAuto でも待ってない。
             _ = Userspace.ExitWorld(world);

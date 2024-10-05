@@ -79,6 +79,17 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         return new StopSessionResponse();
     }
 
+    public override async Task<SaveSessionWorldResponse> SaveSessionWorld(SaveSessionWorldRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        await _worldService.SaveWorldAsync(session);
+        return new SaveSessionWorldResponse();
+    }
+
     public override async Task<InviteUserResponse> InviteUser(InviteUserRequest request, ServerCallContext context)
     {
         var session = _worldService.GetSession(request.SessionId);
