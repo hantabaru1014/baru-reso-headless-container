@@ -54,9 +54,9 @@ jobs:
           HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
         run: |
           if [ "${{ github.event.inputs.resonite_branch }}" == "prerelease" ]; then
-            docker run -it -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta prerelease" +quit
+            docker run -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta prerelease" +quit
           elif [ "${{ github.event.inputs.resonite_branch }}" == "headless" ]; then
-            docker run -it -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta headless -betapassword $HEADLESS_PASSWORD" +quit
+            docker run -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta headless -betapassword $HEADLESS_PASSWORD" +quit
           fi
 
       - name: Read Resonite Version
