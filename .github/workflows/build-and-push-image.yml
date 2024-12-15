@@ -25,26 +25,38 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download DepotDownloader
-        run: |
-          if [ "${{ runner.arch }}" == "ARM64" ]; then
-            wget https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.7.4/DepotDownloader-linux-arm64.zip -O ./DepotDownloader.zip
-          else
-            wget https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.7.4/DepotDownloader-linux-x64.zip -O ./DepotDownloader.zip
-          fi
-          unzip ./DepotDownloader.zip
-          chmod +x ./DepotDownloader
+      # - name: Download DepotDownloader
+      #   run: |
+      #     if [ "${{ runner.arch }}" == "ARM64" ]; then
+      #       wget https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.7.4/DepotDownloader-linux-arm64.zip -O ./DepotDownloader.zip
+      #     else
+      #       wget https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.7.4/DepotDownloader-linux-x64.zip -O ./DepotDownloader.zip
+      #     fi
+      #     unzip ./DepotDownloader.zip
+      #     chmod +x ./DepotDownloader
 
-      - name: Download Resonite
+      # - name: Download Resonite (DepotDownloader)
+      #   env:
+      #     STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+      #     STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+      #     HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
+      #   run: |
+      #     if [ "${{ github.event.inputs.resonite_branch }}" == "prerelease" ]; then
+      #       ./DepotDownloader -app 2519830 -beta prerelease -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux -filelist ./depot-dl-list.txt
+      #     elif [ "${{ github.event.inputs.resonite_branch }}" == "headless" ]; then
+      #       ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux -filelist ./depot-dl-list.txt
+      #     fi
+
+      - name: Download Resonite (SteamCMD)
         env:
           STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
           STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
           HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
         run: |
           if [ "${{ github.event.inputs.resonite_branch }}" == "prerelease" ]; then
-            ./DepotDownloader -app 2519830 -beta prerelease -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux -filelist ./depot-dl-list.txt
+            docker run -it -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta prerelease" +quit
           elif [ "${{ github.event.inputs.resonite_branch }}" == "headless" ]; then
-            ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux -filelist ./depot-dl-list.txt
+            docker run -it -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta headless -betapassword $HEADLESS_PASSWORD" +quit
           fi
 
       - name: Read Resonite Version
