@@ -46,6 +46,10 @@ namespace Headless.Rpc {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetAboutRequest> __Marshaller_headless_v1_GetAboutRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAboutRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetAboutResponse> __Marshaller_headless_v1_GetAboutResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAboutResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ShutdownRequest> __Marshaller_headless_v1_ShutdownRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ShutdownRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ShutdownResponse> __Marshaller_headless_v1_ShutdownResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ShutdownResponse.Parser));
@@ -81,6 +85,14 @@ namespace Headless.Rpc {
     static readonly grpc::Marshaller<global::Headless.Rpc.ListUsersInSessionRequest> __Marshaller_headless_v1_ListUsersInSessionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListUsersInSessionRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ListUsersInSessionResponse> __Marshaller_headless_v1_ListUsersInSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListUsersInSessionResponse.Parser));
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse> __Method_GetAbout = new grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetAbout",
+        __Marshaller_headless_v1_GetAboutRequest,
+        __Marshaller_headless_v1_GetAboutResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.ShutdownRequest, global::Headless.Rpc.ShutdownResponse> __Method_Shutdown = new grpc::Method<global::Headless.Rpc.ShutdownRequest, global::Headless.Rpc.ShutdownResponse>(
@@ -165,6 +177,12 @@ namespace Headless.Rpc {
     public abstract partial class HeadlessControlServiceBase
     {
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.GetAboutResponse> GetAbout(global::Headless.Rpc.GetAboutRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.ShutdownResponse> Shutdown(global::Headless.Rpc.ShutdownRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
@@ -247,6 +265,26 @@ namespace Headless.Rpc {
       {
       }
 
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetAboutResponse GetAbout(global::Headless.Rpc.GetAboutRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetAbout(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetAboutResponse GetAbout(global::Headless.Rpc.GetAboutRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetAbout, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetAboutResponse> GetAboutAsync(global::Headless.Rpc.GetAboutRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetAboutAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetAboutResponse> GetAboutAsync(global::Headless.Rpc.GetAboutRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetAbout, null, options, request);
+      }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::Headless.Rpc.ShutdownResponse Shutdown(global::Headless.Rpc.ShutdownRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
@@ -441,6 +479,7 @@ namespace Headless.Rpc {
     public static grpc::ServerServiceDefinition BindService(HeadlessControlServiceBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_GetAbout, serviceImpl.GetAbout)
           .AddMethod(__Method_Shutdown, serviceImpl.Shutdown)
           .AddMethod(__Method_ListSessions, serviceImpl.ListSessions)
           .AddMethod(__Method_StartWorld, serviceImpl.StartWorld)
@@ -459,6 +498,7 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, HeadlessControlServiceBase serviceImpl)
     {
+      serviceBinder.AddMethod(__Method_GetAbout, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse>(serviceImpl.GetAbout));
       serviceBinder.AddMethod(__Method_Shutdown, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ShutdownRequest, global::Headless.Rpc.ShutdownResponse>(serviceImpl.Shutdown));
       serviceBinder.AddMethod(__Method_ListSessions, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListSessionsRequest, global::Headless.Rpc.ListSessionsResponse>(serviceImpl.ListSessions));
       serviceBinder.AddMethod(__Method_StartWorld, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.StartWorldRequest, global::Headless.Rpc.StartWorldResponse>(serviceImpl.StartWorld));

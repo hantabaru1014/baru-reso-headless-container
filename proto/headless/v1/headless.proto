@@ -5,6 +5,7 @@ package headless.v1;
 option csharp_namespace = "Headless.Rpc";
 
 service HeadlessControlService {
+  rpc GetAbout(GetAboutRequest) returns (GetAboutResponse);
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
   rpc StartWorld(StartWorldRequest) returns (StartWorldResponse);
@@ -14,6 +15,13 @@ service HeadlessControlService {
   rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse);
   rpc UpdateSessionParameters(UpdateSessionParametersRequest) returns (UpdateSessionParametersResponse);
   rpc ListUsersInSession(ListUsersInSessionRequest) returns (ListUsersInSessionResponse);
+}
+
+message GetAboutRequest {}
+
+message GetAboutResponse {
+  string app_version = 1;
+  string resonite_version = 2;
 }
 
 message ShutdownRequest {}

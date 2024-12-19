@@ -26,6 +26,15 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         _worldService = worldService;
     }
 
+    public override Task<GetAboutResponse> GetAbout(GetAboutRequest request, ServerCallContext context)
+    {
+        return Task.FromResult(new GetAboutResponse
+        {
+            AppVersion = "<TODO>",
+            ResoniteVersion = _engine.VersionString,
+        });
+    }
+
     public override Task<ShutdownResponse> Shutdown(ShutdownRequest request, ServerCallContext context)
     {
         _applicationLifetime.StopApplication();
