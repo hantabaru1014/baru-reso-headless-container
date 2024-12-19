@@ -160,15 +160,15 @@ public class StandaloneFrooxEngineService : BackgroundService
         tokenSource.CancelAfter(_appConfig.ShutdownTimeoutSeconds * 1000);
 
         await _worldService.StopAllWorldsAsync(tokenSource.Token);
+
+        // TODO: Userspace.ExitAppはGUI前提の無駄な処理してるし、待てないので本当は自前でやりたい
+        Userspace.ExitApp(saveHomes: false);
+
         if (_engine.Cloud.CurrentUser is not null)
         {
-            await Task.WhenAll(
-                _engine.Cloud.FinalizeSession(),
-                _engine.RecordManager.WaitForPendingUploadsAsync(ct: tokenSource.Token)
-            );
+            // Userspace.ExitAppが待てないのでレコードのSyncが終わってるかを確認して待つ
+            await _engine.RecordManager.WaitForPendingUploadsAsync(ct: tokenSource.Token);
         }
-
-        _engine.RequestShutdown();
     }
 
     private async Task EngineLoopAsync(CancellationToken ct = default)
