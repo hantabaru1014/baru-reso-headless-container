@@ -6,6 +6,7 @@ option csharp_namespace = "Headless.Rpc";
 
 service HeadlessControlService {
   rpc GetAbout(GetAboutRequest) returns (GetAboutResponse);
+  rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
   rpc StartWorld(StartWorldRequest) returns (StartWorldResponse);
@@ -22,6 +23,14 @@ message GetAboutRequest {}
 message GetAboutResponse {
   string app_version = 1;
   string resonite_version = 2;
+}
+
+message GetStatusRequest {}
+
+message GetStatusResponse {
+  float fps = 1;
+  float total_engine_update_time = 2;
+  int32 syncing_records_count = 3;
 }
 
 message ShutdownRequest {}

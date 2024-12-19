@@ -35,6 +35,16 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         });
     }
 
+    public override Task<GetStatusResponse> GetStatus(GetStatusRequest request, ServerCallContext context)
+    {
+        return Task.FromResult(new GetStatusResponse
+        {
+            Fps = _engine.SystemInfo.FPS,
+            TotalEngineUpdateTime = _engine.TotalEngineUpdateTime,
+            SyncingRecordsCount = _engine.RecordManager.SyncingRecordsCount,
+        });
+    }
+
     public override Task<ShutdownResponse> Shutdown(ShutdownRequest request, ServerCallContext context)
     {
         _applicationLifetime.StopApplication();
