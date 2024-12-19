@@ -271,6 +271,13 @@ public class WorldService
                 }
             };
 
+            // ユーザがいなくなったタイミングで保存する
+            // TODO: 一旦、SaveOnExitで判断するが後から専用設定項目を追加
+            if (world.SaveOnExit && world.UserCount == 1 && runningSession.LastUserCount > 1)
+            {
+                _ = SaveWorldAsync(runningSession);
+            }
+
             if (runningSession.HasIdleTimeElapsed)
             {
                 _logger.LogInformation
