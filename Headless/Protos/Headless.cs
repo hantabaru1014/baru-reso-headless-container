@@ -49,64 +49,64 @@ namespace Headless.Rpc {
             "bklkEhkKB3VzZXJfaWQYAiABKAlIAFIGdXNlcklkEh0KCXVzZXJfbmFtZRgD",
             "IAEoCUgAUgh1c2VyTmFtZRISCgRyb2xlGAQgASgJUgRyb2xlQgYKBHVzZXIi",
             "LAoWVXBkYXRlVXNlclJvbGVSZXNwb25zZRISCgRyb2xlGAEgASgJUgRyb2xl",
-            "IrICCh5VcGRhdGVTZXNzaW9uUGFyYW1ldGVyc1JlcXVlc3QSHQoKc2Vzc2lv",
-            "bl9pZBgBIAEoCVIJc2Vzc2lvbklkEiYKDHNlc3Npb25fbmFtZRgCIAEoCUgA",
-            "UgtzZXNzaW9uTmFtZYgBARIlCgtkZXNjcmlwdGlvbhgDIAEoCUgBUgtkZXNj",
-            "cmlwdGlvbogBARIgCgltYXhfdXNlcnMYBCABKAVIAlIIbWF4VXNlcnOIAQES",
-            "QAoMYWNjZXNzX2xldmVsGAUgASgOMhguaGVhZGxlc3MudjEuQWNjZXNzTGV2",
-            "ZWxIA1ILYWNjZXNzTGV2ZWyIAQFCDwoNX3Nlc3Npb25fbmFtZUIOCgxfZGVz",
-            "Y3JpcHRpb25CDAoKX21heF91c2Vyc0IPCg1fYWNjZXNzX2xldmVsIiEKH1Vw",
-            "ZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVzcG9uc2UiOgoZTGlzdFVzZXJzSW5T",
-            "ZXNzaW9uUmVxdWVzdBIdCgpzZXNzaW9uX2lkGAEgASgJUglzZXNzaW9uSWQi",
-            "TgoaTGlzdFVzZXJzSW5TZXNzaW9uUmVzcG9uc2USMAoFdXNlcnMYASADKAsy",
-            "Gi5oZWFkbGVzcy52MS5Vc2VySW5TZXNzaW9uUgV1c2VycyJmCg1Vc2VySW5T",
-            "ZXNzaW9uEg4KAmlkGAEgASgJUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhIK",
-            "BHJvbGUYAyABKAlSBHJvbGUSHQoKaXNfcHJlc2VudBgEIAEoCFIJaXNQcmVz",
-            "ZW50IpwCCgdTZXNzaW9uEg4KAmlkGAEgASgJUgJpZBISCgRuYW1lGAIgASgJ",
-            "UgRuYW1lEiAKC2Rlc2NyaXB0aW9uGAMgASgJUgtkZXNjcmlwdGlvbhI7Cgxh",
-            "Y2Nlc3NfbGV2ZWwYBCABKA4yGC5oZWFkbGVzcy52MS5BY2Nlc3NMZXZlbFIL",
-            "YWNjZXNzTGV2ZWwSKAoNdGh1bWJuYWlsX3VybBgFIAEoCUgAUgx0aHVtYm5h",
-            "aWxVcmyIAQESUgoSc3RhcnR1cF9wYXJhbWV0ZXJzGAYgASgLMiMuaGVhZGxl",
-            "c3MudjEuV29ybGRTdGFydHVwUGFyYW1ldGVyc1IRc3RhcnR1cFBhcmFtZXRl",
-            "cnNCEAoOX3RodW1ibmFpbF91cmwi3QMKFldvcmxkU3RhcnR1cFBhcmFtZXRl",
-            "cnMSJgoMc2Vzc2lvbl9uYW1lGAEgASgJSAFSC3Nlc3Npb25OYW1liAEBEi8K",
-            "EWN1c3RvbV9zZXNzaW9uX2lkGAIgASgJSAJSD2N1c3RvbVNlc3Npb25JZIgB",
-            "ARIlCgtkZXNjcmlwdGlvbhgDIAEoCUgDUgtkZXNjcmlwdGlvbogBARIgCglt",
-            "YXhfdXNlcnMYBCABKAVIBFIIbWF4VXNlcnOIAQESOwoMYWNjZXNzX2xldmVs",
-            "GAUgASgOMhguaGVhZGxlc3MudjEuQWNjZXNzTGV2ZWxSC2FjY2Vzc0xldmVs",
-            "EiYKDmxvYWRfd29ybGRfdXJsGAYgASgJSABSDGxvYWRXb3JsZFVybBI1ChZs",
-            "b2FkX3dvcmxkX3ByZXNldF9uYW1lGAcgASgJSABSE2xvYWRXb3JsZFByZXNl",
-            "dE5hbWUSMgoVYXV0b19pbnZpdGVfdXNlcm5hbWVzGAggAygJUhNhdXRvSW52",
-            "aXRlVXNlcm5hbWVzQgwKCmxvYWRfd29ybGRCDwoNX3Nlc3Npb25fbmFtZUIU",
-            "ChJfY3VzdG9tX3Nlc3Npb25faWRCDgoMX2Rlc2NyaXB0aW9uQgwKCl9tYXhf",
-            "dXNlcnMq0gEKC0FjY2Vzc0xldmVsEhwKGEFDQ0VTU19MRVZFTF9VTlNQRUNJ",
-            "RklFRBAAEhgKFEFDQ0VTU19MRVZFTF9QUklWQVRFEAESFAoQQUNDRVNTX0xF",
-            "VkVMX0xBThACEhkKFUFDQ0VTU19MRVZFTF9DT05UQUNUUxADEh4KGkFDQ0VT",
-            "U19MRVZFTF9DT05UQUNUU19QTFVTEAQSIQodQUNDRVNTX0xFVkVMX1JFR0lT",
-            "VEVSRURfVVNFUlMQBRIXChNBQ0NFU1NfTEVWRUxfQU5ZT05FEAYy1AcKFkhl",
-            "YWRsZXNzQ29udHJvbFNlcnZpY2USRwoIR2V0QWJvdXQSHC5oZWFkbGVzcy52",
-            "MS5HZXRBYm91dFJlcXVlc3QaHS5oZWFkbGVzcy52MS5HZXRBYm91dFJlc3Bv",
-            "bnNlEkoKCUdldFN0YXR1cxIdLmhlYWRsZXNzLnYxLkdldFN0YXR1c1JlcXVl",
-            "c3QaHi5oZWFkbGVzcy52MS5HZXRTdGF0dXNSZXNwb25zZRJHCghTaHV0ZG93",
-            "bhIcLmhlYWRsZXNzLnYxLlNodXRkb3duUmVxdWVzdBodLmhlYWRsZXNzLnYx",
-            "LlNodXRkb3duUmVzcG9uc2USUwoMTGlzdFNlc3Npb25zEiAuaGVhZGxlc3Mu",
-            "djEuTGlzdFNlc3Npb25zUmVxdWVzdBohLmhlYWRsZXNzLnYxLkxpc3RTZXNz",
-            "aW9uc1Jlc3BvbnNlEk0KClN0YXJ0V29ybGQSHi5oZWFkbGVzcy52MS5TdGFy",
-            "dFdvcmxkUmVxdWVzdBofLmhlYWRsZXNzLnYxLlN0YXJ0V29ybGRSZXNwb25z",
-            "ZRJQCgtTdG9wU2Vzc2lvbhIfLmhlYWRsZXNzLnYxLlN0b3BTZXNzaW9uUmVx",
-            "dWVzdBogLmhlYWRsZXNzLnYxLlN0b3BTZXNzaW9uUmVzcG9uc2USXwoQU2F2",
-            "ZVNlc3Npb25Xb3JsZBIkLmhlYWRsZXNzLnYxLlNhdmVTZXNzaW9uV29ybGRS",
-            "ZXF1ZXN0GiUuaGVhZGxlc3MudjEuU2F2ZVNlc3Npb25Xb3JsZFJlc3BvbnNl",
-            "Ek0KCkludml0ZVVzZXISHi5oZWFkbGVzcy52MS5JbnZpdGVVc2VyUmVxdWVz",
-            "dBofLmhlYWRsZXNzLnYxLkludml0ZVVzZXJSZXNwb25zZRJZCg5VcGRhdGVV",
-            "c2VyUm9sZRIiLmhlYWRsZXNzLnYxLlVwZGF0ZVVzZXJSb2xlUmVxdWVzdBoj",
-            "LmhlYWRsZXNzLnYxLlVwZGF0ZVVzZXJSb2xlUmVzcG9uc2USdAoXVXBkYXRl",
-            "U2Vzc2lvblBhcmFtZXRlcnMSKy5oZWFkbGVzcy52MS5VcGRhdGVTZXNzaW9u",
-            "UGFyYW1ldGVyc1JlcXVlc3QaLC5oZWFkbGVzcy52MS5VcGRhdGVTZXNzaW9u",
-            "UGFyYW1ldGVyc1Jlc3BvbnNlEmUKEkxpc3RVc2Vyc0luU2Vzc2lvbhImLmhl",
-            "YWRsZXNzLnYxLkxpc3RVc2Vyc0luU2Vzc2lvblJlcXVlc3QaJy5oZWFkbGVz",
-            "cy52MS5MaXN0VXNlcnNJblNlc3Npb25SZXNwb25zZUIPqgIMSGVhZGxlc3Mu",
-            "UnBjYgZwcm90bzM="));
+            "IpsCCh5VcGRhdGVTZXNzaW9uUGFyYW1ldGVyc1JlcXVlc3QSHQoKc2Vzc2lv",
+            "bl9pZBgBIAEoCVIJc2Vzc2lvbklkEhcKBG5hbWUYAiABKAlIAFIEbmFtZYgB",
+            "ARIlCgtkZXNjcmlwdGlvbhgDIAEoCUgBUgtkZXNjcmlwdGlvbogBARIgCglt",
+            "YXhfdXNlcnMYBCABKAVIAlIIbWF4VXNlcnOIAQESQAoMYWNjZXNzX2xldmVs",
+            "GAUgASgOMhguaGVhZGxlc3MudjEuQWNjZXNzTGV2ZWxIA1ILYWNjZXNzTGV2",
+            "ZWyIAQFCBwoFX25hbWVCDgoMX2Rlc2NyaXB0aW9uQgwKCl9tYXhfdXNlcnNC",
+            "DwoNX2FjY2Vzc19sZXZlbCIhCh9VcGRhdGVTZXNzaW9uUGFyYW1ldGVyc1Jl",
+            "c3BvbnNlIjoKGUxpc3RVc2Vyc0luU2Vzc2lvblJlcXVlc3QSHQoKc2Vzc2lv",
+            "bl9pZBgBIAEoCVIJc2Vzc2lvbklkIk4KGkxpc3RVc2Vyc0luU2Vzc2lvblJl",
+            "c3BvbnNlEjAKBXVzZXJzGAEgAygLMhouaGVhZGxlc3MudjEuVXNlckluU2Vz",
+            "c2lvblIFdXNlcnMiZgoNVXNlckluU2Vzc2lvbhIOCgJpZBgBIAEoCVICaWQS",
+            "EgoEbmFtZRgCIAEoCVIEbmFtZRISCgRyb2xlGAMgASgJUgRyb2xlEh0KCmlz",
+            "X3ByZXNlbnQYBCABKAhSCWlzUHJlc2VudCLaAgoHU2Vzc2lvbhIOCgJpZBgB",
+            "IAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIgCgtkZXNjcmlwdGlvbhgD",
+            "IAEoCVILZGVzY3JpcHRpb24SOwoMYWNjZXNzX2xldmVsGAQgASgOMhguaGVh",
+            "ZGxlc3MudjEuQWNjZXNzTGV2ZWxSC2FjY2Vzc0xldmVsEh8KC3VzZXJzX2Nv",
+            "dW50GAcgASgFUgp1c2Vyc0NvdW50EhsKCW1heF91c2VycxgIIAEoBVIIbWF4",
+            "VXNlcnMSKAoNdGh1bWJuYWlsX3VybBgFIAEoCUgAUgx0aHVtYm5haWxVcmyI",
+            "AQESUgoSc3RhcnR1cF9wYXJhbWV0ZXJzGAYgASgLMiMuaGVhZGxlc3MudjEu",
+            "V29ybGRTdGFydHVwUGFyYW1ldGVyc1IRc3RhcnR1cFBhcmFtZXRlcnNCEAoO",
+            "X3RodW1ibmFpbF91cmwixgMKFldvcmxkU3RhcnR1cFBhcmFtZXRlcnMSFwoE",
+            "bmFtZRgBIAEoCUgBUgRuYW1liAEBEi8KEWN1c3RvbV9zZXNzaW9uX2lkGAIg",
+            "ASgJSAJSD2N1c3RvbVNlc3Npb25JZIgBARIlCgtkZXNjcmlwdGlvbhgDIAEo",
+            "CUgDUgtkZXNjcmlwdGlvbogBARIgCgltYXhfdXNlcnMYBCABKAVIBFIIbWF4",
+            "VXNlcnOIAQESOwoMYWNjZXNzX2xldmVsGAUgASgOMhguaGVhZGxlc3MudjEu",
+            "QWNjZXNzTGV2ZWxSC2FjY2Vzc0xldmVsEiYKDmxvYWRfd29ybGRfdXJsGAYg",
+            "ASgJSABSDGxvYWRXb3JsZFVybBI1ChZsb2FkX3dvcmxkX3ByZXNldF9uYW1l",
+            "GAcgASgJSABSE2xvYWRXb3JsZFByZXNldE5hbWUSMgoVYXV0b19pbnZpdGVf",
+            "dXNlcm5hbWVzGAggAygJUhNhdXRvSW52aXRlVXNlcm5hbWVzQgwKCmxvYWRf",
+            "d29ybGRCBwoFX25hbWVCFAoSX2N1c3RvbV9zZXNzaW9uX2lkQg4KDF9kZXNj",
+            "cmlwdGlvbkIMCgpfbWF4X3VzZXJzKtIBCgtBY2Nlc3NMZXZlbBIcChhBQ0NF",
+            "U1NfTEVWRUxfVU5TUEVDSUZJRUQQABIYChRBQ0NFU1NfTEVWRUxfUFJJVkFU",
+            "RRABEhQKEEFDQ0VTU19MRVZFTF9MQU4QAhIZChVBQ0NFU1NfTEVWRUxfQ09O",
+            "VEFDVFMQAxIeChpBQ0NFU1NfTEVWRUxfQ09OVEFDVFNfUExVUxAEEiEKHUFD",
+            "Q0VTU19MRVZFTF9SRUdJU1RFUkVEX1VTRVJTEAUSFwoTQUNDRVNTX0xFVkVM",
+            "X0FOWU9ORRAGMtQHChZIZWFkbGVzc0NvbnRyb2xTZXJ2aWNlEkcKCEdldEFi",
+            "b3V0EhwuaGVhZGxlc3MudjEuR2V0QWJvdXRSZXF1ZXN0Gh0uaGVhZGxlc3Mu",
+            "djEuR2V0QWJvdXRSZXNwb25zZRJKCglHZXRTdGF0dXMSHS5oZWFkbGVzcy52",
+            "MS5HZXRTdGF0dXNSZXF1ZXN0Gh4uaGVhZGxlc3MudjEuR2V0U3RhdHVzUmVz",
+            "cG9uc2USRwoIU2h1dGRvd24SHC5oZWFkbGVzcy52MS5TaHV0ZG93blJlcXVl",
+            "c3QaHS5oZWFkbGVzcy52MS5TaHV0ZG93blJlc3BvbnNlElMKDExpc3RTZXNz",
+            "aW9ucxIgLmhlYWRsZXNzLnYxLkxpc3RTZXNzaW9uc1JlcXVlc3QaIS5oZWFk",
+            "bGVzcy52MS5MaXN0U2Vzc2lvbnNSZXNwb25zZRJNCgpTdGFydFdvcmxkEh4u",
+            "aGVhZGxlc3MudjEuU3RhcnRXb3JsZFJlcXVlc3QaHy5oZWFkbGVzcy52MS5T",
+            "dGFydFdvcmxkUmVzcG9uc2USUAoLU3RvcFNlc3Npb24SHy5oZWFkbGVzcy52",
+            "MS5TdG9wU2Vzc2lvblJlcXVlc3QaIC5oZWFkbGVzcy52MS5TdG9wU2Vzc2lv",
+            "blJlc3BvbnNlEl8KEFNhdmVTZXNzaW9uV29ybGQSJC5oZWFkbGVzcy52MS5T",
+            "YXZlU2Vzc2lvbldvcmxkUmVxdWVzdBolLmhlYWRsZXNzLnYxLlNhdmVTZXNz",
+            "aW9uV29ybGRSZXNwb25zZRJNCgpJbnZpdGVVc2VyEh4uaGVhZGxlc3MudjEu",
+            "SW52aXRlVXNlclJlcXVlc3QaHy5oZWFkbGVzcy52MS5JbnZpdGVVc2VyUmVz",
+            "cG9uc2USWQoOVXBkYXRlVXNlclJvbGUSIi5oZWFkbGVzcy52MS5VcGRhdGVV",
+            "c2VyUm9sZVJlcXVlc3QaIy5oZWFkbGVzcy52MS5VcGRhdGVVc2VyUm9sZVJl",
+            "c3BvbnNlEnQKF1VwZGF0ZVNlc3Npb25QYXJhbWV0ZXJzEisuaGVhZGxlc3Mu",
+            "djEuVXBkYXRlU2Vzc2lvblBhcmFtZXRlcnNSZXF1ZXN0GiwuaGVhZGxlc3Mu",
+            "djEuVXBkYXRlU2Vzc2lvblBhcmFtZXRlcnNSZXNwb25zZRJlChJMaXN0VXNl",
+            "cnNJblNlc3Npb24SJi5oZWFkbGVzcy52MS5MaXN0VXNlcnNJblNlc3Npb25S",
+            "ZXF1ZXN0GicuaGVhZGxlc3MudjEuTGlzdFVzZXJzSW5TZXNzaW9uUmVzcG9u",
+            "c2VCD6oCDEhlYWRsZXNzLlJwY2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Headless.Rpc.AccessLevel), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -128,13 +128,13 @@ namespace Headless.Rpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.InviteUserResponse), global::Headless.Rpc.InviteUserResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleRequest), global::Headless.Rpc.UpdateUserRoleRequest.Parser, new[]{ "SessionId", "UserId", "UserName", "Role" }, new[]{ "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleResponse), global::Headless.Rpc.UpdateUserRoleResponse.Parser, new[]{ "Role" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "SessionName", "Description", "MaxUsers", "AccessLevel" }, new[]{ "SessionName", "Description", "MaxUsers", "AccessLevel" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "Name", "Description", "MaxUsers", "AccessLevel" }, new[]{ "Name", "Description", "MaxUsers", "AccessLevel" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersResponse), global::Headless.Rpc.UpdateSessionParametersResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionRequest), global::Headless.Rpc.ListUsersInSessionRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionResponse), global::Headless.Rpc.ListUsersInSessionResponse.Parser, new[]{ "Users" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UserInSession), global::Headless.Rpc.UserInSession.Parser, new[]{ "Id", "Name", "Role", "IsPresent" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.Session), global::Headless.Rpc.Session.Parser, new[]{ "Id", "Name", "Description", "AccessLevel", "ThumbnailUrl", "StartupParameters" }, new[]{ "ThumbnailUrl" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "SessionName", "CustomSessionId", "Description", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames" }, new[]{ "LoadWorld", "SessionName", "CustomSessionId", "Description", "MaxUsers" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.Session), global::Headless.Rpc.Session.Parser, new[]{ "Id", "Name", "Description", "AccessLevel", "UsersCount", "MaxUsers", "ThumbnailUrl", "StartupParameters" }, new[]{ "ThumbnailUrl" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "Name", "CustomSessionId", "Description", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames" }, new[]{ "LoadWorld", "Name", "CustomSessionId", "Description", "MaxUsers" }, null, null, null)
           }));
     }
     #endregion
@@ -3888,7 +3888,7 @@ namespace Headless.Rpc {
     public UpdateSessionParametersRequest(UpdateSessionParametersRequest other) : this() {
       _hasBits0 = other._hasBits0;
       sessionId_ = other.sessionId_;
-      sessionName_ = other.sessionName_;
+      name_ = other.name_;
       description_ = other.description_;
       maxUsers_ = other.maxUsers_;
       accessLevel_ = other.accessLevel_;
@@ -3913,30 +3913,30 @@ namespace Headless.Rpc {
       }
     }
 
-    /// <summary>Field number for the "session_name" field.</summary>
-    public const int SessionNameFieldNumber = 2;
-    private readonly static string SessionNameDefaultValue = "";
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 2;
+    private readonly static string NameDefaultValue = "";
 
-    private string sessionName_;
+    private string name_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SessionName {
-      get { return sessionName_ ?? SessionNameDefaultValue; }
+    public string Name {
+      get { return name_ ?? NameDefaultValue; }
       set {
-        sessionName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
-    /// <summary>Gets whether the "session_name" field is set</summary>
+    /// <summary>Gets whether the "name" field is set</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool HasSessionName {
-      get { return sessionName_ != null; }
+    public bool HasName {
+      get { return name_ != null; }
     }
-    /// <summary>Clears the value of the "session_name" field</summary>
+    /// <summary>Clears the value of the "name" field</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearSessionName() {
-      sessionName_ = null;
+    public void ClearName() {
+      name_ = null;
     }
 
     /// <summary>Field number for the "description" field.</summary>
@@ -4035,7 +4035,7 @@ namespace Headless.Rpc {
         return true;
       }
       if (SessionId != other.SessionId) return false;
-      if (SessionName != other.SessionName) return false;
+      if (Name != other.Name) return false;
       if (Description != other.Description) return false;
       if (MaxUsers != other.MaxUsers) return false;
       if (AccessLevel != other.AccessLevel) return false;
@@ -4047,7 +4047,7 @@ namespace Headless.Rpc {
     public override int GetHashCode() {
       int hash = 1;
       if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
-      if (HasSessionName) hash ^= SessionName.GetHashCode();
+      if (HasName) hash ^= Name.GetHashCode();
       if (HasDescription) hash ^= Description.GetHashCode();
       if (HasMaxUsers) hash ^= MaxUsers.GetHashCode();
       if (HasAccessLevel) hash ^= AccessLevel.GetHashCode();
@@ -4073,9 +4073,9 @@ namespace Headless.Rpc {
         output.WriteRawTag(10);
         output.WriteString(SessionId);
       }
-      if (HasSessionName) {
+      if (HasName) {
         output.WriteRawTag(18);
-        output.WriteString(SessionName);
+        output.WriteString(Name);
       }
       if (HasDescription) {
         output.WriteRawTag(26);
@@ -4103,9 +4103,9 @@ namespace Headless.Rpc {
         output.WriteRawTag(10);
         output.WriteString(SessionId);
       }
-      if (HasSessionName) {
+      if (HasName) {
         output.WriteRawTag(18);
-        output.WriteString(SessionName);
+        output.WriteString(Name);
       }
       if (HasDescription) {
         output.WriteRawTag(26);
@@ -4132,8 +4132,8 @@ namespace Headless.Rpc {
       if (SessionId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
       }
-      if (HasSessionName) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionName);
+      if (HasName) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
       if (HasDescription) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
@@ -4159,8 +4159,8 @@ namespace Headless.Rpc {
       if (other.SessionId.Length != 0) {
         SessionId = other.SessionId;
       }
-      if (other.HasSessionName) {
-        SessionName = other.SessionName;
+      if (other.HasName) {
+        Name = other.Name;
       }
       if (other.HasDescription) {
         Description = other.Description;
@@ -4195,7 +4195,7 @@ namespace Headless.Rpc {
             break;
           }
           case 18: {
-            SessionName = input.ReadString();
+            Name = input.ReadString();
             break;
           }
           case 26: {
@@ -4234,7 +4234,7 @@ namespace Headless.Rpc {
             break;
           }
           case 18: {
-            SessionName = input.ReadString();
+            Name = input.ReadString();
             break;
           }
           case 26: {
@@ -5150,6 +5150,8 @@ namespace Headless.Rpc {
       name_ = other.name_;
       description_ = other.description_;
       accessLevel_ = other.accessLevel_;
+      usersCount_ = other.usersCount_;
+      maxUsers_ = other.maxUsers_;
       thumbnailUrl_ = other.thumbnailUrl_;
       startupParameters_ = other.startupParameters_ != null ? other.startupParameters_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -5206,6 +5208,30 @@ namespace Headless.Rpc {
       get { return accessLevel_; }
       set {
         accessLevel_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "users_count" field.</summary>
+    public const int UsersCountFieldNumber = 7;
+    private int usersCount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int UsersCount {
+      get { return usersCount_; }
+      set {
+        usersCount_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "max_users" field.</summary>
+    public const int MaxUsersFieldNumber = 8;
+    private int maxUsers_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MaxUsers {
+      get { return maxUsers_; }
+      set {
+        maxUsers_ = value;
       }
     }
 
@@ -5266,6 +5292,8 @@ namespace Headless.Rpc {
       if (Name != other.Name) return false;
       if (Description != other.Description) return false;
       if (AccessLevel != other.AccessLevel) return false;
+      if (UsersCount != other.UsersCount) return false;
+      if (MaxUsers != other.MaxUsers) return false;
       if (ThumbnailUrl != other.ThumbnailUrl) return false;
       if (!object.Equals(StartupParameters, other.StartupParameters)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -5279,6 +5307,8 @@ namespace Headless.Rpc {
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (Description.Length != 0) hash ^= Description.GetHashCode();
       if (AccessLevel != global::Headless.Rpc.AccessLevel.Unspecified) hash ^= AccessLevel.GetHashCode();
+      if (UsersCount != 0) hash ^= UsersCount.GetHashCode();
+      if (MaxUsers != 0) hash ^= MaxUsers.GetHashCode();
       if (HasThumbnailUrl) hash ^= ThumbnailUrl.GetHashCode();
       if (startupParameters_ != null) hash ^= StartupParameters.GetHashCode();
       if (_unknownFields != null) {
@@ -5323,6 +5353,14 @@ namespace Headless.Rpc {
         output.WriteRawTag(50);
         output.WriteMessage(StartupParameters);
       }
+      if (UsersCount != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(UsersCount);
+      }
+      if (MaxUsers != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(MaxUsers);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5357,6 +5395,14 @@ namespace Headless.Rpc {
         output.WriteRawTag(50);
         output.WriteMessage(StartupParameters);
       }
+      if (UsersCount != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(UsersCount);
+      }
+      if (MaxUsers != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(MaxUsers);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5378,6 +5424,12 @@ namespace Headless.Rpc {
       }
       if (AccessLevel != global::Headless.Rpc.AccessLevel.Unspecified) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) AccessLevel);
+      }
+      if (UsersCount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UsersCount);
+      }
+      if (MaxUsers != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxUsers);
       }
       if (HasThumbnailUrl) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ThumbnailUrl);
@@ -5408,6 +5460,12 @@ namespace Headless.Rpc {
       }
       if (other.AccessLevel != global::Headless.Rpc.AccessLevel.Unspecified) {
         AccessLevel = other.AccessLevel;
+      }
+      if (other.UsersCount != 0) {
+        UsersCount = other.UsersCount;
+      }
+      if (other.MaxUsers != 0) {
+        MaxUsers = other.MaxUsers;
       }
       if (other.HasThumbnailUrl) {
         ThumbnailUrl = other.ThumbnailUrl;
@@ -5464,6 +5522,14 @@ namespace Headless.Rpc {
             input.ReadMessage(StartupParameters);
             break;
           }
+          case 56: {
+            UsersCount = input.ReadInt32();
+            break;
+          }
+          case 64: {
+            MaxUsers = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -5510,6 +5576,14 @@ namespace Headless.Rpc {
             input.ReadMessage(StartupParameters);
             break;
           }
+          case 56: {
+            UsersCount = input.ReadInt32();
+            break;
+          }
+          case 64: {
+            MaxUsers = input.ReadInt32();
+            break;
+          }
         }
       }
     }
@@ -5554,7 +5628,7 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public WorldStartupParameters(WorldStartupParameters other) : this() {
       _hasBits0 = other._hasBits0;
-      sessionName_ = other.sessionName_;
+      name_ = other.name_;
       customSessionId_ = other.customSessionId_;
       description_ = other.description_;
       maxUsers_ = other.maxUsers_;
@@ -5578,30 +5652,30 @@ namespace Headless.Rpc {
       return new WorldStartupParameters(this);
     }
 
-    /// <summary>Field number for the "session_name" field.</summary>
-    public const int SessionNameFieldNumber = 1;
-    private readonly static string SessionNameDefaultValue = "";
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private readonly static string NameDefaultValue = "";
 
-    private string sessionName_;
+    private string name_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SessionName {
-      get { return sessionName_ ?? SessionNameDefaultValue; }
+    public string Name {
+      get { return name_ ?? NameDefaultValue; }
       set {
-        sessionName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
-    /// <summary>Gets whether the "session_name" field is set</summary>
+    /// <summary>Gets whether the "name" field is set</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool HasSessionName {
-      get { return sessionName_ != null; }
+    public bool HasName {
+      get { return name_ != null; }
     }
-    /// <summary>Clears the value of the "session_name" field</summary>
+    /// <summary>Clears the value of the "name" field</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearSessionName() {
-      sessionName_ = null;
+    public void ClearName() {
+      name_ = null;
     }
 
     /// <summary>Field number for the "custom_session_id" field.</summary>
@@ -5794,7 +5868,7 @@ namespace Headless.Rpc {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (SessionName != other.SessionName) return false;
+      if (Name != other.Name) return false;
       if (CustomSessionId != other.CustomSessionId) return false;
       if (Description != other.Description) return false;
       if (MaxUsers != other.MaxUsers) return false;
@@ -5810,7 +5884,7 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (HasSessionName) hash ^= SessionName.GetHashCode();
+      if (HasName) hash ^= Name.GetHashCode();
       if (HasCustomSessionId) hash ^= CustomSessionId.GetHashCode();
       if (HasDescription) hash ^= Description.GetHashCode();
       if (HasMaxUsers) hash ^= MaxUsers.GetHashCode();
@@ -5837,9 +5911,9 @@ namespace Headless.Rpc {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (HasSessionName) {
+      if (HasName) {
         output.WriteRawTag(10);
-        output.WriteString(SessionName);
+        output.WriteString(Name);
       }
       if (HasCustomSessionId) {
         output.WriteRawTag(18);
@@ -5876,9 +5950,9 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (HasSessionName) {
+      if (HasName) {
         output.WriteRawTag(10);
-        output.WriteString(SessionName);
+        output.WriteString(Name);
       }
       if (HasCustomSessionId) {
         output.WriteRawTag(18);
@@ -5915,8 +5989,8 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (HasSessionName) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionName);
+      if (HasName) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
       if (HasCustomSessionId) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(CustomSessionId);
@@ -5949,8 +6023,8 @@ namespace Headless.Rpc {
       if (other == null) {
         return;
       }
-      if (other.HasSessionName) {
-        SessionName = other.SessionName;
+      if (other.HasName) {
+        Name = other.Name;
       }
       if (other.HasCustomSessionId) {
         CustomSessionId = other.CustomSessionId;
@@ -5994,7 +6068,7 @@ namespace Headless.Rpc {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            SessionName = input.ReadString();
+            Name = input.ReadString();
             break;
           }
           case 18: {
@@ -6045,7 +6119,7 @@ namespace Headless.Rpc {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            SessionName = input.ReadString();
+            Name = input.ReadString();
             break;
           }
           case 18: {

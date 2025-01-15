@@ -70,7 +70,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         }
         var parameters = new SkyFrost.Base.WorldStartupParameters
         {
-            SessionName = reqParam.HasSessionName ? reqParam.SessionName : null,
+            SessionName = reqParam.HasName ? reqParam.Name : null,
             CustomSessionId = reqParam.HasCustomSessionId ? reqParam.CustomSessionId : null,
             Description = reqParam.HasDescription ? reqParam.Description : null,
             AccessLevel = ToSessionAccessLevel(reqParam.AccessLevel),
@@ -182,9 +182,9 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        if (request.HasSessionName)
+        if (request.HasName)
         {
-            session.WorldInstance.Name = request.SessionName;
+            session.WorldInstance.Name = request.Name;
         }
         if (request.HasDescription)
         {
@@ -260,7 +260,9 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             Name = info.Name ?? "<Empty Name>",
             Description = info.Description ?? "",
             AccessLevel = ToRpcAccessLevel(info.AccessLevel),
-            StartupParameters = ToRpcStartupParams(session.StartInfo)
+            StartupParameters = ToRpcStartupParams(session.StartInfo),
+            UsersCount = info.JoinedUsers,
+            MaxUsers = info.MaximumUsers,
         };
         if (info.ThumbnailUrl is not null)
         {
@@ -279,7 +281,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         };
         if (parameters.SessionName is not null)
         {
-            result.SessionName = parameters.SessionName;
+            result.Name = parameters.SessionName;
         }
         if (parameters.CustomSessionId is not null)
         {

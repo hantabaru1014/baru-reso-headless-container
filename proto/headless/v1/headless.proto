@@ -89,7 +89,7 @@ message UpdateUserRoleResponse {
 
 message UpdateSessionParametersRequest {
   string session_id = 1;
-  optional string session_name = 2;
+  optional string name = 2;
   optional string description = 3;
   optional int32 max_users = 4;
   optional AccessLevel access_level = 5;
@@ -129,12 +129,14 @@ message Session {
   string name = 2;
   string description = 3;
   AccessLevel access_level = 4;
+  int32 users_count = 7;
+  int32 max_users = 8;
   optional string thumbnail_url = 5;
   WorldStartupParameters startup_parameters = 6;
 }
 
 message WorldStartupParameters {
-  optional string session_name = 1;
+  optional string name = 1;
   optional string custom_session_id = 2;
   optional string description = 3;
   optional int32 max_users = 4;
