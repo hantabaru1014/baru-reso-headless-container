@@ -62,6 +62,10 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ListSessionsResponse> __Marshaller_headless_v1_ListSessionsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListSessionsResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetSessionRequest> __Marshaller_headless_v1_GetSessionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetSessionRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetSessionResponse> __Marshaller_headless_v1_GetSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetSessionResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.StartWorldRequest> __Marshaller_headless_v1_StartWorldRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.StartWorldRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.StartWorldResponse> __Marshaller_headless_v1_StartWorldResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.StartWorldResponse.Parser));
@@ -121,6 +125,14 @@ namespace Headless.Rpc {
         "ListSessions",
         __Marshaller_headless_v1_ListSessionsRequest,
         __Marshaller_headless_v1_ListSessionsResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.GetSessionRequest, global::Headless.Rpc.GetSessionResponse> __Method_GetSession = new grpc::Method<global::Headless.Rpc.GetSessionRequest, global::Headless.Rpc.GetSessionResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetSession",
+        __Marshaller_headless_v1_GetSessionRequest,
+        __Marshaller_headless_v1_GetSessionResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.StartWorldRequest, global::Headless.Rpc.StartWorldResponse> __Method_StartWorld = new grpc::Method<global::Headless.Rpc.StartWorldRequest, global::Headless.Rpc.StartWorldResponse>(
@@ -208,6 +220,12 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.ListSessionsResponse> ListSessions(global::Headless.Rpc.ListSessionsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.GetSessionResponse> GetSession(global::Headless.Rpc.GetSessionRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -362,6 +380,26 @@ namespace Headless.Rpc {
       public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.ListSessionsResponse> ListSessionsAsync(global::Headless.Rpc.ListSessionsRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_ListSessions, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetSessionResponse GetSession(global::Headless.Rpc.GetSessionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetSession(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetSessionResponse GetSession(global::Headless.Rpc.GetSessionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetSession, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetSessionResponse> GetSessionAsync(global::Headless.Rpc.GetSessionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetSessionAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetSessionResponse> GetSessionAsync(global::Headless.Rpc.GetSessionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetSession, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::Headless.Rpc.StartWorldResponse StartWorld(global::Headless.Rpc.StartWorldRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
@@ -521,6 +559,7 @@ namespace Headless.Rpc {
           .AddMethod(__Method_GetStatus, serviceImpl.GetStatus)
           .AddMethod(__Method_Shutdown, serviceImpl.Shutdown)
           .AddMethod(__Method_ListSessions, serviceImpl.ListSessions)
+          .AddMethod(__Method_GetSession, serviceImpl.GetSession)
           .AddMethod(__Method_StartWorld, serviceImpl.StartWorld)
           .AddMethod(__Method_StopSession, serviceImpl.StopSession)
           .AddMethod(__Method_SaveSessionWorld, serviceImpl.SaveSessionWorld)
@@ -541,6 +580,7 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_GetStatus, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetStatusRequest, global::Headless.Rpc.GetStatusResponse>(serviceImpl.GetStatus));
       serviceBinder.AddMethod(__Method_Shutdown, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ShutdownRequest, global::Headless.Rpc.ShutdownResponse>(serviceImpl.Shutdown));
       serviceBinder.AddMethod(__Method_ListSessions, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListSessionsRequest, global::Headless.Rpc.ListSessionsResponse>(serviceImpl.ListSessions));
+      serviceBinder.AddMethod(__Method_GetSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetSessionRequest, global::Headless.Rpc.GetSessionResponse>(serviceImpl.GetSession));
       serviceBinder.AddMethod(__Method_StartWorld, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.StartWorldRequest, global::Headless.Rpc.StartWorldResponse>(serviceImpl.StartWorld));
       serviceBinder.AddMethod(__Method_StopSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.StopSessionRequest, global::Headless.Rpc.StopSessionResponse>(serviceImpl.StopSession));
       serviceBinder.AddMethod(__Method_SaveSessionWorld, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SaveSessionWorldRequest, global::Headless.Rpc.SaveSessionWorldResponse>(serviceImpl.SaveSessionWorld));

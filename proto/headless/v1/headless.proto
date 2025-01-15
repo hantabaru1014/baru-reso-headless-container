@@ -9,6 +9,7 @@ service HeadlessControlService {
   rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+  rpc GetSession(GetSessionRequest) returns (GetSessionResponse);
   rpc StartWorld(StartWorldRequest) returns (StartWorldResponse);
   rpc StopSession(StopSessionRequest) returns (StopSessionResponse);
   rpc SaveSessionWorld(SaveSessionWorldRequest) returns (SaveSessionWorldResponse);
@@ -41,6 +42,14 @@ message ListSessionsRequest {}
 
 message ListSessionsResponse {
   repeated Session sessions = 1;
+}
+
+message GetSessionRequest {
+  string session_id = 1;
+}
+
+message GetSessionResponse {
+  Session session = 1;
 }
 
 message StartWorldRequest {
