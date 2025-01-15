@@ -68,7 +68,8 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        return Task.FromResult(new GetSessionResponse{
+        return Task.FromResult(new GetSessionResponse
+        {
             Session = ToRpcSession(session)
         });
     }
@@ -240,12 +241,37 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         var cloud = _engine.Cloud;
         var storage = cloud.Storage.CurrentStorage;
 
-        return Task.FromResult(new GetAccountInfoResponse{
+        return Task.FromResult(new GetAccountInfoResponse
+        {
             UserId = cloud.CurrentUserID,
             DisplayName = cloud.CurrentUsername,
             StorageQuotaBytes = storage.QuotaBytes,
             StorageUsedBytes = storage.UsedBytes,
         });
+    }
+
+    public override async Task<FetchWorldInfoResponse> FetchWorldInfo(FetchWorldInfoRequest request, ServerCallContext context)
+    {
+        var cloudResult = await _engine.RecordManager.FetchRecord(new Uri(request.Url));
+        if (!cloudResult.IsOK)
+        {
+            throw new RpcException(new Status(StatusCode.Internal, "Failed to fetch record"));
+        }
+        var record = cloudResult.Entity;
+        var canModify = _engine.RecordManager.CanModify(record);
+
+        return new FetchWorldInfoResponse
+        {
+            Name = record.Name ?? "Unnamed",
+            Description = record.Description ?? "",
+            ThumbnailUrl = record.ThumbnailURI ?? "",
+            DefaultMaxUsers = -1, // TODO
+            OwnerId = record.OwnerId ?? "",
+            IsPublic = record.IsPublic,
+            CanModify = canModify,
+            IsReadonly = record.IsReadOnly,
+            Tags = { record.Tags ?? [] },
+        };
     }
 
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)

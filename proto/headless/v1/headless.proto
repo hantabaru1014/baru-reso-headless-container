@@ -20,6 +20,7 @@ service HeadlessControlService {
 
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
+  rpc FetchWorldInfo(FetchWorldInfoRequest) returns (FetchWorldInfoResponse);
 }
 
 message GetAccountInfoRequest {}
@@ -29,6 +30,22 @@ message GetAccountInfoResponse {
   string display_name = 2;
   int64 storage_quota_bytes = 3;
   int64 storage_used_bytes = 4;
+}
+
+message FetchWorldInfoRequest {
+  string url = 1;
+}
+
+message FetchWorldInfoResponse {
+  string name = 1;
+  string description = 2;
+  string thumbnail_url = 3;
+  int32 default_max_users = 4;
+  string owner_id = 5;
+  bool is_public = 6;
+  bool can_modify = 7;
+  bool is_readonly = 8;
+  repeated string tags = 9;
 }
 
 message GetAboutRequest {}
