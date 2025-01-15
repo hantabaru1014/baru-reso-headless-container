@@ -93,6 +93,10 @@ namespace Headless.Rpc {
     static readonly grpc::Marshaller<global::Headless.Rpc.ListUsersInSessionRequest> __Marshaller_headless_v1_ListUsersInSessionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListUsersInSessionRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ListUsersInSessionResponse> __Marshaller_headless_v1_ListUsersInSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListUsersInSessionResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoRequest> __Marshaller_headless_v1_GetAccountInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoResponse> __Marshaller_headless_v1_GetAccountInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse> __Method_GetAbout = new grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse>(
@@ -190,6 +194,14 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_ListUsersInSessionRequest,
         __Marshaller_headless_v1_ListUsersInSessionResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse> __Method_GetAccountInfo = new grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetAccountInfo",
+        __Marshaller_headless_v1_GetAccountInfoRequest,
+        __Marshaller_headless_v1_GetAccountInfoResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -268,6 +280,18 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.ListUsersInSessionResponse> ListUsersInSession(global::Headless.Rpc.ListUsersInSessionRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Cloud系
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.GetAccountInfoResponse> GetAccountInfo(global::Headless.Rpc.GetAccountInfoRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -541,6 +565,54 @@ namespace Headless.Rpc {
       {
         return CallInvoker.AsyncUnaryCall(__Method_ListUsersInSession, null, options, request);
       }
+      /// <summary>
+      /// Cloud系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetAccountInfoResponse GetAccountInfo(global::Headless.Rpc.GetAccountInfoRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetAccountInfo(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Cloud系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetAccountInfoResponse GetAccountInfo(global::Headless.Rpc.GetAccountInfoRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetAccountInfo, null, options, request);
+      }
+      /// <summary>
+      /// Cloud系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetAccountInfoResponse> GetAccountInfoAsync(global::Headless.Rpc.GetAccountInfoRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetAccountInfoAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Cloud系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetAccountInfoResponse> GetAccountInfoAsync(global::Headless.Rpc.GetAccountInfoRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetAccountInfo, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override HeadlessControlServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -566,7 +638,8 @@ namespace Headless.Rpc {
           .AddMethod(__Method_InviteUser, serviceImpl.InviteUser)
           .AddMethod(__Method_UpdateUserRole, serviceImpl.UpdateUserRole)
           .AddMethod(__Method_UpdateSessionParameters, serviceImpl.UpdateSessionParameters)
-          .AddMethod(__Method_ListUsersInSession, serviceImpl.ListUsersInSession).Build();
+          .AddMethod(__Method_ListUsersInSession, serviceImpl.ListUsersInSession)
+          .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -588,6 +661,7 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_UpdateUserRole, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateUserRoleRequest, global::Headless.Rpc.UpdateUserRoleResponse>(serviceImpl.UpdateUserRole));
       serviceBinder.AddMethod(__Method_UpdateSessionParameters, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateSessionParametersRequest, global::Headless.Rpc.UpdateSessionParametersResponse>(serviceImpl.UpdateSessionParameters));
       serviceBinder.AddMethod(__Method_ListUsersInSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListUsersInSessionRequest, global::Headless.Rpc.ListUsersInSessionResponse>(serviceImpl.ListUsersInSession));
+      serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
     }
 
   }

@@ -17,6 +17,18 @@ service HeadlessControlService {
   rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse);
   rpc UpdateSessionParameters(UpdateSessionParametersRequest) returns (UpdateSessionParametersResponse);
   rpc ListUsersInSession(ListUsersInSessionRequest) returns (ListUsersInSessionResponse);
+
+  // Cloud系
+  rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
+}
+
+message GetAccountInfoRequest {}
+
+message GetAccountInfoResponse {
+  string user_id = 1;
+  string display_name = 2;
+  int64 storage_quota_bytes = 3;
+  int64 storage_used_bytes = 4;
 }
 
 message GetAboutRequest {}

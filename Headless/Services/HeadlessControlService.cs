@@ -235,6 +235,19 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         };
     }
 
+    public override Task<GetAccountInfoResponse> GetAccountInfo(GetAccountInfoRequest request, ServerCallContext context)
+    {
+        var cloud = _engine.Cloud;
+        var storage = cloud.Storage.CurrentStorage;
+
+        return Task.FromResult(new GetAccountInfoResponse{
+            UserId = cloud.CurrentUserID,
+            DisplayName = cloud.CurrentUsername,
+            StorageQuotaBytes = storage.QuotaBytes,
+            StorageUsedBytes = storage.UsedBytes,
+        });
+    }
+
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
     {
         return level switch
