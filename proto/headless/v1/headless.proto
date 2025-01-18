@@ -23,6 +23,20 @@ service HeadlessControlService {
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
   rpc FetchWorldInfo(FetchWorldInfoRequest) returns (FetchWorldInfoResponse);
+  rpc SearchUserInfo(SearchUserInfoRequest) returns (SearchUserInfoResponse);
+}
+
+message SearchUserInfoRequest {
+  oneof user {
+    string user_id = 1;
+    string user_name = 2;
+  }
+  bool only_in_contacts = 3;
+  bool partial_match = 4;
+}
+
+message SearchUserInfoResponse {
+  repeated UserInfo users = 1;
 }
 
 message GetAccountInfoRequest {}
@@ -170,6 +184,12 @@ message UserInSession {
   string name = 2;
   string role = 3;
   bool is_present = 4;
+}
+
+message UserInfo {
+  string id = 1;
+  string name = 2;
+  string icon_url = 3;
 }
 
 message Session {

@@ -308,6 +308,61 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         };
     }
 
+    public override async Task<SearchUserInfoResponse> SearchUserInfo(SearchUserInfoRequest request, ServerCallContext context)
+    {
+        var contactResult = new List<Contact>();
+        _engine.Cloud.Contacts.ForeachContact(c =>
+        {
+            if (request.HasUserId)
+            {
+                if (request.PartialMatch)
+                {
+                    if (c.ContactUserId.Contains(request.UserId))
+                    {
+                        contactResult.Add(c);
+                    }
+                }
+                else
+                {
+                    if (c.ContactUserId.Equals(request.UserId, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        contactResult.Add(c);
+                    }
+                }
+            }
+            else
+            {
+                if (request.PartialMatch)
+                {
+                    if (c.ContactUsername.Contains(request.UserName.Trim().ToLower(), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        contactResult.Add(c);
+                    }
+                }
+                else
+                {
+                    if (c.ContactUsername.Equals(request.UserName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        contactResult.Add(c);
+                    }
+                }
+            }
+        });
+        var result = contactResult.Select(c => new Rpc.UserInfo { Id = c.ContactUserId, Name = c.ContactUsername, IconUrl = c.Profile.IconUrl }).ToList();
+        if (!request.OnlyInContacts && request.HasUserName)
+        {
+            var cloudResult = await _engine.Cloud.Users.GetUsers(request.UserName.Trim().ToLower());
+            if (cloudResult.IsOK)
+            {
+                result.Concat(cloudResult.Entity.Select(r => new Rpc.UserInfo { Id = r.Id, Name = r.Username, IconUrl = "" }));
+            }
+        }
+        return new SearchUserInfoResponse
+        {
+            Users = { result }
+        };
+    }
+
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
     {
         return level switch

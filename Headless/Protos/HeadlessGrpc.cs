@@ -101,6 +101,10 @@ namespace Headless.Rpc {
     static readonly grpc::Marshaller<global::Headless.Rpc.FetchWorldInfoRequest> __Marshaller_headless_v1_FetchWorldInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.FetchWorldInfoRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.FetchWorldInfoResponse> __Marshaller_headless_v1_FetchWorldInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.FetchWorldInfoResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.SearchUserInfoRequest> __Marshaller_headless_v1_SearchUserInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SearchUserInfoRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.SearchUserInfoResponse> __Marshaller_headless_v1_SearchUserInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SearchUserInfoResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse> __Method_GetAbout = new grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse>(
@@ -214,6 +218,14 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_FetchWorldInfoRequest,
         __Marshaller_headless_v1_FetchWorldInfoResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse> __Method_SearchUserInfo = new grpc::Method<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SearchUserInfo",
+        __Marshaller_headless_v1_SearchUserInfoRequest,
+        __Marshaller_headless_v1_SearchUserInfoResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -310,6 +322,12 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.FetchWorldInfoResponse> FetchWorldInfo(global::Headless.Rpc.FetchWorldInfoRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.SearchUserInfoResponse> SearchUserInfo(global::Headless.Rpc.SearchUserInfoRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -651,6 +669,26 @@ namespace Headless.Rpc {
       {
         return CallInvoker.AsyncUnaryCall(__Method_FetchWorldInfo, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.SearchUserInfoResponse SearchUserInfo(global::Headless.Rpc.SearchUserInfoRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SearchUserInfo(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.SearchUserInfoResponse SearchUserInfo(global::Headless.Rpc.SearchUserInfoRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SearchUserInfo, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.SearchUserInfoResponse> SearchUserInfoAsync(global::Headless.Rpc.SearchUserInfoRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SearchUserInfoAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.SearchUserInfoResponse> SearchUserInfoAsync(global::Headless.Rpc.SearchUserInfoRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SearchUserInfo, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override HeadlessControlServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -678,7 +716,8 @@ namespace Headless.Rpc {
           .AddMethod(__Method_UpdateSessionParameters, serviceImpl.UpdateSessionParameters)
           .AddMethod(__Method_ListUsersInSession, serviceImpl.ListUsersInSession)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
-          .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo).Build();
+          .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
+          .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -702,6 +741,7 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_ListUsersInSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListUsersInSessionRequest, global::Headless.Rpc.ListUsersInSessionResponse>(serviceImpl.ListUsersInSession));
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));
+      serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));
     }
 
   }
