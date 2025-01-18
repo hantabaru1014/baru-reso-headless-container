@@ -30,6 +30,10 @@ lint.headless:
 build.docker:
 	docker build -t ghcr.io/hantabaru1014/baru-reso-headless-container .
 
+.PHONY: build.prepatcher
+build.prepatcher:
+	dotnet publish -c Release -o ./bin/prepatch ./EnginePrePatcher/EnginePrePatcher.csproj
+
 ./DepotDownloader:
 	./scripts/download-depot-downloader.sh
 
