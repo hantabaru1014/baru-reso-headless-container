@@ -88,6 +88,14 @@ public class StandaloneFrooxEngineService : BackgroundService
         }
     }
 
+    private void OnShutdownRequest(string message)
+    {
+        var tokenSource = new CancellationTokenSource();
+        tokenSource.CancelAfter(_appConfig.ShutdownTimeoutSeconds * 1000);
+
+        _ = StopAsync(tokenSource.Token);
+    }
+
     protected override async Task ExecuteAsync(CancellationToken ct)
     {
         LoadTypes();
@@ -96,6 +104,7 @@ public class StandaloneFrooxEngineService : BackgroundService
 
         _engine.UsernameOverride = _configService.Config.UsernameOverride;
         _engine.EnvironmentShutdownCallback = () => _engineShutdownComplete = true;
+        _engine.OnShutdownRequest += OnShutdownRequest;
         var launchOptions = new LaunchOptions
         {
             DataDirectory = Path.Combine(_appConfig.DataDirectoryPath, "Data"),
@@ -161,14 +170,15 @@ public class StandaloneFrooxEngineService : BackgroundService
 
         await _worldService.StopAllWorldsAsync(tokenSource.Token);
 
-        // TODO: Userspace.ExitAppはGUI前提の無駄な処理してるし、待てないので本当は自前でやりたい
-        Userspace.ExitApp(saveHomes: false);
-
         if (_engine.Cloud.CurrentUser is not null)
         {
             // Userspace.ExitAppが待てないのでレコードのSyncが終わってるかを確認して待つ
             await _engine.RecordManager.WaitForPendingUploadsAsync(ct: tokenSource.Token);
         }
+
+        _engine.RequestShutdown();
+
+        await _engine.Cloud.FinalizeSession();
     }
 
     private async Task EngineLoopAsync(CancellationToken ct = default)

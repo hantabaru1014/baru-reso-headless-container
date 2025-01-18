@@ -48,7 +48,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
 
     public override Task<ShutdownResponse> Shutdown(ShutdownRequest request, ServerCallContext context)
     {
-        _applicationLifetime.StopApplication();
+        _engine.RequestShutdown();
         return Task.FromResult(new ShutdownResponse());
     }
 
@@ -451,12 +451,12 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             Id = info.SessionId,
             Name = info.Name ?? "<Empty Name>",
             Description = info.Description ?? "",
-            Tags = { info.Tags },
+            Tags = { info.Tags ?? [] },
             AccessLevel = ToRpcAccessLevel(info.AccessLevel),
             StartupParameters = ToRpcStartupParams(session.StartInfo),
             UsersCount = info.JoinedUsers,
             MaxUsers = info.MaximumUsers,
-            SessionUrl = info.SessionURLs[0],
+            SessionUrl = info.SessionURLs.Count > 0 ? info.SessionURLs[0] : "",
             TimeRunningMs = (int)Math.Round(session.TimeRunning.TotalMilliseconds),
             AwayKickMinutes = info.AwayKickMinutes,
             IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
@@ -479,9 +479,9 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             MaxUsers = parameters.MaxUsers,
             AccessLevel = ToRpcAccessLevel(parameters.AccessLevel),
             AutoInviteUsernames = { parameters.AutoInviteUsernames ?? [] },
-            Tags = { parameters.Tags },
+            Tags = { parameters.Tags ?? [] },
             HideFromPublicListing = parameters.HideFromPublicListing ?? false,
-            DefaultUserRoles = { parameters.DefaultUserRoles.Select(p => new Rpc.DefaultUserRole { UserName = p.Key, Role = p.Value }) },
+            DefaultUserRoles = { parameters.DefaultUserRoles?.Select(p => new Rpc.DefaultUserRole { UserName = p.Key, Role = p.Value }) },
             AwayKickMinutes = (float)parameters.AwayKickMinutes,
             IdleRestartIntervalSeconds = (int)parameters.IdleRestartInterval,
             SaveOnExit = parameters.SaveOnExit,
