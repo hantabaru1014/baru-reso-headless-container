@@ -94,6 +94,14 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ListUsersInSessionResponse> __Marshaller_headless_v1_ListUsersInSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListUsersInSessionResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.KickUserRequest> __Marshaller_headless_v1_KickUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.KickUserRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.KickUserResponse> __Marshaller_headless_v1_KickUserResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.KickUserResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.BanUserRequest> __Marshaller_headless_v1_BanUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.BanUserRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.BanUserResponse> __Marshaller_headless_v1_BanUserResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.BanUserResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoRequest> __Marshaller_headless_v1_GetAccountInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoResponse> __Marshaller_headless_v1_GetAccountInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoResponse.Parser));
@@ -203,6 +211,22 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_ListUsersInSessionResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.KickUserRequest, global::Headless.Rpc.KickUserResponse> __Method_KickUser = new grpc::Method<global::Headless.Rpc.KickUserRequest, global::Headless.Rpc.KickUserResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "KickUser",
+        __Marshaller_headless_v1_KickUserRequest,
+        __Marshaller_headless_v1_KickUserResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.BanUserRequest, global::Headless.Rpc.BanUserResponse> __Method_BanUser = new grpc::Method<global::Headless.Rpc.BanUserRequest, global::Headless.Rpc.BanUserResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "BanUser",
+        __Marshaller_headless_v1_BanUserRequest,
+        __Marshaller_headless_v1_BanUserResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse> __Method_GetAccountInfo = new grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
@@ -304,6 +328,18 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.ListUsersInSessionResponse> ListUsersInSession(global::Headless.Rpc.ListUsersInSessionRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.KickUserResponse> KickUser(global::Headless.Rpc.KickUserRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.BanUserResponse> BanUser(global::Headless.Rpc.BanUserRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -601,6 +637,46 @@ namespace Headless.Rpc {
       {
         return CallInvoker.AsyncUnaryCall(__Method_ListUsersInSession, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.KickUserResponse KickUser(global::Headless.Rpc.KickUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return KickUser(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.KickUserResponse KickUser(global::Headless.Rpc.KickUserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_KickUser, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.KickUserResponse> KickUserAsync(global::Headless.Rpc.KickUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return KickUserAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.KickUserResponse> KickUserAsync(global::Headless.Rpc.KickUserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_KickUser, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.BanUserResponse BanUser(global::Headless.Rpc.BanUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return BanUser(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.BanUserResponse BanUser(global::Headless.Rpc.BanUserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_BanUser, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.BanUserResponse> BanUserAsync(global::Headless.Rpc.BanUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return BanUserAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.BanUserResponse> BanUserAsync(global::Headless.Rpc.BanUserRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_BanUser, null, options, request);
+      }
       /// <summary>
       /// Cloud系
       /// </summary>
@@ -715,6 +791,8 @@ namespace Headless.Rpc {
           .AddMethod(__Method_UpdateUserRole, serviceImpl.UpdateUserRole)
           .AddMethod(__Method_UpdateSessionParameters, serviceImpl.UpdateSessionParameters)
           .AddMethod(__Method_ListUsersInSession, serviceImpl.ListUsersInSession)
+          .AddMethod(__Method_KickUser, serviceImpl.KickUser)
+          .AddMethod(__Method_BanUser, serviceImpl.BanUser)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
           .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
           .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo).Build();
@@ -739,6 +817,8 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_UpdateUserRole, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateUserRoleRequest, global::Headless.Rpc.UpdateUserRoleResponse>(serviceImpl.UpdateUserRole));
       serviceBinder.AddMethod(__Method_UpdateSessionParameters, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateSessionParametersRequest, global::Headless.Rpc.UpdateSessionParametersResponse>(serviceImpl.UpdateSessionParameters));
       serviceBinder.AddMethod(__Method_ListUsersInSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListUsersInSessionRequest, global::Headless.Rpc.ListUsersInSessionResponse>(serviceImpl.ListUsersInSession));
+      serviceBinder.AddMethod(__Method_KickUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.KickUserRequest, global::Headless.Rpc.KickUserResponse>(serviceImpl.KickUser));
+      serviceBinder.AddMethod(__Method_BanUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.BanUserRequest, global::Headless.Rpc.BanUserResponse>(serviceImpl.BanUser));
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));
       serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));

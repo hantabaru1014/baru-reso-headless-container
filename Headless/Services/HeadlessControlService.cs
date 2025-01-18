@@ -270,6 +270,58 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         };
     }
 
+    public override Task<KickUserResponse> KickUser(KickUserRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        FrooxEngine.User? user = null;
+        if (request.HasUserId)
+        {
+            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+        }
+        else if (request.HasUserName)
+        {
+            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+        }
+        if (user is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
+        }
+
+        user.Kick();
+
+        return Task.FromResult(new KickUserResponse());
+    }
+
+    public override Task<BanUserResponse> BanUser(BanUserRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        FrooxEngine.User? user = null;
+        if (request.HasUserId)
+        {
+            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+        }
+        else if (request.HasUserName)
+        {
+            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+        }
+        if (user is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
+        }
+
+        user.Ban();
+
+        return Task.FromResult(new BanUserResponse());
+    }
+
     public override Task<GetAccountInfoResponse> GetAccountInfo(GetAccountInfoRequest request, ServerCallContext context)
     {
         var cloud = _engine.Cloud;

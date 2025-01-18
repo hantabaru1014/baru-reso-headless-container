@@ -19,12 +19,34 @@ service HeadlessControlService {
   rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse);
   rpc UpdateSessionParameters(UpdateSessionParametersRequest) returns (UpdateSessionParametersResponse);
   rpc ListUsersInSession(ListUsersInSessionRequest) returns (ListUsersInSessionResponse);
+  rpc KickUser(KickUserRequest) returns (KickUserResponse);
+  rpc BanUser(BanUserRequest) returns (BanUserResponse);
 
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
   rpc FetchWorldInfo(FetchWorldInfoRequest) returns (FetchWorldInfoResponse);
   rpc SearchUserInfo(SearchUserInfoRequest) returns (SearchUserInfoResponse);
 }
+
+message KickUserRequest {
+  string session_id = 1;
+  oneof user {
+    string user_id = 2;
+    string user_name = 3;
+  }
+}
+
+message KickUserResponse {}
+
+message BanUserRequest {
+  string session_id = 1;
+  oneof user {
+    string user_id = 2;
+    string user_name = 3;
+  }
+}
+
+message BanUserResponse {}
 
 message SearchUserInfoRequest {
   oneof user {
