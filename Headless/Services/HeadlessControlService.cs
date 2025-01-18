@@ -464,6 +464,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             AutoSaveIntervalSeconds = (int)session.AutosaveInterval.TotalSeconds,
             HideFromPublicListing = info.HideFromListing,
             LastSavedAt = Timestamp.FromDateTimeOffset(session.LastSaveTime),
+            CanSave = Userspace.CanSave(session.WorldInstance),
         };
         if (info.ThumbnailUrl is not null)
         {

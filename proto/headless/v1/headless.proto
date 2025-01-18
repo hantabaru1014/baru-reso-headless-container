@@ -233,6 +233,7 @@ message Session {
   bool hide_from_public_listing = 16;
   repeated string tags = 17;
   google.protobuf.Timestamp last_saved_at = 18;
+  bool can_save = 19;
 }
 
 message DefaultUserRole {
