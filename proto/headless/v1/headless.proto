@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package headless.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option csharp_namespace = "Headless.Rpc";
 
 service HeadlessControlService {
@@ -131,6 +133,14 @@ message UpdateSessionParametersRequest {
   optional string description = 3;
   optional int32 max_users = 4;
   optional AccessLevel access_level = 5;
+  optional float away_kick_minutes = 6;
+  optional int32 idle_restart_interval_seconds = 7;
+  optional bool save_on_exit = 8;
+  optional int32 auto_save_interval_seconds = 9;
+  optional bool auto_sleep = 10;
+  optional bool hide_from_public_listing = 11;
+  bool update_tags = 12;
+  repeated string tags = 13;
 }
 
 message UpdateSessionParametersResponse {}
@@ -171,12 +181,28 @@ message Session {
   int32 max_users = 8;
   optional string thumbnail_url = 5;
   WorldStartupParameters startup_parameters = 6;
+  string session_url = 9;
+  int32 time_running_ms = 10;
+  float away_kick_minutes = 11;
+  int32 idle_restart_interval_seconds = 12;
+  bool save_on_exit = 13;
+  int32 auto_save_interval_seconds = 14;
+  bool auto_sleep = 15;
+  bool hide_from_public_listing = 16;
+  repeated string tags = 17;
+  google.protobuf.Timestamp last_saved_at = 18;
+}
+
+message DefaultUserRole {
+  string role = 1;
+  string user_name = 2;
 }
 
 message WorldStartupParameters {
   optional string name = 1;
   optional string custom_session_id = 2;
   optional string description = 3;
+  repeated string tags = 10;
   optional int32 max_users = 4;
   AccessLevel access_level = 5;
   oneof load_world {
@@ -184,4 +210,11 @@ message WorldStartupParameters {
     string load_world_preset_name = 7;
   }
   repeated string auto_invite_usernames = 8;
+  bool hide_from_public_listing = 9;
+  repeated DefaultUserRole default_user_roles = 11;
+  float away_kick_minutes = 12;
+  int32 idle_restart_interval_seconds = 13;
+  bool save_on_exit = 14;
+  int32 auto_save_interval_seconds = 15;
+  bool auto_sleep = 16;
 }

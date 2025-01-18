@@ -2,6 +2,7 @@ using FrooxEngine;
 using Grpc.Core;
 using SkyFrost.Base;
 using Headless.Rpc;
+using Google.Protobuf.WellKnownTypes;
 
 namespace Headless.Services;
 
@@ -86,10 +87,19 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             SessionName = reqParam.HasName ? reqParam.Name : null,
             CustomSessionId = reqParam.HasCustomSessionId ? reqParam.CustomSessionId : null,
             Description = reqParam.HasDescription ? reqParam.Description : null,
+            Tags = reqParam.Tags.ToList(),
             AccessLevel = ToSessionAccessLevel(reqParam.AccessLevel),
             LoadWorldURL = reqParam.HasLoadWorldUrl ? reqParam.LoadWorldUrl : null,
             LoadWorldPresetName = reqParam.HasLoadWorldPresetName ? reqParam.LoadWorldPresetName : null,
-            AutoInviteUsernames = reqParam.AutoInviteUsernames.ToList()
+            AutoInviteUsernames = reqParam.AutoInviteUsernames.ToList(),
+            DefaultUserRoles = reqParam.DefaultUserRoles.ToDictionary(p => p.UserName, p => p.Role),
+            HideFromPublicListing = reqParam.HideFromPublicListing,
+            AwayKickMinutes = reqParam.AwayKickMinutes == 0 ? -1 : reqParam.AwayKickMinutes,
+            IdleRestartInterval = reqParam.IdleRestartIntervalSeconds,
+            SaveOnExit = reqParam.SaveOnExit,
+            AutoSaveInterval = reqParam.AutoSaveIntervalSeconds,
+            AutoSleep = reqParam.AutoSleep,
+            AutoRecover = true,
         };
         if (reqParam.HasMaxUsers)
         {
@@ -211,6 +221,30 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         {
             session.WorldInstance.AccessLevel = ToSessionAccessLevel(request.AccessLevel);
         }
+        if (request.HasAwayKickMinutes)
+        {
+            session.WorldInstance.AwayKickMinutes = request.AwayKickMinutes;
+        }
+        if (request.HasIdleRestartIntervalSeconds)
+        {
+            session.IdleRestartInterval = TimeSpan.FromSeconds(request.IdleRestartIntervalSeconds);
+        }
+        if (request.HasSaveOnExit)
+        {
+            session.WorldInstance.SaveOnExit = request.SaveOnExit;
+        }
+        if (request.HasAutoSaveIntervalSeconds)
+        {
+            session.AutosaveInterval = TimeSpan.FromSeconds(request.AutoSaveIntervalSeconds);
+        }
+        if (request.HasHideFromPublicListing)
+        {
+            session.WorldInstance.HideFromListing = request.HideFromPublicListing;
+        }
+        if (request.UpdateTags)
+        {
+            session.WorldInstance.Tags = request.Tags;
+        }
         await Task.CompletedTask;
         return new UpdateSessionParametersResponse();
     }
@@ -310,10 +344,19 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             Id = info.SessionId,
             Name = info.Name ?? "<Empty Name>",
             Description = info.Description ?? "",
+            Tags = { info.Tags },
             AccessLevel = ToRpcAccessLevel(info.AccessLevel),
             StartupParameters = ToRpcStartupParams(session.StartInfo),
             UsersCount = info.JoinedUsers,
             MaxUsers = info.MaximumUsers,
+            SessionUrl = info.SessionURLs[0],
+            TimeRunningMs = (int)Math.Round(session.TimeRunning.TotalMilliseconds),
+            AwayKickMinutes = info.AwayKickMinutes,
+            IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
+            SaveOnExit = session.WorldInstance.SaveOnExit,
+            AutoSaveIntervalSeconds = (int)session.AutosaveInterval.TotalSeconds,
+            HideFromPublicListing = info.HideFromListing,
+            LastSavedAt = Timestamp.FromDateTimeOffset(session.LastSaveTime),
         };
         if (info.ThumbnailUrl is not null)
         {
@@ -328,7 +371,15 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         {
             MaxUsers = parameters.MaxUsers,
             AccessLevel = ToRpcAccessLevel(parameters.AccessLevel),
-            AutoInviteUsernames = { parameters.AutoInviteUsernames ?? [] }
+            AutoInviteUsernames = { parameters.AutoInviteUsernames ?? [] },
+            Tags = { parameters.Tags },
+            HideFromPublicListing = parameters.HideFromPublicListing ?? false,
+            DefaultUserRoles = { parameters.DefaultUserRoles.Select(p => new Rpc.DefaultUserRole { UserName = p.Key, Role = p.Value }) },
+            AwayKickMinutes = (float)parameters.AwayKickMinutes,
+            IdleRestartIntervalSeconds = (int)parameters.IdleRestartInterval,
+            SaveOnExit = parameters.SaveOnExit,
+            AutoSaveIntervalSeconds = (int)parameters.AutoSaveInterval,
+            AutoSleep = parameters.AutoSleep,
         };
         if (parameters.SessionName is not null)
         {

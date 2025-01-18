@@ -18,12 +18,12 @@ public record RunningSession
     /// <summary>
     /// Gets the interval at which the world should automatically save.
     /// </summary>
-    public TimeSpan AutosaveInterval { get; } = TimeSpan.FromSeconds(StartInfo.AutoSaveInterval);
+    public TimeSpan AutosaveInterval { get; set; } = TimeSpan.FromSeconds(StartInfo.AutoSaveInterval);
 
     /// <summary>
-    /// Gets the time after which an idle world should restart.
+    /// the time after which an idle world should restart.
     /// </summary>
-    public TimeSpan IdleRestartInterval { get; } = TimeSpan.FromSeconds(StartInfo.IdleRestartInterval);
+    public TimeSpan IdleRestartInterval { get; set; } = TimeSpan.FromSeconds(StartInfo.IdleRestartInterval);
 
     /// <summary>
     /// Gets the absolute time after which a world should unconditionally restart.

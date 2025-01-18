@@ -24,112 +24,144 @@ namespace Headless.Rpc {
     static HeadlessReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChpoZWFkbGVzcy92MS9oZWFkbGVzcy5wcm90bxILaGVhZGxlc3MudjEiFwoV",
-            "R2V0QWNjb3VudEluZm9SZXF1ZXN0IrIBChZHZXRBY2NvdW50SW5mb1Jlc3Bv",
-            "bnNlEhcKB3VzZXJfaWQYASABKAlSBnVzZXJJZBIhCgxkaXNwbGF5X25hbWUY",
-            "AiABKAlSC2Rpc3BsYXlOYW1lEi4KE3N0b3JhZ2VfcXVvdGFfYnl0ZXMYAyAB",
-            "KANSEXN0b3JhZ2VRdW90YUJ5dGVzEiwKEnN0b3JhZ2VfdXNlZF9ieXRlcxgE",
-            "IAEoA1IQc3RvcmFnZVVzZWRCeXRlcyIpChVGZXRjaFdvcmxkSW5mb1JlcXVl",
-            "c3QSEAoDdXJsGAEgASgJUgN1cmwiqwIKFkZldGNoV29ybGRJbmZvUmVzcG9u",
-            "c2USEgoEbmFtZRgBIAEoCVIEbmFtZRIgCgtkZXNjcmlwdGlvbhgCIAEoCVIL",
-            "ZGVzY3JpcHRpb24SIwoNdGh1bWJuYWlsX3VybBgDIAEoCVIMdGh1bWJuYWls",
-            "VXJsEioKEWRlZmF1bHRfbWF4X3VzZXJzGAQgASgFUg9kZWZhdWx0TWF4VXNl",
-            "cnMSGQoIb3duZXJfaWQYBSABKAlSB293bmVySWQSGwoJaXNfcHVibGljGAYg",
-            "ASgIUghpc1B1YmxpYxIdCgpjYW5fbW9kaWZ5GAcgASgIUgljYW5Nb2RpZnkS",
-            "HwoLaXNfcmVhZG9ubHkYCCABKAhSCmlzUmVhZG9ubHkSEgoEdGFncxgJIAMo",
-            "CVIEdGFncyIRCg9HZXRBYm91dFJlcXVlc3QiXgoQR2V0QWJvdXRSZXNwb25z",
-            "ZRIfCgthcHBfdmVyc2lvbhgBIAEoCVIKYXBwVmVyc2lvbhIpChByZXNvbml0",
-            "ZV92ZXJzaW9uGAIgASgJUg9yZXNvbml0ZVZlcnNpb24iEgoQR2V0U3RhdHVz",
-            "UmVxdWVzdCKSAQoRR2V0U3RhdHVzUmVzcG9uc2USEAoDZnBzGAEgASgCUgNm",
-            "cHMSNwoYdG90YWxfZW5naW5lX3VwZGF0ZV90aW1lGAIgASgCUhV0b3RhbEVu",
-            "Z2luZVVwZGF0ZVRpbWUSMgoVc3luY2luZ19yZWNvcmRzX2NvdW50GAMgASgF",
-            "UhNzeW5jaW5nUmVjb3Jkc0NvdW50IhEKD1NodXRkb3duUmVxdWVzdCISChBT",
-            "aHV0ZG93blJlc3BvbnNlIhUKE0xpc3RTZXNzaW9uc1JlcXVlc3QiSAoUTGlz",
-            "dFNlc3Npb25zUmVzcG9uc2USMAoIc2Vzc2lvbnMYASADKAsyFC5oZWFkbGVz",
-            "cy52MS5TZXNzaW9uUghzZXNzaW9ucyIyChFHZXRTZXNzaW9uUmVxdWVzdBId",
-            "CgpzZXNzaW9uX2lkGAEgASgJUglzZXNzaW9uSWQiRAoSR2V0U2Vzc2lvblJl",
-            "c3BvbnNlEi4KB3Nlc3Npb24YASABKAsyFC5oZWFkbGVzcy52MS5TZXNzaW9u",
-            "UgdzZXNzaW9uIlgKEVN0YXJ0V29ybGRSZXF1ZXN0EkMKCnBhcmFtZXRlcnMY",
-            "ASABKAsyIy5oZWFkbGVzcy52MS5Xb3JsZFN0YXJ0dXBQYXJhbWV0ZXJzUgpw",
-            "YXJhbWV0ZXJzIlEKElN0YXJ0V29ybGRSZXNwb25zZRI7Cg5vcGVuZWRfc2Vz",
-            "c2lvbhgBIAEoCzIULmhlYWRsZXNzLnYxLlNlc3Npb25SDW9wZW5lZFNlc3Np",
-            "b24iMwoSU3RvcFNlc3Npb25SZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlS",
-            "CXNlc3Npb25JZCIVChNTdG9wU2Vzc2lvblJlc3BvbnNlIjgKF1NhdmVTZXNz",
-            "aW9uV29ybGRSZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25J",
-            "ZCIaChhTYXZlU2Vzc2lvbldvcmxkUmVzcG9uc2UidAoRSW52aXRlVXNlclJl",
-            "cXVlc3QSHQoKc2Vzc2lvbl9pZBgBIAEoCVIJc2Vzc2lvbklkEhkKB3VzZXJf",
-            "aWQYAiABKAlIAFIGdXNlcklkEh0KCXVzZXJfbmFtZRgDIAEoCUgAUgh1c2Vy",
-            "TmFtZUIGCgR1c2VyIhQKEkludml0ZVVzZXJSZXNwb25zZSKMAQoVVXBkYXRl",
-            "VXNlclJvbGVSZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25J",
-            "ZBIZCgd1c2VyX2lkGAIgASgJSABSBnVzZXJJZBIdCgl1c2VyX25hbWUYAyAB",
-            "KAlIAFIIdXNlck5hbWUSEgoEcm9sZRgEIAEoCVIEcm9sZUIGCgR1c2VyIiwK",
-            "FlVwZGF0ZVVzZXJSb2xlUmVzcG9uc2USEgoEcm9sZRgBIAEoCVIEcm9sZSKb",
-            "AgoeVXBkYXRlU2Vzc2lvblBhcmFtZXRlcnNSZXF1ZXN0Eh0KCnNlc3Npb25f",
-            "aWQYASABKAlSCXNlc3Npb25JZBIXCgRuYW1lGAIgASgJSABSBG5hbWWIAQES",
-            "JQoLZGVzY3JpcHRpb24YAyABKAlIAVILZGVzY3JpcHRpb26IAQESIAoJbWF4",
-            "X3VzZXJzGAQgASgFSAJSCG1heFVzZXJziAEBEkAKDGFjY2Vzc19sZXZlbBgF",
-            "IAEoDjIYLmhlYWRsZXNzLnYxLkFjY2Vzc0xldmVsSANSC2FjY2Vzc0xldmVs",
-            "iAEBQgcKBV9uYW1lQg4KDF9kZXNjcmlwdGlvbkIMCgpfbWF4X3VzZXJzQg8K",
-            "DV9hY2Nlc3NfbGV2ZWwiIQofVXBkYXRlU2Vzc2lvblBhcmFtZXRlcnNSZXNw",
-            "b25zZSI6ChlMaXN0VXNlcnNJblNlc3Npb25SZXF1ZXN0Eh0KCnNlc3Npb25f",
-            "aWQYASABKAlSCXNlc3Npb25JZCJOChpMaXN0VXNlcnNJblNlc3Npb25SZXNw",
-            "b25zZRIwCgV1c2VycxgBIAMoCzIaLmhlYWRsZXNzLnYxLlVzZXJJblNlc3Np",
-            "b25SBXVzZXJzImYKDVVzZXJJblNlc3Npb24SDgoCaWQYASABKAlSAmlkEhIK",
-            "BG5hbWUYAiABKAlSBG5hbWUSEgoEcm9sZRgDIAEoCVIEcm9sZRIdCgppc19w",
-            "cmVzZW50GAQgASgIUglpc1ByZXNlbnQi2gIKB1Nlc3Npb24SDgoCaWQYASAB",
-            "KAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSIAoLZGVzY3JpcHRpb24YAyAB",
-            "KAlSC2Rlc2NyaXB0aW9uEjsKDGFjY2Vzc19sZXZlbBgEIAEoDjIYLmhlYWRs",
-            "ZXNzLnYxLkFjY2Vzc0xldmVsUgthY2Nlc3NMZXZlbBIfCgt1c2Vyc19jb3Vu",
-            "dBgHIAEoBVIKdXNlcnNDb3VudBIbCgltYXhfdXNlcnMYCCABKAVSCG1heFVz",
-            "ZXJzEigKDXRodW1ibmFpbF91cmwYBSABKAlIAFIMdGh1bWJuYWlsVXJsiAEB",
-            "ElIKEnN0YXJ0dXBfcGFyYW1ldGVycxgGIAEoCzIjLmhlYWRsZXNzLnYxLldv",
-            "cmxkU3RhcnR1cFBhcmFtZXRlcnNSEXN0YXJ0dXBQYXJhbWV0ZXJzQhAKDl90",
-            "aHVtYm5haWxfdXJsIsYDChZXb3JsZFN0YXJ0dXBQYXJhbWV0ZXJzEhcKBG5h",
-            "bWUYASABKAlIAVIEbmFtZYgBARIvChFjdXN0b21fc2Vzc2lvbl9pZBgCIAEo",
-            "CUgCUg9jdXN0b21TZXNzaW9uSWSIAQESJQoLZGVzY3JpcHRpb24YAyABKAlI",
-            "A1ILZGVzY3JpcHRpb26IAQESIAoJbWF4X3VzZXJzGAQgASgFSARSCG1heFVz",
-            "ZXJziAEBEjsKDGFjY2Vzc19sZXZlbBgFIAEoDjIYLmhlYWRsZXNzLnYxLkFj",
-            "Y2Vzc0xldmVsUgthY2Nlc3NMZXZlbBImCg5sb2FkX3dvcmxkX3VybBgGIAEo",
-            "CUgAUgxsb2FkV29ybGRVcmwSNQoWbG9hZF93b3JsZF9wcmVzZXRfbmFtZRgH",
-            "IAEoCUgAUhNsb2FkV29ybGRQcmVzZXROYW1lEjIKFWF1dG9faW52aXRlX3Vz",
-            "ZXJuYW1lcxgIIAMoCVITYXV0b0ludml0ZVVzZXJuYW1lc0IMCgpsb2FkX3dv",
-            "cmxkQgcKBV9uYW1lQhQKEl9jdXN0b21fc2Vzc2lvbl9pZEIOCgxfZGVzY3Jp",
-            "cHRpb25CDAoKX21heF91c2VycyrSAQoLQWNjZXNzTGV2ZWwSHAoYQUNDRVNT",
-            "X0xFVkVMX1VOU1BFQ0lGSUVEEAASGAoUQUNDRVNTX0xFVkVMX1BSSVZBVEUQ",
-            "ARIUChBBQ0NFU1NfTEVWRUxfTEFOEAISGQoVQUNDRVNTX0xFVkVMX0NPTlRB",
-            "Q1RTEAMSHgoaQUNDRVNTX0xFVkVMX0NPTlRBQ1RTX1BMVVMQBBIhCh1BQ0NF",
-            "U1NfTEVWRUxfUkVHSVNURVJFRF9VU0VSUxAFEhcKE0FDQ0VTU19MRVZFTF9B",
-            "TllPTkUQBjLZCQoWSGVhZGxlc3NDb250cm9sU2VydmljZRJHCghHZXRBYm91",
-            "dBIcLmhlYWRsZXNzLnYxLkdldEFib3V0UmVxdWVzdBodLmhlYWRsZXNzLnYx",
-            "LkdldEFib3V0UmVzcG9uc2USSgoJR2V0U3RhdHVzEh0uaGVhZGxlc3MudjEu",
-            "R2V0U3RhdHVzUmVxdWVzdBoeLmhlYWRsZXNzLnYxLkdldFN0YXR1c1Jlc3Bv",
-            "bnNlEkcKCFNodXRkb3duEhwuaGVhZGxlc3MudjEuU2h1dGRvd25SZXF1ZXN0",
-            "Gh0uaGVhZGxlc3MudjEuU2h1dGRvd25SZXNwb25zZRJTCgxMaXN0U2Vzc2lv",
-            "bnMSIC5oZWFkbGVzcy52MS5MaXN0U2Vzc2lvbnNSZXF1ZXN0GiEuaGVhZGxl",
-            "c3MudjEuTGlzdFNlc3Npb25zUmVzcG9uc2USTQoKR2V0U2Vzc2lvbhIeLmhl",
-            "YWRsZXNzLnYxLkdldFNlc3Npb25SZXF1ZXN0Gh8uaGVhZGxlc3MudjEuR2V0",
-            "U2Vzc2lvblJlc3BvbnNlEk0KClN0YXJ0V29ybGQSHi5oZWFkbGVzcy52MS5T",
-            "dGFydFdvcmxkUmVxdWVzdBofLmhlYWRsZXNzLnYxLlN0YXJ0V29ybGRSZXNw",
-            "b25zZRJQCgtTdG9wU2Vzc2lvbhIfLmhlYWRsZXNzLnYxLlN0b3BTZXNzaW9u",
-            "UmVxdWVzdBogLmhlYWRsZXNzLnYxLlN0b3BTZXNzaW9uUmVzcG9uc2USXwoQ",
-            "U2F2ZVNlc3Npb25Xb3JsZBIkLmhlYWRsZXNzLnYxLlNhdmVTZXNzaW9uV29y",
-            "bGRSZXF1ZXN0GiUuaGVhZGxlc3MudjEuU2F2ZVNlc3Npb25Xb3JsZFJlc3Bv",
-            "bnNlEk0KCkludml0ZVVzZXISHi5oZWFkbGVzcy52MS5JbnZpdGVVc2VyUmVx",
-            "dWVzdBofLmhlYWRsZXNzLnYxLkludml0ZVVzZXJSZXNwb25zZRJZCg5VcGRh",
-            "dGVVc2VyUm9sZRIiLmhlYWRsZXNzLnYxLlVwZGF0ZVVzZXJSb2xlUmVxdWVz",
-            "dBojLmhlYWRsZXNzLnYxLlVwZGF0ZVVzZXJSb2xlUmVzcG9uc2USdAoXVXBk",
-            "YXRlU2Vzc2lvblBhcmFtZXRlcnMSKy5oZWFkbGVzcy52MS5VcGRhdGVTZXNz",
-            "aW9uUGFyYW1ldGVyc1JlcXVlc3QaLC5oZWFkbGVzcy52MS5VcGRhdGVTZXNz",
-            "aW9uUGFyYW1ldGVyc1Jlc3BvbnNlEmUKEkxpc3RVc2Vyc0luU2Vzc2lvbhIm",
-            "LmhlYWRsZXNzLnYxLkxpc3RVc2Vyc0luU2Vzc2lvblJlcXVlc3QaJy5oZWFk",
-            "bGVzcy52MS5MaXN0VXNlcnNJblNlc3Npb25SZXNwb25zZRJZCg5HZXRBY2Nv",
-            "dW50SW5mbxIiLmhlYWRsZXNzLnYxLkdldEFjY291bnRJbmZvUmVxdWVzdBoj",
-            "LmhlYWRsZXNzLnYxLkdldEFjY291bnRJbmZvUmVzcG9uc2USWQoORmV0Y2hX",
-            "b3JsZEluZm8SIi5oZWFkbGVzcy52MS5GZXRjaFdvcmxkSW5mb1JlcXVlc3Qa",
-            "Iy5oZWFkbGVzcy52MS5GZXRjaFdvcmxkSW5mb1Jlc3BvbnNlQg+qAgxIZWFk",
-            "bGVzcy5ScGNiBnByb3RvMw=="));
+            "ChpoZWFkbGVzcy92MS9oZWFkbGVzcy5wcm90bxILaGVhZGxlc3MudjEaH2dv",
+            "b2dsZS9wcm90b2J1Zi90aW1lc3RhbXAucHJvdG8iFwoVR2V0QWNjb3VudElu",
+            "Zm9SZXF1ZXN0IrIBChZHZXRBY2NvdW50SW5mb1Jlc3BvbnNlEhcKB3VzZXJf",
+            "aWQYASABKAlSBnVzZXJJZBIhCgxkaXNwbGF5X25hbWUYAiABKAlSC2Rpc3Bs",
+            "YXlOYW1lEi4KE3N0b3JhZ2VfcXVvdGFfYnl0ZXMYAyABKANSEXN0b3JhZ2VR",
+            "dW90YUJ5dGVzEiwKEnN0b3JhZ2VfdXNlZF9ieXRlcxgEIAEoA1IQc3RvcmFn",
+            "ZVVzZWRCeXRlcyIpChVGZXRjaFdvcmxkSW5mb1JlcXVlc3QSEAoDdXJsGAEg",
+            "ASgJUgN1cmwiqwIKFkZldGNoV29ybGRJbmZvUmVzcG9uc2USEgoEbmFtZRgB",
+            "IAEoCVIEbmFtZRIgCgtkZXNjcmlwdGlvbhgCIAEoCVILZGVzY3JpcHRpb24S",
+            "IwoNdGh1bWJuYWlsX3VybBgDIAEoCVIMdGh1bWJuYWlsVXJsEioKEWRlZmF1",
+            "bHRfbWF4X3VzZXJzGAQgASgFUg9kZWZhdWx0TWF4VXNlcnMSGQoIb3duZXJf",
+            "aWQYBSABKAlSB293bmVySWQSGwoJaXNfcHVibGljGAYgASgIUghpc1B1Ymxp",
+            "YxIdCgpjYW5fbW9kaWZ5GAcgASgIUgljYW5Nb2RpZnkSHwoLaXNfcmVhZG9u",
+            "bHkYCCABKAhSCmlzUmVhZG9ubHkSEgoEdGFncxgJIAMoCVIEdGFncyIRCg9H",
+            "ZXRBYm91dFJlcXVlc3QiXgoQR2V0QWJvdXRSZXNwb25zZRIfCgthcHBfdmVy",
+            "c2lvbhgBIAEoCVIKYXBwVmVyc2lvbhIpChByZXNvbml0ZV92ZXJzaW9uGAIg",
+            "ASgJUg9yZXNvbml0ZVZlcnNpb24iEgoQR2V0U3RhdHVzUmVxdWVzdCKSAQoR",
+            "R2V0U3RhdHVzUmVzcG9uc2USEAoDZnBzGAEgASgCUgNmcHMSNwoYdG90YWxf",
+            "ZW5naW5lX3VwZGF0ZV90aW1lGAIgASgCUhV0b3RhbEVuZ2luZVVwZGF0ZVRp",
+            "bWUSMgoVc3luY2luZ19yZWNvcmRzX2NvdW50GAMgASgFUhNzeW5jaW5nUmVj",
+            "b3Jkc0NvdW50IhEKD1NodXRkb3duUmVxdWVzdCISChBTaHV0ZG93blJlc3Bv",
+            "bnNlIhUKE0xpc3RTZXNzaW9uc1JlcXVlc3QiSAoUTGlzdFNlc3Npb25zUmVz",
+            "cG9uc2USMAoIc2Vzc2lvbnMYASADKAsyFC5oZWFkbGVzcy52MS5TZXNzaW9u",
+            "UghzZXNzaW9ucyIyChFHZXRTZXNzaW9uUmVxdWVzdBIdCgpzZXNzaW9uX2lk",
+            "GAEgASgJUglzZXNzaW9uSWQiRAoSR2V0U2Vzc2lvblJlc3BvbnNlEi4KB3Nl",
+            "c3Npb24YASABKAsyFC5oZWFkbGVzcy52MS5TZXNzaW9uUgdzZXNzaW9uIlgK",
+            "EVN0YXJ0V29ybGRSZXF1ZXN0EkMKCnBhcmFtZXRlcnMYASABKAsyIy5oZWFk",
+            "bGVzcy52MS5Xb3JsZFN0YXJ0dXBQYXJhbWV0ZXJzUgpwYXJhbWV0ZXJzIlEK",
+            "ElN0YXJ0V29ybGRSZXNwb25zZRI7Cg5vcGVuZWRfc2Vzc2lvbhgBIAEoCzIU",
+            "LmhlYWRsZXNzLnYxLlNlc3Npb25SDW9wZW5lZFNlc3Npb24iMwoSU3RvcFNl",
+            "c3Npb25SZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25JZCIV",
+            "ChNTdG9wU2Vzc2lvblJlc3BvbnNlIjgKF1NhdmVTZXNzaW9uV29ybGRSZXF1",
+            "ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25JZCIaChhTYXZlU2Vz",
+            "c2lvbldvcmxkUmVzcG9uc2UidAoRSW52aXRlVXNlclJlcXVlc3QSHQoKc2Vz",
+            "c2lvbl9pZBgBIAEoCVIJc2Vzc2lvbklkEhkKB3VzZXJfaWQYAiABKAlIAFIG",
+            "dXNlcklkEh0KCXVzZXJfbmFtZRgDIAEoCUgAUgh1c2VyTmFtZUIGCgR1c2Vy",
+            "IhQKEkludml0ZVVzZXJSZXNwb25zZSKMAQoVVXBkYXRlVXNlclJvbGVSZXF1",
+            "ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25JZBIZCgd1c2VyX2lk",
+            "GAIgASgJSABSBnVzZXJJZBIdCgl1c2VyX25hbWUYAyABKAlIAFIIdXNlck5h",
+            "bWUSEgoEcm9sZRgEIAEoCVIEcm9sZUIGCgR1c2VyIiwKFlVwZGF0ZVVzZXJS",
+            "b2xlUmVzcG9uc2USEgoEcm9sZRgBIAEoCVIEcm9sZSKoBgoeVXBkYXRlU2Vz",
+            "c2lvblBhcmFtZXRlcnNSZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNl",
+            "c3Npb25JZBIXCgRuYW1lGAIgASgJSABSBG5hbWWIAQESJQoLZGVzY3JpcHRp",
+            "b24YAyABKAlIAVILZGVzY3JpcHRpb26IAQESIAoJbWF4X3VzZXJzGAQgASgF",
+            "SAJSCG1heFVzZXJziAEBEkAKDGFjY2Vzc19sZXZlbBgFIAEoDjIYLmhlYWRs",
+            "ZXNzLnYxLkFjY2Vzc0xldmVsSANSC2FjY2Vzc0xldmVsiAEBEi8KEWF3YXlf",
+            "a2lja19taW51dGVzGAYgASgCSARSD2F3YXlLaWNrTWludXRlc4gBARJGCh1p",
+            "ZGxlX3Jlc3RhcnRfaW50ZXJ2YWxfc2Vjb25kcxgHIAEoBUgFUhppZGxlUmVz",
+            "dGFydEludGVydmFsU2Vjb25kc4gBARIlCgxzYXZlX29uX2V4aXQYCCABKAhI",
+            "BlIKc2F2ZU9uRXhpdIgBARJAChphdXRvX3NhdmVfaW50ZXJ2YWxfc2Vjb25k",
+            "cxgJIAEoBUgHUhdhdXRvU2F2ZUludGVydmFsU2Vjb25kc4gBARIiCgphdXRv",
+            "X3NsZWVwGAogASgISAhSCWF1dG9TbGVlcIgBARI8ChhoaWRlX2Zyb21fcHVi",
+            "bGljX2xpc3RpbmcYCyABKAhICVIVaGlkZUZyb21QdWJsaWNMaXN0aW5niAEB",
+            "Eh8KC3VwZGF0ZV90YWdzGAwgASgIUgp1cGRhdGVUYWdzEhIKBHRhZ3MYDSAD",
+            "KAlSBHRhZ3NCBwoFX25hbWVCDgoMX2Rlc2NyaXB0aW9uQgwKCl9tYXhfdXNl",
+            "cnNCDwoNX2FjY2Vzc19sZXZlbEIUChJfYXdheV9raWNrX21pbnV0ZXNCIAoe",
+            "X2lkbGVfcmVzdGFydF9pbnRlcnZhbF9zZWNvbmRzQg8KDV9zYXZlX29uX2V4",
+            "aXRCHQobX2F1dG9fc2F2ZV9pbnRlcnZhbF9zZWNvbmRzQg0KC19hdXRvX3Ns",
+            "ZWVwQhsKGV9oaWRlX2Zyb21fcHVibGljX2xpc3RpbmciIQofVXBkYXRlU2Vz",
+            "c2lvblBhcmFtZXRlcnNSZXNwb25zZSI6ChlMaXN0VXNlcnNJblNlc3Npb25S",
+            "ZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25JZCJOChpMaXN0",
+            "VXNlcnNJblNlc3Npb25SZXNwb25zZRIwCgV1c2VycxgBIAMoCzIaLmhlYWRs",
+            "ZXNzLnYxLlVzZXJJblNlc3Npb25SBXVzZXJzImYKDVVzZXJJblNlc3Npb24S",
+            "DgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSEgoEcm9sZRgD",
+            "IAEoCVIEcm9sZRIdCgppc19wcmVzZW50GAQgASgIUglpc1ByZXNlbnQinQYK",
+            "B1Nlc3Npb24SDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUS",
+            "IAoLZGVzY3JpcHRpb24YAyABKAlSC2Rlc2NyaXB0aW9uEjsKDGFjY2Vzc19s",
+            "ZXZlbBgEIAEoDjIYLmhlYWRsZXNzLnYxLkFjY2Vzc0xldmVsUgthY2Nlc3NM",
+            "ZXZlbBIfCgt1c2Vyc19jb3VudBgHIAEoBVIKdXNlcnNDb3VudBIbCgltYXhf",
+            "dXNlcnMYCCABKAVSCG1heFVzZXJzEigKDXRodW1ibmFpbF91cmwYBSABKAlI",
+            "AFIMdGh1bWJuYWlsVXJsiAEBElIKEnN0YXJ0dXBfcGFyYW1ldGVycxgGIAEo",
+            "CzIjLmhlYWRsZXNzLnYxLldvcmxkU3RhcnR1cFBhcmFtZXRlcnNSEXN0YXJ0",
+            "dXBQYXJhbWV0ZXJzEh8KC3Nlc3Npb25fdXJsGAkgASgJUgpzZXNzaW9uVXJs",
+            "EiYKD3RpbWVfcnVubmluZ19tcxgKIAEoBVINdGltZVJ1bm5pbmdNcxIqChFh",
+            "d2F5X2tpY2tfbWludXRlcxgLIAEoAlIPYXdheUtpY2tNaW51dGVzEkEKHWlk",
+            "bGVfcmVzdGFydF9pbnRlcnZhbF9zZWNvbmRzGAwgASgFUhppZGxlUmVzdGFy",
+            "dEludGVydmFsU2Vjb25kcxIgCgxzYXZlX29uX2V4aXQYDSABKAhSCnNhdmVP",
+            "bkV4aXQSOwoaYXV0b19zYXZlX2ludGVydmFsX3NlY29uZHMYDiABKAVSF2F1",
+            "dG9TYXZlSW50ZXJ2YWxTZWNvbmRzEh0KCmF1dG9fc2xlZXAYDyABKAhSCWF1",
+            "dG9TbGVlcBI3ChhoaWRlX2Zyb21fcHVibGljX2xpc3RpbmcYECABKAhSFWhp",
+            "ZGVGcm9tUHVibGljTGlzdGluZxISCgR0YWdzGBEgAygJUgR0YWdzEj4KDWxh",
+            "c3Rfc2F2ZWRfYXQYEiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1w",
+            "UgtsYXN0U2F2ZWRBdEIQCg5fdGh1bWJuYWlsX3VybCJCCg9EZWZhdWx0VXNl",
+            "clJvbGUSEgoEcm9sZRgBIAEoCVIEcm9sZRIbCgl1c2VyX25hbWUYAiABKAlS",
+            "CHVzZXJOYW1lIswGChZXb3JsZFN0YXJ0dXBQYXJhbWV0ZXJzEhcKBG5hbWUY",
+            "ASABKAlIAVIEbmFtZYgBARIvChFjdXN0b21fc2Vzc2lvbl9pZBgCIAEoCUgC",
+            "Ug9jdXN0b21TZXNzaW9uSWSIAQESJQoLZGVzY3JpcHRpb24YAyABKAlIA1IL",
+            "ZGVzY3JpcHRpb26IAQESEgoEdGFncxgKIAMoCVIEdGFncxIgCgltYXhfdXNl",
+            "cnMYBCABKAVIBFIIbWF4VXNlcnOIAQESOwoMYWNjZXNzX2xldmVsGAUgASgO",
+            "MhguaGVhZGxlc3MudjEuQWNjZXNzTGV2ZWxSC2FjY2Vzc0xldmVsEiYKDmxv",
+            "YWRfd29ybGRfdXJsGAYgASgJSABSDGxvYWRXb3JsZFVybBI1ChZsb2FkX3dv",
+            "cmxkX3ByZXNldF9uYW1lGAcgASgJSABSE2xvYWRXb3JsZFByZXNldE5hbWUS",
+            "MgoVYXV0b19pbnZpdGVfdXNlcm5hbWVzGAggAygJUhNhdXRvSW52aXRlVXNl",
+            "cm5hbWVzEjcKGGhpZGVfZnJvbV9wdWJsaWNfbGlzdGluZxgJIAEoCFIVaGlk",
+            "ZUZyb21QdWJsaWNMaXN0aW5nEkoKEmRlZmF1bHRfdXNlcl9yb2xlcxgLIAMo",
+            "CzIcLmhlYWRsZXNzLnYxLkRlZmF1bHRVc2VyUm9sZVIQZGVmYXVsdFVzZXJS",
+            "b2xlcxIqChFhd2F5X2tpY2tfbWludXRlcxgMIAEoAlIPYXdheUtpY2tNaW51",
+            "dGVzEkEKHWlkbGVfcmVzdGFydF9pbnRlcnZhbF9zZWNvbmRzGA0gASgFUhpp",
+            "ZGxlUmVzdGFydEludGVydmFsU2Vjb25kcxIgCgxzYXZlX29uX2V4aXQYDiAB",
+            "KAhSCnNhdmVPbkV4aXQSOwoaYXV0b19zYXZlX2ludGVydmFsX3NlY29uZHMY",
+            "DyABKAVSF2F1dG9TYXZlSW50ZXJ2YWxTZWNvbmRzEh0KCmF1dG9fc2xlZXAY",
+            "ECABKAhSCWF1dG9TbGVlcEIMCgpsb2FkX3dvcmxkQgcKBV9uYW1lQhQKEl9j",
+            "dXN0b21fc2Vzc2lvbl9pZEIOCgxfZGVzY3JpcHRpb25CDAoKX21heF91c2Vy",
+            "cyrSAQoLQWNjZXNzTGV2ZWwSHAoYQUNDRVNTX0xFVkVMX1VOU1BFQ0lGSUVE",
+            "EAASGAoUQUNDRVNTX0xFVkVMX1BSSVZBVEUQARIUChBBQ0NFU1NfTEVWRUxf",
+            "TEFOEAISGQoVQUNDRVNTX0xFVkVMX0NPTlRBQ1RTEAMSHgoaQUNDRVNTX0xF",
+            "VkVMX0NPTlRBQ1RTX1BMVVMQBBIhCh1BQ0NFU1NfTEVWRUxfUkVHSVNURVJF",
+            "RF9VU0VSUxAFEhcKE0FDQ0VTU19MRVZFTF9BTllPTkUQBjLZCQoWSGVhZGxl",
+            "c3NDb250cm9sU2VydmljZRJHCghHZXRBYm91dBIcLmhlYWRsZXNzLnYxLkdl",
+            "dEFib3V0UmVxdWVzdBodLmhlYWRsZXNzLnYxLkdldEFib3V0UmVzcG9uc2US",
+            "SgoJR2V0U3RhdHVzEh0uaGVhZGxlc3MudjEuR2V0U3RhdHVzUmVxdWVzdBoe",
+            "LmhlYWRsZXNzLnYxLkdldFN0YXR1c1Jlc3BvbnNlEkcKCFNodXRkb3duEhwu",
+            "aGVhZGxlc3MudjEuU2h1dGRvd25SZXF1ZXN0Gh0uaGVhZGxlc3MudjEuU2h1",
+            "dGRvd25SZXNwb25zZRJTCgxMaXN0U2Vzc2lvbnMSIC5oZWFkbGVzcy52MS5M",
+            "aXN0U2Vzc2lvbnNSZXF1ZXN0GiEuaGVhZGxlc3MudjEuTGlzdFNlc3Npb25z",
+            "UmVzcG9uc2USTQoKR2V0U2Vzc2lvbhIeLmhlYWRsZXNzLnYxLkdldFNlc3Np",
+            "b25SZXF1ZXN0Gh8uaGVhZGxlc3MudjEuR2V0U2Vzc2lvblJlc3BvbnNlEk0K",
+            "ClN0YXJ0V29ybGQSHi5oZWFkbGVzcy52MS5TdGFydFdvcmxkUmVxdWVzdBof",
+            "LmhlYWRsZXNzLnYxLlN0YXJ0V29ybGRSZXNwb25zZRJQCgtTdG9wU2Vzc2lv",
+            "bhIfLmhlYWRsZXNzLnYxLlN0b3BTZXNzaW9uUmVxdWVzdBogLmhlYWRsZXNz",
+            "LnYxLlN0b3BTZXNzaW9uUmVzcG9uc2USXwoQU2F2ZVNlc3Npb25Xb3JsZBIk",
+            "LmhlYWRsZXNzLnYxLlNhdmVTZXNzaW9uV29ybGRSZXF1ZXN0GiUuaGVhZGxl",
+            "c3MudjEuU2F2ZVNlc3Npb25Xb3JsZFJlc3BvbnNlEk0KCkludml0ZVVzZXIS",
+            "Hi5oZWFkbGVzcy52MS5JbnZpdGVVc2VyUmVxdWVzdBofLmhlYWRsZXNzLnYx",
+            "Lkludml0ZVVzZXJSZXNwb25zZRJZCg5VcGRhdGVVc2VyUm9sZRIiLmhlYWRs",
+            "ZXNzLnYxLlVwZGF0ZVVzZXJSb2xlUmVxdWVzdBojLmhlYWRsZXNzLnYxLlVw",
+            "ZGF0ZVVzZXJSb2xlUmVzcG9uc2USdAoXVXBkYXRlU2Vzc2lvblBhcmFtZXRl",
+            "cnMSKy5oZWFkbGVzcy52MS5VcGRhdGVTZXNzaW9uUGFyYW1ldGVyc1JlcXVl",
+            "c3QaLC5oZWFkbGVzcy52MS5VcGRhdGVTZXNzaW9uUGFyYW1ldGVyc1Jlc3Bv",
+            "bnNlEmUKEkxpc3RVc2Vyc0luU2Vzc2lvbhImLmhlYWRsZXNzLnYxLkxpc3RV",
+            "c2Vyc0luU2Vzc2lvblJlcXVlc3QaJy5oZWFkbGVzcy52MS5MaXN0VXNlcnNJ",
+            "blNlc3Npb25SZXNwb25zZRJZCg5HZXRBY2NvdW50SW5mbxIiLmhlYWRsZXNz",
+            "LnYxLkdldEFjY291bnRJbmZvUmVxdWVzdBojLmhlYWRsZXNzLnYxLkdldEFj",
+            "Y291bnRJbmZvUmVzcG9uc2USWQoORmV0Y2hXb3JsZEluZm8SIi5oZWFkbGVz",
+            "cy52MS5GZXRjaFdvcmxkSW5mb1JlcXVlc3QaIy5oZWFkbGVzcy52MS5GZXRj",
+            "aFdvcmxkSW5mb1Jlc3BvbnNlQg+qAgxIZWFkbGVzcy5ScGNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Headless.Rpc.AccessLevel), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.GetAccountInfoRequest), global::Headless.Rpc.GetAccountInfoRequest.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.GetAccountInfoResponse), global::Headless.Rpc.GetAccountInfoResponse.Parser, new[]{ "UserId", "DisplayName", "StorageQuotaBytes", "StorageUsedBytes" }, null, null, null, null),
@@ -155,13 +187,14 @@ namespace Headless.Rpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.InviteUserResponse), global::Headless.Rpc.InviteUserResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleRequest), global::Headless.Rpc.UpdateUserRoleRequest.Parser, new[]{ "SessionId", "UserId", "UserName", "Role" }, new[]{ "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleResponse), global::Headless.Rpc.UpdateUserRoleResponse.Parser, new[]{ "Role" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "Name", "Description", "MaxUsers", "AccessLevel" }, new[]{ "Name", "Description", "MaxUsers", "AccessLevel" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "Name", "Description", "MaxUsers", "AccessLevel", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing", "UpdateTags", "Tags" }, new[]{ "Name", "Description", "MaxUsers", "AccessLevel", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersResponse), global::Headless.Rpc.UpdateSessionParametersResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionRequest), global::Headless.Rpc.ListUsersInSessionRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionResponse), global::Headless.Rpc.ListUsersInSessionResponse.Parser, new[]{ "Users" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UserInSession), global::Headless.Rpc.UserInSession.Parser, new[]{ "Id", "Name", "Role", "IsPresent" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.Session), global::Headless.Rpc.Session.Parser, new[]{ "Id", "Name", "Description", "AccessLevel", "UsersCount", "MaxUsers", "ThumbnailUrl", "StartupParameters" }, new[]{ "ThumbnailUrl" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "Name", "CustomSessionId", "Description", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames" }, new[]{ "LoadWorld", "Name", "CustomSessionId", "Description", "MaxUsers" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.Session), global::Headless.Rpc.Session.Parser, new[]{ "Id", "Name", "Description", "AccessLevel", "UsersCount", "MaxUsers", "ThumbnailUrl", "StartupParameters", "SessionUrl", "TimeRunningMs", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing", "Tags", "LastSavedAt" }, new[]{ "ThumbnailUrl" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.DefaultUserRole), global::Headless.Rpc.DefaultUserRole.Parser, new[]{ "Role", "UserName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "Name", "CustomSessionId", "Description", "Tags", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames", "HideFromPublicListing", "DefaultUserRoles", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep" }, new[]{ "LoadWorld", "Name", "CustomSessionId", "Description", "MaxUsers" }, null, null, null)
           }));
     }
     #endregion
@@ -5475,6 +5508,14 @@ namespace Headless.Rpc {
       description_ = other.description_;
       maxUsers_ = other.maxUsers_;
       accessLevel_ = other.accessLevel_;
+      awayKickMinutes_ = other.awayKickMinutes_;
+      idleRestartIntervalSeconds_ = other.idleRestartIntervalSeconds_;
+      saveOnExit_ = other.saveOnExit_;
+      autoSaveIntervalSeconds_ = other.autoSaveIntervalSeconds_;
+      autoSleep_ = other.autoSleep_;
+      hideFromPublicListing_ = other.hideFromPublicListing_;
+      updateTags_ = other.updateTags_;
+      tags_ = other.tags_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5602,6 +5643,191 @@ namespace Headless.Rpc {
       _hasBits0 &= ~2;
     }
 
+    /// <summary>Field number for the "away_kick_minutes" field.</summary>
+    public const int AwayKickMinutesFieldNumber = 6;
+    private readonly static float AwayKickMinutesDefaultValue = 0F;
+
+    private float awayKickMinutes_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AwayKickMinutes {
+      get { if ((_hasBits0 & 4) != 0) { return awayKickMinutes_; } else { return AwayKickMinutesDefaultValue; } }
+      set {
+        _hasBits0 |= 4;
+        awayKickMinutes_ = value;
+      }
+    }
+    /// <summary>Gets whether the "away_kick_minutes" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAwayKickMinutes {
+      get { return (_hasBits0 & 4) != 0; }
+    }
+    /// <summary>Clears the value of the "away_kick_minutes" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAwayKickMinutes() {
+      _hasBits0 &= ~4;
+    }
+
+    /// <summary>Field number for the "idle_restart_interval_seconds" field.</summary>
+    public const int IdleRestartIntervalSecondsFieldNumber = 7;
+    private readonly static int IdleRestartIntervalSecondsDefaultValue = 0;
+
+    private int idleRestartIntervalSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int IdleRestartIntervalSeconds {
+      get { if ((_hasBits0 & 8) != 0) { return idleRestartIntervalSeconds_; } else { return IdleRestartIntervalSecondsDefaultValue; } }
+      set {
+        _hasBits0 |= 8;
+        idleRestartIntervalSeconds_ = value;
+      }
+    }
+    /// <summary>Gets whether the "idle_restart_interval_seconds" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasIdleRestartIntervalSeconds {
+      get { return (_hasBits0 & 8) != 0; }
+    }
+    /// <summary>Clears the value of the "idle_restart_interval_seconds" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearIdleRestartIntervalSeconds() {
+      _hasBits0 &= ~8;
+    }
+
+    /// <summary>Field number for the "save_on_exit" field.</summary>
+    public const int SaveOnExitFieldNumber = 8;
+    private readonly static bool SaveOnExitDefaultValue = false;
+
+    private bool saveOnExit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool SaveOnExit {
+      get { if ((_hasBits0 & 16) != 0) { return saveOnExit_; } else { return SaveOnExitDefaultValue; } }
+      set {
+        _hasBits0 |= 16;
+        saveOnExit_ = value;
+      }
+    }
+    /// <summary>Gets whether the "save_on_exit" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasSaveOnExit {
+      get { return (_hasBits0 & 16) != 0; }
+    }
+    /// <summary>Clears the value of the "save_on_exit" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearSaveOnExit() {
+      _hasBits0 &= ~16;
+    }
+
+    /// <summary>Field number for the "auto_save_interval_seconds" field.</summary>
+    public const int AutoSaveIntervalSecondsFieldNumber = 9;
+    private readonly static int AutoSaveIntervalSecondsDefaultValue = 0;
+
+    private int autoSaveIntervalSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int AutoSaveIntervalSeconds {
+      get { if ((_hasBits0 & 32) != 0) { return autoSaveIntervalSeconds_; } else { return AutoSaveIntervalSecondsDefaultValue; } }
+      set {
+        _hasBits0 |= 32;
+        autoSaveIntervalSeconds_ = value;
+      }
+    }
+    /// <summary>Gets whether the "auto_save_interval_seconds" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAutoSaveIntervalSeconds {
+      get { return (_hasBits0 & 32) != 0; }
+    }
+    /// <summary>Clears the value of the "auto_save_interval_seconds" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAutoSaveIntervalSeconds() {
+      _hasBits0 &= ~32;
+    }
+
+    /// <summary>Field number for the "auto_sleep" field.</summary>
+    public const int AutoSleepFieldNumber = 10;
+    private readonly static bool AutoSleepDefaultValue = false;
+
+    private bool autoSleep_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool AutoSleep {
+      get { if ((_hasBits0 & 64) != 0) { return autoSleep_; } else { return AutoSleepDefaultValue; } }
+      set {
+        _hasBits0 |= 64;
+        autoSleep_ = value;
+      }
+    }
+    /// <summary>Gets whether the "auto_sleep" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAutoSleep {
+      get { return (_hasBits0 & 64) != 0; }
+    }
+    /// <summary>Clears the value of the "auto_sleep" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAutoSleep() {
+      _hasBits0 &= ~64;
+    }
+
+    /// <summary>Field number for the "hide_from_public_listing" field.</summary>
+    public const int HideFromPublicListingFieldNumber = 11;
+    private readonly static bool HideFromPublicListingDefaultValue = false;
+
+    private bool hideFromPublicListing_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HideFromPublicListing {
+      get { if ((_hasBits0 & 128) != 0) { return hideFromPublicListing_; } else { return HideFromPublicListingDefaultValue; } }
+      set {
+        _hasBits0 |= 128;
+        hideFromPublicListing_ = value;
+      }
+    }
+    /// <summary>Gets whether the "hide_from_public_listing" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasHideFromPublicListing {
+      get { return (_hasBits0 & 128) != 0; }
+    }
+    /// <summary>Clears the value of the "hide_from_public_listing" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearHideFromPublicListing() {
+      _hasBits0 &= ~128;
+    }
+
+    /// <summary>Field number for the "update_tags" field.</summary>
+    public const int UpdateTagsFieldNumber = 12;
+    private bool updateTags_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool UpdateTags {
+      get { return updateTags_; }
+      set {
+        updateTags_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "tags" field.</summary>
+    public const int TagsFieldNumber = 13;
+    private static readonly pb::FieldCodec<string> _repeated_tags_codec
+        = pb::FieldCodec.ForString(106);
+    private readonly pbc::RepeatedField<string> tags_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<string> Tags {
+      get { return tags_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5622,6 +5848,14 @@ namespace Headless.Rpc {
       if (Description != other.Description) return false;
       if (MaxUsers != other.MaxUsers) return false;
       if (AccessLevel != other.AccessLevel) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AwayKickMinutes, other.AwayKickMinutes)) return false;
+      if (IdleRestartIntervalSeconds != other.IdleRestartIntervalSeconds) return false;
+      if (SaveOnExit != other.SaveOnExit) return false;
+      if (AutoSaveIntervalSeconds != other.AutoSaveIntervalSeconds) return false;
+      if (AutoSleep != other.AutoSleep) return false;
+      if (HideFromPublicListing != other.HideFromPublicListing) return false;
+      if (UpdateTags != other.UpdateTags) return false;
+      if(!tags_.Equals(other.tags_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5634,6 +5868,14 @@ namespace Headless.Rpc {
       if (HasDescription) hash ^= Description.GetHashCode();
       if (HasMaxUsers) hash ^= MaxUsers.GetHashCode();
       if (HasAccessLevel) hash ^= AccessLevel.GetHashCode();
+      if (HasAwayKickMinutes) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AwayKickMinutes);
+      if (HasIdleRestartIntervalSeconds) hash ^= IdleRestartIntervalSeconds.GetHashCode();
+      if (HasSaveOnExit) hash ^= SaveOnExit.GetHashCode();
+      if (HasAutoSaveIntervalSeconds) hash ^= AutoSaveIntervalSeconds.GetHashCode();
+      if (HasAutoSleep) hash ^= AutoSleep.GetHashCode();
+      if (HasHideFromPublicListing) hash ^= HideFromPublicListing.GetHashCode();
+      if (UpdateTags != false) hash ^= UpdateTags.GetHashCode();
+      hash ^= tags_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5672,6 +5914,35 @@ namespace Headless.Rpc {
         output.WriteRawTag(40);
         output.WriteEnum((int) AccessLevel);
       }
+      if (HasAwayKickMinutes) {
+        output.WriteRawTag(53);
+        output.WriteFloat(AwayKickMinutes);
+      }
+      if (HasIdleRestartIntervalSeconds) {
+        output.WriteRawTag(56);
+        output.WriteInt32(IdleRestartIntervalSeconds);
+      }
+      if (HasSaveOnExit) {
+        output.WriteRawTag(64);
+        output.WriteBool(SaveOnExit);
+      }
+      if (HasAutoSaveIntervalSeconds) {
+        output.WriteRawTag(72);
+        output.WriteInt32(AutoSaveIntervalSeconds);
+      }
+      if (HasAutoSleep) {
+        output.WriteRawTag(80);
+        output.WriteBool(AutoSleep);
+      }
+      if (HasHideFromPublicListing) {
+        output.WriteRawTag(88);
+        output.WriteBool(HideFromPublicListing);
+      }
+      if (UpdateTags != false) {
+        output.WriteRawTag(96);
+        output.WriteBool(UpdateTags);
+      }
+      tags_.WriteTo(output, _repeated_tags_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5702,6 +5973,35 @@ namespace Headless.Rpc {
         output.WriteRawTag(40);
         output.WriteEnum((int) AccessLevel);
       }
+      if (HasAwayKickMinutes) {
+        output.WriteRawTag(53);
+        output.WriteFloat(AwayKickMinutes);
+      }
+      if (HasIdleRestartIntervalSeconds) {
+        output.WriteRawTag(56);
+        output.WriteInt32(IdleRestartIntervalSeconds);
+      }
+      if (HasSaveOnExit) {
+        output.WriteRawTag(64);
+        output.WriteBool(SaveOnExit);
+      }
+      if (HasAutoSaveIntervalSeconds) {
+        output.WriteRawTag(72);
+        output.WriteInt32(AutoSaveIntervalSeconds);
+      }
+      if (HasAutoSleep) {
+        output.WriteRawTag(80);
+        output.WriteBool(AutoSleep);
+      }
+      if (HasHideFromPublicListing) {
+        output.WriteRawTag(88);
+        output.WriteBool(HideFromPublicListing);
+      }
+      if (UpdateTags != false) {
+        output.WriteRawTag(96);
+        output.WriteBool(UpdateTags);
+      }
+      tags_.WriteTo(ref output, _repeated_tags_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5727,6 +6027,28 @@ namespace Headless.Rpc {
       if (HasAccessLevel) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) AccessLevel);
       }
+      if (HasAwayKickMinutes) {
+        size += 1 + 4;
+      }
+      if (HasIdleRestartIntervalSeconds) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(IdleRestartIntervalSeconds);
+      }
+      if (HasSaveOnExit) {
+        size += 1 + 1;
+      }
+      if (HasAutoSaveIntervalSeconds) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AutoSaveIntervalSeconds);
+      }
+      if (HasAutoSleep) {
+        size += 1 + 1;
+      }
+      if (HasHideFromPublicListing) {
+        size += 1 + 1;
+      }
+      if (UpdateTags != false) {
+        size += 1 + 1;
+      }
+      size += tags_.CalculateSize(_repeated_tags_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -5754,6 +6076,28 @@ namespace Headless.Rpc {
       if (other.HasAccessLevel) {
         AccessLevel = other.AccessLevel;
       }
+      if (other.HasAwayKickMinutes) {
+        AwayKickMinutes = other.AwayKickMinutes;
+      }
+      if (other.HasIdleRestartIntervalSeconds) {
+        IdleRestartIntervalSeconds = other.IdleRestartIntervalSeconds;
+      }
+      if (other.HasSaveOnExit) {
+        SaveOnExit = other.SaveOnExit;
+      }
+      if (other.HasAutoSaveIntervalSeconds) {
+        AutoSaveIntervalSeconds = other.AutoSaveIntervalSeconds;
+      }
+      if (other.HasAutoSleep) {
+        AutoSleep = other.AutoSleep;
+      }
+      if (other.HasHideFromPublicListing) {
+        HideFromPublicListing = other.HideFromPublicListing;
+      }
+      if (other.UpdateTags != false) {
+        UpdateTags = other.UpdateTags;
+      }
+      tags_.Add(other.tags_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -5793,6 +6137,38 @@ namespace Headless.Rpc {
             AccessLevel = (global::Headless.Rpc.AccessLevel) input.ReadEnum();
             break;
           }
+          case 53: {
+            AwayKickMinutes = input.ReadFloat();
+            break;
+          }
+          case 56: {
+            IdleRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 64: {
+            SaveOnExit = input.ReadBool();
+            break;
+          }
+          case 72: {
+            AutoSaveIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 80: {
+            AutoSleep = input.ReadBool();
+            break;
+          }
+          case 88: {
+            HideFromPublicListing = input.ReadBool();
+            break;
+          }
+          case 96: {
+            UpdateTags = input.ReadBool();
+            break;
+          }
+          case 106: {
+            tags_.AddEntriesFrom(input, _repeated_tags_codec);
+            break;
+          }
         }
       }
     #endif
@@ -5830,6 +6206,38 @@ namespace Headless.Rpc {
           }
           case 40: {
             AccessLevel = (global::Headless.Rpc.AccessLevel) input.ReadEnum();
+            break;
+          }
+          case 53: {
+            AwayKickMinutes = input.ReadFloat();
+            break;
+          }
+          case 56: {
+            IdleRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 64: {
+            SaveOnExit = input.ReadBool();
+            break;
+          }
+          case 72: {
+            AutoSaveIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 80: {
+            AutoSleep = input.ReadBool();
+            break;
+          }
+          case 88: {
+            HideFromPublicListing = input.ReadBool();
+            break;
+          }
+          case 96: {
+            UpdateTags = input.ReadBool();
+            break;
+          }
+          case 106: {
+            tags_.AddEntriesFrom(ref input, _repeated_tags_codec);
             break;
           }
         }
@@ -6737,6 +7145,16 @@ namespace Headless.Rpc {
       maxUsers_ = other.maxUsers_;
       thumbnailUrl_ = other.thumbnailUrl_;
       startupParameters_ = other.startupParameters_ != null ? other.startupParameters_.Clone() : null;
+      sessionUrl_ = other.sessionUrl_;
+      timeRunningMs_ = other.timeRunningMs_;
+      awayKickMinutes_ = other.awayKickMinutes_;
+      idleRestartIntervalSeconds_ = other.idleRestartIntervalSeconds_;
+      saveOnExit_ = other.saveOnExit_;
+      autoSaveIntervalSeconds_ = other.autoSaveIntervalSeconds_;
+      autoSleep_ = other.autoSleep_;
+      hideFromPublicListing_ = other.hideFromPublicListing_;
+      tags_ = other.tags_.Clone();
+      lastSavedAt_ = other.lastSavedAt_ != null ? other.lastSavedAt_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -6856,6 +7274,125 @@ namespace Headless.Rpc {
       }
     }
 
+    /// <summary>Field number for the "session_url" field.</summary>
+    public const int SessionUrlFieldNumber = 9;
+    private string sessionUrl_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string SessionUrl {
+      get { return sessionUrl_; }
+      set {
+        sessionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "time_running_ms" field.</summary>
+    public const int TimeRunningMsFieldNumber = 10;
+    private int timeRunningMs_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int TimeRunningMs {
+      get { return timeRunningMs_; }
+      set {
+        timeRunningMs_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "away_kick_minutes" field.</summary>
+    public const int AwayKickMinutesFieldNumber = 11;
+    private float awayKickMinutes_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AwayKickMinutes {
+      get { return awayKickMinutes_; }
+      set {
+        awayKickMinutes_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "idle_restart_interval_seconds" field.</summary>
+    public const int IdleRestartIntervalSecondsFieldNumber = 12;
+    private int idleRestartIntervalSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int IdleRestartIntervalSeconds {
+      get { return idleRestartIntervalSeconds_; }
+      set {
+        idleRestartIntervalSeconds_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "save_on_exit" field.</summary>
+    public const int SaveOnExitFieldNumber = 13;
+    private bool saveOnExit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool SaveOnExit {
+      get { return saveOnExit_; }
+      set {
+        saveOnExit_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "auto_save_interval_seconds" field.</summary>
+    public const int AutoSaveIntervalSecondsFieldNumber = 14;
+    private int autoSaveIntervalSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int AutoSaveIntervalSeconds {
+      get { return autoSaveIntervalSeconds_; }
+      set {
+        autoSaveIntervalSeconds_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "auto_sleep" field.</summary>
+    public const int AutoSleepFieldNumber = 15;
+    private bool autoSleep_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool AutoSleep {
+      get { return autoSleep_; }
+      set {
+        autoSleep_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "hide_from_public_listing" field.</summary>
+    public const int HideFromPublicListingFieldNumber = 16;
+    private bool hideFromPublicListing_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HideFromPublicListing {
+      get { return hideFromPublicListing_; }
+      set {
+        hideFromPublicListing_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "tags" field.</summary>
+    public const int TagsFieldNumber = 17;
+    private static readonly pb::FieldCodec<string> _repeated_tags_codec
+        = pb::FieldCodec.ForString(138);
+    private readonly pbc::RepeatedField<string> tags_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<string> Tags {
+      get { return tags_; }
+    }
+
+    /// <summary>Field number for the "last_saved_at" field.</summary>
+    public const int LastSavedAtFieldNumber = 18;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp lastSavedAt_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp LastSavedAt {
+      get { return lastSavedAt_; }
+      set {
+        lastSavedAt_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -6879,6 +7416,16 @@ namespace Headless.Rpc {
       if (MaxUsers != other.MaxUsers) return false;
       if (ThumbnailUrl != other.ThumbnailUrl) return false;
       if (!object.Equals(StartupParameters, other.StartupParameters)) return false;
+      if (SessionUrl != other.SessionUrl) return false;
+      if (TimeRunningMs != other.TimeRunningMs) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AwayKickMinutes, other.AwayKickMinutes)) return false;
+      if (IdleRestartIntervalSeconds != other.IdleRestartIntervalSeconds) return false;
+      if (SaveOnExit != other.SaveOnExit) return false;
+      if (AutoSaveIntervalSeconds != other.AutoSaveIntervalSeconds) return false;
+      if (AutoSleep != other.AutoSleep) return false;
+      if (HideFromPublicListing != other.HideFromPublicListing) return false;
+      if(!tags_.Equals(other.tags_)) return false;
+      if (!object.Equals(LastSavedAt, other.LastSavedAt)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6894,6 +7441,16 @@ namespace Headless.Rpc {
       if (MaxUsers != 0) hash ^= MaxUsers.GetHashCode();
       if (HasThumbnailUrl) hash ^= ThumbnailUrl.GetHashCode();
       if (startupParameters_ != null) hash ^= StartupParameters.GetHashCode();
+      if (SessionUrl.Length != 0) hash ^= SessionUrl.GetHashCode();
+      if (TimeRunningMs != 0) hash ^= TimeRunningMs.GetHashCode();
+      if (AwayKickMinutes != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AwayKickMinutes);
+      if (IdleRestartIntervalSeconds != 0) hash ^= IdleRestartIntervalSeconds.GetHashCode();
+      if (SaveOnExit != false) hash ^= SaveOnExit.GetHashCode();
+      if (AutoSaveIntervalSeconds != 0) hash ^= AutoSaveIntervalSeconds.GetHashCode();
+      if (AutoSleep != false) hash ^= AutoSleep.GetHashCode();
+      if (HideFromPublicListing != false) hash ^= HideFromPublicListing.GetHashCode();
+      hash ^= tags_.GetHashCode();
+      if (lastSavedAt_ != null) hash ^= LastSavedAt.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6944,6 +7501,43 @@ namespace Headless.Rpc {
         output.WriteRawTag(64);
         output.WriteInt32(MaxUsers);
       }
+      if (SessionUrl.Length != 0) {
+        output.WriteRawTag(74);
+        output.WriteString(SessionUrl);
+      }
+      if (TimeRunningMs != 0) {
+        output.WriteRawTag(80);
+        output.WriteInt32(TimeRunningMs);
+      }
+      if (AwayKickMinutes != 0F) {
+        output.WriteRawTag(93);
+        output.WriteFloat(AwayKickMinutes);
+      }
+      if (IdleRestartIntervalSeconds != 0) {
+        output.WriteRawTag(96);
+        output.WriteInt32(IdleRestartIntervalSeconds);
+      }
+      if (SaveOnExit != false) {
+        output.WriteRawTag(104);
+        output.WriteBool(SaveOnExit);
+      }
+      if (AutoSaveIntervalSeconds != 0) {
+        output.WriteRawTag(112);
+        output.WriteInt32(AutoSaveIntervalSeconds);
+      }
+      if (AutoSleep != false) {
+        output.WriteRawTag(120);
+        output.WriteBool(AutoSleep);
+      }
+      if (HideFromPublicListing != false) {
+        output.WriteRawTag(128, 1);
+        output.WriteBool(HideFromPublicListing);
+      }
+      tags_.WriteTo(output, _repeated_tags_codec);
+      if (lastSavedAt_ != null) {
+        output.WriteRawTag(146, 1);
+        output.WriteMessage(LastSavedAt);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -6986,6 +7580,43 @@ namespace Headless.Rpc {
         output.WriteRawTag(64);
         output.WriteInt32(MaxUsers);
       }
+      if (SessionUrl.Length != 0) {
+        output.WriteRawTag(74);
+        output.WriteString(SessionUrl);
+      }
+      if (TimeRunningMs != 0) {
+        output.WriteRawTag(80);
+        output.WriteInt32(TimeRunningMs);
+      }
+      if (AwayKickMinutes != 0F) {
+        output.WriteRawTag(93);
+        output.WriteFloat(AwayKickMinutes);
+      }
+      if (IdleRestartIntervalSeconds != 0) {
+        output.WriteRawTag(96);
+        output.WriteInt32(IdleRestartIntervalSeconds);
+      }
+      if (SaveOnExit != false) {
+        output.WriteRawTag(104);
+        output.WriteBool(SaveOnExit);
+      }
+      if (AutoSaveIntervalSeconds != 0) {
+        output.WriteRawTag(112);
+        output.WriteInt32(AutoSaveIntervalSeconds);
+      }
+      if (AutoSleep != false) {
+        output.WriteRawTag(120);
+        output.WriteBool(AutoSleep);
+      }
+      if (HideFromPublicListing != false) {
+        output.WriteRawTag(128, 1);
+        output.WriteBool(HideFromPublicListing);
+      }
+      tags_.WriteTo(ref output, _repeated_tags_codec);
+      if (lastSavedAt_ != null) {
+        output.WriteRawTag(146, 1);
+        output.WriteMessage(LastSavedAt);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -7019,6 +7650,34 @@ namespace Headless.Rpc {
       }
       if (startupParameters_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(StartupParameters);
+      }
+      if (SessionUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionUrl);
+      }
+      if (TimeRunningMs != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(TimeRunningMs);
+      }
+      if (AwayKickMinutes != 0F) {
+        size += 1 + 4;
+      }
+      if (IdleRestartIntervalSeconds != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(IdleRestartIntervalSeconds);
+      }
+      if (SaveOnExit != false) {
+        size += 1 + 1;
+      }
+      if (AutoSaveIntervalSeconds != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AutoSaveIntervalSeconds);
+      }
+      if (AutoSleep != false) {
+        size += 1 + 1;
+      }
+      if (HideFromPublicListing != false) {
+        size += 2 + 1;
+      }
+      size += tags_.CalculateSize(_repeated_tags_codec);
+      if (lastSavedAt_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(LastSavedAt);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -7058,6 +7717,37 @@ namespace Headless.Rpc {
           StartupParameters = new global::Headless.Rpc.WorldStartupParameters();
         }
         StartupParameters.MergeFrom(other.StartupParameters);
+      }
+      if (other.SessionUrl.Length != 0) {
+        SessionUrl = other.SessionUrl;
+      }
+      if (other.TimeRunningMs != 0) {
+        TimeRunningMs = other.TimeRunningMs;
+      }
+      if (other.AwayKickMinutes != 0F) {
+        AwayKickMinutes = other.AwayKickMinutes;
+      }
+      if (other.IdleRestartIntervalSeconds != 0) {
+        IdleRestartIntervalSeconds = other.IdleRestartIntervalSeconds;
+      }
+      if (other.SaveOnExit != false) {
+        SaveOnExit = other.SaveOnExit;
+      }
+      if (other.AutoSaveIntervalSeconds != 0) {
+        AutoSaveIntervalSeconds = other.AutoSaveIntervalSeconds;
+      }
+      if (other.AutoSleep != false) {
+        AutoSleep = other.AutoSleep;
+      }
+      if (other.HideFromPublicListing != false) {
+        HideFromPublicListing = other.HideFromPublicListing;
+      }
+      tags_.Add(other.tags_);
+      if (other.lastSavedAt_ != null) {
+        if (lastSavedAt_ == null) {
+          LastSavedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        LastSavedAt.MergeFrom(other.LastSavedAt);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -7111,6 +7801,49 @@ namespace Headless.Rpc {
           }
           case 64: {
             MaxUsers = input.ReadInt32();
+            break;
+          }
+          case 74: {
+            SessionUrl = input.ReadString();
+            break;
+          }
+          case 80: {
+            TimeRunningMs = input.ReadInt32();
+            break;
+          }
+          case 93: {
+            AwayKickMinutes = input.ReadFloat();
+            break;
+          }
+          case 96: {
+            IdleRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 104: {
+            SaveOnExit = input.ReadBool();
+            break;
+          }
+          case 112: {
+            AutoSaveIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 120: {
+            AutoSleep = input.ReadBool();
+            break;
+          }
+          case 128: {
+            HideFromPublicListing = input.ReadBool();
+            break;
+          }
+          case 138: {
+            tags_.AddEntriesFrom(input, _repeated_tags_codec);
+            break;
+          }
+          case 146: {
+            if (lastSavedAt_ == null) {
+              LastSavedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(LastSavedAt);
             break;
           }
         }
@@ -7167,6 +7900,284 @@ namespace Headless.Rpc {
             MaxUsers = input.ReadInt32();
             break;
           }
+          case 74: {
+            SessionUrl = input.ReadString();
+            break;
+          }
+          case 80: {
+            TimeRunningMs = input.ReadInt32();
+            break;
+          }
+          case 93: {
+            AwayKickMinutes = input.ReadFloat();
+            break;
+          }
+          case 96: {
+            IdleRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 104: {
+            SaveOnExit = input.ReadBool();
+            break;
+          }
+          case 112: {
+            AutoSaveIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 120: {
+            AutoSleep = input.ReadBool();
+            break;
+          }
+          case 128: {
+            HideFromPublicListing = input.ReadBool();
+            break;
+          }
+          case 138: {
+            tags_.AddEntriesFrom(ref input, _repeated_tags_codec);
+            break;
+          }
+          case 146: {
+            if (lastSavedAt_ == null) {
+              LastSavedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(LastSavedAt);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class DefaultUserRole : pb::IMessage<DefaultUserRole>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<DefaultUserRole> _parser = new pb::MessageParser<DefaultUserRole>(() => new DefaultUserRole());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<DefaultUserRole> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[30]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DefaultUserRole() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DefaultUserRole(DefaultUserRole other) : this() {
+      role_ = other.role_;
+      userName_ = other.userName_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DefaultUserRole Clone() {
+      return new DefaultUserRole(this);
+    }
+
+    /// <summary>Field number for the "role" field.</summary>
+    public const int RoleFieldNumber = 1;
+    private string role_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Role {
+      get { return role_; }
+      set {
+        role_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "user_name" field.</summary>
+    public const int UserNameFieldNumber = 2;
+    private string userName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string UserName {
+      get { return userName_; }
+      set {
+        userName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as DefaultUserRole);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(DefaultUserRole other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Role != other.Role) return false;
+      if (UserName != other.UserName) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Role.Length != 0) hash ^= Role.GetHashCode();
+      if (UserName.Length != 0) hash ^= UserName.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Role.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Role);
+      }
+      if (UserName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(UserName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Role.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Role);
+      }
+      if (UserName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(UserName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Role.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Role);
+      }
+      if (UserName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserName);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(DefaultUserRole other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Role.Length != 0) {
+        Role = other.Role;
+      }
+      if (other.UserName.Length != 0) {
+        UserName = other.UserName;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Role = input.ReadString();
+            break;
+          }
+          case 18: {
+            UserName = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Role = input.ReadString();
+            break;
+          }
+          case 18: {
+            UserName = input.ReadString();
+            break;
+          }
         }
       }
     }
@@ -7190,7 +8201,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7214,9 +8225,17 @@ namespace Headless.Rpc {
       name_ = other.name_;
       customSessionId_ = other.customSessionId_;
       description_ = other.description_;
+      tags_ = other.tags_.Clone();
       maxUsers_ = other.maxUsers_;
       accessLevel_ = other.accessLevel_;
       autoInviteUsernames_ = other.autoInviteUsernames_.Clone();
+      hideFromPublicListing_ = other.hideFromPublicListing_;
+      defaultUserRoles_ = other.defaultUserRoles_.Clone();
+      awayKickMinutes_ = other.awayKickMinutes_;
+      idleRestartIntervalSeconds_ = other.idleRestartIntervalSeconds_;
+      saveOnExit_ = other.saveOnExit_;
+      autoSaveIntervalSeconds_ = other.autoSaveIntervalSeconds_;
+      autoSleep_ = other.autoSleep_;
       switch (other.LoadWorldCase) {
         case LoadWorldOneofCase.LoadWorldUrl:
           LoadWorldUrl = other.LoadWorldUrl;
@@ -7311,6 +8330,17 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void ClearDescription() {
       description_ = null;
+    }
+
+    /// <summary>Field number for the "tags" field.</summary>
+    public const int TagsFieldNumber = 10;
+    private static readonly pb::FieldCodec<string> _repeated_tags_codec
+        = pb::FieldCodec.ForString(82);
+    private readonly pbc::RepeatedField<string> tags_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<string> Tags {
+      get { return tags_; }
     }
 
     /// <summary>Field number for the "max_users" field.</summary>
@@ -7415,6 +8445,89 @@ namespace Headless.Rpc {
       get { return autoInviteUsernames_; }
     }
 
+    /// <summary>Field number for the "hide_from_public_listing" field.</summary>
+    public const int HideFromPublicListingFieldNumber = 9;
+    private bool hideFromPublicListing_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HideFromPublicListing {
+      get { return hideFromPublicListing_; }
+      set {
+        hideFromPublicListing_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "default_user_roles" field.</summary>
+    public const int DefaultUserRolesFieldNumber = 11;
+    private static readonly pb::FieldCodec<global::Headless.Rpc.DefaultUserRole> _repeated_defaultUserRoles_codec
+        = pb::FieldCodec.ForMessage(90, global::Headless.Rpc.DefaultUserRole.Parser);
+    private readonly pbc::RepeatedField<global::Headless.Rpc.DefaultUserRole> defaultUserRoles_ = new pbc::RepeatedField<global::Headless.Rpc.DefaultUserRole>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Headless.Rpc.DefaultUserRole> DefaultUserRoles {
+      get { return defaultUserRoles_; }
+    }
+
+    /// <summary>Field number for the "away_kick_minutes" field.</summary>
+    public const int AwayKickMinutesFieldNumber = 12;
+    private float awayKickMinutes_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AwayKickMinutes {
+      get { return awayKickMinutes_; }
+      set {
+        awayKickMinutes_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "idle_restart_interval_seconds" field.</summary>
+    public const int IdleRestartIntervalSecondsFieldNumber = 13;
+    private int idleRestartIntervalSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int IdleRestartIntervalSeconds {
+      get { return idleRestartIntervalSeconds_; }
+      set {
+        idleRestartIntervalSeconds_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "save_on_exit" field.</summary>
+    public const int SaveOnExitFieldNumber = 14;
+    private bool saveOnExit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool SaveOnExit {
+      get { return saveOnExit_; }
+      set {
+        saveOnExit_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "auto_save_interval_seconds" field.</summary>
+    public const int AutoSaveIntervalSecondsFieldNumber = 15;
+    private int autoSaveIntervalSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int AutoSaveIntervalSeconds {
+      get { return autoSaveIntervalSeconds_; }
+      set {
+        autoSaveIntervalSeconds_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "auto_sleep" field.</summary>
+    public const int AutoSleepFieldNumber = 16;
+    private bool autoSleep_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool AutoSleep {
+      get { return autoSleep_; }
+      set {
+        autoSleep_ = value;
+      }
+    }
+
     private object loadWorld_;
     /// <summary>Enum of possible cases for the "load_world" oneof.</summary>
     public enum LoadWorldOneofCase {
@@ -7454,11 +8567,19 @@ namespace Headless.Rpc {
       if (Name != other.Name) return false;
       if (CustomSessionId != other.CustomSessionId) return false;
       if (Description != other.Description) return false;
+      if(!tags_.Equals(other.tags_)) return false;
       if (MaxUsers != other.MaxUsers) return false;
       if (AccessLevel != other.AccessLevel) return false;
       if (LoadWorldUrl != other.LoadWorldUrl) return false;
       if (LoadWorldPresetName != other.LoadWorldPresetName) return false;
       if(!autoInviteUsernames_.Equals(other.autoInviteUsernames_)) return false;
+      if (HideFromPublicListing != other.HideFromPublicListing) return false;
+      if(!defaultUserRoles_.Equals(other.defaultUserRoles_)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AwayKickMinutes, other.AwayKickMinutes)) return false;
+      if (IdleRestartIntervalSeconds != other.IdleRestartIntervalSeconds) return false;
+      if (SaveOnExit != other.SaveOnExit) return false;
+      if (AutoSaveIntervalSeconds != other.AutoSaveIntervalSeconds) return false;
+      if (AutoSleep != other.AutoSleep) return false;
       if (LoadWorldCase != other.LoadWorldCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -7470,11 +8591,19 @@ namespace Headless.Rpc {
       if (HasName) hash ^= Name.GetHashCode();
       if (HasCustomSessionId) hash ^= CustomSessionId.GetHashCode();
       if (HasDescription) hash ^= Description.GetHashCode();
+      hash ^= tags_.GetHashCode();
       if (HasMaxUsers) hash ^= MaxUsers.GetHashCode();
       if (AccessLevel != global::Headless.Rpc.AccessLevel.Unspecified) hash ^= AccessLevel.GetHashCode();
       if (HasLoadWorldUrl) hash ^= LoadWorldUrl.GetHashCode();
       if (HasLoadWorldPresetName) hash ^= LoadWorldPresetName.GetHashCode();
       hash ^= autoInviteUsernames_.GetHashCode();
+      if (HideFromPublicListing != false) hash ^= HideFromPublicListing.GetHashCode();
+      hash ^= defaultUserRoles_.GetHashCode();
+      if (AwayKickMinutes != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AwayKickMinutes);
+      if (IdleRestartIntervalSeconds != 0) hash ^= IdleRestartIntervalSeconds.GetHashCode();
+      if (SaveOnExit != false) hash ^= SaveOnExit.GetHashCode();
+      if (AutoSaveIntervalSeconds != 0) hash ^= AutoSaveIntervalSeconds.GetHashCode();
+      if (AutoSleep != false) hash ^= AutoSleep.GetHashCode();
       hash ^= (int) loadWorldCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -7523,6 +8652,32 @@ namespace Headless.Rpc {
         output.WriteString(LoadWorldPresetName);
       }
       autoInviteUsernames_.WriteTo(output, _repeated_autoInviteUsernames_codec);
+      if (HideFromPublicListing != false) {
+        output.WriteRawTag(72);
+        output.WriteBool(HideFromPublicListing);
+      }
+      tags_.WriteTo(output, _repeated_tags_codec);
+      defaultUserRoles_.WriteTo(output, _repeated_defaultUserRoles_codec);
+      if (AwayKickMinutes != 0F) {
+        output.WriteRawTag(101);
+        output.WriteFloat(AwayKickMinutes);
+      }
+      if (IdleRestartIntervalSeconds != 0) {
+        output.WriteRawTag(104);
+        output.WriteInt32(IdleRestartIntervalSeconds);
+      }
+      if (SaveOnExit != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(SaveOnExit);
+      }
+      if (AutoSaveIntervalSeconds != 0) {
+        output.WriteRawTag(120);
+        output.WriteInt32(AutoSaveIntervalSeconds);
+      }
+      if (AutoSleep != false) {
+        output.WriteRawTag(128, 1);
+        output.WriteBool(AutoSleep);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -7562,6 +8717,32 @@ namespace Headless.Rpc {
         output.WriteString(LoadWorldPresetName);
       }
       autoInviteUsernames_.WriteTo(ref output, _repeated_autoInviteUsernames_codec);
+      if (HideFromPublicListing != false) {
+        output.WriteRawTag(72);
+        output.WriteBool(HideFromPublicListing);
+      }
+      tags_.WriteTo(ref output, _repeated_tags_codec);
+      defaultUserRoles_.WriteTo(ref output, _repeated_defaultUserRoles_codec);
+      if (AwayKickMinutes != 0F) {
+        output.WriteRawTag(101);
+        output.WriteFloat(AwayKickMinutes);
+      }
+      if (IdleRestartIntervalSeconds != 0) {
+        output.WriteRawTag(104);
+        output.WriteInt32(IdleRestartIntervalSeconds);
+      }
+      if (SaveOnExit != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(SaveOnExit);
+      }
+      if (AutoSaveIntervalSeconds != 0) {
+        output.WriteRawTag(120);
+        output.WriteInt32(AutoSaveIntervalSeconds);
+      }
+      if (AutoSleep != false) {
+        output.WriteRawTag(128, 1);
+        output.WriteBool(AutoSleep);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -7581,6 +8762,7 @@ namespace Headless.Rpc {
       if (HasDescription) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
       }
+      size += tags_.CalculateSize(_repeated_tags_codec);
       if (HasMaxUsers) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxUsers);
       }
@@ -7594,6 +8776,25 @@ namespace Headless.Rpc {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(LoadWorldPresetName);
       }
       size += autoInviteUsernames_.CalculateSize(_repeated_autoInviteUsernames_codec);
+      if (HideFromPublicListing != false) {
+        size += 1 + 1;
+      }
+      size += defaultUserRoles_.CalculateSize(_repeated_defaultUserRoles_codec);
+      if (AwayKickMinutes != 0F) {
+        size += 1 + 4;
+      }
+      if (IdleRestartIntervalSeconds != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(IdleRestartIntervalSeconds);
+      }
+      if (SaveOnExit != false) {
+        size += 1 + 1;
+      }
+      if (AutoSaveIntervalSeconds != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AutoSaveIntervalSeconds);
+      }
+      if (AutoSleep != false) {
+        size += 2 + 1;
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -7615,6 +8816,7 @@ namespace Headless.Rpc {
       if (other.HasDescription) {
         Description = other.Description;
       }
+      tags_.Add(other.tags_);
       if (other.HasMaxUsers) {
         MaxUsers = other.MaxUsers;
       }
@@ -7622,6 +8824,25 @@ namespace Headless.Rpc {
         AccessLevel = other.AccessLevel;
       }
       autoInviteUsernames_.Add(other.autoInviteUsernames_);
+      if (other.HideFromPublicListing != false) {
+        HideFromPublicListing = other.HideFromPublicListing;
+      }
+      defaultUserRoles_.Add(other.defaultUserRoles_);
+      if (other.AwayKickMinutes != 0F) {
+        AwayKickMinutes = other.AwayKickMinutes;
+      }
+      if (other.IdleRestartIntervalSeconds != 0) {
+        IdleRestartIntervalSeconds = other.IdleRestartIntervalSeconds;
+      }
+      if (other.SaveOnExit != false) {
+        SaveOnExit = other.SaveOnExit;
+      }
+      if (other.AutoSaveIntervalSeconds != 0) {
+        AutoSaveIntervalSeconds = other.AutoSaveIntervalSeconds;
+      }
+      if (other.AutoSleep != false) {
+        AutoSleep = other.AutoSleep;
+      }
       switch (other.LoadWorldCase) {
         case LoadWorldOneofCase.LoadWorldUrl:
           LoadWorldUrl = other.LoadWorldUrl;
@@ -7682,6 +8903,38 @@ namespace Headless.Rpc {
             autoInviteUsernames_.AddEntriesFrom(input, _repeated_autoInviteUsernames_codec);
             break;
           }
+          case 72: {
+            HideFromPublicListing = input.ReadBool();
+            break;
+          }
+          case 82: {
+            tags_.AddEntriesFrom(input, _repeated_tags_codec);
+            break;
+          }
+          case 90: {
+            defaultUserRoles_.AddEntriesFrom(input, _repeated_defaultUserRoles_codec);
+            break;
+          }
+          case 101: {
+            AwayKickMinutes = input.ReadFloat();
+            break;
+          }
+          case 104: {
+            IdleRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 112: {
+            SaveOnExit = input.ReadBool();
+            break;
+          }
+          case 120: {
+            AutoSaveIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 128: {
+            AutoSleep = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -7731,6 +8984,38 @@ namespace Headless.Rpc {
           }
           case 66: {
             autoInviteUsernames_.AddEntriesFrom(ref input, _repeated_autoInviteUsernames_codec);
+            break;
+          }
+          case 72: {
+            HideFromPublicListing = input.ReadBool();
+            break;
+          }
+          case 82: {
+            tags_.AddEntriesFrom(ref input, _repeated_tags_codec);
+            break;
+          }
+          case 90: {
+            defaultUserRoles_.AddEntriesFrom(ref input, _repeated_defaultUserRoles_codec);
+            break;
+          }
+          case 101: {
+            AwayKickMinutes = input.ReadFloat();
+            break;
+          }
+          case 104: {
+            IdleRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 112: {
+            SaveOnExit = input.ReadBool();
+            break;
+          }
+          case 120: {
+            AutoSaveIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 128: {
+            AutoSleep = input.ReadBool();
             break;
           }
         }
