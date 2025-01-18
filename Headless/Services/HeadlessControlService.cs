@@ -362,6 +362,15 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
 
     public override async Task<SearchUserInfoResponse> SearchUserInfo(SearchUserInfoRequest request, ServerCallContext context)
     {
+        if (request.HasUserId && request.UserId.Length < 2)
+        {
+            return new SearchUserInfoResponse();
+        }
+        if (request.HasUserName && request.UserName.Length == 0)
+        {
+            return new SearchUserInfoResponse();
+        }
+
         var contactResult = new List<Contact>();
         _engine.Cloud.Contacts.ForeachContact(c =>
         {
@@ -400,7 +409,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
                 }
             }
         });
-        var result = contactResult.Select(c => new Rpc.UserInfo { Id = c.ContactUserId, Name = c.ContactUsername, IconUrl = c.Profile.IconUrl }).ToList();
+        var result = contactResult.Select(c => new Rpc.UserInfo { Id = c.ContactUserId, Name = c.ContactUsername, IconUrl = c.Profile?.IconUrl ?? "" }).ToList();
         if (!request.OnlyInContacts && request.HasUserName)
         {
             var cloudResult = await _engine.Cloud.Users.GetUsers(request.UserName.Trim().ToLower());
