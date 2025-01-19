@@ -3,6 +3,7 @@ using Grpc.Core;
 using SkyFrost.Base;
 using Headless.Rpc;
 using Google.Protobuf.WellKnownTypes;
+using Headless.Libs;
 
 namespace Headless.Services;
 
@@ -25,6 +26,8 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         _applicationLifetime = applicationLifetime;
         _engine = engine;
         _worldService = worldService;
+
+        CloudUtils.Setup(_engine.Cloud.Assets);
     }
 
     public override Task<GetAboutResponse> GetAbout(GetAboutRequest request, ServerCallContext context)
@@ -350,7 +353,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         {
             Name = record.Name ?? "Unnamed",
             Description = record.Description ?? "",
-            ThumbnailUrl = record.ThumbnailURI ?? "",
+            ThumbnailUrl = CloudUtils.ResolveURL(record.ThumbnailURI) ?? "",
             DefaultMaxUsers = -1, // TODO
             OwnerId = record.OwnerId ?? "",
             IsPublic = record.IsPublic,
@@ -409,7 +412,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
                 }
             }
         });
-        var result = contactResult.Select(c => new Rpc.UserInfo { Id = c.ContactUserId, Name = c.ContactUsername, IconUrl = c.Profile?.IconUrl ?? "" }).ToList();
+        var result = contactResult.Select(c => new Rpc.UserInfo { Id = c.ContactUserId, Name = c.ContactUsername, IconUrl = CloudUtils.ResolveURL(c.Profile?.IconUrl) ?? "" }).ToList();
         if (!request.OnlyInContacts && request.HasUserName)
         {
             var cloudResult = await _engine.Cloud.Users.GetUsers(request.UserName.Trim().ToLower());
@@ -477,7 +480,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         };
         if (info.ThumbnailUrl is not null)
         {
-            result.ThumbnailUrl = info.ThumbnailUrl;
+            result.ThumbnailUrl = CloudUtils.ResolveURL(info.ThumbnailUrl);
         }
         return result;
     }
