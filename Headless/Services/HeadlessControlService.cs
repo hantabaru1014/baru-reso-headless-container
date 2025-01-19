@@ -306,8 +306,10 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
 
-        user.Kick();
-
+        session.WorldInstance.RunSynchronously(() => {
+            user.Kick();
+        });
+        
         return Task.FromResult(new KickUserResponse());
     }
 
@@ -332,7 +334,9 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
 
-        user.Ban();
+        session.WorldInstance.RunSynchronously(() => {
+            user.Ban();
+        });
 
         return Task.FromResult(new BanUserResponse());
     }
