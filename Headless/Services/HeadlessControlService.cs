@@ -14,6 +14,8 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
     private readonly Engine _engine;
     private readonly WorldService _worldService;
 
+    private bool _isShutdownRequested = false;
+
     public HeadlessControlService
     (
         ILogger<HeadlessControlService> logger,
@@ -51,7 +53,15 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
 
     public override Task<ShutdownResponse> Shutdown(ShutdownRequest request, ServerCallContext context)
     {
-        _engine.RequestShutdown();
+        if (!_isShutdownRequested)
+        {
+            _isShutdownRequested = true;
+
+            // OnShutdownRequest をフックにしてStandaloneFrooxEngineServiceのctをキャンセルするが、
+            // そのままRequestShutdownをしてしまうとEngineの更新が止まって保存したワールドのアップロードが開始しないので一回だけCancelShutdownしておく
+            _engine.CancelShutdown();
+            _engine.RequestShutdown();
+        }
         return Task.FromResult(new ShutdownResponse());
     }
 
@@ -80,6 +90,8 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
 
     public override async Task<StartWorldResponse> StartWorld(StartWorldRequest request, ServerCallContext context)
     {
+        if (_isShutdownRequested) throw new RpcException(new Status(StatusCode.Unavailable, "Already shutting down"));
+
         var reqParam = request.Parameters;
         if (!reqParam.HasLoadWorldUrl && !reqParam.HasLoadWorldPresetName)
         {
