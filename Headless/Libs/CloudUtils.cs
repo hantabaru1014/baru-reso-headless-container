@@ -4,11 +4,13 @@ namespace Headless.Libs;
 
 public static class CloudUtils
 {
+    private static SkyFrostInterface _cloud = SkyFrostConfig.DEFAULT_PRODUCTION.AssetInterface.Cloud;
     private static AssetInterface _assetInterface = SkyFrostConfig.DEFAULT_PRODUCTION.AssetInterface;
 
     public static void Setup(AssetInterface assetInterface)
     {
         _assetInterface = assetInterface;
+        _cloud = assetInterface.Cloud;
     }
 
     /// <summary>
@@ -33,5 +35,10 @@ public static class CloudUtils
     public static string? ResolveURL(string? url)
     {
         return url is not null ? ResolveURL(new Uri(url)).ToString() : null;
+    }
+
+    public static string MakeSessionGoURL(string sessionId)
+    {
+        return _cloud.ApiEndpoint + "/open/session/" + sessionId;
     }
 }

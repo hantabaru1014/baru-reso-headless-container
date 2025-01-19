@@ -468,7 +468,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             StartupParameters = ToRpcStartupParams(session.StartInfo),
             UsersCount = info.JoinedUsers,
             MaxUsers = info.MaximumUsers,
-            SessionUrl = info.SessionURLs.Count > 0 ? info.SessionURLs[0] : "",
+            SessionUrl = CloudUtils.MakeSessionGoURL(info.SessionId),
             TimeRunningMs = (int)Math.Round(session.TimeRunning.TotalMilliseconds),
             AwayKickMinutes = info.AwayKickMinutes,
             IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
