@@ -28,7 +28,34 @@ service HeadlessControlService {
   rpc SearchUserInfo(SearchUserInfoRequest) returns (SearchUserInfoResponse);
   rpc GetFriendRequests(GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
   rpc AcceptFriendRequests(AcceptFriendRequestsRequest) returns (AcceptFriendRequestsResponse);
+  rpc ListContacts(ListContactsRequest) returns (ListContactsResponse);
+  rpc GetContactMessages(GetContactMessagesRequest) returns (GetContactMessagesResponse);
+  rpc SendContactMessage(SendContactMessageRequest) returns (SendContactMessageResponse);
 }
+
+message ListContactsRequest {
+  int32 limit = 1;
+}
+
+message ListContactsResponse {
+  repeated UserInfo users = 1;
+}
+
+message GetContactMessagesRequest {
+  string user_id = 1;
+  int32 limit = 2;
+}
+
+message GetContactMessagesResponse {
+  repeated ContactChatMessage messages = 1;
+}
+
+message SendContactMessageRequest {
+  string user_id = 1;
+  string message = 2;
+}
+
+message SendContactMessageResponse {}
 
 message AcceptFriendRequestsRequest {
   repeated string user_ids = 1;
@@ -274,4 +301,20 @@ message WorldStartupParameters {
   bool save_on_exit = 14;
   int32 auto_save_interval_seconds = 15;
   bool auto_sleep = 16;
+}
+
+enum ContactChatMessageType {
+  CONTACT_CHAT_MESSAGE_TYPE_UNSPECIFIED = 0;
+  CONTACT_CHAT_MESSAGE_TYPE_TEXT = 1;
+  CONTACT_CHAT_MESSAGE_TYPE_OBJECT = 2;
+  CONTACT_CHAT_MESSAGE_TYPE_SOUND = 3;
+  CONTACT_CHAT_MESSAGE_TYPE_SESSION_INVITE = 4;
+}
+
+message ContactChatMessage {
+  string id = 1;
+  ContactChatMessageType type = 2;
+  string content = 3;
+  google.protobuf.Timestamp send_time = 4;
+  optional google.protobuf.Timestamp read_time = 5;
 }

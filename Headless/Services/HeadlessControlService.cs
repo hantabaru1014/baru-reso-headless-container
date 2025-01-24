@@ -474,6 +474,57 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         return Task.FromResult(new AcceptFriendRequestsResponse { });
     }
 
+    public override Task<ListContactsResponse> ListContacts(ListContactsRequest request, ServerCallContext context)
+    {
+        var contacts = new List<Contact>();
+        _engine.Cloud.Contacts.GetContacts(contacts);
+        var userInfos = contacts.Take(request.Limit).Select(c => new Rpc.UserInfo
+        {
+            Id = c.ContactUserId,
+            Name = c.ContactUsername,
+            IconUrl = CloudUtils.ResolveURL(c.Profile?.IconUrl) ?? ""
+        });
+        return Task.FromResult(new ListContactsResponse
+        {
+            Users = { userInfos }
+        });
+    }
+
+    public override async Task<GetContactMessagesResponse> GetContactMessages(GetContactMessagesRequest request, ServerCallContext context)
+    {
+        var result = await _engine.Cloud.Messages.GetMessageHistory(request.UserId, request.Limit);
+        if (result.IsError)
+        {
+            throw new RpcException(new Status(StatusCode.Internal, "Failed fetch from resonite cloud"));
+        }
+        var protoMessages = result.Entity.Select(m => new Rpc.ContactChatMessage
+        {
+            Id = m.Id,
+            Type = m.MessageType switch
+            {
+                SkyFrost.Base.MessageType.Object => ContactChatMessageType.Object,
+                SkyFrost.Base.MessageType.Sound => ContactChatMessageType.Sound,
+                SkyFrost.Base.MessageType.Text => ContactChatMessageType.Text,
+                SkyFrost.Base.MessageType.SessionInvite => ContactChatMessageType.SessionInvite,
+                _ => ContactChatMessageType.Unspecified
+            },
+            Content = m.Content,
+            SendTime = Timestamp.FromDateTime(m.SendTime),
+            ReadTime = m.ReadTime is not null ? Timestamp.FromDateTime((DateTime)m.ReadTime) : null,
+        }).Reverse();
+        return new GetContactMessagesResponse
+        {
+            Messages = { protoMessages }
+        };
+    }
+
+    public override async Task<SendContactMessageResponse> SendContactMessage(SendContactMessageRequest request, ServerCallContext context)
+    {
+        await _engine.Cloud.Messages.GetUserMessages(request.UserId).SendTextMessage(request.Message);
+
+        return new SendContactMessageResponse();
+    }
+
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
     {
         return level switch
