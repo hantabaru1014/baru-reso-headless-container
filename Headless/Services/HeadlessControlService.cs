@@ -306,10 +306,11 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
 
-        session.WorldInstance.RunSynchronously(() => {
+        session.WorldInstance.RunSynchronously(() =>
+        {
             user.Kick();
         });
-        
+
         return Task.FromResult(new KickUserResponse());
     }
 
@@ -334,7 +335,8 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
 
-        session.WorldInstance.RunSynchronously(() => {
+        session.WorldInstance.RunSynchronously(() =>
+        {
             user.Ban();
         });
 
@@ -441,6 +443,35 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         {
             Users = { result }
         };
+    }
+
+    public override Task<GetFriendRequestsResponse> GetFriendRequests(GetFriendRequestsRequest request, ServerCallContext context)
+    {
+        var contacts = new List<Contact>();
+        _engine.Cloud.Contacts.GetContacts(contacts);
+        var userInfos = contacts.FindAll(c => c.ContactStatus == ContactStatus.Requested).Select(c => new Rpc.UserInfo
+        {
+            Id = c.ContactUserId,
+            Name = c.ContactUsername,
+            IconUrl = CloudUtils.ResolveURL(c.Profile?.IconUrl) ?? ""
+        });
+        return Task.FromResult(new GetFriendRequestsResponse
+        {
+            Users = { userInfos }
+        });
+    }
+
+    public override Task<AcceptFriendRequestsResponse> AcceptFriendRequests(AcceptFriendRequestsRequest request, ServerCallContext context)
+    {
+        foreach (var userId in request.UserIds)
+        {
+            var contact = _engine.Cloud.Contacts.GetContact(userId);
+            if (contact.ContactStatus == ContactStatus.Requested)
+            {
+                _engine.Cloud.Contacts.AddContact(contact);
+            }
+        }
+        return Task.FromResult(new AcceptFriendRequestsResponse { });
     }
 
     public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)

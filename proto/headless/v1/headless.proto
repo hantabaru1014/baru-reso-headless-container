@@ -26,6 +26,20 @@ service HeadlessControlService {
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
   rpc FetchWorldInfo(FetchWorldInfoRequest) returns (FetchWorldInfoResponse);
   rpc SearchUserInfo(SearchUserInfoRequest) returns (SearchUserInfoResponse);
+  rpc GetFriendRequests(GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
+  rpc AcceptFriendRequests(AcceptFriendRequestsRequest) returns (AcceptFriendRequestsResponse);
+}
+
+message AcceptFriendRequestsRequest {
+  repeated string user_ids = 1;
+}
+
+message AcceptFriendRequestsResponse {}
+
+message GetFriendRequestsRequest {}
+
+message GetFriendRequestsResponse {
+  repeated UserInfo users = 1;
 }
 
 message KickUserRequest {

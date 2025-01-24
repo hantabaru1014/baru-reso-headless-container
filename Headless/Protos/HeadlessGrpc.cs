@@ -113,6 +113,14 @@ namespace Headless.Rpc {
     static readonly grpc::Marshaller<global::Headless.Rpc.SearchUserInfoRequest> __Marshaller_headless_v1_SearchUserInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SearchUserInfoRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.SearchUserInfoResponse> __Marshaller_headless_v1_SearchUserInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SearchUserInfoResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetFriendRequestsRequest> __Marshaller_headless_v1_GetFriendRequestsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetFriendRequestsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetFriendRequestsResponse> __Marshaller_headless_v1_GetFriendRequestsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetFriendRequestsResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.AcceptFriendRequestsRequest> __Marshaller_headless_v1_AcceptFriendRequestsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.AcceptFriendRequestsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.AcceptFriendRequestsResponse> __Marshaller_headless_v1_AcceptFriendRequestsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.AcceptFriendRequestsResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse> __Method_GetAbout = new grpc::Method<global::Headless.Rpc.GetAboutRequest, global::Headless.Rpc.GetAboutResponse>(
@@ -250,6 +258,22 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_SearchUserInfoRequest,
         __Marshaller_headless_v1_SearchUserInfoResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.GetFriendRequestsRequest, global::Headless.Rpc.GetFriendRequestsResponse> __Method_GetFriendRequests = new grpc::Method<global::Headless.Rpc.GetFriendRequestsRequest, global::Headless.Rpc.GetFriendRequestsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetFriendRequests",
+        __Marshaller_headless_v1_GetFriendRequestsRequest,
+        __Marshaller_headless_v1_GetFriendRequestsResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.AcceptFriendRequestsRequest, global::Headless.Rpc.AcceptFriendRequestsResponse> __Method_AcceptFriendRequests = new grpc::Method<global::Headless.Rpc.AcceptFriendRequestsRequest, global::Headless.Rpc.AcceptFriendRequestsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "AcceptFriendRequests",
+        __Marshaller_headless_v1_AcceptFriendRequestsRequest,
+        __Marshaller_headless_v1_AcceptFriendRequestsResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -364,6 +388,18 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.SearchUserInfoResponse> SearchUserInfo(global::Headless.Rpc.SearchUserInfoRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.GetFriendRequestsResponse> GetFriendRequests(global::Headless.Rpc.GetFriendRequestsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.AcceptFriendRequestsResponse> AcceptFriendRequests(global::Headless.Rpc.AcceptFriendRequestsRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -765,6 +801,46 @@ namespace Headless.Rpc {
       {
         return CallInvoker.AsyncUnaryCall(__Method_SearchUserInfo, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetFriendRequestsResponse GetFriendRequests(global::Headless.Rpc.GetFriendRequestsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetFriendRequests(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetFriendRequestsResponse GetFriendRequests(global::Headless.Rpc.GetFriendRequestsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetFriendRequests, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetFriendRequestsResponse> GetFriendRequestsAsync(global::Headless.Rpc.GetFriendRequestsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetFriendRequestsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetFriendRequestsResponse> GetFriendRequestsAsync(global::Headless.Rpc.GetFriendRequestsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetFriendRequests, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.AcceptFriendRequestsResponse AcceptFriendRequests(global::Headless.Rpc.AcceptFriendRequestsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AcceptFriendRequests(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.AcceptFriendRequestsResponse AcceptFriendRequests(global::Headless.Rpc.AcceptFriendRequestsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_AcceptFriendRequests, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.AcceptFriendRequestsResponse> AcceptFriendRequestsAsync(global::Headless.Rpc.AcceptFriendRequestsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AcceptFriendRequestsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.AcceptFriendRequestsResponse> AcceptFriendRequestsAsync(global::Headless.Rpc.AcceptFriendRequestsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_AcceptFriendRequests, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override HeadlessControlServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -795,7 +871,9 @@ namespace Headless.Rpc {
           .AddMethod(__Method_BanUser, serviceImpl.BanUser)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
           .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
-          .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo).Build();
+          .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo)
+          .AddMethod(__Method_GetFriendRequests, serviceImpl.GetFriendRequests)
+          .AddMethod(__Method_AcceptFriendRequests, serviceImpl.AcceptFriendRequests).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -822,6 +900,8 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));
       serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));
+      serviceBinder.AddMethod(__Method_GetFriendRequests, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetFriendRequestsRequest, global::Headless.Rpc.GetFriendRequestsResponse>(serviceImpl.GetFriendRequests));
+      serviceBinder.AddMethod(__Method_AcceptFriendRequests, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.AcceptFriendRequestsRequest, global::Headless.Rpc.AcceptFriendRequestsResponse>(serviceImpl.AcceptFriendRequests));
     }
 
   }
