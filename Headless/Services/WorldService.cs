@@ -46,7 +46,7 @@ public class WorldService
         World? startedWorld;
         try
         {
-            var startSettings = await startupParameters.GenerateStartSettings();
+            var startSettings = await startupParameters.GenerateStartSettings(_engine.PlatformProfile);
             startSettings.CreateLoadIndicator = false;
             startedWorld = await Userspace.OpenWorld(startSettings);
         }
