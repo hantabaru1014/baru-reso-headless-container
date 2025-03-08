@@ -265,7 +265,7 @@ message Session {
   optional string thumbnail_url = 5;
   WorldStartupParameters startup_parameters = 6;
   string session_url = 9;
-  int32 time_running_ms = 10;
+  int32 time_running_ms = 10 [deprecated = true];
   float away_kick_minutes = 11;
   int32 idle_restart_interval_seconds = 12;
   bool save_on_exit = 13;
@@ -275,6 +275,8 @@ message Session {
   repeated string tags = 17;
   google.protobuf.Timestamp last_saved_at = 18;
   bool can_save = 19;
+  string world_url = 20;
+  google.protobuf.Timestamp started_at = 21;
 }
 
 message DefaultUserRole {

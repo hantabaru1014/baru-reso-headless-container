@@ -568,13 +568,15 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             MaxUsers = info.MaximumUsers,
             SessionUrl = CloudUtils.MakeSessionGoURL(info.SessionId),
             TimeRunningMs = (int)Math.Round(session.TimeRunning.TotalMilliseconds),
-            AwayKickMinutes = info.AwayKickMinutes,
+            StartedAt = Timestamp.FromDateTime(info.SessionBeginTime),
+            AwayKickMinutes = info.AwayKickEnabled ? info.AwayKickMinutes : -1,
             IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
             SaveOnExit = session.WorldInstance.SaveOnExit,
             AutoSaveIntervalSeconds = (int)session.AutosaveInterval.TotalSeconds,
             HideFromPublicListing = info.HideFromListing,
             LastSavedAt = Timestamp.FromDateTimeOffset(session.LastSaveTime),
             CanSave = Userspace.CanSave(session.WorldInstance),
+            WorldUrl = session.WorldInstance.RecordURL.ToString(),
         };
         if (info.ThumbnailUrl is not null)
         {
