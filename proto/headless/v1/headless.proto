@@ -303,6 +303,11 @@ message WorldStartupParameters {
   bool save_on_exit = 14;
   int32 auto_save_interval_seconds = 15;
   bool auto_sleep = 16;
+  repeated string invite_request_handler_usernames = 17;
+  uint32 force_port = 18;
+  repeated string parent_session_ids = 19;
+  bool auto_recover = 20;
+  int32 forced_restart_interval_seconds = 21;
 }
 
 enum ContactChatMessageType {

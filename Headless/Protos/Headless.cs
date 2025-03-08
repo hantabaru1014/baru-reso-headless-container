@@ -136,7 +136,7 @@ namespace Headless.Rpc {
             "GwoJd29ybGRfdXJsGBQgASgJUgh3b3JsZFVybBI5CgpzdGFydGVkX2F0GBUg",
             "ASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJc3RhcnRlZEF0QhAK",
             "Dl90aHVtYm5haWxfdXJsIkIKD0RlZmF1bHRVc2VyUm9sZRISCgRyb2xlGAEg",
-            "ASgJUgRyb2xlEhsKCXVzZXJfbmFtZRgCIAEoCVIIdXNlck5hbWUizAYKFldv",
+            "ASgJUgRyb2xlEhsKCXVzZXJfbmFtZRgCIAEoCVIIdXNlck5hbWUizAgKFldv",
             "cmxkU3RhcnR1cFBhcmFtZXRlcnMSFwoEbmFtZRgBIAEoCUgBUgRuYW1liAEB",
             "Ei8KEWN1c3RvbV9zZXNzaW9uX2lkGAIgASgJSAJSD2N1c3RvbVNlc3Npb25J",
             "ZIgBARIlCgtkZXNjcmlwdGlvbhgDIAEoCUgDUgtkZXNjcmlwdGlvbogBARIS",
@@ -154,68 +154,74 @@ namespace Headless.Rpc {
             "YWxTZWNvbmRzEiAKDHNhdmVfb25fZXhpdBgOIAEoCFIKc2F2ZU9uRXhpdBI7",
             "ChphdXRvX3NhdmVfaW50ZXJ2YWxfc2Vjb25kcxgPIAEoBVIXYXV0b1NhdmVJ",
             "bnRlcnZhbFNlY29uZHMSHQoKYXV0b19zbGVlcBgQIAEoCFIJYXV0b1NsZWVw",
-            "QgwKCmxvYWRfd29ybGRCBwoFX25hbWVCFAoSX2N1c3RvbV9zZXNzaW9uX2lk",
-            "Qg4KDF9kZXNjcmlwdGlvbkIMCgpfbWF4X3VzZXJzIvwBChJDb250YWN0Q2hh",
-            "dE1lc3NhZ2USDgoCaWQYASABKAlSAmlkEjcKBHR5cGUYAiABKA4yIy5oZWFk",
-            "bGVzcy52MS5Db250YWN0Q2hhdE1lc3NhZ2VUeXBlUgR0eXBlEhgKB2NvbnRl",
-            "bnQYAyABKAlSB2NvbnRlbnQSNwoJc2VuZF90aW1lGAQgASgLMhouZ29vZ2xl",
-            "LnByb3RvYnVmLlRpbWVzdGFtcFIIc2VuZFRpbWUSPAoJcmVhZF90aW1lGAUg",
-            "ASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgAUghyZWFkVGltZYgB",
-            "AUIMCgpfcmVhZF90aW1lKtIBCgtBY2Nlc3NMZXZlbBIcChhBQ0NFU1NfTEVW",
-            "RUxfVU5TUEVDSUZJRUQQABIYChRBQ0NFU1NfTEVWRUxfUFJJVkFURRABEhQK",
-            "EEFDQ0VTU19MRVZFTF9MQU4QAhIZChVBQ0NFU1NfTEVWRUxfQ09OVEFDVFMQ",
-            "AxIeChpBQ0NFU1NfTEVWRUxfQ09OVEFDVFNfUExVUxAEEiEKHUFDQ0VTU19M",
-            "RVZFTF9SRUdJU1RFUkVEX1VTRVJTEAUSFwoTQUNDRVNTX0xFVkVMX0FOWU9O",
-            "RRAGKuABChZDb250YWN0Q2hhdE1lc3NhZ2VUeXBlEikKJUNPTlRBQ1RfQ0hB",
-            "VF9NRVNTQUdFX1RZUEVfVU5TUEVDSUZJRUQQABIiCh5DT05UQUNUX0NIQVRf",
-            "TUVTU0FHRV9UWVBFX1RFWFQQARIkCiBDT05UQUNUX0NIQVRfTUVTU0FHRV9U",
-            "WVBFX09CSkVDVBACEiMKH0NPTlRBQ1RfQ0hBVF9NRVNTQUdFX1RZUEVfU09V",
-            "TkQQAxIsCihDT05UQUNUX0NIQVRfTUVTU0FHRV9UWVBFX1NFU1NJT05fSU5W",
-            "SVRFEAQytw8KFkhlYWRsZXNzQ29udHJvbFNlcnZpY2USRwoIR2V0QWJvdXQS",
-            "HC5oZWFkbGVzcy52MS5HZXRBYm91dFJlcXVlc3QaHS5oZWFkbGVzcy52MS5H",
-            "ZXRBYm91dFJlc3BvbnNlEkoKCUdldFN0YXR1cxIdLmhlYWRsZXNzLnYxLkdl",
-            "dFN0YXR1c1JlcXVlc3QaHi5oZWFkbGVzcy52MS5HZXRTdGF0dXNSZXNwb25z",
-            "ZRJHCghTaHV0ZG93bhIcLmhlYWRsZXNzLnYxLlNodXRkb3duUmVxdWVzdBod",
-            "LmhlYWRsZXNzLnYxLlNodXRkb3duUmVzcG9uc2USUwoMTGlzdFNlc3Npb25z",
-            "EiAuaGVhZGxlc3MudjEuTGlzdFNlc3Npb25zUmVxdWVzdBohLmhlYWRsZXNz",
-            "LnYxLkxpc3RTZXNzaW9uc1Jlc3BvbnNlEk0KCkdldFNlc3Npb24SHi5oZWFk",
-            "bGVzcy52MS5HZXRTZXNzaW9uUmVxdWVzdBofLmhlYWRsZXNzLnYxLkdldFNl",
-            "c3Npb25SZXNwb25zZRJNCgpTdGFydFdvcmxkEh4uaGVhZGxlc3MudjEuU3Rh",
-            "cnRXb3JsZFJlcXVlc3QaHy5oZWFkbGVzcy52MS5TdGFydFdvcmxkUmVzcG9u",
-            "c2USUAoLU3RvcFNlc3Npb24SHy5oZWFkbGVzcy52MS5TdG9wU2Vzc2lvblJl",
-            "cXVlc3QaIC5oZWFkbGVzcy52MS5TdG9wU2Vzc2lvblJlc3BvbnNlEl8KEFNh",
-            "dmVTZXNzaW9uV29ybGQSJC5oZWFkbGVzcy52MS5TYXZlU2Vzc2lvbldvcmxk",
-            "UmVxdWVzdBolLmhlYWRsZXNzLnYxLlNhdmVTZXNzaW9uV29ybGRSZXNwb25z",
-            "ZRJNCgpJbnZpdGVVc2VyEh4uaGVhZGxlc3MudjEuSW52aXRlVXNlclJlcXVl",
-            "c3QaHy5oZWFkbGVzcy52MS5JbnZpdGVVc2VyUmVzcG9uc2USWQoOVXBkYXRl",
-            "VXNlclJvbGUSIi5oZWFkbGVzcy52MS5VcGRhdGVVc2VyUm9sZVJlcXVlc3Qa",
-            "Iy5oZWFkbGVzcy52MS5VcGRhdGVVc2VyUm9sZVJlc3BvbnNlEnQKF1VwZGF0",
-            "ZVNlc3Npb25QYXJhbWV0ZXJzEisuaGVhZGxlc3MudjEuVXBkYXRlU2Vzc2lv",
-            "blBhcmFtZXRlcnNSZXF1ZXN0GiwuaGVhZGxlc3MudjEuVXBkYXRlU2Vzc2lv",
-            "blBhcmFtZXRlcnNSZXNwb25zZRJlChJMaXN0VXNlcnNJblNlc3Npb24SJi5o",
-            "ZWFkbGVzcy52MS5MaXN0VXNlcnNJblNlc3Npb25SZXF1ZXN0GicuaGVhZGxl",
-            "c3MudjEuTGlzdFVzZXJzSW5TZXNzaW9uUmVzcG9uc2USRwoIS2lja1VzZXIS",
-            "HC5oZWFkbGVzcy52MS5LaWNrVXNlclJlcXVlc3QaHS5oZWFkbGVzcy52MS5L",
-            "aWNrVXNlclJlc3BvbnNlEkQKB0JhblVzZXISGy5oZWFkbGVzcy52MS5CYW5V",
-            "c2VyUmVxdWVzdBocLmhlYWRsZXNzLnYxLkJhblVzZXJSZXNwb25zZRJZCg5H",
-            "ZXRBY2NvdW50SW5mbxIiLmhlYWRsZXNzLnYxLkdldEFjY291bnRJbmZvUmVx",
-            "dWVzdBojLmhlYWRsZXNzLnYxLkdldEFjY291bnRJbmZvUmVzcG9uc2USWQoO",
-            "RmV0Y2hXb3JsZEluZm8SIi5oZWFkbGVzcy52MS5GZXRjaFdvcmxkSW5mb1Jl",
-            "cXVlc3QaIy5oZWFkbGVzcy52MS5GZXRjaFdvcmxkSW5mb1Jlc3BvbnNlElkK",
-            "DlNlYXJjaFVzZXJJbmZvEiIuaGVhZGxlc3MudjEuU2VhcmNoVXNlckluZm9S",
-            "ZXF1ZXN0GiMuaGVhZGxlc3MudjEuU2VhcmNoVXNlckluZm9SZXNwb25zZRJi",
-            "ChFHZXRGcmllbmRSZXF1ZXN0cxIlLmhlYWRsZXNzLnYxLkdldEZyaWVuZFJl",
-            "cXVlc3RzUmVxdWVzdBomLmhlYWRsZXNzLnYxLkdldEZyaWVuZFJlcXVlc3Rz",
-            "UmVzcG9uc2USawoUQWNjZXB0RnJpZW5kUmVxdWVzdHMSKC5oZWFkbGVzcy52",
-            "MS5BY2NlcHRGcmllbmRSZXF1ZXN0c1JlcXVlc3QaKS5oZWFkbGVzcy52MS5B",
-            "Y2NlcHRGcmllbmRSZXF1ZXN0c1Jlc3BvbnNlElMKDExpc3RDb250YWN0cxIg",
-            "LmhlYWRsZXNzLnYxLkxpc3RDb250YWN0c1JlcXVlc3QaIS5oZWFkbGVzcy52",
-            "MS5MaXN0Q29udGFjdHNSZXNwb25zZRJlChJHZXRDb250YWN0TWVzc2FnZXMS",
-            "Ji5oZWFkbGVzcy52MS5HZXRDb250YWN0TWVzc2FnZXNSZXF1ZXN0GicuaGVh",
-            "ZGxlc3MudjEuR2V0Q29udGFjdE1lc3NhZ2VzUmVzcG9uc2USZQoSU2VuZENv",
-            "bnRhY3RNZXNzYWdlEiYuaGVhZGxlc3MudjEuU2VuZENvbnRhY3RNZXNzYWdl",
-            "UmVxdWVzdBonLmhlYWRsZXNzLnYxLlNlbmRDb250YWN0TWVzc2FnZVJlc3Bv",
-            "bnNlQg+qAgxIZWFkbGVzcy5ScGNiBnByb3RvMw=="));
+            "EkcKIGludml0ZV9yZXF1ZXN0X2hhbmRsZXJfdXNlcm5hbWVzGBEgAygJUh1p",
+            "bnZpdGVSZXF1ZXN0SGFuZGxlclVzZXJuYW1lcxIdCgpmb3JjZV9wb3J0GBIg",
+            "ASgNUglmb3JjZVBvcnQSLAoScGFyZW50X3Nlc3Npb25faWRzGBMgAygJUhBw",
+            "YXJlbnRTZXNzaW9uSWRzEiEKDGF1dG9fcmVjb3ZlchgUIAEoCFILYXV0b1Jl",
+            "Y292ZXISRQofZm9yY2VkX3Jlc3RhcnRfaW50ZXJ2YWxfc2Vjb25kcxgVIAEo",
+            "BVIcZm9yY2VkUmVzdGFydEludGVydmFsU2Vjb25kc0IMCgpsb2FkX3dvcmxk",
+            "QgcKBV9uYW1lQhQKEl9jdXN0b21fc2Vzc2lvbl9pZEIOCgxfZGVzY3JpcHRp",
+            "b25CDAoKX21heF91c2VycyL8AQoSQ29udGFjdENoYXRNZXNzYWdlEg4KAmlk",
+            "GAEgASgJUgJpZBI3CgR0eXBlGAIgASgOMiMuaGVhZGxlc3MudjEuQ29udGFj",
+            "dENoYXRNZXNzYWdlVHlwZVIEdHlwZRIYCgdjb250ZW50GAMgASgJUgdjb250",
+            "ZW50EjcKCXNlbmRfdGltZRgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
+            "c3RhbXBSCHNlbmRUaW1lEjwKCXJlYWRfdGltZRgFIAEoCzIaLmdvb2dsZS5w",
+            "cm90b2J1Zi5UaW1lc3RhbXBIAFIIcmVhZFRpbWWIAQFCDAoKX3JlYWRfdGlt",
+            "ZSrSAQoLQWNjZXNzTGV2ZWwSHAoYQUNDRVNTX0xFVkVMX1VOU1BFQ0lGSUVE",
+            "EAASGAoUQUNDRVNTX0xFVkVMX1BSSVZBVEUQARIUChBBQ0NFU1NfTEVWRUxf",
+            "TEFOEAISGQoVQUNDRVNTX0xFVkVMX0NPTlRBQ1RTEAMSHgoaQUNDRVNTX0xF",
+            "VkVMX0NPTlRBQ1RTX1BMVVMQBBIhCh1BQ0NFU1NfTEVWRUxfUkVHSVNURVJF",
+            "RF9VU0VSUxAFEhcKE0FDQ0VTU19MRVZFTF9BTllPTkUQBirgAQoWQ29udGFj",
+            "dENoYXRNZXNzYWdlVHlwZRIpCiVDT05UQUNUX0NIQVRfTUVTU0FHRV9UWVBF",
+            "X1VOU1BFQ0lGSUVEEAASIgoeQ09OVEFDVF9DSEFUX01FU1NBR0VfVFlQRV9U",
+            "RVhUEAESJAogQ09OVEFDVF9DSEFUX01FU1NBR0VfVFlQRV9PQkpFQ1QQAhIj",
+            "Ch9DT05UQUNUX0NIQVRfTUVTU0FHRV9UWVBFX1NPVU5EEAMSLAooQ09OVEFD",
+            "VF9DSEFUX01FU1NBR0VfVFlQRV9TRVNTSU9OX0lOVklURRAEMrcPChZIZWFk",
+            "bGVzc0NvbnRyb2xTZXJ2aWNlEkcKCEdldEFib3V0EhwuaGVhZGxlc3MudjEu",
+            "R2V0QWJvdXRSZXF1ZXN0Gh0uaGVhZGxlc3MudjEuR2V0QWJvdXRSZXNwb25z",
+            "ZRJKCglHZXRTdGF0dXMSHS5oZWFkbGVzcy52MS5HZXRTdGF0dXNSZXF1ZXN0",
+            "Gh4uaGVhZGxlc3MudjEuR2V0U3RhdHVzUmVzcG9uc2USRwoIU2h1dGRvd24S",
+            "HC5oZWFkbGVzcy52MS5TaHV0ZG93blJlcXVlc3QaHS5oZWFkbGVzcy52MS5T",
+            "aHV0ZG93blJlc3BvbnNlElMKDExpc3RTZXNzaW9ucxIgLmhlYWRsZXNzLnYx",
+            "Lkxpc3RTZXNzaW9uc1JlcXVlc3QaIS5oZWFkbGVzcy52MS5MaXN0U2Vzc2lv",
+            "bnNSZXNwb25zZRJNCgpHZXRTZXNzaW9uEh4uaGVhZGxlc3MudjEuR2V0U2Vz",
+            "c2lvblJlcXVlc3QaHy5oZWFkbGVzcy52MS5HZXRTZXNzaW9uUmVzcG9uc2US",
+            "TQoKU3RhcnRXb3JsZBIeLmhlYWRsZXNzLnYxLlN0YXJ0V29ybGRSZXF1ZXN0",
+            "Gh8uaGVhZGxlc3MudjEuU3RhcnRXb3JsZFJlc3BvbnNlElAKC1N0b3BTZXNz",
+            "aW9uEh8uaGVhZGxlc3MudjEuU3RvcFNlc3Npb25SZXF1ZXN0GiAuaGVhZGxl",
+            "c3MudjEuU3RvcFNlc3Npb25SZXNwb25zZRJfChBTYXZlU2Vzc2lvbldvcmxk",
+            "EiQuaGVhZGxlc3MudjEuU2F2ZVNlc3Npb25Xb3JsZFJlcXVlc3QaJS5oZWFk",
+            "bGVzcy52MS5TYXZlU2Vzc2lvbldvcmxkUmVzcG9uc2USTQoKSW52aXRlVXNl",
+            "chIeLmhlYWRsZXNzLnYxLkludml0ZVVzZXJSZXF1ZXN0Gh8uaGVhZGxlc3Mu",
+            "djEuSW52aXRlVXNlclJlc3BvbnNlElkKDlVwZGF0ZVVzZXJSb2xlEiIuaGVh",
+            "ZGxlc3MudjEuVXBkYXRlVXNlclJvbGVSZXF1ZXN0GiMuaGVhZGxlc3MudjEu",
+            "VXBkYXRlVXNlclJvbGVSZXNwb25zZRJ0ChdVcGRhdGVTZXNzaW9uUGFyYW1l",
+            "dGVycxIrLmhlYWRsZXNzLnYxLlVwZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVx",
+            "dWVzdBosLmhlYWRsZXNzLnYxLlVwZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVz",
+            "cG9uc2USZQoSTGlzdFVzZXJzSW5TZXNzaW9uEiYuaGVhZGxlc3MudjEuTGlz",
+            "dFVzZXJzSW5TZXNzaW9uUmVxdWVzdBonLmhlYWRsZXNzLnYxLkxpc3RVc2Vy",
+            "c0luU2Vzc2lvblJlc3BvbnNlEkcKCEtpY2tVc2VyEhwuaGVhZGxlc3MudjEu",
+            "S2lja1VzZXJSZXF1ZXN0Gh0uaGVhZGxlc3MudjEuS2lja1VzZXJSZXNwb25z",
+            "ZRJECgdCYW5Vc2VyEhsuaGVhZGxlc3MudjEuQmFuVXNlclJlcXVlc3QaHC5o",
+            "ZWFkbGVzcy52MS5CYW5Vc2VyUmVzcG9uc2USWQoOR2V0QWNjb3VudEluZm8S",
+            "Ii5oZWFkbGVzcy52MS5HZXRBY2NvdW50SW5mb1JlcXVlc3QaIy5oZWFkbGVz",
+            "cy52MS5HZXRBY2NvdW50SW5mb1Jlc3BvbnNlElkKDkZldGNoV29ybGRJbmZv",
+            "EiIuaGVhZGxlc3MudjEuRmV0Y2hXb3JsZEluZm9SZXF1ZXN0GiMuaGVhZGxl",
+            "c3MudjEuRmV0Y2hXb3JsZEluZm9SZXNwb25zZRJZCg5TZWFyY2hVc2VySW5m",
+            "bxIiLmhlYWRsZXNzLnYxLlNlYXJjaFVzZXJJbmZvUmVxdWVzdBojLmhlYWRs",
+            "ZXNzLnYxLlNlYXJjaFVzZXJJbmZvUmVzcG9uc2USYgoRR2V0RnJpZW5kUmVx",
+            "dWVzdHMSJS5oZWFkbGVzcy52MS5HZXRGcmllbmRSZXF1ZXN0c1JlcXVlc3Qa",
+            "Ji5oZWFkbGVzcy52MS5HZXRGcmllbmRSZXF1ZXN0c1Jlc3BvbnNlEmsKFEFj",
+            "Y2VwdEZyaWVuZFJlcXVlc3RzEiguaGVhZGxlc3MudjEuQWNjZXB0RnJpZW5k",
+            "UmVxdWVzdHNSZXF1ZXN0GikuaGVhZGxlc3MudjEuQWNjZXB0RnJpZW5kUmVx",
+            "dWVzdHNSZXNwb25zZRJTCgxMaXN0Q29udGFjdHMSIC5oZWFkbGVzcy52MS5M",
+            "aXN0Q29udGFjdHNSZXF1ZXN0GiEuaGVhZGxlc3MudjEuTGlzdENvbnRhY3Rz",
+            "UmVzcG9uc2USZQoSR2V0Q29udGFjdE1lc3NhZ2VzEiYuaGVhZGxlc3MudjEu",
+            "R2V0Q29udGFjdE1lc3NhZ2VzUmVxdWVzdBonLmhlYWRsZXNzLnYxLkdldENv",
+            "bnRhY3RNZXNzYWdlc1Jlc3BvbnNlEmUKElNlbmRDb250YWN0TWVzc2FnZRIm",
+            "LmhlYWRsZXNzLnYxLlNlbmRDb250YWN0TWVzc2FnZVJlcXVlc3QaJy5oZWFk",
+            "bGVzcy52MS5TZW5kQ29udGFjdE1lc3NhZ2VSZXNwb25zZUIPqgIMSGVhZGxl",
+            "c3MuUnBjYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Headless.Rpc.AccessLevel), typeof(global::Headless.Rpc.ContactChatMessageType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -267,7 +273,7 @@ namespace Headless.Rpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UserInfo), global::Headless.Rpc.UserInfo.Parser, new[]{ "Id", "Name", "IconUrl" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.Session), global::Headless.Rpc.Session.Parser, new[]{ "Id", "Name", "Description", "AccessLevel", "UsersCount", "MaxUsers", "ThumbnailUrl", "StartupParameters", "SessionUrl", "TimeRunningMs", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing", "Tags", "LastSavedAt", "CanSave", "WorldUrl", "StartedAt" }, new[]{ "ThumbnailUrl" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.DefaultUserRole), global::Headless.Rpc.DefaultUserRole.Parser, new[]{ "Role", "UserName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "Name", "CustomSessionId", "Description", "Tags", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames", "HideFromPublicListing", "DefaultUserRoles", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep" }, new[]{ "LoadWorld", "Name", "CustomSessionId", "Description", "MaxUsers" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "Name", "CustomSessionId", "Description", "Tags", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames", "HideFromPublicListing", "DefaultUserRoles", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "InviteRequestHandlerUsernames", "ForcePort", "ParentSessionIds", "AutoRecover", "ForcedRestartIntervalSeconds" }, new[]{ "LoadWorld", "Name", "CustomSessionId", "Description", "MaxUsers" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ContactChatMessage), global::Headless.Rpc.ContactChatMessage.Parser, new[]{ "Id", "Type", "Content", "SendTime", "ReadTime" }, new[]{ "ReadTime" }, null, null, null)
           }));
     }
@@ -12155,6 +12161,11 @@ namespace Headless.Rpc {
       saveOnExit_ = other.saveOnExit_;
       autoSaveIntervalSeconds_ = other.autoSaveIntervalSeconds_;
       autoSleep_ = other.autoSleep_;
+      inviteRequestHandlerUsernames_ = other.inviteRequestHandlerUsernames_.Clone();
+      forcePort_ = other.forcePort_;
+      parentSessionIds_ = other.parentSessionIds_.Clone();
+      autoRecover_ = other.autoRecover_;
+      forcedRestartIntervalSeconds_ = other.forcedRestartIntervalSeconds_;
       switch (other.LoadWorldCase) {
         case LoadWorldOneofCase.LoadWorldUrl:
           LoadWorldUrl = other.LoadWorldUrl;
@@ -12447,6 +12458,64 @@ namespace Headless.Rpc {
       }
     }
 
+    /// <summary>Field number for the "invite_request_handler_usernames" field.</summary>
+    public const int InviteRequestHandlerUsernamesFieldNumber = 17;
+    private static readonly pb::FieldCodec<string> _repeated_inviteRequestHandlerUsernames_codec
+        = pb::FieldCodec.ForString(138);
+    private readonly pbc::RepeatedField<string> inviteRequestHandlerUsernames_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<string> InviteRequestHandlerUsernames {
+      get { return inviteRequestHandlerUsernames_; }
+    }
+
+    /// <summary>Field number for the "force_port" field.</summary>
+    public const int ForcePortFieldNumber = 18;
+    private uint forcePort_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint ForcePort {
+      get { return forcePort_; }
+      set {
+        forcePort_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "parent_session_ids" field.</summary>
+    public const int ParentSessionIdsFieldNumber = 19;
+    private static readonly pb::FieldCodec<string> _repeated_parentSessionIds_codec
+        = pb::FieldCodec.ForString(154);
+    private readonly pbc::RepeatedField<string> parentSessionIds_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<string> ParentSessionIds {
+      get { return parentSessionIds_; }
+    }
+
+    /// <summary>Field number for the "auto_recover" field.</summary>
+    public const int AutoRecoverFieldNumber = 20;
+    private bool autoRecover_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool AutoRecover {
+      get { return autoRecover_; }
+      set {
+        autoRecover_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "forced_restart_interval_seconds" field.</summary>
+    public const int ForcedRestartIntervalSecondsFieldNumber = 21;
+    private int forcedRestartIntervalSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ForcedRestartIntervalSeconds {
+      get { return forcedRestartIntervalSeconds_; }
+      set {
+        forcedRestartIntervalSeconds_ = value;
+      }
+    }
+
     private object loadWorld_;
     /// <summary>Enum of possible cases for the "load_world" oneof.</summary>
     public enum LoadWorldOneofCase {
@@ -12499,6 +12568,11 @@ namespace Headless.Rpc {
       if (SaveOnExit != other.SaveOnExit) return false;
       if (AutoSaveIntervalSeconds != other.AutoSaveIntervalSeconds) return false;
       if (AutoSleep != other.AutoSleep) return false;
+      if(!inviteRequestHandlerUsernames_.Equals(other.inviteRequestHandlerUsernames_)) return false;
+      if (ForcePort != other.ForcePort) return false;
+      if(!parentSessionIds_.Equals(other.parentSessionIds_)) return false;
+      if (AutoRecover != other.AutoRecover) return false;
+      if (ForcedRestartIntervalSeconds != other.ForcedRestartIntervalSeconds) return false;
       if (LoadWorldCase != other.LoadWorldCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -12523,6 +12597,11 @@ namespace Headless.Rpc {
       if (SaveOnExit != false) hash ^= SaveOnExit.GetHashCode();
       if (AutoSaveIntervalSeconds != 0) hash ^= AutoSaveIntervalSeconds.GetHashCode();
       if (AutoSleep != false) hash ^= AutoSleep.GetHashCode();
+      hash ^= inviteRequestHandlerUsernames_.GetHashCode();
+      if (ForcePort != 0) hash ^= ForcePort.GetHashCode();
+      hash ^= parentSessionIds_.GetHashCode();
+      if (AutoRecover != false) hash ^= AutoRecover.GetHashCode();
+      if (ForcedRestartIntervalSeconds != 0) hash ^= ForcedRestartIntervalSeconds.GetHashCode();
       hash ^= (int) loadWorldCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -12597,6 +12676,20 @@ namespace Headless.Rpc {
         output.WriteRawTag(128, 1);
         output.WriteBool(AutoSleep);
       }
+      inviteRequestHandlerUsernames_.WriteTo(output, _repeated_inviteRequestHandlerUsernames_codec);
+      if (ForcePort != 0) {
+        output.WriteRawTag(144, 1);
+        output.WriteUInt32(ForcePort);
+      }
+      parentSessionIds_.WriteTo(output, _repeated_parentSessionIds_codec);
+      if (AutoRecover != false) {
+        output.WriteRawTag(160, 1);
+        output.WriteBool(AutoRecover);
+      }
+      if (ForcedRestartIntervalSeconds != 0) {
+        output.WriteRawTag(168, 1);
+        output.WriteInt32(ForcedRestartIntervalSeconds);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -12662,6 +12755,20 @@ namespace Headless.Rpc {
         output.WriteRawTag(128, 1);
         output.WriteBool(AutoSleep);
       }
+      inviteRequestHandlerUsernames_.WriteTo(ref output, _repeated_inviteRequestHandlerUsernames_codec);
+      if (ForcePort != 0) {
+        output.WriteRawTag(144, 1);
+        output.WriteUInt32(ForcePort);
+      }
+      parentSessionIds_.WriteTo(ref output, _repeated_parentSessionIds_codec);
+      if (AutoRecover != false) {
+        output.WriteRawTag(160, 1);
+        output.WriteBool(AutoRecover);
+      }
+      if (ForcedRestartIntervalSeconds != 0) {
+        output.WriteRawTag(168, 1);
+        output.WriteInt32(ForcedRestartIntervalSeconds);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -12714,6 +12821,17 @@ namespace Headless.Rpc {
       if (AutoSleep != false) {
         size += 2 + 1;
       }
+      size += inviteRequestHandlerUsernames_.CalculateSize(_repeated_inviteRequestHandlerUsernames_codec);
+      if (ForcePort != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeUInt32Size(ForcePort);
+      }
+      size += parentSessionIds_.CalculateSize(_repeated_parentSessionIds_codec);
+      if (AutoRecover != false) {
+        size += 2 + 1;
+      }
+      if (ForcedRestartIntervalSeconds != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(ForcedRestartIntervalSeconds);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -12761,6 +12879,17 @@ namespace Headless.Rpc {
       }
       if (other.AutoSleep != false) {
         AutoSleep = other.AutoSleep;
+      }
+      inviteRequestHandlerUsernames_.Add(other.inviteRequestHandlerUsernames_);
+      if (other.ForcePort != 0) {
+        ForcePort = other.ForcePort;
+      }
+      parentSessionIds_.Add(other.parentSessionIds_);
+      if (other.AutoRecover != false) {
+        AutoRecover = other.AutoRecover;
+      }
+      if (other.ForcedRestartIntervalSeconds != 0) {
+        ForcedRestartIntervalSeconds = other.ForcedRestartIntervalSeconds;
       }
       switch (other.LoadWorldCase) {
         case LoadWorldOneofCase.LoadWorldUrl:
@@ -12854,6 +12983,26 @@ namespace Headless.Rpc {
             AutoSleep = input.ReadBool();
             break;
           }
+          case 138: {
+            inviteRequestHandlerUsernames_.AddEntriesFrom(input, _repeated_inviteRequestHandlerUsernames_codec);
+            break;
+          }
+          case 144: {
+            ForcePort = input.ReadUInt32();
+            break;
+          }
+          case 154: {
+            parentSessionIds_.AddEntriesFrom(input, _repeated_parentSessionIds_codec);
+            break;
+          }
+          case 160: {
+            AutoRecover = input.ReadBool();
+            break;
+          }
+          case 168: {
+            ForcedRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -12935,6 +13084,26 @@ namespace Headless.Rpc {
           }
           case 128: {
             AutoSleep = input.ReadBool();
+            break;
+          }
+          case 138: {
+            inviteRequestHandlerUsernames_.AddEntriesFrom(ref input, _repeated_inviteRequestHandlerUsernames_codec);
+            break;
+          }
+          case 144: {
+            ForcePort = input.ReadUInt32();
+            break;
+          }
+          case 154: {
+            parentSessionIds_.AddEntriesFrom(ref input, _repeated_parentSessionIds_codec);
+            break;
+          }
+          case 160: {
+            AutoRecover = input.ReadBool();
+            break;
+          }
+          case 168: {
+            ForcedRestartIntervalSeconds = input.ReadInt32();
             break;
           }
         }

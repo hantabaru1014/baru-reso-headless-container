@@ -110,11 +110,15 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             DefaultUserRoles = reqParam.DefaultUserRoles.ToDictionary(p => p.UserName, p => p.Role),
             HideFromPublicListing = reqParam.HideFromPublicListing,
             AwayKickMinutes = reqParam.AwayKickMinutes == 0 ? -1 : reqParam.AwayKickMinutes,
-            IdleRestartInterval = reqParam.IdleRestartIntervalSeconds,
+            IdleRestartInterval = reqParam.IdleRestartIntervalSeconds == 0 ? -1 : reqParam.IdleRestartIntervalSeconds,
             SaveOnExit = reqParam.SaveOnExit,
-            AutoSaveInterval = reqParam.AutoSaveIntervalSeconds,
+            AutoSaveInterval = reqParam.AutoSaveIntervalSeconds == 0 ? -1 : reqParam.AutoSaveIntervalSeconds,
             AutoSleep = reqParam.AutoSleep,
-            AutoRecover = true,
+            AutoRecover = reqParam.AutoRecover,
+            ForcePort = reqParam.ForcePort == 0 ? null : (ushort)reqParam.ForcePort,
+            ParentSessionIds = reqParam.ParentSessionIds.ToList(),
+            ForcedRestartInterval = reqParam.ForcedRestartIntervalSeconds == 0 ? -1 : reqParam.ForcedRestartIntervalSeconds,
+            InviteRequestHandlerUsernames = reqParam.InviteRequestHandlerUsernames.ToList(),
         };
         if (reqParam.HasMaxUsers)
         {
@@ -600,6 +604,11 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             SaveOnExit = parameters.SaveOnExit,
             AutoSaveIntervalSeconds = (int)parameters.AutoSaveInterval,
             AutoSleep = parameters.AutoSleep,
+            ForcePort = parameters.ForcePort ?? 0,
+            ParentSessionIds = { parameters.ParentSessionIds ?? [] },
+            AutoRecover = parameters.AutoRecover,
+            ForcedRestartIntervalSeconds = (int)parameters.ForcedRestartInterval,
+            InviteRequestHandlerUsernames = { parameters.InviteRequestHandlerUsernames ?? [] }
         };
         if (parameters.SessionName is not null)
         {
