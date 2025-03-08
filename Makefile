@@ -34,9 +34,6 @@ build.docker:
 build.prepatcher:
 	dotnet publish -c Release -o ./bin/prepatch ./EnginePrePatcher/EnginePrePatcher.csproj
 
-./DepotDownloader:
-	./scripts/download-depot-downloader.sh
-
-.PHONY: install.resonite
-install.resonite: ./DepotDownloader
+.PHONY: download.resonite
+download.resonite:
 	./scripts/download-resonite.sh
