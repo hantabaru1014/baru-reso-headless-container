@@ -580,8 +580,11 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             HideFromPublicListing = info.HideFromListing,
             LastSavedAt = Timestamp.FromDateTimeOffset(session.LastSaveTime),
             CanSave = Userspace.CanSave(session.WorldInstance),
-            WorldUrl = session.WorldInstance.RecordURL.ToString(),
         };
+        if (session.WorldInstance.RecordURL != null)
+        {
+            result.WorldUrl = session.WorldInstance.RecordURL.ToString();
+        }
         if (info.ThumbnailUrl is not null)
         {
             result.ThumbnailUrl = CloudUtils.ResolveURL(info.ThumbnailUrl);
