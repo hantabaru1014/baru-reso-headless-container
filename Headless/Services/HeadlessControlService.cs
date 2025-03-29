@@ -350,8 +350,12 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
     public override Task<GetAccountInfoResponse> GetAccountInfo(GetAccountInfoRequest request, ServerCallContext context)
     {
         var cloud = _engine.Cloud;
-        var storage = cloud.Storage.CurrentStorage;
+        if (cloud.CurrentUser is null)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, $"Headless is not login"));
+        }
 
+        var storage = cloud.Storage.CurrentStorage;
         return Task.FromResult(new GetAccountInfoResponse
         {
             UserId = cloud.CurrentUserID,
