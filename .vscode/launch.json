@@ -5,25 +5,24 @@
             // IntelliSense を使用して、C# デバッグに存在する属性を確認します
             // 既存の属性の説明にホバーを使用する
             // 詳細については、https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md を参照してください。
-            "name": ".NET Core Launch (web)",
+            "name": ".NET Launch",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // ターゲット フレームワークを変更した場合は、プログラム パスを更新するようにしてください。
-            "program": "${workspaceFolder}/Headless/bin/Debug/net8.0/Headless.dll",
+            "program": "${workspaceFolder}/Headless/bin/Debug/net9.0/Headless.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Headless",
             "stopAtEntry": false,
-            // ASP.NET Core の起動時に Web ブラウザーの起動を有効にします。詳細については、次を参照してください: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+            "envFile": "${workspaceFolder}/.env",
+            "justMyCode": false,
+            "symbolOptions": {
+                "searchPaths": [],
+                "searchMicrosoftSymbolServer": false,
+                "searchNuGetOrgSymbolServer": false
             }
         },
         {
