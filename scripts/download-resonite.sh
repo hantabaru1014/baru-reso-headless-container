@@ -58,5 +58,6 @@ if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
   cp ./native-libs/arm64/* ./Resonite/Headless/
 else
   cp ./Resonite/Headless/runtimes/linux-x64/native/* ./Resonite/Headless/
+  mkdir -p ./native-libs/amd64
   cp ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
 fi
