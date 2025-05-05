@@ -38,6 +38,7 @@ jobs:
           STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
           HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
         run: |
+          chmod +x ${GITHUB_WORKSPACE}/scripts/download_resonite.sh
           if [ "${{ github.event.inputs.resonite_branch }}" == "prerelease" ]; then
             USE_PRERELEASE=true bash ${GITHUB_WORKSPACE}/scripts/download_resonite.sh
           elif [ "${{ github.event.inputs.resonite_branch }}" == "headless" ]; then
