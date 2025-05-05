@@ -1,6 +1,7 @@
 using System.Reflection;
 using FrooxEngine;
 using PhotonDust;
+using Awwdio;
 using Headless.Configuration;
 using Headless.Extensions;
 using Microsoft.Extensions.Options;
@@ -161,6 +162,7 @@ public class StandaloneFrooxEngineService : BackgroundService
         _type = typeof(FrooxEngine.Store.Record);
         _type = typeof(PhotonDust.ParticleSystem);
         _type = typeof(ScaleMultiplierMode);
+        _type = typeof(AudioSimulator);
     }
 
     private async Task ShutdownEngineAsync()
@@ -183,10 +185,6 @@ public class StandaloneFrooxEngineService : BackgroundService
 
     private async Task EngineLoopAsync(CancellationToken ct = default)
     {
-        var audioStartTime = DateTimeOffset.UtcNow;
-        var audioTime = 0.0;
-        var audioTickRate = 1.0 / _configService.Config.TickRate;
-
         using var tickTimer = new PeriodicTimer(TimeSpan.FromSeconds(1.0 / _configService.Config.TickRate));
 
         Task? shutdownEngineTask = null;
@@ -204,13 +202,6 @@ public class StandaloneFrooxEngineService : BackgroundService
             catch (Exception e)
             {
                 _logger.LogError(e, "Unexpected error during engine update loop");
-            }
-
-            audioTime += audioTickRate * 48000f;
-            if (audioTime >= 1024.0)
-            {
-                audioTime = (audioTime - 1024.0) % 1024.0;
-                DummyAudioConnector.UpdateCallback((DateTimeOffset.UtcNow - audioStartTime).TotalMilliseconds * 1000);
             }
 
             if (!ct.IsCancellationRequested || isShuttingDown || !_applicationStartupComplete)
