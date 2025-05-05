@@ -64,6 +64,7 @@
     <None Include="$(ResonitePath)/*.dll" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(ResonitePath)/*.xml" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(ResonitePath)/*.config" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(ResonitePath)/*.so" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(ResonitePath)/RuntimeData/**" CopyToOutputDirectory="PreserveNewest" LinkBase="RuntimeData/" />
   </ItemGroup>
 

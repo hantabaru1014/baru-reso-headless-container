@@ -32,16 +32,16 @@ jobs:
         with:
           ref: ${{ github.event.inputs.git_branch }}
 
-      - name: Download Resonite (SteamCMD)
+      - name: Download Resonite
         env:
           STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
           STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
           HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
         run: |
           if [ "${{ github.event.inputs.resonite_branch }}" == "prerelease" ]; then
-            docker run -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta prerelease" +quit
+            USE_PRERELEASE=true bash ./scripts/download_resonite.sh
           elif [ "${{ github.event.inputs.resonite_branch }}" == "headless" ]; then
-            docker run -v $PWD/Resonite:/data steamcmd/steamcmd:latest +force_install_dir /data +login $STEAM_USERNAME $STEAM_PASSWORD "+app_update 2519830 -beta headless -betapassword $HEADLESS_PASSWORD" +quit
+            bash ./scripts/download_resonite.sh
           fi
 
       - name: Read Resonite Version
