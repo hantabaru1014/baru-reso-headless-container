@@ -33,7 +33,7 @@ chmod 777 "$PWD/Resonite"
 echo "アーキテクチャ: $(uname -m)"
 echo "使用するイメージ: $IMAGE_NAME"
 
-docker run -it \
+docker run \
   -v "$PWD/Resonite:$INSTALL_DIR" \
   --entrypoint "$ENTRYPOINT" \
   "$IMAGE_NAME" \
