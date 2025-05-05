@@ -1,6 +1,6 @@
 using System.Reflection;
-using System.Text.Json;
 using FrooxEngine;
+using PhotonDust;
 using Headless.Configuration;
 using Headless.Extensions;
 using Microsoft.Extensions.Options;
@@ -100,8 +100,6 @@ public class StandaloneFrooxEngineService : BackgroundService
     {
         LoadTypes();
 
-        _logger.LogInformation(JsonSerializer.Serialize(_configService.Config));
-
         _engine.UsernameOverride = _configService.Config.UsernameOverride;
         _engine.EnvironmentShutdownCallback = () => _engineShutdownComplete = true;
         _engine.OnShutdownRequest += OnShutdownRequest;
@@ -161,6 +159,8 @@ public class StandaloneFrooxEngineService : BackgroundService
         _type = typeof(FrooxEngine.ProtoFlux.Runtimes.Execution.VoidNode<>);
         _type = typeof(ProtoFlux.Runtimes.Execution.Nodes.Math.TangentPointFloat);
         _type = typeof(FrooxEngine.Store.Record);
+        _type = typeof(PhotonDust.ParticleSystem);
+        _type = typeof(ScaleMultiplierMode);
     }
 
     private async Task ShutdownEngineAsync()

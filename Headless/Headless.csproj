@@ -11,9 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="8.0.7" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +42,9 @@
     </Reference>
     <Reference Include="ProtoFluxBindings">
       <HintPath>$(ResonitePath)/ProtoFluxBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonDust">
+      <HintPath>$(ResonitePath)/PhotonDust.dll</HintPath>
     </Reference>
     <Reference Include="Hardware.Info">
       <HintPath>$(ResonitePath)/Hardware.Info.dll</HintPath>
