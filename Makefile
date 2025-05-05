@@ -37,3 +37,7 @@ build.prepatcher:
 .PHONY: download.resonite
 download.resonite:
 	./scripts/download-resonite.sh
+
+.PHONY: download.resonite-pre
+download.resonite-pre:
+	USE_PRERELEASE=true ./scripts/download-resonite.sh

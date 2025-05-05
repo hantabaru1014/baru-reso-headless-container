@@ -15,12 +15,17 @@ mkdir -p "$PWD/Resonite"
 IMAGE_NAME="steamcmd/steamcmd:latest"
 ENTRYPOINT="steamcmd"
 INSTALL_DIR="/data"
+APP_BRANCH="+app_update 2519830 -beta headless -betapassword $HEADLESS_PASSWORD"
 
 if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
   IMAGE_NAME="ghcr.io/sonroyaalmerol/steamcmd-arm64:latest"
   ENTRYPOINT="./steamcmd.sh"
   # ARM64の場合は異なるインストールディレクトリを使用
   INSTALL_DIR="/home/steam/Steam/steamapps/common/Resonite"
+fi
+
+if [ "${USE_PRERELEASE}" = "true" ]; then
+  APP_BRANCH="+app_update 2519830 -beta prerelease"
 fi
 
 chmod 777 "$PWD/Resonite"
@@ -34,7 +39,7 @@ docker run -it \
   "$IMAGE_NAME" \
   +force_install_dir "$INSTALL_DIR" \
   +login "$STEAM_USERNAME" "$STEAM_PASSWORD" \
-  "+app_update 2519830 -beta headless -betapassword $HEADLESS_PASSWORD" \
+  "$APP_BRANCH" \
   +quit
 
 if ! sudo chown -R "$USER:$USER" Resonite; then

@@ -11,6 +11,11 @@ on:
         options:
           - "headless"
           - "prerelease"
+      git_branch:
+        type: string
+        required: false
+        description: "Source git branch"
+        default: "main"
   # push:
   #   branches: [ "main" ]
 
@@ -24,6 +29,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.git_branch }}
 
       - name: Download Resonite (SteamCMD)
         env:
