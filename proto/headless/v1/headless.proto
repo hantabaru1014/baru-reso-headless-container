@@ -21,6 +21,10 @@ service HeadlessControlService {
   rpc ListUsersInSession(ListUsersInSessionRequest) returns (ListUsersInSessionResponse);
   rpc KickUser(KickUserRequest) returns (KickUserResponse);
   rpc BanUser(BanUserRequest) returns (BanUserResponse);
+  rpc GetHostSettings(GetHostSettingsRequest) returns (GetHostSettingsResponse);
+  rpc UpdateHostSettings(UpdateHostSettingsRequest) returns (UpdateHostSettingsResponse);
+  rpc AllowHostAccess(AllowHostAccessRequest) returns (AllowHostAccessResponse);
+  rpc DenyHostAccess(DenyHostAccessRequest) returns (DenyHostAccessResponse);
 
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
@@ -32,6 +36,43 @@ service HeadlessControlService {
   rpc GetContactMessages(GetContactMessagesRequest) returns (GetContactMessagesResponse);
   rpc SendContactMessage(SendContactMessageRequest) returns (SendContactMessageResponse);
 }
+
+message GetHostSettingsRequest {}
+
+message GetHostSettingsResponse {
+  optional string universe_id = 1;
+  float tick_rate = 2;
+  int32 max_concurrent_asset_transfers = 3;
+  optional string username_override = 4;
+  repeated AllowedAccessEntry allowed_url_hosts = 5;
+  repeated string auto_spawn_items = 6;
+}
+
+message UpdateHostSettingsRequest {
+  optional float tick_rate = 1;
+  optional int32 max_concurrent_asset_transfers = 2;
+  optional string username_override = 3;
+  bool update_auto_spawn_items = 4;
+  repeated string auto_spawn_items = 5;
+}
+
+message UpdateHostSettingsResponse {}
+
+message AllowHostAccessRequest {
+  string host = 1;
+  int32 port = 2;
+  AllowedAccessEntry.AccessType access_type = 3;
+}
+
+message AllowHostAccessResponse {}
+
+message DenyHostAccessRequest {
+  string host = 1;
+  optional int32 port = 2;
+  AllowedAccessEntry.AccessType access_type = 3;
+}
+
+message DenyHostAccessResponse {}
 
 message ListContactsRequest {
   int32 limit = 1;
@@ -324,4 +365,18 @@ message ContactChatMessage {
   string content = 3;
   google.protobuf.Timestamp send_time = 4;
   optional google.protobuf.Timestamp read_time = 5;
+}
+
+message AllowedAccessEntry {
+  enum AccessType {
+    ACCESS_TYPE_UNSPECIFIED = 0;
+    ACCESS_TYPE_HTTP = 1;
+    ACCESS_TYPE_WEBSOCKET = 2;
+    ACCESS_TYPE_OSC_RECEIVING = 3;
+    ACCESS_TYPE_OSC_SENDING = 4;
+  }
+
+  string host = 1;
+  repeated int32 ports = 2;
+  repeated AccessType access_types = 3;
 }

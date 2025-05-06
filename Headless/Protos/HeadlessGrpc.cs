@@ -102,6 +102,22 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.BanUserResponse> __Marshaller_headless_v1_BanUserResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.BanUserResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetHostSettingsRequest> __Marshaller_headless_v1_GetHostSettingsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetHostSettingsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetHostSettingsResponse> __Marshaller_headless_v1_GetHostSettingsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetHostSettingsResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.UpdateHostSettingsRequest> __Marshaller_headless_v1_UpdateHostSettingsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.UpdateHostSettingsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.UpdateHostSettingsResponse> __Marshaller_headless_v1_UpdateHostSettingsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.UpdateHostSettingsResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.AllowHostAccessRequest> __Marshaller_headless_v1_AllowHostAccessRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.AllowHostAccessRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.AllowHostAccessResponse> __Marshaller_headless_v1_AllowHostAccessResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.AllowHostAccessResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.DenyHostAccessRequest> __Marshaller_headless_v1_DenyHostAccessRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.DenyHostAccessRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.DenyHostAccessResponse> __Marshaller_headless_v1_DenyHostAccessResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.DenyHostAccessResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoRequest> __Marshaller_headless_v1_GetAccountInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoResponse> __Marshaller_headless_v1_GetAccountInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoResponse.Parser));
@@ -245,6 +261,38 @@ namespace Headless.Rpc {
         "BanUser",
         __Marshaller_headless_v1_BanUserRequest,
         __Marshaller_headless_v1_BanUserResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.GetHostSettingsRequest, global::Headless.Rpc.GetHostSettingsResponse> __Method_GetHostSettings = new grpc::Method<global::Headless.Rpc.GetHostSettingsRequest, global::Headless.Rpc.GetHostSettingsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetHostSettings",
+        __Marshaller_headless_v1_GetHostSettingsRequest,
+        __Marshaller_headless_v1_GetHostSettingsResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.UpdateHostSettingsRequest, global::Headless.Rpc.UpdateHostSettingsResponse> __Method_UpdateHostSettings = new grpc::Method<global::Headless.Rpc.UpdateHostSettingsRequest, global::Headless.Rpc.UpdateHostSettingsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "UpdateHostSettings",
+        __Marshaller_headless_v1_UpdateHostSettingsRequest,
+        __Marshaller_headless_v1_UpdateHostSettingsResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.AllowHostAccessRequest, global::Headless.Rpc.AllowHostAccessResponse> __Method_AllowHostAccess = new grpc::Method<global::Headless.Rpc.AllowHostAccessRequest, global::Headless.Rpc.AllowHostAccessResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "AllowHostAccess",
+        __Marshaller_headless_v1_AllowHostAccessRequest,
+        __Marshaller_headless_v1_AllowHostAccessResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.DenyHostAccessRequest, global::Headless.Rpc.DenyHostAccessResponse> __Method_DenyHostAccess = new grpc::Method<global::Headless.Rpc.DenyHostAccessRequest, global::Headless.Rpc.DenyHostAccessResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "DenyHostAccess",
+        __Marshaller_headless_v1_DenyHostAccessRequest,
+        __Marshaller_headless_v1_DenyHostAccessResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse> __Method_GetAccountInfo = new grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(
@@ -400,6 +448,30 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.BanUserResponse> BanUser(global::Headless.Rpc.BanUserRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.GetHostSettingsResponse> GetHostSettings(global::Headless.Rpc.GetHostSettingsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.UpdateHostSettingsResponse> UpdateHostSettings(global::Headless.Rpc.UpdateHostSettingsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.AllowHostAccessResponse> AllowHostAccess(global::Headless.Rpc.AllowHostAccessRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.DenyHostAccessResponse> DenyHostAccess(global::Headless.Rpc.DenyHostAccessRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -767,6 +839,86 @@ namespace Headless.Rpc {
       {
         return CallInvoker.AsyncUnaryCall(__Method_BanUser, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetHostSettingsResponse GetHostSettings(global::Headless.Rpc.GetHostSettingsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetHostSettings(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetHostSettingsResponse GetHostSettings(global::Headless.Rpc.GetHostSettingsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetHostSettings, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetHostSettingsResponse> GetHostSettingsAsync(global::Headless.Rpc.GetHostSettingsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetHostSettingsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetHostSettingsResponse> GetHostSettingsAsync(global::Headless.Rpc.GetHostSettingsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetHostSettings, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.UpdateHostSettingsResponse UpdateHostSettings(global::Headless.Rpc.UpdateHostSettingsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateHostSettings(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.UpdateHostSettingsResponse UpdateHostSettings(global::Headless.Rpc.UpdateHostSettingsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_UpdateHostSettings, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.UpdateHostSettingsResponse> UpdateHostSettingsAsync(global::Headless.Rpc.UpdateHostSettingsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateHostSettingsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.UpdateHostSettingsResponse> UpdateHostSettingsAsync(global::Headless.Rpc.UpdateHostSettingsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_UpdateHostSettings, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.AllowHostAccessResponse AllowHostAccess(global::Headless.Rpc.AllowHostAccessRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AllowHostAccess(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.AllowHostAccessResponse AllowHostAccess(global::Headless.Rpc.AllowHostAccessRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_AllowHostAccess, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.AllowHostAccessResponse> AllowHostAccessAsync(global::Headless.Rpc.AllowHostAccessRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AllowHostAccessAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.AllowHostAccessResponse> AllowHostAccessAsync(global::Headless.Rpc.AllowHostAccessRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_AllowHostAccess, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.DenyHostAccessResponse DenyHostAccess(global::Headless.Rpc.DenyHostAccessRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DenyHostAccess(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.DenyHostAccessResponse DenyHostAccess(global::Headless.Rpc.DenyHostAccessRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_DenyHostAccess, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.DenyHostAccessResponse> DenyHostAccessAsync(global::Headless.Rpc.DenyHostAccessRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DenyHostAccessAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.DenyHostAccessResponse> DenyHostAccessAsync(global::Headless.Rpc.DenyHostAccessRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_DenyHostAccess, null, options, request);
+      }
       /// <summary>
       /// Cloud系
       /// </summary>
@@ -983,6 +1135,10 @@ namespace Headless.Rpc {
           .AddMethod(__Method_ListUsersInSession, serviceImpl.ListUsersInSession)
           .AddMethod(__Method_KickUser, serviceImpl.KickUser)
           .AddMethod(__Method_BanUser, serviceImpl.BanUser)
+          .AddMethod(__Method_GetHostSettings, serviceImpl.GetHostSettings)
+          .AddMethod(__Method_UpdateHostSettings, serviceImpl.UpdateHostSettings)
+          .AddMethod(__Method_AllowHostAccess, serviceImpl.AllowHostAccess)
+          .AddMethod(__Method_DenyHostAccess, serviceImpl.DenyHostAccess)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
           .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
           .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo)
@@ -1014,6 +1170,10 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_ListUsersInSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListUsersInSessionRequest, global::Headless.Rpc.ListUsersInSessionResponse>(serviceImpl.ListUsersInSession));
       serviceBinder.AddMethod(__Method_KickUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.KickUserRequest, global::Headless.Rpc.KickUserResponse>(serviceImpl.KickUser));
       serviceBinder.AddMethod(__Method_BanUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.BanUserRequest, global::Headless.Rpc.BanUserResponse>(serviceImpl.BanUser));
+      serviceBinder.AddMethod(__Method_GetHostSettings, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetHostSettingsRequest, global::Headless.Rpc.GetHostSettingsResponse>(serviceImpl.GetHostSettings));
+      serviceBinder.AddMethod(__Method_UpdateHostSettings, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateHostSettingsRequest, global::Headless.Rpc.UpdateHostSettingsResponse>(serviceImpl.UpdateHostSettings));
+      serviceBinder.AddMethod(__Method_AllowHostAccess, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.AllowHostAccessRequest, global::Headless.Rpc.AllowHostAccessResponse>(serviceImpl.AllowHostAccess));
+      serviceBinder.AddMethod(__Method_DenyHostAccess, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.DenyHostAccessRequest, global::Headless.Rpc.DenyHostAccessResponse>(serviceImpl.DenyHostAccess));
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));
       serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));

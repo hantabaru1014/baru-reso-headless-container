@@ -30,7 +30,9 @@ public class Program
                 .AddSingleton<SystemInfo>()
                 .AddSingleton<Engine>()
                 .AddSingleton<WorldService>()
-                .AddHostedService<StandaloneFrooxEngineService>();
+                .AddSingleton<StandaloneFrooxEngineService>()
+                .AddSingleton<IHostedService>(p => p.GetRequiredService<StandaloneFrooxEngineService>())
+                .AddSingleton<IFrooxEngineRunnerService>(p => p.GetRequiredService<StandaloneFrooxEngineService>());
         });
 
         var app = builder.Build();

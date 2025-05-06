@@ -8,7 +8,12 @@ using SkyFrost.Base;
 
 namespace Headless.Services;
 
-public class StandaloneFrooxEngineService : BackgroundService
+public interface IFrooxEngineRunnerService
+{
+    float TickRate { get; set; }
+}
+
+public class StandaloneFrooxEngineService : BackgroundService, IFrooxEngineRunnerService
 {
     private static Type? _type;
 
@@ -22,6 +27,18 @@ public class StandaloneFrooxEngineService : BackgroundService
 
     private bool _applicationStartupComplete;
     private bool _engineShutdownComplete;
+    private float _tickRate = 60f;
+    private PeriodicTimer _tickTimer = new PeriodicTimer(TimeSpan.FromSeconds(1.0 / 60f));
+
+    public float TickRate
+    {
+        get => _tickRate;
+        set
+        {
+            _tickRate = value;
+            _tickTimer.Period = TimeSpan.FromSeconds(1.0 / value);
+        }
+    }
 
     private class EngineInitProgressLogger : IEngineInitProgress
     {
@@ -101,6 +118,8 @@ public class StandaloneFrooxEngineService : BackgroundService
         LoadTypes();
 
         _engine.UsernameOverride = _configService.Config.UsernameOverride;
+        TickRate = _configService.Config.TickRate;
+
         _engine.EnvironmentShutdownCallback = () => _engineShutdownComplete = true;
         _engine.OnShutdownRequest += OnShutdownRequest;
         var launchOptions = new LaunchOptions
@@ -126,7 +145,7 @@ public class StandaloneFrooxEngineService : BackgroundService
         var userspcaeWorld = Userspace.SetupUserspace(_engine);
         var engineLoop = EngineLoopAsync(ct);
 
-        await userspcaeWorld.Coroutines.StartTask(async () => await default(ToWorld)).ConfigureAwait(false);
+        await userspcaeWorld.Coroutines.StartTask(async () => await default(ToWorld));
 
         if (_configService.Config.UniverseID is not null)
         {
@@ -134,7 +153,7 @@ public class StandaloneFrooxEngineService : BackgroundService
         }
 
         await LoginAsync(_appConfig.HeadlessUserCredential, _appConfig.HeadlessUserPassword);
-        await AllowHosts(_configService.Config.AllowedUrlHosts ?? Enumerable.Empty<string>());
+        AllowHosts(_configService.Config.AllowedUrlHosts ?? Enumerable.Empty<string>());
 
         SessionAssetTransferer.OverrideMaxConcurrentTransfers = _configService.Config.MaxConcurrentAssetTransfers;
         var startWorlds = _configService.Config.StartWorlds ?? Array.Empty<WorldStartupParameters>();
@@ -149,6 +168,7 @@ public class StandaloneFrooxEngineService : BackgroundService
 
         _applicationStartupComplete = true;
         await engineLoop;
+        _tickTimer.Dispose();
         _applicationLifetime.StopApplication();
     }
 
@@ -185,17 +205,12 @@ public class StandaloneFrooxEngineService : BackgroundService
     {
         var audioStartTime = DateTimeOffset.UtcNow;
         var audioTime = 0.0;
-        var audioTickRate = 1.0 / _configService.Config.TickRate;
-
-        using var tickTimer = new PeriodicTimer(TimeSpan.FromSeconds(1.0 / _configService.Config.TickRate));
 
         Task? shutdownEngineTask = null;
         var isShuttingDown = false;
 
         while (!ct.IsCancellationRequested || !_engineShutdownComplete || !_applicationStartupComplete)
         {
-            await tickTimer.WaitForNextTickAsync(CancellationToken.None);
-
             try
             {
                 _engine.RunUpdateLoop();
@@ -206,18 +221,19 @@ public class StandaloneFrooxEngineService : BackgroundService
                 _logger.LogError(e, "Unexpected error during engine update loop");
             }
 
-            audioTime += audioTickRate * 48000f;
+            audioTime += 1.0 / _tickRate * 48000f;
             if (audioTime >= 1024.0)
             {
                 audioTime = (audioTime - 1024.0) % 1024.0;
                 DummyAudioConnector.UpdateCallback((DateTimeOffset.UtcNow - audioStartTime).TotalMilliseconds * 1000);
             }
 
+            await _tickTimer.WaitForNextTickAsync(CancellationToken.None);
+
             if (!ct.IsCancellationRequested || isShuttingDown || !_applicationStartupComplete)
             {
                 continue;
             }
-
             isShuttingDown = true;
             shutdownEngineTask = ShutdownEngineAsync();
         }
@@ -253,10 +269,10 @@ public class StandaloneFrooxEngineService : BackgroundService
         }
     );
 
-    private Task AllowHosts(IEnumerable<string> hosts) => _engine.GlobalCoroutineManager.StartTask(
+    private void AllowHosts(IEnumerable<string> hosts) => Userspace.UserspaceWorld.RunSynchronously(
         async () =>
         {
-            await default(NextUpdate);
+            var securitySettings = await Settings.GetActiveSettingAsync<HostAccessSettings>();
 
             foreach (string host in hosts)
             {
@@ -290,12 +306,12 @@ public class StandaloneFrooxEngineService : BackgroundService
                     continue;
                 }
                 _logger.LogInformation("Allowing host: " + _host + ", Port: " + _port);
-                _engine.Security.TemporarilyAllowHTTP(_host);
-                _engine.Security.TemporarilyAllowWebsocket(_host, _port);
-                _engine.Security.TemporarilyAllowOSC_Sender(_host, _port);
+                securitySettings.AllowHTTP_Requests(_host, _port);
+                securitySettings.AllowWebsocket(_host, _port);
+                securitySettings.AllowOSC_Sending(_host, _port);
                 if (_host == "localhost")
                 {
-                    _engine.Security.TemporarilyAllowOSC_Receiver(_port);
+                    securitySettings.AllowOSC_Receiving(_port);
                 }
             }
         }

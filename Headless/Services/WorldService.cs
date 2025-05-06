@@ -12,6 +12,8 @@ public class WorldService
     private readonly ConcurrentDictionary<string, RunningSession> _runningWorlds;
     private readonly IConfigService _configService;
 
+    public IEnumerable<Uri> AutoSpawnItems { get; set; }
+
     public WorldService
     (
         ILogger<WorldService> logger,
@@ -23,6 +25,15 @@ public class WorldService
         _engine = engine;
         _configService = configService;
         _runningWorlds = new();
+
+        if (configService.Config.AutoSpawnItems is not null)
+        {
+            AutoSpawnItems = configService.Config.AutoSpawnItems.ToList();
+        }
+        else
+        {
+            AutoSpawnItems = new List<Uri>();
+        }
     }
 
     public RunningSession? GetSession(string id)
@@ -91,12 +102,11 @@ public class WorldService
         var handler = _engine.GlobalCoroutineManager.StartTask(() => SessionHandlerAsync(session, sessionCancellation.Token));
         session.Handler = handler;
 
-        var autoSpawnItems = _configService.Config.AutoSpawnItems;
-        if (autoSpawnItems is not null)
+        if (AutoSpawnItems.Count() > 0)
         {
             _ = startedWorld.Coroutines.StartTask(async () =>
             {
-                foreach (var item in autoSpawnItems)
+                foreach (var item in AutoSpawnItems)
                 {
                     await startedWorld.RootSlot.AddSlot("Headless Auto-Spawn").LoadObjectAsync(item);
                 }
