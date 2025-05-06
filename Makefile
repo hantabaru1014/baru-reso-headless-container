@@ -41,3 +41,7 @@ download.resonite:
 .PHONY: download.resonite-pre
 download.resonite-pre:
 	USE_PRERELEASE=true ./scripts/download-resonite.sh
+
+.PHONY: evans
+evans:
+	evans --proto proto/headless/v1/headless.proto --host localhost -p 5000 repl
