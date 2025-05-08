@@ -4,6 +4,7 @@ using SkyFrost.Base;
 using Headless.Extensions;
 using Microsoft.Extensions.Options;
 using Headless.Configuration;
+using Headless.Models;
 
 namespace Headless.Services;
 

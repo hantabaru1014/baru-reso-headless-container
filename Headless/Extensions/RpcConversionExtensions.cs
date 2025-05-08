@@ -130,7 +130,7 @@ public static class RpcConversionExtensions
         return result;
     }
 
-    public static Rpc.Session ToProto(this Services.RunningSession session)
+    public static Rpc.Session ToProto(this Models.RunningSession session)
     {
         var info = session.WorldInstance.GenerateSessionInfo();
         var result = new Rpc.Session
