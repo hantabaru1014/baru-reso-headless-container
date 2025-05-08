@@ -25,6 +25,7 @@ service HeadlessControlService {
   rpc UpdateHostSettings(UpdateHostSettingsRequest) returns (UpdateHostSettingsResponse);
   rpc AllowHostAccess(AllowHostAccessRequest) returns (AllowHostAccessResponse);
   rpc DenyHostAccess(DenyHostAccessRequest) returns (DenyHostAccessResponse);
+  rpc GetStartupConfigToRestore(GetStartupConfigToRestoreRequest) returns (GetStartupConfigToRestoreResponse);
 
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
@@ -35,6 +36,14 @@ service HeadlessControlService {
   rpc ListContacts(ListContactsRequest) returns (ListContactsResponse);
   rpc GetContactMessages(GetContactMessagesRequest) returns (GetContactMessagesResponse);
   rpc SendContactMessage(SendContactMessageRequest) returns (SendContactMessageResponse);
+}
+
+message GetStartupConfigToRestoreRequest {
+  bool include_start_worlds = 1;
+}
+
+message GetStartupConfigToRestoreResponse {
+  StartupConfig startup_config = 1;
 }
 
 message GetHostSettingsRequest {}
@@ -379,4 +388,14 @@ message AllowedAccessEntry {
   string host = 1;
   repeated int32 ports = 2;
   repeated AccessType access_types = 3;
+}
+
+message StartupConfig {
+  optional string universe_id = 1;
+  optional float tick_rate = 2;
+  optional int32 max_concurrent_asset_transfers = 3;
+  optional string username_override = 4;
+  repeated WorldStartupParameters start_worlds = 5;
+  repeated AllowedAccessEntry allowed_url_hosts = 6;
+  repeated string auto_spawn_items = 7;
 }

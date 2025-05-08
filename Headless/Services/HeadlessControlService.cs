@@ -4,13 +4,12 @@ using SkyFrost.Base;
 using Headless.Rpc;
 using Google.Protobuf.WellKnownTypes;
 using Headless.Libs;
+using Headless.Extensions;
 
 namespace Headless.Services;
 
 public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControlServiceBase
 {
-    private readonly ILogger<HeadlessControlService> _logger;
-    private readonly IHostApplicationLifetime _applicationLifetime;
     private readonly Engine _engine;
     private readonly WorldService _worldService;
     private readonly IFrooxEngineRunnerService _runnerService;
@@ -19,15 +18,11 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
 
     public HeadlessControlService
     (
-        ILogger<HeadlessControlService> logger,
-        IHostApplicationLifetime applicationLifetime,
         Engine engine,
         WorldService worldService,
         IFrooxEngineRunnerService runnerService
     )
     {
-        _logger = logger;
-        _applicationLifetime = applicationLifetime;
         _engine = engine;
         _worldService = worldService;
         _runnerService = runnerService;
@@ -73,7 +68,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         var reply = new ListSessionsResponse();
         foreach (var session in _worldService.ListAll())
         {
-            reply.Sessions.Add(ToRpcSession(session));
+            reply.Sessions.Add(session.ToProto());
         }
         return Task.FromResult(reply);
     }
@@ -87,7 +82,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         }
         return Task.FromResult(new GetSessionResponse
         {
-            Session = ToRpcSession(session)
+            Session = session.ToProto()
         });
     }
 
@@ -106,7 +101,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
             CustomSessionId = reqParam.HasCustomSessionId ? reqParam.CustomSessionId : null,
             Description = reqParam.HasDescription ? reqParam.Description : null,
             Tags = reqParam.Tags.ToList(),
-            AccessLevel = ToSessionAccessLevel(reqParam.AccessLevel),
+            AccessLevel = reqParam.AccessLevel.ToResonite(),
             LoadWorldURL = reqParam.HasLoadWorldUrl ? reqParam.LoadWorldUrl : null,
             LoadWorldPresetName = reqParam.HasLoadWorldPresetName ? reqParam.LoadWorldPresetName : null,
             AutoInviteUsernames = reqParam.AutoInviteUsernames.ToList(),
@@ -134,7 +129,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         }
         return new StartWorldResponse
         {
-            OpenedSession = ToRpcSession(session)
+            OpenedSession = session.ToProto()
         };
     }
 
@@ -241,7 +236,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         }
         if (request.HasAccessLevel)
         {
-            session.WorldInstance.AccessLevel = ToSessionAccessLevel(request.AccessLevel);
+            session.WorldInstance.AccessLevel = request.AccessLevel.ToResonite();
         }
         if (request.HasAwayKickMinutes)
         {
@@ -584,6 +579,65 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         return response;
     }
 
+    public override async Task<GetStartupConfigToRestoreResponse> GetStartupConfigToRestore(GetStartupConfigToRestoreRequest request, ServerCallContext context)
+    {
+        var securitySettings = await Settings.GetActiveSettingAsync<HostAccessSettings>();
+        var allowedList = securitySettings.Entries.Select(entry =>
+        {
+            var types = new List<AllowedAccessEntry.Types.AccessType>();
+            if (entry.Value.AllowHTTP_Requests)
+            {
+                types.Add(AllowedAccessEntry.Types.AccessType.Http);
+            }
+            if (entry.Value.AllowWebsockets)
+            {
+                types.Add(AllowedAccessEntry.Types.AccessType.Websocket);
+            }
+            if (entry.Value.AllowOSC_Receiving)
+            {
+                types.Add(AllowedAccessEntry.Types.AccessType.OscReceiving);
+            }
+            if (entry.Value.AllowOSC_Sending)
+            {
+                types.Add(AllowedAccessEntry.Types.AccessType.OscSending);
+            }
+            return new AllowedAccessEntry
+            {
+                Host = entry.Key,
+                Ports = { entry.Value.AllowedPorts },
+                AccessTypes = { types },
+            };
+        });
+        var config = new StartupConfig
+        {
+            TickRate = _runnerService.TickRate,
+            MaxConcurrentAssetTransfers = SessionAssetTransferer.OverrideMaxConcurrentTransfers ?? 4,
+            AllowedUrlHosts = { allowedList },
+            AutoSpawnItems = { _worldService.AutoSpawnItems.Select(uri => uri.ToString()) },
+        };
+        if (_engine.Cloud.UniverseID is not null)
+        {
+            config.UniverseId = _engine.Cloud.UniverseID;
+        }
+        if (_engine.UsernameOverride is not null)
+        {
+            config.UsernameOverride = _engine.UsernameOverride;
+        }
+
+        if (request.IncludeStartWorlds)
+        {
+            foreach (var session in _worldService.ListAll())
+            {
+                config.StartWorlds.Add(session.StartInfo.ToProto());
+            }
+        }
+
+        return new GetStartupConfigToRestoreResponse
+        {
+            StartupConfig = config
+        };
+    }
+
     public override Task<UpdateHostSettingsResponse> UpdateHostSettings(UpdateHostSettingsRequest request, ServerCallContext context)
     {
         if (request.HasTickRate && request.TickRate > 0)
@@ -666,112 +720,5 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
         });
 
         return Task.FromResult(new DenyHostAccessResponse());
-    }
-
-    public static Rpc.AccessLevel ToRpcAccessLevel(SessionAccessLevel level)
-    {
-        return level switch
-        {
-            SessionAccessLevel.Private => AccessLevel.Private,
-            SessionAccessLevel.LAN => AccessLevel.Lan,
-            SessionAccessLevel.Contacts => AccessLevel.Contacts,
-            SessionAccessLevel.ContactsPlus => AccessLevel.ContactsPlus,
-            SessionAccessLevel.RegisteredUsers => AccessLevel.RegisteredUsers,
-            SessionAccessLevel.Anyone => AccessLevel.Anyone,
-            _ => AccessLevel.Unspecified
-        };
-    }
-
-    public static SessionAccessLevel ToSessionAccessLevel(AccessLevel level)
-    {
-        return level switch
-        {
-            AccessLevel.Private => SessionAccessLevel.Private,
-            AccessLevel.Lan => SessionAccessLevel.LAN,
-            AccessLevel.Contacts => SessionAccessLevel.Contacts,
-            AccessLevel.ContactsPlus => SessionAccessLevel.ContactsPlus,
-            AccessLevel.RegisteredUsers => SessionAccessLevel.RegisteredUsers,
-            AccessLevel.Anyone => SessionAccessLevel.Anyone,
-            _ => SessionAccessLevel.Private
-        };
-    }
-
-    public static Rpc.Session ToRpcSession(RunningSession session)
-    {
-        var info = session.WorldInstance.GenerateSessionInfo();
-        var result = new Rpc.Session
-        {
-            Id = info.SessionId,
-            Name = info.Name ?? "<Empty Name>",
-            Description = info.Description ?? "",
-            Tags = { info.Tags ?? [] },
-            AccessLevel = ToRpcAccessLevel(info.AccessLevel),
-            StartupParameters = ToRpcStartupParams(session.StartInfo),
-            UsersCount = info.JoinedUsers,
-            MaxUsers = info.MaximumUsers,
-            SessionUrl = CloudUtils.MakeSessionGoURL(info.SessionId),
-            TimeRunningMs = (int)Math.Round(session.TimeRunning.TotalMilliseconds),
-            StartedAt = Timestamp.FromDateTime(info.SessionBeginTime),
-            AwayKickMinutes = info.AwayKickEnabled ? info.AwayKickMinutes : -1,
-            IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
-            SaveOnExit = session.WorldInstance.SaveOnExit,
-            AutoSaveIntervalSeconds = (int)session.AutosaveInterval.TotalSeconds,
-            HideFromPublicListing = info.HideFromListing,
-            LastSavedAt = Timestamp.FromDateTimeOffset(session.LastSaveTime),
-            CanSave = Userspace.CanSave(session.WorldInstance),
-        };
-        if (session.WorldInstance.RecordURL != null)
-        {
-            result.WorldUrl = session.WorldInstance.RecordURL.ToString();
-        }
-        if (info.ThumbnailUrl is not null)
-        {
-            result.ThumbnailUrl = CloudUtils.ResolveURL(info.ThumbnailUrl);
-        }
-        return result;
-    }
-
-    public static Rpc.WorldStartupParameters ToRpcStartupParams(SkyFrost.Base.WorldStartupParameters parameters)
-    {
-        var result = new Rpc.WorldStartupParameters
-        {
-            MaxUsers = parameters.MaxUsers,
-            AccessLevel = ToRpcAccessLevel(parameters.AccessLevel),
-            AutoInviteUsernames = { parameters.AutoInviteUsernames ?? [] },
-            Tags = { parameters.Tags ?? [] },
-            HideFromPublicListing = parameters.HideFromPublicListing ?? false,
-            DefaultUserRoles = { parameters.DefaultUserRoles?.Select(p => new Rpc.DefaultUserRole { UserName = p.Key, Role = p.Value }) },
-            AwayKickMinutes = (float)parameters.AwayKickMinutes,
-            IdleRestartIntervalSeconds = (int)parameters.IdleRestartInterval,
-            SaveOnExit = parameters.SaveOnExit,
-            AutoSaveIntervalSeconds = (int)parameters.AutoSaveInterval,
-            AutoSleep = parameters.AutoSleep,
-            ForcePort = parameters.ForcePort ?? 0,
-            ParentSessionIds = { parameters.ParentSessionIds ?? [] },
-            AutoRecover = parameters.AutoRecover,
-            ForcedRestartIntervalSeconds = (int)parameters.ForcedRestartInterval,
-            InviteRequestHandlerUsernames = { parameters.InviteRequestHandlerUsernames ?? [] }
-        };
-        if (parameters.SessionName is not null)
-        {
-            result.Name = parameters.SessionName;
-        }
-        if (parameters.CustomSessionId is not null)
-        {
-            result.CustomSessionId = parameters.CustomSessionId;
-        }
-        if (parameters.Description is not null)
-        {
-            result.Description = parameters.Description;
-        }
-        if (parameters.LoadWorldURL is not null)
-        {
-            result.LoadWorldUrl = parameters.LoadWorldURL;
-        }
-        else
-        {
-            result.LoadWorldPresetName = parameters.LoadWorldPresetName;
-        }
-        return result;
     }
 }

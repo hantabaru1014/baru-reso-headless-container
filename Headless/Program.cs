@@ -21,12 +21,19 @@ public class Program
         builder.Host.ConfigureServices((hostContext, services) =>
         {
             services.Configure<ApplicationConfig>(appConfig);
+            services.Configure<HeadlessStartupConfig>(config =>
+            {
+                var json = appConfig.GetValue<string>("StartupConfig");
+                if (json is not null)
+                {
+                    config.Parse(json);
+                }
+            });
 
             services.AddGrpc();
 
             services
                 .AddSingleton(assemblyResolver)
-                .AddSingleton<IConfigService, ConfigService>()
                 .AddSingleton<SystemInfo>()
                 .AddSingleton<Engine>()
                 .AddSingleton<WorldService>()

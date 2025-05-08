@@ -118,6 +118,10 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.DenyHostAccessResponse> __Marshaller_headless_v1_DenyHostAccessResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.DenyHostAccessResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetStartupConfigToRestoreRequest> __Marshaller_headless_v1_GetStartupConfigToRestoreRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetStartupConfigToRestoreRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetStartupConfigToRestoreResponse> __Marshaller_headless_v1_GetStartupConfigToRestoreResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetStartupConfigToRestoreResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoRequest> __Marshaller_headless_v1_GetAccountInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoResponse> __Marshaller_headless_v1_GetAccountInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoResponse.Parser));
@@ -293,6 +297,14 @@ namespace Headless.Rpc {
         "DenyHostAccess",
         __Marshaller_headless_v1_DenyHostAccessRequest,
         __Marshaller_headless_v1_DenyHostAccessResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.GetStartupConfigToRestoreRequest, global::Headless.Rpc.GetStartupConfigToRestoreResponse> __Method_GetStartupConfigToRestore = new grpc::Method<global::Headless.Rpc.GetStartupConfigToRestoreRequest, global::Headless.Rpc.GetStartupConfigToRestoreResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetStartupConfigToRestore",
+        __Marshaller_headless_v1_GetStartupConfigToRestoreRequest,
+        __Marshaller_headless_v1_GetStartupConfigToRestoreResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse> __Method_GetAccountInfo = new grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(
@@ -472,6 +484,12 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.DenyHostAccessResponse> DenyHostAccess(global::Headless.Rpc.DenyHostAccessRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.GetStartupConfigToRestoreResponse> GetStartupConfigToRestore(global::Headless.Rpc.GetStartupConfigToRestoreRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -919,6 +937,26 @@ namespace Headless.Rpc {
       {
         return CallInvoker.AsyncUnaryCall(__Method_DenyHostAccess, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetStartupConfigToRestoreResponse GetStartupConfigToRestore(global::Headless.Rpc.GetStartupConfigToRestoreRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetStartupConfigToRestore(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetStartupConfigToRestoreResponse GetStartupConfigToRestore(global::Headless.Rpc.GetStartupConfigToRestoreRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetStartupConfigToRestore, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetStartupConfigToRestoreResponse> GetStartupConfigToRestoreAsync(global::Headless.Rpc.GetStartupConfigToRestoreRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetStartupConfigToRestoreAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetStartupConfigToRestoreResponse> GetStartupConfigToRestoreAsync(global::Headless.Rpc.GetStartupConfigToRestoreRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetStartupConfigToRestore, null, options, request);
+      }
       /// <summary>
       /// Cloud系
       /// </summary>
@@ -1139,6 +1177,7 @@ namespace Headless.Rpc {
           .AddMethod(__Method_UpdateHostSettings, serviceImpl.UpdateHostSettings)
           .AddMethod(__Method_AllowHostAccess, serviceImpl.AllowHostAccess)
           .AddMethod(__Method_DenyHostAccess, serviceImpl.DenyHostAccess)
+          .AddMethod(__Method_GetStartupConfigToRestore, serviceImpl.GetStartupConfigToRestore)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
           .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
           .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo)
@@ -1174,6 +1213,7 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_UpdateHostSettings, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.UpdateHostSettingsRequest, global::Headless.Rpc.UpdateHostSettingsResponse>(serviceImpl.UpdateHostSettings));
       serviceBinder.AddMethod(__Method_AllowHostAccess, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.AllowHostAccessRequest, global::Headless.Rpc.AllowHostAccessResponse>(serviceImpl.AllowHostAccess));
       serviceBinder.AddMethod(__Method_DenyHostAccess, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.DenyHostAccessRequest, global::Headless.Rpc.DenyHostAccessResponse>(serviceImpl.DenyHostAccess));
+      serviceBinder.AddMethod(__Method_GetStartupConfigToRestore, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetStartupConfigToRestoreRequest, global::Headless.Rpc.GetStartupConfigToRestoreResponse>(serviceImpl.GetStartupConfigToRestore));
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));
       serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));

@@ -2,6 +2,8 @@ using System.Collections.Concurrent;
 using FrooxEngine;
 using SkyFrost.Base;
 using Headless.Extensions;
+using Microsoft.Extensions.Options;
+using Headless.Configuration;
 
 namespace Headless.Services;
 
@@ -10,25 +12,29 @@ public class WorldService
     private readonly ILogger<WorldService> _logger;
     private readonly Engine _engine;
     private readonly ConcurrentDictionary<string, RunningSession> _runningWorlds;
-    private readonly IConfigService _configService;
 
     public IEnumerable<Uri> AutoSpawnItems { get; set; }
 
     public WorldService
     (
         ILogger<WorldService> logger,
-        Engine engine,
-        IConfigService configService
+        IOptions<HeadlessStartupConfig> startupConfig,
+        Engine engine
     )
     {
         _logger = logger;
         _engine = engine;
-        _configService = configService;
         _runningWorlds = new();
 
-        if (configService.Config.AutoSpawnItems is not null)
+        if (startupConfig.Value.Value.AutoSpawnItems is not null)
         {
-            AutoSpawnItems = configService.Config.AutoSpawnItems.ToList();
+            AutoSpawnItems = startupConfig.Value.Value.AutoSpawnItems.Select(s => {
+                if (Uri.TryCreate(s, UriKind.Absolute, out var uri))
+                {
+                    return uri;
+                }
+                return null;
+            }).Where(u => u != null).Select(u => u!);
         }
         else
         {
