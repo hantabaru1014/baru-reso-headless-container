@@ -134,7 +134,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         {
             DataDirectory = Path.Combine(_appConfig.DataDirectoryPath, "Data"),
             CacheDirectory = Path.Combine(_appConfig.DataDirectoryPath, "Cache"),
-            LogsDirectory = null,
+            LogsDirectory = null!,
             VerboseInit = true,
             NeverSaveSettings = true,
             NeverSaveDash = true,
@@ -146,7 +146,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
             AppDomain.CurrentDomain.BaseDirectory,
             launchOptions,
             _systemInfo,
-            null,
+            null!,
             new EngineInitProgressLogger(_logger)
         );
 
@@ -167,7 +167,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         {
             SessionAssetTransferer.OverrideMaxConcurrentTransfers = _startupConfig.MaxConcurrentAssetTransfers;
         }
-        
+
         var startWorlds = _startupConfig.StartWorlds.Select(w => w.ToResonite());
         foreach (var world in startWorlds)
         {

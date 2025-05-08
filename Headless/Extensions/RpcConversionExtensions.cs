@@ -132,7 +132,7 @@ public static class RpcConversionExtensions
 
     public static Rpc.Session ToProto(this Models.RunningSession session)
     {
-        var info = session.WorldInstance.GenerateSessionInfo();
+        var info = session.Instance.GenerateSessionInfo();
         var result = new Rpc.Session
         {
             Id = info.SessionId,
@@ -144,23 +144,25 @@ public static class RpcConversionExtensions
             UsersCount = info.JoinedUsers,
             MaxUsers = info.MaximumUsers,
             SessionUrl = CloudUtils.MakeSessionGoURL(info.SessionId),
-            TimeRunningMs = (int)Math.Round(session.TimeRunning.TotalMilliseconds),
             StartedAt = Timestamp.FromDateTime(info.SessionBeginTime),
             AwayKickMinutes = info.AwayKickEnabled ? info.AwayKickMinutes : -1,
             IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
-            SaveOnExit = session.WorldInstance.SaveOnExit,
+            SaveOnExit = session.Instance.SaveOnExit,
             AutoSaveIntervalSeconds = (int)session.AutosaveInterval.TotalSeconds,
             HideFromPublicListing = info.HideFromListing,
-            LastSavedAt = Timestamp.FromDateTimeOffset(session.LastSaveTime),
-            CanSave = Userspace.CanSave(session.WorldInstance),
+            CanSave = Userspace.ShouldSave(session.Instance),
         };
-        if (session.WorldInstance.RecordURL != null)
+        if (session.Instance.RecordURL is not null)
         {
-            result.WorldUrl = session.WorldInstance.RecordURL.ToString();
+            result.WorldUrl = session.Instance.RecordURL.ToString();
         }
         if (info.ThumbnailUrl is not null)
         {
             result.ThumbnailUrl = CloudUtils.ResolveURL(info.ThumbnailUrl);
+        }
+        if (session.LastSavedAt is not null)
+        {
+            result.LastSavedAt = Timestamp.FromDateTimeOffset(session.LastSavedAt ?? throw new Exception("LastSavedAt is null"));
         }
         return result;
     }

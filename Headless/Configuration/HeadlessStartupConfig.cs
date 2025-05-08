@@ -51,7 +51,8 @@ public class HeadlessStartupConfig
         }
         if (config.AllowedUrlHosts is not null)
         {
-            var hosts = config.AllowedUrlHosts.Select(h => {
+            var hosts = config.AllowedUrlHosts.Select(h =>
+            {
                 string host = h.Trim().ToLower();
                 int port = 80;
                 if (Uri.TryCreate(host, UriKind.Absolute, out var url) && !string.IsNullOrEmpty(url.Host))
@@ -92,7 +93,7 @@ public class HeadlessStartupConfig
                 return new Rpc.AllowedAccessEntry
                 {
                     Host = host,
-                    Ports = { new int[]{ port } },
+                    Ports = { new int[] { port } },
                     AccessTypes = { types }
                 };
             }).Where(h => h != null).Select(h => h!);
