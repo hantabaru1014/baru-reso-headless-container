@@ -8,20 +8,37 @@ using SkyFrost.Base;
 
 namespace Headless.Services;
 
-public class StandaloneFrooxEngineService : BackgroundService
+public interface IFrooxEngineRunnerService
+{
+    float TickRate { get; set; }
+}
+
+public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerService
 {
     private static Type? _type;
 
-    private readonly ILogger<StandaloneFrooxEngineService> _logger;
+    private readonly ILogger<FrooxEngineRunnerService> _logger;
     private readonly ApplicationConfig _appConfig;
+    private readonly Rpc.StartupConfig _startupConfig;
     private readonly Engine _engine;
     private readonly SystemInfo _systemInfo;
     private readonly IHostApplicationLifetime _applicationLifetime;
     private readonly WorldService _worldService;
-    private readonly IConfigService _configService;
 
     private bool _applicationStartupComplete;
     private bool _engineShutdownComplete;
+    private float _tickRate = 60f;
+    private PeriodicTimer _tickTimer = new PeriodicTimer(TimeSpan.FromSeconds(1.0 / 60f));
+
+    public float TickRate
+    {
+        get => _tickRate;
+        set
+        {
+            _tickRate = value;
+            _tickTimer.Period = TimeSpan.FromSeconds(1.0 / value);
+        }
+    }
 
     private class EngineInitProgressLogger : IEngineInitProgress
     {
@@ -53,24 +70,30 @@ public class StandaloneFrooxEngineService : BackgroundService
         }
     }
 
-    public StandaloneFrooxEngineService
+    public FrooxEngineRunnerService
     (
-        ILogger<StandaloneFrooxEngineService> logger,
+        ILogger<FrooxEngineRunnerService> logger,
         IOptions<ApplicationConfig> applicationConfig,
+        IOptions<HeadlessStartupConfig> startupConfig,
         Engine engine,
         SystemInfo systemInfo,
         IHostApplicationLifetime applicationLifetime,
-        WorldService worldService,
-        IConfigService configService
+        WorldService worldService
     )
     {
         _logger = logger;
         _appConfig = applicationConfig.Value;
+        _startupConfig = startupConfig.Value.Value;
         _engine = engine;
         _systemInfo = systemInfo;
         _applicationLifetime = applicationLifetime;
         _worldService = worldService;
-        _configService = configService;
+
+        var config = startupConfig.Value.Value;
+        if (config.HasTickRate && config.TickRate > 0)
+        {
+            TickRate = config.TickRate;
+        }
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken)
@@ -100,7 +123,11 @@ public class StandaloneFrooxEngineService : BackgroundService
     {
         LoadTypes();
 
-        _engine.UsernameOverride = _configService.Config.UsernameOverride;
+        if (_startupConfig.HasUsernameOverride && _startupConfig.UsernameOverride.Length > 0)
+        {
+            _engine.UsernameOverride = _startupConfig.UsernameOverride;
+        }
+
         _engine.EnvironmentShutdownCallback = () => _engineShutdownComplete = true;
         _engine.OnShutdownRequest += OnShutdownRequest;
         var launchOptions = new LaunchOptions
@@ -111,8 +138,8 @@ public class StandaloneFrooxEngineService : BackgroundService
             VerboseInit = true,
             NeverSaveSettings = true,
             NeverSaveDash = true,
-            BackgroundWorkerCount = _appConfig.BackgroundWorkers ?? _configService.Config.BackgroundWorkers,
-            PriorityWorkerCount = _appConfig.PriorityWorkers ?? _configService.Config.PriorityWorkers,
+            BackgroundWorkerCount = _appConfig.BackgroundWorkers,
+            PriorityWorkerCount = _appConfig.PriorityWorkers,
         };
 
         await _engine.Initialize(
@@ -126,18 +153,22 @@ public class StandaloneFrooxEngineService : BackgroundService
         var userspcaeWorld = Userspace.SetupUserspace(_engine);
         var engineLoop = EngineLoopAsync(ct);
 
-        await userspcaeWorld.Coroutines.StartTask(async () => await default(ToWorld)).ConfigureAwait(false);
+        await userspcaeWorld.Coroutines.StartTask(async () => await default(ToWorld));
 
-        if (_configService.Config.UniverseID is not null)
+        if (_startupConfig.HasUniverseId && _startupConfig.UniverseId.Length > 0)
         {
-            Engine.Config.UniverseId = _configService.Config.UniverseID;
+            Engine.Config.UniverseId = _startupConfig.UniverseId;
         }
 
         await LoginAsync(_appConfig.HeadlessUserCredential, _appConfig.HeadlessUserPassword);
-        await AllowHosts(_configService.Config.AllowedUrlHosts ?? Enumerable.Empty<string>());
+        AllowHosts(_startupConfig.AllowedUrlHosts);
 
-        SessionAssetTransferer.OverrideMaxConcurrentTransfers = _configService.Config.MaxConcurrentAssetTransfers;
-        var startWorlds = _configService.Config.StartWorlds ?? Array.Empty<WorldStartupParameters>();
+        if (_startupConfig.HasMaxConcurrentAssetTransfers && _startupConfig.MaxConcurrentAssetTransfers > 0)
+        {
+            SessionAssetTransferer.OverrideMaxConcurrentTransfers = _startupConfig.MaxConcurrentAssetTransfers;
+        }
+        
+        var startWorlds = _startupConfig.StartWorlds.Select(w => w.ToResonite());
         foreach (var world in startWorlds)
         {
             if (!world.IsEnabled) continue;
@@ -145,10 +176,10 @@ public class StandaloneFrooxEngineService : BackgroundService
             _logger.LogInformation($"Starting world : {world.SessionName ?? "NoName"} ({world.LoadWorldURL})");
             await _worldService.StartWorldAsync(world, ct);
         }
-        _configService.SaveConfig();
 
         _applicationStartupComplete = true;
         await engineLoop;
+        _tickTimer.Dispose();
         _applicationLifetime.StopApplication();
     }
 
@@ -185,17 +216,12 @@ public class StandaloneFrooxEngineService : BackgroundService
     {
         var audioStartTime = DateTimeOffset.UtcNow;
         var audioTime = 0.0;
-        var audioTickRate = 1.0 / _configService.Config.TickRate;
-
-        using var tickTimer = new PeriodicTimer(TimeSpan.FromSeconds(1.0 / _configService.Config.TickRate));
 
         Task? shutdownEngineTask = null;
         var isShuttingDown = false;
 
         while (!ct.IsCancellationRequested || !_engineShutdownComplete || !_applicationStartupComplete)
         {
-            await tickTimer.WaitForNextTickAsync(CancellationToken.None);
-
             try
             {
                 _engine.RunUpdateLoop();
@@ -206,18 +232,19 @@ public class StandaloneFrooxEngineService : BackgroundService
                 _logger.LogError(e, "Unexpected error during engine update loop");
             }
 
-            audioTime += audioTickRate * 48000f;
+            audioTime += 1.0 / _tickRate * 48000f;
             if (audioTime >= 1024.0)
             {
                 audioTime = (audioTime - 1024.0) % 1024.0;
                 DummyAudioConnector.UpdateCallback((DateTimeOffset.UtcNow - audioStartTime).TotalMilliseconds * 1000);
             }
 
+            await _tickTimer.WaitForNextTickAsync(CancellationToken.None);
+
             if (!ct.IsCancellationRequested || isShuttingDown || !_applicationStartupComplete)
             {
                 continue;
             }
-
             isShuttingDown = true;
             shutdownEngineTask = ShutdownEngineAsync();
         }
@@ -253,49 +280,31 @@ public class StandaloneFrooxEngineService : BackgroundService
         }
     );
 
-    private Task AllowHosts(IEnumerable<string> hosts) => _engine.GlobalCoroutineManager.StartTask(
+    private void AllowHosts(IEnumerable<Rpc.AllowedAccessEntry> hosts) => Userspace.UserspaceWorld.RunSynchronously(
         async () =>
         {
-            await default(NextUpdate);
-
-            foreach (string host in hosts)
+            var securitySettings = await Settings.GetActiveSettingAsync<HostAccessSettings>();
+            foreach (var host in hosts)
             {
-                string _host = host.Trim().ToLower();
-                int _port = 80;
-                if (Uri.TryCreate(_host, UriKind.Absolute, out var url) && !string.IsNullOrEmpty(url.Host))
+                foreach (var port in host.Ports)
                 {
-                    _host = url.Host;
-                    _port = url.Port;
-                }
-                else
-                {
-                    string[] segments = _host.Split(':');
-                    switch (segments.Length)
+                    _logger.LogInformation("Allowing host: " + host.Host + ", Port: " + port);
+                    if (host.AccessTypes.Contains(Rpc.AllowedAccessEntry.Types.AccessType.Http))
                     {
-                        case 1:
-                            _host = segments[0];
-                            break;
-                        case 2:
-                            _host = segments[0];
-                            if (segments.Length > 1 && int.TryParse(segments[1], out var port))
-                            {
-                                _port = port;
-                            }
-                            break;
+                        securitySettings.AllowHTTP_Requests(host.Host, port);
                     }
-                }
-                if (string.IsNullOrEmpty(_host))
-                {
-                    _logger.LogWarning($"Unable to parse allowed host entry: \"{_host}\"");
-                    continue;
-                }
-                _logger.LogInformation("Allowing host: " + _host + ", Port: " + _port);
-                _engine.Security.TemporarilyAllowHTTP(_host);
-                _engine.Security.TemporarilyAllowWebsocket(_host, _port);
-                _engine.Security.TemporarilyAllowOSC_Sender(_host, _port);
-                if (_host == "localhost")
-                {
-                    _engine.Security.TemporarilyAllowOSC_Receiver(_port);
+                    if (host.AccessTypes.Contains(Rpc.AllowedAccessEntry.Types.AccessType.Websocket))
+                    {
+                        securitySettings.AllowWebsocket(host.Host, port);
+                    }
+                    if (host.AccessTypes.Contains(Rpc.AllowedAccessEntry.Types.AccessType.OscSending))
+                    {
+                        securitySettings.AllowOSC_Sending(host.Host, port);
+                    }
+                    if (host.Host == "localhost" && host.AccessTypes.Contains(Rpc.AllowedAccessEntry.Types.AccessType.OscReceiving))
+                    {
+                        securitySettings.AllowOSC_Receiving(port);
+                    }
                 }
             }
         }

@@ -2,6 +2,9 @@ using System.Collections.Concurrent;
 using FrooxEngine;
 using SkyFrost.Base;
 using Headless.Extensions;
+using Microsoft.Extensions.Options;
+using Headless.Configuration;
+using Headless.Models;
 
 namespace Headless.Services;
 
@@ -10,19 +13,34 @@ public class WorldService
     private readonly ILogger<WorldService> _logger;
     private readonly Engine _engine;
     private readonly ConcurrentDictionary<string, RunningSession> _runningWorlds;
-    private readonly IConfigService _configService;
+
+    public IEnumerable<Uri> AutoSpawnItems { get; set; }
 
     public WorldService
     (
         ILogger<WorldService> logger,
-        Engine engine,
-        IConfigService configService
+        IOptions<HeadlessStartupConfig> startupConfig,
+        Engine engine
     )
     {
         _logger = logger;
         _engine = engine;
-        _configService = configService;
         _runningWorlds = new();
+
+        if (startupConfig.Value.Value.AutoSpawnItems is not null)
+        {
+            AutoSpawnItems = startupConfig.Value.Value.AutoSpawnItems.Select(s => {
+                if (Uri.TryCreate(s, UriKind.Absolute, out var uri))
+                {
+                    return uri;
+                }
+                return null;
+            }).Where(u => u != null).Select(u => u!);
+        }
+        else
+        {
+            AutoSpawnItems = new List<Uri>();
+        }
     }
 
     public RunningSession? GetSession(string id)
@@ -91,12 +109,11 @@ public class WorldService
         var handler = _engine.GlobalCoroutineManager.StartTask(() => SessionHandlerAsync(session, sessionCancellation.Token));
         session.Handler = handler;
 
-        var autoSpawnItems = _configService.Config.AutoSpawnItems;
-        if (autoSpawnItems is not null)
+        if (AutoSpawnItems.Count() > 0)
         {
             _ = startedWorld.Coroutines.StartTask(async () =>
             {
-                foreach (var item in autoSpawnItems)
+                foreach (var item in AutoSpawnItems)
                 {
                     await startedWorld.RootSlot.AddSlot("Headless Auto-Spawn").LoadObjectAsync(item);
                 }

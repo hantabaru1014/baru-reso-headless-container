@@ -1,7 +1,7 @@
 using FrooxEngine;
 using SkyFrost.Base;
 
-namespace Headless.Services;
+namespace Headless.Models;
 
 public record RunningSession
 (
