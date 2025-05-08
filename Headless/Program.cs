@@ -21,22 +21,31 @@ public class Program
         builder.Host.ConfigureServices((hostContext, services) =>
         {
             services.Configure<ApplicationConfig>(appConfig);
+            services.Configure<HeadlessStartupConfig>(config =>
+            {
+                var json = appConfig.GetValue<string>("StartupConfig");
+                if (json is not null)
+                {
+                    config.Parse(json);
+                }
+            });
 
             services.AddGrpc();
 
             services
                 .AddSingleton(assemblyResolver)
-                .AddSingleton<IConfigService, ConfigService>()
                 .AddSingleton<SystemInfo>()
                 .AddSingleton<Engine>()
                 .AddSingleton<WorldService>()
-                .AddHostedService<StandaloneFrooxEngineService>();
+                .AddSingleton<FrooxEngineRunnerService>()
+                .AddSingleton<IHostedService>(p => p.GetRequiredService<FrooxEngineRunnerService>())
+                .AddSingleton<IFrooxEngineRunnerService>(p => p.GetRequiredService<FrooxEngineRunnerService>());
         });
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        app.MapGrpcService<HeadlessControlService>();
+        app.MapGrpcService<GrpcControllerService>();
         app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
         var logger = app.Services.GetRequiredService<ILogger<Program>>();

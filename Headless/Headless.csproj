@@ -61,6 +61,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(ResonitePath)/Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Resonite">
+      <HintPath>$(ResonitePath)/Resonite.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
