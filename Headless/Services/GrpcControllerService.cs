@@ -184,7 +184,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        var permissionSet = session.WorldInstance.Permissions.Roles.FirstOrDefault(r => r.RoleName.Value.Equals(request.Role, StringComparison.InvariantCultureIgnoreCase));
+        var permissionSet = session.Instance.Permissions.Roles.FirstOrDefault(r => r.RoleName.Value.Equals(request.Role, StringComparison.InvariantCultureIgnoreCase));
         if (permissionSet is null)
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid role name"));
@@ -192,20 +192,20 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         FrooxEngine.User? user = null;
         if (request.HasUserId)
         {
-            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
         }
         else if (request.HasUserName)
         {
-            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
         }
         if (user is null)
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
-        session.WorldInstance.RunSynchronously(() =>
+        session.Instance.RunSynchronously(() =>
         {
             user.Role = permissionSet;
-            session.WorldInstance.Permissions.AssignDefaultRole(user, permissionSet);
+            session.Instance.Permissions.AssignDefaultRole(user, permissionSet);
         });
 
         await Task.CompletedTask;
@@ -224,23 +224,23 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         }
         if (request.HasName)
         {
-            session.WorldInstance.Name = request.Name;
+            session.Instance.Name = request.Name;
         }
         if (request.HasDescription)
         {
-            session.WorldInstance.Description = request.Description;
+            session.Instance.Description = request.Description;
         }
         if (request.HasMaxUsers)
         {
-            session.WorldInstance.MaxUsers = request.MaxUsers;
+            session.Instance.MaxUsers = request.MaxUsers;
         }
         if (request.HasAccessLevel)
         {
-            session.WorldInstance.AccessLevel = request.AccessLevel.ToResonite();
+            session.Instance.AccessLevel = request.AccessLevel.ToResonite();
         }
         if (request.HasAwayKickMinutes)
         {
-            session.WorldInstance.AwayKickMinutes = request.AwayKickMinutes;
+            session.Instance.AwayKickMinutes = request.AwayKickMinutes;
         }
         if (request.HasIdleRestartIntervalSeconds)
         {
@@ -248,7 +248,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         }
         if (request.HasSaveOnExit)
         {
-            session.WorldInstance.SaveOnExit = request.SaveOnExit;
+            session.Instance.SaveOnExit = request.SaveOnExit;
         }
         if (request.HasAutoSaveIntervalSeconds)
         {
@@ -256,11 +256,11 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         }
         if (request.HasHideFromPublicListing)
         {
-            session.WorldInstance.HideFromListing = request.HideFromPublicListing;
+            session.Instance.HideFromListing = request.HideFromPublicListing;
         }
         if (request.UpdateTags)
         {
-            session.WorldInstance.Tags = request.Tags;
+            session.Instance.Tags = request.Tags;
         }
         await Task.CompletedTask;
         return new UpdateSessionParametersResponse();
@@ -273,7 +273,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        var users = session.WorldInstance.AllUsers.Select(user => new Rpc.UserInSession
+        var users = session.Instance.AllUsers.Select(user => new Rpc.UserInSession
         {
             Id = user.UserID,
             Name = user.UserName,
@@ -297,18 +297,18 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         FrooxEngine.User? user = null;
         if (request.HasUserId)
         {
-            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
         }
         else if (request.HasUserName)
         {
-            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
         }
         if (user is null)
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
 
-        session.WorldInstance.RunSynchronously(() =>
+        session.Instance.RunSynchronously(() =>
         {
             user.Kick();
         });
@@ -326,18 +326,18 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         FrooxEngine.User? user = null;
         if (request.HasUserId)
         {
-            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
         }
         else if (request.HasUserName)
         {
-            user = session.WorldInstance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
         }
         if (user is null)
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
 
-        session.WorldInstance.RunSynchronously(() =>
+        session.Instance.RunSynchronously(() =>
         {
             user.Ban();
         });

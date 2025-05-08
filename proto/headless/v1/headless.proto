@@ -323,7 +323,7 @@ message Session {
   bool auto_sleep = 15;
   bool hide_from_public_listing = 16;
   repeated string tags = 17;
-  google.protobuf.Timestamp last_saved_at = 18;
+  optional google.protobuf.Timestamp last_saved_at = 18;
   bool can_save = 19;
   string world_url = 20;
   google.protobuf.Timestamp started_at = 21;

@@ -29,7 +29,8 @@ public class WorldService
 
         if (startupConfig.Value.Value.AutoSpawnItems is not null)
         {
-            AutoSpawnItems = startupConfig.Value.Value.AutoSpawnItems.Select(s => {
+            AutoSpawnItems = startupConfig.Value.Value.AutoSpawnItems.Select(s =>
+            {
                 if (Uri.TryCreate(s, UriKind.Absolute, out var uri))
                 {
                     return uri;
@@ -141,24 +142,18 @@ public class WorldService
 
             await runningSession.CancellationTokenSource.CancelAsync();
             await (runningSession.Handler ?? Task.CompletedTask);
-            _runningWorlds.TryRemove(runningSession.WorldInstance.SessionId, out _);
+            _runningWorlds.TryRemove(runningSession.Instance.SessionId, out _);
         }
     }
 
     public async Task SaveWorldAsync(RunningSession runningSession)
     {
-        var world = runningSession.WorldInstance;
-        if (world is null)
+        if (!Userspace.ShouldSave(runningSession.Instance) || runningSession.IsWorldSaving) return;
+
+        _logger.LogInformation("Saving {World}", runningSession.Instance.RawName);
+        if (await runningSession.SaveWorld())
         {
-            throw new Exception("Not found world");
-        }
-        if (Userspace.CanSave(world))
-        {
-            _logger.LogInformation("Saving {World}", world.RawName);
-            // TODO: 本来ならこのタイミングでサムネイルを撮影して world.CorrespondingRecord.ThumbnailURI に入れてる
-            // クライアントがいるなら撮影してもらうか、最後のセッションサムネイルをセットしてもいいかも？
-            // Memo: Userspace.SaveWorldAuto は サムネイル撮影 + SaveWorld + ExitWorld といった建付け
-            await Userspace.SaveWorld(world);
+            _logger.LogInformation("World({World}) saved successfully!", runningSession.Instance.RawName);
         }
     }
 
@@ -197,7 +192,7 @@ public class WorldService
         async Task RestartSessionAsync(RunningSession runningSession, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Restart Session");
-            var world = runningSession.WorldInstance;
+            var world = runningSession.Instance;
             world.WorldManager.WorldFailed -= MarkAutoRecoverRestart;
             if (!world.IsDestroyed)
             {
@@ -209,7 +204,7 @@ public class WorldService
 
         async Task StopSessionAsync(RunningSession runningSession)
         {
-            var world = runningSession.WorldInstance;
+            var world = runningSession.Instance;
             if (world.SaveOnExit)
             {
                 await SaveWorldAsync(runningSession);
@@ -224,7 +219,7 @@ public class WorldService
         }
 
         var restart = false;
-        var world = runningSession.WorldInstance;
+        var world = runningSession.Instance;
         var autoRecover = runningSession.StartInfo.AutoRecover;
 
         void MarkAutoRecoverRestart(World failedWorld)
@@ -263,29 +258,20 @@ public class WorldService
                 break;
             }
 
-            var originalRunningSession = runningSession;
-
-            if (runningSession.HasAutosaveIntervalElapsed && Userspace.CanSave(world))
+            if (runningSession.HasAutosaveIntervalElapsed && Userspace.ShouldSave(runningSession.Instance))
             {
-                // only attempt a save if the last save has been synchronized and we're not shutting down
-                if (world.CorrespondingRecord.IsSynced && !(Userspace.IsExitingApp || _engine.ShutdownRequested))
+                // autoSaveは同期中や終了中には行わない
+                if (!runningSession.IsWorldSaving && !(Userspace.IsExitingApp || _engine.ShutdownRequested))
                 {
                     _logger.LogInformation("Autosaving {World}", world.RawName);
-                    await Userspace.SaveWorldAuto(world, SaveType.Overwrite, false);
+                    _ = runningSession.SaveWorld();
                 }
-                runningSession = runningSession with
-                {
-                    LastSaveTime = DateTimeOffset.UtcNow
-                };
             }
-            runningSession = runningSession with
+            runningSession.IdleBeganAt = world.UserCount switch
             {
-                IdleBeginTime = world.UserCount switch
-                {
-                    1 when runningSession.LastUserCount > 1 => DateTimeOffset.UtcNow,
-                    > 1 => null,
-                    _ => runningSession.IdleBeginTime
-                }
+                1 when runningSession.LastUserCount > 1 => DateTimeOffset.UtcNow,
+                > 1 => null,
+                _ => runningSession.IdleBeganAt
             };
 
             // ユーザがいなくなったタイミングで保存する
@@ -325,21 +311,13 @@ public class WorldService
                 break;
             }
 
-            runningSession = runningSession with
-            {
-                LastUserCount = world.UserCount
-            };
-
-            if (!_runningWorlds.TryUpdate(world.SessionId, runningSession, originalRunningSession))
-            {
-                _logger.LogError("Failed to update an active session's information ({World})! This is probably a concurrency bug", world.RawName);
-            }
+            runningSession.LastUserCount = world.UserCount;
         }
 
         _logger.LogInformation("World {World} has stopped", world.Name);
 
         // always remove us first
-        _runningWorlds.TryRemove(runningSession.WorldInstance.SessionId, out _);
+        _runningWorlds.TryRemove(runningSession.Instance.SessionId, out _);
 
         if (!ct.IsCancellationRequested && restart)
         {
