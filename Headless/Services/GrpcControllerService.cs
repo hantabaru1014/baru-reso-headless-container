@@ -8,7 +8,7 @@ using Headless.Extensions;
 
 namespace Headless.Services;
 
-public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControlServiceBase
+public class GrpcControllerService : HeadlessControlService.HeadlessControlServiceBase
 {
     private readonly Engine _engine;
     private readonly WorldService _worldService;
@@ -16,7 +16,7 @@ public class HeadlessControlService : Rpc.HeadlessControlService.HeadlessControl
 
     private bool _isShutdownRequested = false;
 
-    public HeadlessControlService
+    public GrpcControllerService
     (
         Engine engine,
         WorldService worldService,

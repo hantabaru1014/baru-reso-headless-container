@@ -13,11 +13,11 @@ public interface IFrooxEngineRunnerService
     float TickRate { get; set; }
 }
 
-public class StandaloneFrooxEngineService : BackgroundService, IFrooxEngineRunnerService
+public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerService
 {
     private static Type? _type;
 
-    private readonly ILogger<StandaloneFrooxEngineService> _logger;
+    private readonly ILogger<FrooxEngineRunnerService> _logger;
     private readonly ApplicationConfig _appConfig;
     private readonly Rpc.StartupConfig _startupConfig;
     private readonly Engine _engine;
@@ -70,9 +70,9 @@ public class StandaloneFrooxEngineService : BackgroundService, IFrooxEngineRunne
         }
     }
 
-    public StandaloneFrooxEngineService
+    public FrooxEngineRunnerService
     (
-        ILogger<StandaloneFrooxEngineService> logger,
+        ILogger<FrooxEngineRunnerService> logger,
         IOptions<ApplicationConfig> applicationConfig,
         IOptions<HeadlessStartupConfig> startupConfig,
         Engine engine,

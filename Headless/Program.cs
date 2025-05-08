@@ -37,15 +37,15 @@ public class Program
                 .AddSingleton<SystemInfo>()
                 .AddSingleton<Engine>()
                 .AddSingleton<WorldService>()
-                .AddSingleton<StandaloneFrooxEngineService>()
-                .AddSingleton<IHostedService>(p => p.GetRequiredService<StandaloneFrooxEngineService>())
-                .AddSingleton<IFrooxEngineRunnerService>(p => p.GetRequiredService<StandaloneFrooxEngineService>());
+                .AddSingleton<FrooxEngineRunnerService>()
+                .AddSingleton<IHostedService>(p => p.GetRequiredService<FrooxEngineRunnerService>())
+                .AddSingleton<IFrooxEngineRunnerService>(p => p.GetRequiredService<FrooxEngineRunnerService>());
         });
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        app.MapGrpcService<HeadlessControlService>();
+        app.MapGrpcService<GrpcControllerService>();
         app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
