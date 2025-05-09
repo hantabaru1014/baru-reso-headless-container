@@ -5,6 +5,7 @@ using Headless.Rpc;
 using Google.Protobuf.WellKnownTypes;
 using Headless.Libs;
 using Headless.Extensions;
+using System.Reflection;
 
 namespace Headless.Services;
 
@@ -13,6 +14,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
     private readonly Engine _engine;
     private readonly WorldService _worldService;
     private readonly IFrooxEngineRunnerService _runnerService;
+    private readonly string _appVersion;
 
     private bool _isShutdownRequested = false;
 
@@ -28,13 +30,17 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         _runnerService = runnerService;
 
         CloudUtils.Setup(_engine.Cloud.Assets);
+
+        _appVersion = Assembly.GetEntryAssembly()
+            ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion ?? "Unknown";
     }
 
     public override Task<GetAboutResponse> GetAbout(GetAboutRequest request, ServerCallContext context)
     {
         return Task.FromResult(new GetAboutResponse
         {
-            AppVersion = "<TODO>",
+            AppVersion = _appVersion,
             ResoniteVersion = _engine.VersionString,
         });
     }
