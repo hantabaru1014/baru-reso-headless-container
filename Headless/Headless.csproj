@@ -1,5 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <Target Name="SetupVersion" BeforeTargets="BeforeBuild">
+    <ReadLinesFromFile File="./AppVersion">
+      <Output TaskParameter="Lines" PropertyName="AppVersionContent" />
+    </ReadLinesFromFile>
+
+    <PropertyGroup>
+      <AssemblyVersion>$(AppVersionContent)</AssemblyVersion>
+      <FileVersion>$(AppVersionContent)</FileVersion>
+      <InformationalVersion>$(AppVersionContent)</InformationalVersion>
+    </PropertyGroup>
+  </Target>
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>

@@ -44,10 +44,12 @@ jobs:
             bash ${GITHUB_WORKSPACE}/scripts/download-resonite.sh
           fi
 
-      - name: Read Resonite Version
+      - name: Read Versions
         run: |
-          VERSION=$(cat ./Resonite/Build.version)
-          echo "RESONITE_VERSION=$VERSION" >> $GITHUB_ENV
+          RESO_VERSION=$(cat ./Resonite/Build.version)
+          echo "RESONITE_VERSION=$RESO_VERSION" >> $GITHUB_ENV
+          APP_VERSION=$(cat ./Headless/AppVersion)
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -63,23 +65,23 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         if: github.event.inputs.resonite_branch == 'headless'
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.IMAGE_NAME }}:latest, ghcr.io/${{ env.IMAGE_NAME }}:${{ env.RESONITE_VERSION }}
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:latest, ghcr.io/${{ env.IMAGE_NAME }}:${{ env.RESONITE_VERSION }}-v${{ env.APP_VERSION }}
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
       
       - name: Build and push Docker image (prerelease)
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         if: github.event.inputs.resonite_branch == 'prerelease'
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.IMAGE_NAME }}:prerelease, ghcr.io/${{ env.IMAGE_NAME }}:prerelease-${{ env.RESONITE_VERSION }}
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:prerelease, ghcr.io/${{ env.IMAGE_NAME }}:prerelease-${{ env.RESONITE_VERSION }}-v${{ env.APP_VERSION }}
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
