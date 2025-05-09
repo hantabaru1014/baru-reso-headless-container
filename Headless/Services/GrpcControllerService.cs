@@ -95,34 +95,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Require load_world_url or load_world_preset_name!"));
         }
-        var parameters = new SkyFrost.Base.WorldStartupParameters
-        {
-            SessionName = reqParam.HasName ? reqParam.Name : null,
-            CustomSessionId = reqParam.HasCustomSessionId ? reqParam.CustomSessionId : null,
-            Description = reqParam.HasDescription ? reqParam.Description : null,
-            Tags = reqParam.Tags.ToList(),
-            AccessLevel = reqParam.AccessLevel.ToResonite(),
-            LoadWorldURL = reqParam.HasLoadWorldUrl ? reqParam.LoadWorldUrl : null,
-            LoadWorldPresetName = reqParam.HasLoadWorldPresetName ? reqParam.LoadWorldPresetName : null,
-            AutoInviteUsernames = reqParam.AutoInviteUsernames.ToList(),
-            DefaultUserRoles = reqParam.DefaultUserRoles.ToDictionary(p => p.UserName, p => p.Role),
-            HideFromPublicListing = reqParam.HideFromPublicListing,
-            AwayKickMinutes = reqParam.AwayKickMinutes == 0 ? -1 : reqParam.AwayKickMinutes,
-            IdleRestartInterval = reqParam.IdleRestartIntervalSeconds == 0 ? -1 : reqParam.IdleRestartIntervalSeconds,
-            SaveOnExit = reqParam.SaveOnExit,
-            AutoSaveInterval = reqParam.AutoSaveIntervalSeconds == 0 ? -1 : reqParam.AutoSaveIntervalSeconds,
-            AutoSleep = reqParam.AutoSleep,
-            AutoRecover = reqParam.AutoRecover,
-            ForcePort = reqParam.ForcePort == 0 ? null : (ushort)reqParam.ForcePort,
-            ParentSessionIds = reqParam.ParentSessionIds.ToList(),
-            ForcedRestartInterval = reqParam.ForcedRestartIntervalSeconds == 0 ? -1 : reqParam.ForcedRestartIntervalSeconds,
-            InviteRequestHandlerUsernames = reqParam.InviteRequestHandlerUsernames.ToList(),
-        };
-        if (reqParam.HasMaxUsers)
-        {
-            parameters.MaxUsers = reqParam.MaxUsers;
-        }
-        var session = await _worldService.StartWorldAsync(parameters);
+        var session = await _worldService.StartWorldAsync(reqParam.ToResonite());
         if (session is null)
         {
             throw new RpcException(new Status(StatusCode.Internal, "Failed open world!"));
@@ -257,6 +230,79 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         if (request.HasHideFromPublicListing)
         {
             session.Instance.HideFromListing = request.HideFromPublicListing;
+        }
+        if (request.HasAutoSleep)
+        {
+            session.Instance.ForceFullUpdateCycle = !request.AutoSleep;
+        }
+        if (request.HasUseCustomJoinVerifier)
+        {
+            session.Instance.UseCustomJoinVerifier = request.UseCustomJoinVerifier;
+        }
+        if (request.HasMobileFriendly)
+        {
+            session.Instance.MobileFriendly = request.MobileFriendly;
+        }
+        if (request.OverrideCorrespondingWorldId is not null && !string.IsNullOrEmpty(request.OverrideCorrespondingWorldId.Id))
+        {
+            var id = request.OverrideCorrespondingWorldId;
+            var correspondingWorldId = new SkyFrost.Base.RecordId(id.OwnerId, id.Id);
+            if (correspondingWorldId is not null && correspondingWorldId.IsValid)
+            {
+                session.Instance.CorrespondingWorldId = correspondingWorldId.ToString();
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "invalid CorrespondingWorldId"));
+            }
+        }
+        if (request.HasRoleCloudVariable)
+        {
+            if (CloudVariableHelper.IsValidPath(request.RoleCloudVariable))
+            {
+                session.Instance.Permissions.DefaultRoleCloudVariable = request.RoleCloudVariable;
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid RoleCloudVariable"));
+            }
+        }
+        if (request.HasAllowUserCloudVariable)
+        {
+            if (CloudVariableHelper.IsValidPath(request.AllowUserCloudVariable))
+            {
+                session.Instance.AllowUserCloudVariable = request.AllowUserCloudVariable;
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid AllowUserCloudVariable"));
+            }
+        }
+        if (request.HasDenyUserCloudVariable)
+        {
+            if (CloudVariableHelper.IsValidPath(request.DenyUserCloudVariable))
+            {
+                session.Instance.DenyUserCloudVariable = request.DenyUserCloudVariable;
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid DenyUserCloudVariable"));
+            }
+        }
+        if (request.HasRequiredUserJoinCloudVariable)
+        {
+            if (CloudVariableHelper.IsValidPath(request.RequiredUserJoinCloudVariable))
+            {
+                session.Instance.RequiredUserJoinCloudVariable = request.RequiredUserJoinCloudVariable;
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid RequiredUserJoinCloudVariable"));
+            }
+        }
+        if (request.HasRequiredUserJoinCloudVariableDenyMessage)
+        {
+            session.Instance.RequiredUserJoinCloudVariableDenyMessage = request.RequiredUserJoinCloudVariableDenyMessage;
         }
         if (request.UpdateTags)
         {

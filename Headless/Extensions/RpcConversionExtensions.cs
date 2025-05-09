@@ -55,7 +55,10 @@ public static class RpcConversionExtensions
             ParentSessionIds = { parameters.ParentSessionIds ?? [] },
             AutoRecover = parameters.AutoRecover,
             ForcedRestartIntervalSeconds = (int)parameters.ForcedRestartInterval,
-            InviteRequestHandlerUsernames = { parameters.InviteRequestHandlerUsernames ?? [] }
+            InviteRequestHandlerUsernames = { parameters.InviteRequestHandlerUsernames ?? [] },
+            UseCustomJoinVerifier = parameters.UseCustomJoinVerifier,
+            MobileFriendly = parameters.MobileFriendly,
+            KeepOriginalRoles = parameters.KeepOriginalRoles
         };
         if (parameters.SessionName is not null)
         {
@@ -77,6 +80,46 @@ public static class RpcConversionExtensions
         {
             result.LoadWorldPresetName = parameters.LoadWorldPresetName;
         }
+
+        if (parameters.OverrideCorrespondingWorldId != null)
+        {
+            result.OverrideCorrespondingWorldId = new Rpc.RecordId
+            {
+                Id = parameters.OverrideCorrespondingWorldId.Id,
+                OwnerId = parameters.OverrideCorrespondingWorldId.OwnerId
+            };
+        }
+
+        if (parameters.RoleCloudVariable != null)
+        {
+            result.RoleCloudVariable = parameters.RoleCloudVariable;
+        }
+
+        if (parameters.AllowUserCloudVariable != null)
+        {
+            result.AllowUserCloudVariable = parameters.AllowUserCloudVariable;
+        }
+
+        if (parameters.DenyUserCloudVariable != null)
+        {
+            result.DenyUserCloudVariable = parameters.DenyUserCloudVariable;
+        }
+
+        if (parameters.RequiredUserJoinCloudVariable != null)
+        {
+            result.RequiredUserJoinCloudVariable = parameters.RequiredUserJoinCloudVariable;
+        }
+
+        if (parameters.RequiredUserJoinCloudVariableDenyMessage != null)
+        {
+            result.RequiredUserJoinCloudVariableDenyMessage = parameters.RequiredUserJoinCloudVariableDenyMessage;
+        }
+
+        if (parameters.AutoInviteMessage != null)
+        {
+            result.AutoInviteMessage = parameters.AutoInviteMessage;
+        }
+
         return result;
     }
 
@@ -85,22 +128,24 @@ public static class RpcConversionExtensions
         var result = new SkyFrost.Base.WorldStartupParameters
         {
             IsEnabled = true,
-            MaxUsers = parameters.MaxUsers,
             AccessLevel = parameters.AccessLevel.ToResonite(),
             AutoInviteUsernames = parameters.AutoInviteUsernames.ToList(),
             Tags = parameters.Tags.ToList(),
             HideFromPublicListing = parameters.HideFromPublicListing,
             DefaultUserRoles = parameters.DefaultUserRoles.ToDictionary(r => r.UserName, r => r.Role),
-            AwayKickMinutes = parameters.AwayKickMinutes,
-            IdleRestartInterval = parameters.IdleRestartIntervalSeconds,
+            AwayKickMinutes = parameters.AwayKickMinutes == 0 ? -1 : parameters.AwayKickMinutes,
+            IdleRestartInterval = parameters.IdleRestartIntervalSeconds == 0 ? -1 : parameters.IdleRestartIntervalSeconds,
             SaveOnExit = parameters.SaveOnExit,
-            AutoSaveInterval = parameters.AutoSaveIntervalSeconds,
+            AutoSaveInterval = parameters.AutoSaveIntervalSeconds == 0 ? -1 : parameters.AutoSaveIntervalSeconds,
             AutoSleep = parameters.AutoSleep,
             ForcePort = parameters.ForcePort > 0 ? (ushort)parameters.ForcePort : null,
             ParentSessionIds = parameters.ParentSessionIds.ToList(),
             AutoRecover = parameters.AutoRecover,
-            ForcedRestartInterval = parameters.ForcedRestartIntervalSeconds,
-            InviteRequestHandlerUsernames = parameters.InviteRequestHandlerUsernames.ToList()
+            ForcedRestartInterval = parameters.ForcedRestartIntervalSeconds == 0 ? -1 : parameters.ForcedRestartIntervalSeconds,
+            InviteRequestHandlerUsernames = parameters.InviteRequestHandlerUsernames.ToList(),
+            UseCustomJoinVerifier = parameters.UseCustomJoinVerifier,
+            MobileFriendly = parameters.MobileFriendly,
+            KeepOriginalRoles = parameters.KeepOriginalRoles
         };
 
         if (!string.IsNullOrEmpty(parameters.Name))
@@ -125,6 +170,50 @@ public static class RpcConversionExtensions
         else if (!string.IsNullOrEmpty(parameters.LoadWorldPresetName))
         {
             result.LoadWorldPresetName = parameters.LoadWorldPresetName;
+        }
+
+        if (parameters.HasMaxUsers)
+        {
+            result.MaxUsers = parameters.MaxUsers;
+        }
+
+        if (parameters.OverrideCorrespondingWorldId != null)
+        {
+            result.OverrideCorrespondingWorldId = new SkyFrost.Base.RecordId
+            {
+                Id = parameters.OverrideCorrespondingWorldId.Id,
+                OwnerId = parameters.OverrideCorrespondingWorldId.OwnerId
+            };
+        }
+
+        if (!string.IsNullOrEmpty(parameters.RoleCloudVariable))
+        {
+            result.RoleCloudVariable = parameters.RoleCloudVariable;
+        }
+
+        if (!string.IsNullOrEmpty(parameters.AllowUserCloudVariable))
+        {
+            result.AllowUserCloudVariable = parameters.AllowUserCloudVariable;
+        }
+
+        if (!string.IsNullOrEmpty(parameters.DenyUserCloudVariable))
+        {
+            result.DenyUserCloudVariable = parameters.DenyUserCloudVariable;
+        }
+
+        if (!string.IsNullOrEmpty(parameters.RequiredUserJoinCloudVariable))
+        {
+            result.RequiredUserJoinCloudVariable = parameters.RequiredUserJoinCloudVariable;
+        }
+
+        if (!string.IsNullOrEmpty(parameters.RequiredUserJoinCloudVariableDenyMessage))
+        {
+            result.RequiredUserJoinCloudVariableDenyMessage = parameters.RequiredUserJoinCloudVariableDenyMessage;
+        }
+
+        if (!string.IsNullOrEmpty(parameters.AutoInviteMessage))
+        {
+            result.AutoInviteMessage = parameters.AutoInviteMessage;
         }
 
         return result;
