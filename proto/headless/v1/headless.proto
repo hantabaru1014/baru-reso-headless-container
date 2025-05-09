@@ -268,6 +268,14 @@ message UpdateSessionParametersRequest {
   optional bool hide_from_public_listing = 11;
   bool update_tags = 12;
   repeated string tags = 13;
+  optional bool use_custom_join_verifier = 14;
+  optional bool mobile_friendly = 15;
+  optional RecordId override_corresponding_world_id = 16;
+  optional string role_cloud_variable = 17;
+  optional string allow_user_cloud_variable = 18;
+  optional string deny_user_cloud_variable = 19;
+  optional string required_user_join_cloud_variable = 20;
+  optional string required_user_join_cloud_variable_deny_message = 21;
 }
 
 message UpdateSessionParametersResponse {}
@@ -358,6 +366,16 @@ message WorldStartupParameters {
   repeated string parent_session_ids = 19;
   bool auto_recover = 20;
   int32 forced_restart_interval_seconds = 21;
+  bool use_custom_join_verifier = 22;
+  bool mobile_friendly = 23;
+  optional RecordId override_corresponding_world_id = 24;
+  bool keep_original_roles = 25;
+  optional string role_cloud_variable = 26;
+  optional string allow_user_cloud_variable = 27;
+  optional string deny_user_cloud_variable = 28;
+  optional string required_user_join_cloud_variable = 29;
+  optional string required_user_join_cloud_variable_deny_message = 30;
+  optional string auto_invite_message = 31;
 }
 
 enum ContactChatMessageType {
@@ -398,4 +416,9 @@ message StartupConfig {
   repeated WorldStartupParameters start_worlds = 5;
   repeated AllowedAccessEntry allowed_url_hosts = 6;
   repeated string auto_spawn_items = 7;
+}
+
+message RecordId {
+  string id = 1;
+  string owner_id = 2;
 }

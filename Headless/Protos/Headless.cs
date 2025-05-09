@@ -118,7 +118,7 @@ namespace Headless.Rpc {
             "ZXNzaW9uX2lkGAEgASgJUglzZXNzaW9uSWQSGQoHdXNlcl9pZBgCIAEoCUgA",
             "UgZ1c2VySWQSHQoJdXNlcl9uYW1lGAMgASgJSABSCHVzZXJOYW1lEhIKBHJv",
             "bGUYBCABKAlSBHJvbGVCBgoEdXNlciIsChZVcGRhdGVVc2VyUm9sZVJlc3Bv",
-            "bnNlEhIKBHJvbGUYASABKAlSBHJvbGUiqAYKHlVwZGF0ZVNlc3Npb25QYXJh",
+            "bnNlEhIKBHJvbGUYASABKAlSBHJvbGUirg0KHlVwZGF0ZVNlc3Npb25QYXJh",
             "bWV0ZXJzUmVxdWVzdBIdCgpzZXNzaW9uX2lkGAEgASgJUglzZXNzaW9uSWQS",
             "FwoEbmFtZRgCIAEoCUgAUgRuYW1liAEBEiUKC2Rlc2NyaXB0aW9uGAMgASgJ",
             "SAFSC2Rlc2NyaXB0aW9uiAEBEiAKCW1heF91c2VycxgEIAEoBUgCUghtYXhV",
@@ -132,155 +132,196 @@ namespace Headless.Rpc {
             "IAEoCEgIUglhdXRvU2xlZXCIAQESPAoYaGlkZV9mcm9tX3B1YmxpY19saXN0",
             "aW5nGAsgASgISAlSFWhpZGVGcm9tUHVibGljTGlzdGluZ4gBARIfCgt1cGRh",
             "dGVfdGFncxgMIAEoCFIKdXBkYXRlVGFncxISCgR0YWdzGA0gAygJUgR0YWdz",
-            "QgcKBV9uYW1lQg4KDF9kZXNjcmlwdGlvbkIMCgpfbWF4X3VzZXJzQg8KDV9h",
-            "Y2Nlc3NfbGV2ZWxCFAoSX2F3YXlfa2lja19taW51dGVzQiAKHl9pZGxlX3Jl",
-            "c3RhcnRfaW50ZXJ2YWxfc2Vjb25kc0IPCg1fc2F2ZV9vbl9leGl0Qh0KG19h",
-            "dXRvX3NhdmVfaW50ZXJ2YWxfc2Vjb25kc0INCgtfYXV0b19zbGVlcEIbChlf",
-            "aGlkZV9mcm9tX3B1YmxpY19saXN0aW5nIiEKH1VwZGF0ZVNlc3Npb25QYXJh",
-            "bWV0ZXJzUmVzcG9uc2UiOgoZTGlzdFVzZXJzSW5TZXNzaW9uUmVxdWVzdBId",
-            "CgpzZXNzaW9uX2lkGAEgASgJUglzZXNzaW9uSWQiTgoaTGlzdFVzZXJzSW5T",
-            "ZXNzaW9uUmVzcG9uc2USMAoFdXNlcnMYASADKAsyGi5oZWFkbGVzcy52MS5V",
-            "c2VySW5TZXNzaW9uUgV1c2VycyJmCg1Vc2VySW5TZXNzaW9uEg4KAmlkGAEg",
-            "ASgJUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhIKBHJvbGUYAyABKAlSBHJv",
-            "bGUSHQoKaXNfcHJlc2VudBgEIAEoCFIJaXNQcmVzZW50IkkKCFVzZXJJbmZv",
-            "Eg4KAmlkGAEgASgJUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhkKCGljb25f",
-            "dXJsGAMgASgJUgdpY29uVXJsIqsHCgdTZXNzaW9uEg4KAmlkGAEgASgJUgJp",
-            "ZBISCgRuYW1lGAIgASgJUgRuYW1lEiAKC2Rlc2NyaXB0aW9uGAMgASgJUgtk",
-            "ZXNjcmlwdGlvbhI7CgxhY2Nlc3NfbGV2ZWwYBCABKA4yGC5oZWFkbGVzcy52",
-            "MS5BY2Nlc3NMZXZlbFILYWNjZXNzTGV2ZWwSHwoLdXNlcnNfY291bnQYByAB",
-            "KAVSCnVzZXJzQ291bnQSGwoJbWF4X3VzZXJzGAggASgFUghtYXhVc2VycxIo",
-            "Cg10aHVtYm5haWxfdXJsGAUgASgJSABSDHRodW1ibmFpbFVybIgBARJSChJz",
-            "dGFydHVwX3BhcmFtZXRlcnMYBiABKAsyIy5oZWFkbGVzcy52MS5Xb3JsZFN0",
-            "YXJ0dXBQYXJhbWV0ZXJzUhFzdGFydHVwUGFyYW1ldGVycxIfCgtzZXNzaW9u",
-            "X3VybBgJIAEoCVIKc2Vzc2lvblVybBIqCg90aW1lX3J1bm5pbmdfbXMYCiAB",
-            "KAVCAhgBUg10aW1lUnVubmluZ01zEioKEWF3YXlfa2lja19taW51dGVzGAsg",
-            "ASgCUg9hd2F5S2lja01pbnV0ZXMSQQodaWRsZV9yZXN0YXJ0X2ludGVydmFs",
-            "X3NlY29uZHMYDCABKAVSGmlkbGVSZXN0YXJ0SW50ZXJ2YWxTZWNvbmRzEiAK",
-            "DHNhdmVfb25fZXhpdBgNIAEoCFIKc2F2ZU9uRXhpdBI7ChphdXRvX3NhdmVf",
-            "aW50ZXJ2YWxfc2Vjb25kcxgOIAEoBVIXYXV0b1NhdmVJbnRlcnZhbFNlY29u",
-            "ZHMSHQoKYXV0b19zbGVlcBgPIAEoCFIJYXV0b1NsZWVwEjcKGGhpZGVfZnJv",
-            "bV9wdWJsaWNfbGlzdGluZxgQIAEoCFIVaGlkZUZyb21QdWJsaWNMaXN0aW5n",
-            "EhIKBHRhZ3MYESADKAlSBHRhZ3MSQwoNbGFzdF9zYXZlZF9hdBgSIAEoCzIa",
-            "Lmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAVILbGFzdFNhdmVkQXSIAQES",
-            "GQoIY2FuX3NhdmUYEyABKAhSB2NhblNhdmUSGwoJd29ybGRfdXJsGBQgASgJ",
-            "Ugh3b3JsZFVybBI5CgpzdGFydGVkX2F0GBUgASgLMhouZ29vZ2xlLnByb3Rv",
-            "YnVmLlRpbWVzdGFtcFIJc3RhcnRlZEF0QhAKDl90aHVtYm5haWxfdXJsQhAK",
-            "Dl9sYXN0X3NhdmVkX2F0IkIKD0RlZmF1bHRVc2VyUm9sZRISCgRyb2xlGAEg",
-            "ASgJUgRyb2xlEhsKCXVzZXJfbmFtZRgCIAEoCVIIdXNlck5hbWUizAgKFldv",
-            "cmxkU3RhcnR1cFBhcmFtZXRlcnMSFwoEbmFtZRgBIAEoCUgBUgRuYW1liAEB",
-            "Ei8KEWN1c3RvbV9zZXNzaW9uX2lkGAIgASgJSAJSD2N1c3RvbVNlc3Npb25J",
-            "ZIgBARIlCgtkZXNjcmlwdGlvbhgDIAEoCUgDUgtkZXNjcmlwdGlvbogBARIS",
-            "CgR0YWdzGAogAygJUgR0YWdzEiAKCW1heF91c2VycxgEIAEoBUgEUghtYXhV",
-            "c2Vyc4gBARI7CgxhY2Nlc3NfbGV2ZWwYBSABKA4yGC5oZWFkbGVzcy52MS5B",
-            "Y2Nlc3NMZXZlbFILYWNjZXNzTGV2ZWwSJgoObG9hZF93b3JsZF91cmwYBiAB",
-            "KAlIAFIMbG9hZFdvcmxkVXJsEjUKFmxvYWRfd29ybGRfcHJlc2V0X25hbWUY",
-            "ByABKAlIAFITbG9hZFdvcmxkUHJlc2V0TmFtZRIyChVhdXRvX2ludml0ZV91",
-            "c2VybmFtZXMYCCADKAlSE2F1dG9JbnZpdGVVc2VybmFtZXMSNwoYaGlkZV9m",
-            "cm9tX3B1YmxpY19saXN0aW5nGAkgASgIUhVoaWRlRnJvbVB1YmxpY0xpc3Rp",
-            "bmcSSgoSZGVmYXVsdF91c2VyX3JvbGVzGAsgAygLMhwuaGVhZGxlc3MudjEu",
-            "RGVmYXVsdFVzZXJSb2xlUhBkZWZhdWx0VXNlclJvbGVzEioKEWF3YXlfa2lj",
-            "a19taW51dGVzGAwgASgCUg9hd2F5S2lja01pbnV0ZXMSQQodaWRsZV9yZXN0",
-            "YXJ0X2ludGVydmFsX3NlY29uZHMYDSABKAVSGmlkbGVSZXN0YXJ0SW50ZXJ2",
-            "YWxTZWNvbmRzEiAKDHNhdmVfb25fZXhpdBgOIAEoCFIKc2F2ZU9uRXhpdBI7",
-            "ChphdXRvX3NhdmVfaW50ZXJ2YWxfc2Vjb25kcxgPIAEoBVIXYXV0b1NhdmVJ",
-            "bnRlcnZhbFNlY29uZHMSHQoKYXV0b19zbGVlcBgQIAEoCFIJYXV0b1NsZWVw",
-            "EkcKIGludml0ZV9yZXF1ZXN0X2hhbmRsZXJfdXNlcm5hbWVzGBEgAygJUh1p",
-            "bnZpdGVSZXF1ZXN0SGFuZGxlclVzZXJuYW1lcxIdCgpmb3JjZV9wb3J0GBIg",
-            "ASgNUglmb3JjZVBvcnQSLAoScGFyZW50X3Nlc3Npb25faWRzGBMgAygJUhBw",
-            "YXJlbnRTZXNzaW9uSWRzEiEKDGF1dG9fcmVjb3ZlchgUIAEoCFILYXV0b1Jl",
-            "Y292ZXISRQofZm9yY2VkX3Jlc3RhcnRfaW50ZXJ2YWxfc2Vjb25kcxgVIAEo",
-            "BVIcZm9yY2VkUmVzdGFydEludGVydmFsU2Vjb25kc0IMCgpsb2FkX3dvcmxk",
-            "QgcKBV9uYW1lQhQKEl9jdXN0b21fc2Vzc2lvbl9pZEIOCgxfZGVzY3JpcHRp",
-            "b25CDAoKX21heF91c2VycyL8AQoSQ29udGFjdENoYXRNZXNzYWdlEg4KAmlk",
-            "GAEgASgJUgJpZBI3CgR0eXBlGAIgASgOMiMuaGVhZGxlc3MudjEuQ29udGFj",
-            "dENoYXRNZXNzYWdlVHlwZVIEdHlwZRIYCgdjb250ZW50GAMgASgJUgdjb250",
-            "ZW50EjcKCXNlbmRfdGltZRgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
-            "c3RhbXBSCHNlbmRUaW1lEjwKCXJlYWRfdGltZRgFIAEoCzIaLmdvb2dsZS5w",
-            "cm90b2J1Zi5UaW1lc3RhbXBIAFIIcmVhZFRpbWWIAQFCDAoKX3JlYWRfdGlt",
-            "ZSKmAgoSQWxsb3dlZEFjY2Vzc0VudHJ5EhIKBGhvc3QYASABKAlSBGhvc3QS",
-            "FAoFcG9ydHMYAiADKAVSBXBvcnRzEk0KDGFjY2Vzc190eXBlcxgDIAMoDjIq",
-            "LmhlYWRsZXNzLnYxLkFsbG93ZWRBY2Nlc3NFbnRyeS5BY2Nlc3NUeXBlUgth",
-            "Y2Nlc3NUeXBlcyKWAQoKQWNjZXNzVHlwZRIbChdBQ0NFU1NfVFlQRV9VTlNQ",
-            "RUNJRklFRBAAEhQKEEFDQ0VTU19UWVBFX0hUVFAQARIZChVBQ0NFU1NfVFlQ",
-            "RV9XRUJTT0NLRVQQAhIdChlBQ0NFU1NfVFlQRV9PU0NfUkVDRUlWSU5HEAMS",
-            "GwoXQUNDRVNTX1RZUEVfT1NDX1NFTkRJTkcQBCLpAwoNU3RhcnR1cENvbmZp",
-            "ZxIkCgt1bml2ZXJzZV9pZBgBIAEoCUgAUgp1bml2ZXJzZUlkiAEBEiAKCXRp",
-            "Y2tfcmF0ZRgCIAEoAkgBUgh0aWNrUmF0ZYgBARJICh5tYXhfY29uY3VycmVu",
-            "dF9hc3NldF90cmFuc2ZlcnMYAyABKAVIAlIbbWF4Q29uY3VycmVudEFzc2V0",
-            "VHJhbnNmZXJziAEBEjAKEXVzZXJuYW1lX292ZXJyaWRlGAQgASgJSANSEHVz",
-            "ZXJuYW1lT3ZlcnJpZGWIAQESRgoMc3RhcnRfd29ybGRzGAUgAygLMiMuaGVh",
-            "ZGxlc3MudjEuV29ybGRTdGFydHVwUGFyYW1ldGVyc1ILc3RhcnRXb3JsZHMS",
-            "SwoRYWxsb3dlZF91cmxfaG9zdHMYBiADKAsyHy5oZWFkbGVzcy52MS5BbGxv",
-            "d2VkQWNjZXNzRW50cnlSD2FsbG93ZWRVcmxIb3N0cxIoChBhdXRvX3NwYXdu",
-            "X2l0ZW1zGAcgAygJUg5hdXRvU3Bhd25JdGVtc0IOCgxfdW5pdmVyc2VfaWRC",
-            "DAoKX3RpY2tfcmF0ZUIhCh9fbWF4X2NvbmN1cnJlbnRfYXNzZXRfdHJhbnNm",
-            "ZXJzQhQKEl91c2VybmFtZV9vdmVycmlkZSrSAQoLQWNjZXNzTGV2ZWwSHAoY",
-            "QUNDRVNTX0xFVkVMX1VOU1BFQ0lGSUVEEAASGAoUQUNDRVNTX0xFVkVMX1BS",
-            "SVZBVEUQARIUChBBQ0NFU1NfTEVWRUxfTEFOEAISGQoVQUNDRVNTX0xFVkVM",
-            "X0NPTlRBQ1RTEAMSHgoaQUNDRVNTX0xFVkVMX0NPTlRBQ1RTX1BMVVMQBBIh",
-            "Ch1BQ0NFU1NfTEVWRUxfUkVHSVNURVJFRF9VU0VSUxAFEhcKE0FDQ0VTU19M",
-            "RVZFTF9BTllPTkUQBirgAQoWQ29udGFjdENoYXRNZXNzYWdlVHlwZRIpCiVD",
-            "T05UQUNUX0NIQVRfTUVTU0FHRV9UWVBFX1VOU1BFQ0lGSUVEEAASIgoeQ09O",
-            "VEFDVF9DSEFUX01FU1NBR0VfVFlQRV9URVhUEAESJAogQ09OVEFDVF9DSEFU",
-            "X01FU1NBR0VfVFlQRV9PQkpFQ1QQAhIjCh9DT05UQUNUX0NIQVRfTUVTU0FH",
-            "RV9UWVBFX1NPVU5EEAMSLAooQ09OVEFDVF9DSEFUX01FU1NBR0VfVFlQRV9T",
-            "RVNTSU9OX0lOVklURRAEMrETChZIZWFkbGVzc0NvbnRyb2xTZXJ2aWNlEkcK",
-            "CEdldEFib3V0EhwuaGVhZGxlc3MudjEuR2V0QWJvdXRSZXF1ZXN0Gh0uaGVh",
-            "ZGxlc3MudjEuR2V0QWJvdXRSZXNwb25zZRJKCglHZXRTdGF0dXMSHS5oZWFk",
-            "bGVzcy52MS5HZXRTdGF0dXNSZXF1ZXN0Gh4uaGVhZGxlc3MudjEuR2V0U3Rh",
-            "dHVzUmVzcG9uc2USRwoIU2h1dGRvd24SHC5oZWFkbGVzcy52MS5TaHV0ZG93",
-            "blJlcXVlc3QaHS5oZWFkbGVzcy52MS5TaHV0ZG93blJlc3BvbnNlElMKDExp",
-            "c3RTZXNzaW9ucxIgLmhlYWRsZXNzLnYxLkxpc3RTZXNzaW9uc1JlcXVlc3Qa",
-            "IS5oZWFkbGVzcy52MS5MaXN0U2Vzc2lvbnNSZXNwb25zZRJNCgpHZXRTZXNz",
-            "aW9uEh4uaGVhZGxlc3MudjEuR2V0U2Vzc2lvblJlcXVlc3QaHy5oZWFkbGVz",
-            "cy52MS5HZXRTZXNzaW9uUmVzcG9uc2USTQoKU3RhcnRXb3JsZBIeLmhlYWRs",
-            "ZXNzLnYxLlN0YXJ0V29ybGRSZXF1ZXN0Gh8uaGVhZGxlc3MudjEuU3RhcnRX",
-            "b3JsZFJlc3BvbnNlElAKC1N0b3BTZXNzaW9uEh8uaGVhZGxlc3MudjEuU3Rv",
-            "cFNlc3Npb25SZXF1ZXN0GiAuaGVhZGxlc3MudjEuU3RvcFNlc3Npb25SZXNw",
-            "b25zZRJfChBTYXZlU2Vzc2lvbldvcmxkEiQuaGVhZGxlc3MudjEuU2F2ZVNl",
-            "c3Npb25Xb3JsZFJlcXVlc3QaJS5oZWFkbGVzcy52MS5TYXZlU2Vzc2lvbldv",
-            "cmxkUmVzcG9uc2USTQoKSW52aXRlVXNlchIeLmhlYWRsZXNzLnYxLkludml0",
-            "ZVVzZXJSZXF1ZXN0Gh8uaGVhZGxlc3MudjEuSW52aXRlVXNlclJlc3BvbnNl",
-            "ElkKDlVwZGF0ZVVzZXJSb2xlEiIuaGVhZGxlc3MudjEuVXBkYXRlVXNlclJv",
-            "bGVSZXF1ZXN0GiMuaGVhZGxlc3MudjEuVXBkYXRlVXNlclJvbGVSZXNwb25z",
-            "ZRJ0ChdVcGRhdGVTZXNzaW9uUGFyYW1ldGVycxIrLmhlYWRsZXNzLnYxLlVw",
-            "ZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVxdWVzdBosLmhlYWRsZXNzLnYxLlVw",
-            "ZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVzcG9uc2USZQoSTGlzdFVzZXJzSW5T",
-            "ZXNzaW9uEiYuaGVhZGxlc3MudjEuTGlzdFVzZXJzSW5TZXNzaW9uUmVxdWVz",
-            "dBonLmhlYWRsZXNzLnYxLkxpc3RVc2Vyc0luU2Vzc2lvblJlc3BvbnNlEkcK",
-            "CEtpY2tVc2VyEhwuaGVhZGxlc3MudjEuS2lja1VzZXJSZXF1ZXN0Gh0uaGVh",
-            "ZGxlc3MudjEuS2lja1VzZXJSZXNwb25zZRJECgdCYW5Vc2VyEhsuaGVhZGxl",
-            "c3MudjEuQmFuVXNlclJlcXVlc3QaHC5oZWFkbGVzcy52MS5CYW5Vc2VyUmVz",
-            "cG9uc2USXAoPR2V0SG9zdFNldHRpbmdzEiMuaGVhZGxlc3MudjEuR2V0SG9z",
-            "dFNldHRpbmdzUmVxdWVzdBokLmhlYWRsZXNzLnYxLkdldEhvc3RTZXR0aW5n",
-            "c1Jlc3BvbnNlEmUKElVwZGF0ZUhvc3RTZXR0aW5ncxImLmhlYWRsZXNzLnYx",
-            "LlVwZGF0ZUhvc3RTZXR0aW5nc1JlcXVlc3QaJy5oZWFkbGVzcy52MS5VcGRh",
-            "dGVIb3N0U2V0dGluZ3NSZXNwb25zZRJcCg9BbGxvd0hvc3RBY2Nlc3MSIy5o",
-            "ZWFkbGVzcy52MS5BbGxvd0hvc3RBY2Nlc3NSZXF1ZXN0GiQuaGVhZGxlc3Mu",
-            "djEuQWxsb3dIb3N0QWNjZXNzUmVzcG9uc2USWQoORGVueUhvc3RBY2Nlc3MS",
-            "Ii5oZWFkbGVzcy52MS5EZW55SG9zdEFjY2Vzc1JlcXVlc3QaIy5oZWFkbGVz",
-            "cy52MS5EZW55SG9zdEFjY2Vzc1Jlc3BvbnNlEnoKGUdldFN0YXJ0dXBDb25m",
-            "aWdUb1Jlc3RvcmUSLS5oZWFkbGVzcy52MS5HZXRTdGFydHVwQ29uZmlnVG9S",
-            "ZXN0b3JlUmVxdWVzdBouLmhlYWRsZXNzLnYxLkdldFN0YXJ0dXBDb25maWdU",
-            "b1Jlc3RvcmVSZXNwb25zZRJZCg5HZXRBY2NvdW50SW5mbxIiLmhlYWRsZXNz",
-            "LnYxLkdldEFjY291bnRJbmZvUmVxdWVzdBojLmhlYWRsZXNzLnYxLkdldEFj",
-            "Y291bnRJbmZvUmVzcG9uc2USWQoORmV0Y2hXb3JsZEluZm8SIi5oZWFkbGVz",
-            "cy52MS5GZXRjaFdvcmxkSW5mb1JlcXVlc3QaIy5oZWFkbGVzcy52MS5GZXRj",
-            "aFdvcmxkSW5mb1Jlc3BvbnNlElkKDlNlYXJjaFVzZXJJbmZvEiIuaGVhZGxl",
-            "c3MudjEuU2VhcmNoVXNlckluZm9SZXF1ZXN0GiMuaGVhZGxlc3MudjEuU2Vh",
-            "cmNoVXNlckluZm9SZXNwb25zZRJiChFHZXRGcmllbmRSZXF1ZXN0cxIlLmhl",
-            "YWRsZXNzLnYxLkdldEZyaWVuZFJlcXVlc3RzUmVxdWVzdBomLmhlYWRsZXNz",
-            "LnYxLkdldEZyaWVuZFJlcXVlc3RzUmVzcG9uc2USawoUQWNjZXB0RnJpZW5k",
-            "UmVxdWVzdHMSKC5oZWFkbGVzcy52MS5BY2NlcHRGcmllbmRSZXF1ZXN0c1Jl",
-            "cXVlc3QaKS5oZWFkbGVzcy52MS5BY2NlcHRGcmllbmRSZXF1ZXN0c1Jlc3Bv",
-            "bnNlElMKDExpc3RDb250YWN0cxIgLmhlYWRsZXNzLnYxLkxpc3RDb250YWN0",
-            "c1JlcXVlc3QaIS5oZWFkbGVzcy52MS5MaXN0Q29udGFjdHNSZXNwb25zZRJl",
-            "ChJHZXRDb250YWN0TWVzc2FnZXMSJi5oZWFkbGVzcy52MS5HZXRDb250YWN0",
-            "TWVzc2FnZXNSZXF1ZXN0GicuaGVhZGxlc3MudjEuR2V0Q29udGFjdE1lc3Nh",
-            "Z2VzUmVzcG9uc2USZQoSU2VuZENvbnRhY3RNZXNzYWdlEiYuaGVhZGxlc3Mu",
-            "djEuU2VuZENvbnRhY3RNZXNzYWdlUmVxdWVzdBonLmhlYWRsZXNzLnYxLlNl",
-            "bmRDb250YWN0TWVzc2FnZVJlc3BvbnNlQg+qAgxIZWFkbGVzcy5ScGNiBnBy",
-            "b3RvMw=="));
+            "EjwKGHVzZV9jdXN0b21fam9pbl92ZXJpZmllchgOIAEoCEgKUhV1c2VDdXN0",
+            "b21Kb2luVmVyaWZpZXKIAQESLAoPbW9iaWxlX2ZyaWVuZGx5GA8gASgISAtS",
+            "Dm1vYmlsZUZyaWVuZGx5iAEBEmEKH292ZXJyaWRlX2NvcnJlc3BvbmRpbmdf",
+            "d29ybGRfaWQYECABKAsyFS5oZWFkbGVzcy52MS5SZWNvcmRJZEgMUhxvdmVy",
+            "cmlkZUNvcnJlc3BvbmRpbmdXb3JsZElkiAEBEjMKE3JvbGVfY2xvdWRfdmFy",
+            "aWFibGUYESABKAlIDVIRcm9sZUNsb3VkVmFyaWFibGWIAQESPgoZYWxsb3df",
+            "dXNlcl9jbG91ZF92YXJpYWJsZRgSIAEoCUgOUhZhbGxvd1VzZXJDbG91ZFZh",
+            "cmlhYmxliAEBEjwKGGRlbnlfdXNlcl9jbG91ZF92YXJpYWJsZRgTIAEoCUgP",
+            "UhVkZW55VXNlckNsb3VkVmFyaWFibGWIAQESTQohcmVxdWlyZWRfdXNlcl9q",
+            "b2luX2Nsb3VkX3ZhcmlhYmxlGBQgASgJSBBSHXJlcXVpcmVkVXNlckpvaW5D",
+            "bG91ZFZhcmlhYmxliAEBEmUKLnJlcXVpcmVkX3VzZXJfam9pbl9jbG91ZF92",
+            "YXJpYWJsZV9kZW55X21lc3NhZ2UYFSABKAlIEVIocmVxdWlyZWRVc2VySm9p",
+            "bkNsb3VkVmFyaWFibGVEZW55TWVzc2FnZYgBARIzChNhdXRvX2ludml0ZV9t",
+            "ZXNzYWdlGBYgASgJSBJSEWF1dG9JbnZpdGVNZXNzYWdliAEBQgcKBV9uYW1l",
+            "Qg4KDF9kZXNjcmlwdGlvbkIMCgpfbWF4X3VzZXJzQg8KDV9hY2Nlc3NfbGV2",
+            "ZWxCFAoSX2F3YXlfa2lja19taW51dGVzQiAKHl9pZGxlX3Jlc3RhcnRfaW50",
+            "ZXJ2YWxfc2Vjb25kc0IPCg1fc2F2ZV9vbl9leGl0Qh0KG19hdXRvX3NhdmVf",
+            "aW50ZXJ2YWxfc2Vjb25kc0INCgtfYXV0b19zbGVlcEIbChlfaGlkZV9mcm9t",
+            "X3B1YmxpY19saXN0aW5nQhsKGV91c2VfY3VzdG9tX2pvaW5fdmVyaWZpZXJC",
+            "EgoQX21vYmlsZV9mcmllbmRseUIiCiBfb3ZlcnJpZGVfY29ycmVzcG9uZGlu",
+            "Z193b3JsZF9pZEIWChRfcm9sZV9jbG91ZF92YXJpYWJsZUIcChpfYWxsb3df",
+            "dXNlcl9jbG91ZF92YXJpYWJsZUIbChlfZGVueV91c2VyX2Nsb3VkX3Zhcmlh",
+            "YmxlQiQKIl9yZXF1aXJlZF91c2VyX2pvaW5fY2xvdWRfdmFyaWFibGVCMQov",
+            "X3JlcXVpcmVkX3VzZXJfam9pbl9jbG91ZF92YXJpYWJsZV9kZW55X21lc3Nh",
+            "Z2VCFgoUX2F1dG9faW52aXRlX21lc3NhZ2UiIQofVXBkYXRlU2Vzc2lvblBh",
+            "cmFtZXRlcnNSZXNwb25zZSI6ChlMaXN0VXNlcnNJblNlc3Npb25SZXF1ZXN0",
+            "Eh0KCnNlc3Npb25faWQYASABKAlSCXNlc3Npb25JZCJOChpMaXN0VXNlcnNJ",
+            "blNlc3Npb25SZXNwb25zZRIwCgV1c2VycxgBIAMoCzIaLmhlYWRsZXNzLnYx",
+            "LlVzZXJJblNlc3Npb25SBXVzZXJzImYKDVVzZXJJblNlc3Npb24SDgoCaWQY",
+            "ASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSEgoEcm9sZRgDIAEoCVIE",
+            "cm9sZRIdCgppc19wcmVzZW50GAQgASgIUglpc1ByZXNlbnQiSQoIVXNlcklu",
+            "Zm8SDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSGQoIaWNv",
+            "bl91cmwYAyABKAlSB2ljb25VcmwiqwcKB1Nlc3Npb24SDgoCaWQYASABKAlS",
+            "AmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSIAoLZGVzY3JpcHRpb24YAyABKAlS",
+            "C2Rlc2NyaXB0aW9uEjsKDGFjY2Vzc19sZXZlbBgEIAEoDjIYLmhlYWRsZXNz",
+            "LnYxLkFjY2Vzc0xldmVsUgthY2Nlc3NMZXZlbBIfCgt1c2Vyc19jb3VudBgH",
+            "IAEoBVIKdXNlcnNDb3VudBIbCgltYXhfdXNlcnMYCCABKAVSCG1heFVzZXJz",
+            "EigKDXRodW1ibmFpbF91cmwYBSABKAlIAFIMdGh1bWJuYWlsVXJsiAEBElIK",
+            "EnN0YXJ0dXBfcGFyYW1ldGVycxgGIAEoCzIjLmhlYWRsZXNzLnYxLldvcmxk",
+            "U3RhcnR1cFBhcmFtZXRlcnNSEXN0YXJ0dXBQYXJhbWV0ZXJzEh8KC3Nlc3Np",
+            "b25fdXJsGAkgASgJUgpzZXNzaW9uVXJsEioKD3RpbWVfcnVubmluZ19tcxgK",
+            "IAEoBUICGAFSDXRpbWVSdW5uaW5nTXMSKgoRYXdheV9raWNrX21pbnV0ZXMY",
+            "CyABKAJSD2F3YXlLaWNrTWludXRlcxJBCh1pZGxlX3Jlc3RhcnRfaW50ZXJ2",
+            "YWxfc2Vjb25kcxgMIAEoBVIaaWRsZVJlc3RhcnRJbnRlcnZhbFNlY29uZHMS",
+            "IAoMc2F2ZV9vbl9leGl0GA0gASgIUgpzYXZlT25FeGl0EjsKGmF1dG9fc2F2",
+            "ZV9pbnRlcnZhbF9zZWNvbmRzGA4gASgFUhdhdXRvU2F2ZUludGVydmFsU2Vj",
+            "b25kcxIdCgphdXRvX3NsZWVwGA8gASgIUglhdXRvU2xlZXASNwoYaGlkZV9m",
+            "cm9tX3B1YmxpY19saXN0aW5nGBAgASgIUhVoaWRlRnJvbVB1YmxpY0xpc3Rp",
+            "bmcSEgoEdGFncxgRIAMoCVIEdGFncxJDCg1sYXN0X3NhdmVkX2F0GBIgASgL",
+            "MhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgBUgtsYXN0U2F2ZWRBdIgB",
+            "ARIZCghjYW5fc2F2ZRgTIAEoCFIHY2FuU2F2ZRIbCgl3b3JsZF91cmwYFCAB",
+            "KAlSCHdvcmxkVXJsEjkKCnN0YXJ0ZWRfYXQYFSABKAsyGi5nb29nbGUucHJv",
+            "dG9idWYuVGltZXN0YW1wUglzdGFydGVkQXRCEAoOX3RodW1ibmFpbF91cmxC",
+            "EAoOX2xhc3Rfc2F2ZWRfYXQiQgoPRGVmYXVsdFVzZXJSb2xlEhIKBHJvbGUY",
+            "ASABKAlSBHJvbGUSGwoJdXNlcl9uYW1lGAIgASgJUgh1c2VyTmFtZSLHDwoW",
+            "V29ybGRTdGFydHVwUGFyYW1ldGVycxIXCgRuYW1lGAEgASgJSAFSBG5hbWWI",
+            "AQESLwoRY3VzdG9tX3Nlc3Npb25faWQYAiABKAlIAlIPY3VzdG9tU2Vzc2lv",
+            "bklkiAEBEiUKC2Rlc2NyaXB0aW9uGAMgASgJSANSC2Rlc2NyaXB0aW9uiAEB",
+            "EhIKBHRhZ3MYCiADKAlSBHRhZ3MSIAoJbWF4X3VzZXJzGAQgASgFSARSCG1h",
+            "eFVzZXJziAEBEjsKDGFjY2Vzc19sZXZlbBgFIAEoDjIYLmhlYWRsZXNzLnYx",
+            "LkFjY2Vzc0xldmVsUgthY2Nlc3NMZXZlbBImCg5sb2FkX3dvcmxkX3VybBgG",
+            "IAEoCUgAUgxsb2FkV29ybGRVcmwSNQoWbG9hZF93b3JsZF9wcmVzZXRfbmFt",
+            "ZRgHIAEoCUgAUhNsb2FkV29ybGRQcmVzZXROYW1lEjIKFWF1dG9faW52aXRl",
+            "X3VzZXJuYW1lcxgIIAMoCVITYXV0b0ludml0ZVVzZXJuYW1lcxI3ChhoaWRl",
+            "X2Zyb21fcHVibGljX2xpc3RpbmcYCSABKAhSFWhpZGVGcm9tUHVibGljTGlz",
+            "dGluZxJKChJkZWZhdWx0X3VzZXJfcm9sZXMYCyADKAsyHC5oZWFkbGVzcy52",
+            "MS5EZWZhdWx0VXNlclJvbGVSEGRlZmF1bHRVc2VyUm9sZXMSKgoRYXdheV9r",
+            "aWNrX21pbnV0ZXMYDCABKAJSD2F3YXlLaWNrTWludXRlcxJBCh1pZGxlX3Jl",
+            "c3RhcnRfaW50ZXJ2YWxfc2Vjb25kcxgNIAEoBVIaaWRsZVJlc3RhcnRJbnRl",
+            "cnZhbFNlY29uZHMSIAoMc2F2ZV9vbl9leGl0GA4gASgIUgpzYXZlT25FeGl0",
+            "EjsKGmF1dG9fc2F2ZV9pbnRlcnZhbF9zZWNvbmRzGA8gASgFUhdhdXRvU2F2",
+            "ZUludGVydmFsU2Vjb25kcxIdCgphdXRvX3NsZWVwGBAgASgIUglhdXRvU2xl",
+            "ZXASRwogaW52aXRlX3JlcXVlc3RfaGFuZGxlcl91c2VybmFtZXMYESADKAlS",
+            "HWludml0ZVJlcXVlc3RIYW5kbGVyVXNlcm5hbWVzEh0KCmZvcmNlX3BvcnQY",
+            "EiABKA1SCWZvcmNlUG9ydBIsChJwYXJlbnRfc2Vzc2lvbl9pZHMYEyADKAlS",
+            "EHBhcmVudFNlc3Npb25JZHMSIQoMYXV0b19yZWNvdmVyGBQgASgIUgthdXRv",
+            "UmVjb3ZlchJFCh9mb3JjZWRfcmVzdGFydF9pbnRlcnZhbF9zZWNvbmRzGBUg",
+            "ASgFUhxmb3JjZWRSZXN0YXJ0SW50ZXJ2YWxTZWNvbmRzEjcKGHVzZV9jdXN0",
+            "b21fam9pbl92ZXJpZmllchgWIAEoCFIVdXNlQ3VzdG9tSm9pblZlcmlmaWVy",
+            "EicKD21vYmlsZV9mcmllbmRseRgXIAEoCFIObW9iaWxlRnJpZW5kbHkSYQof",
+            "b3ZlcnJpZGVfY29ycmVzcG9uZGluZ193b3JsZF9pZBgYIAEoCzIVLmhlYWRs",
+            "ZXNzLnYxLlJlY29yZElkSAVSHG92ZXJyaWRlQ29ycmVzcG9uZGluZ1dvcmxk",
+            "SWSIAQESLgoTa2VlcF9vcmlnaW5hbF9yb2xlcxgZIAEoCFIRa2VlcE9yaWdp",
+            "bmFsUm9sZXMSMwoTcm9sZV9jbG91ZF92YXJpYWJsZRgaIAEoCUgGUhFyb2xl",
+            "Q2xvdWRWYXJpYWJsZYgBARI+ChlhbGxvd191c2VyX2Nsb3VkX3ZhcmlhYmxl",
+            "GBsgASgJSAdSFmFsbG93VXNlckNsb3VkVmFyaWFibGWIAQESPAoYZGVueV91",
+            "c2VyX2Nsb3VkX3ZhcmlhYmxlGBwgASgJSAhSFWRlbnlVc2VyQ2xvdWRWYXJp",
+            "YWJsZYgBARJNCiFyZXF1aXJlZF91c2VyX2pvaW5fY2xvdWRfdmFyaWFibGUY",
+            "HSABKAlICVIdcmVxdWlyZWRVc2VySm9pbkNsb3VkVmFyaWFibGWIAQESZQou",
+            "cmVxdWlyZWRfdXNlcl9qb2luX2Nsb3VkX3ZhcmlhYmxlX2RlbnlfbWVzc2Fn",
+            "ZRgeIAEoCUgKUihyZXF1aXJlZFVzZXJKb2luQ2xvdWRWYXJpYWJsZURlbnlN",
+            "ZXNzYWdliAEBEjMKE2F1dG9faW52aXRlX21lc3NhZ2UYHyABKAlIC1IRYXV0",
+            "b0ludml0ZU1lc3NhZ2WIAQFCDAoKbG9hZF93b3JsZEIHCgVfbmFtZUIUChJf",
+            "Y3VzdG9tX3Nlc3Npb25faWRCDgoMX2Rlc2NyaXB0aW9uQgwKCl9tYXhfdXNl",
+            "cnNCIgogX292ZXJyaWRlX2NvcnJlc3BvbmRpbmdfd29ybGRfaWRCFgoUX3Jv",
+            "bGVfY2xvdWRfdmFyaWFibGVCHAoaX2FsbG93X3VzZXJfY2xvdWRfdmFyaWFi",
+            "bGVCGwoZX2RlbnlfdXNlcl9jbG91ZF92YXJpYWJsZUIkCiJfcmVxdWlyZWRf",
+            "dXNlcl9qb2luX2Nsb3VkX3ZhcmlhYmxlQjEKL19yZXF1aXJlZF91c2VyX2pv",
+            "aW5fY2xvdWRfdmFyaWFibGVfZGVueV9tZXNzYWdlQhYKFF9hdXRvX2ludml0",
+            "ZV9tZXNzYWdlIvwBChJDb250YWN0Q2hhdE1lc3NhZ2USDgoCaWQYASABKAlS",
+            "AmlkEjcKBHR5cGUYAiABKA4yIy5oZWFkbGVzcy52MS5Db250YWN0Q2hhdE1l",
+            "c3NhZ2VUeXBlUgR0eXBlEhgKB2NvbnRlbnQYAyABKAlSB2NvbnRlbnQSNwoJ",
+            "c2VuZF90aW1lGAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFII",
+            "c2VuZFRpbWUSPAoJcmVhZF90aW1lGAUgASgLMhouZ29vZ2xlLnByb3RvYnVm",
+            "LlRpbWVzdGFtcEgAUghyZWFkVGltZYgBAUIMCgpfcmVhZF90aW1lIqYCChJB",
+            "bGxvd2VkQWNjZXNzRW50cnkSEgoEaG9zdBgBIAEoCVIEaG9zdBIUCgVwb3J0",
+            "cxgCIAMoBVIFcG9ydHMSTQoMYWNjZXNzX3R5cGVzGAMgAygOMiouaGVhZGxl",
+            "c3MudjEuQWxsb3dlZEFjY2Vzc0VudHJ5LkFjY2Vzc1R5cGVSC2FjY2Vzc1R5",
+            "cGVzIpYBCgpBY2Nlc3NUeXBlEhsKF0FDQ0VTU19UWVBFX1VOU1BFQ0lGSUVE",
+            "EAASFAoQQUNDRVNTX1RZUEVfSFRUUBABEhkKFUFDQ0VTU19UWVBFX1dFQlNP",
+            "Q0tFVBACEh0KGUFDQ0VTU19UWVBFX09TQ19SRUNFSVZJTkcQAxIbChdBQ0NF",
+            "U1NfVFlQRV9PU0NfU0VORElORxAEIukDCg1TdGFydHVwQ29uZmlnEiQKC3Vu",
+            "aXZlcnNlX2lkGAEgASgJSABSCnVuaXZlcnNlSWSIAQESIAoJdGlja19yYXRl",
+            "GAIgASgCSAFSCHRpY2tSYXRliAEBEkgKHm1heF9jb25jdXJyZW50X2Fzc2V0",
+            "X3RyYW5zZmVycxgDIAEoBUgCUhttYXhDb25jdXJyZW50QXNzZXRUcmFuc2Zl",
+            "cnOIAQESMAoRdXNlcm5hbWVfb3ZlcnJpZGUYBCABKAlIA1IQdXNlcm5hbWVP",
+            "dmVycmlkZYgBARJGCgxzdGFydF93b3JsZHMYBSADKAsyIy5oZWFkbGVzcy52",
+            "MS5Xb3JsZFN0YXJ0dXBQYXJhbWV0ZXJzUgtzdGFydFdvcmxkcxJLChFhbGxv",
+            "d2VkX3VybF9ob3N0cxgGIAMoCzIfLmhlYWRsZXNzLnYxLkFsbG93ZWRBY2Nl",
+            "c3NFbnRyeVIPYWxsb3dlZFVybEhvc3RzEigKEGF1dG9fc3Bhd25faXRlbXMY",
+            "ByADKAlSDmF1dG9TcGF3bkl0ZW1zQg4KDF91bml2ZXJzZV9pZEIMCgpfdGlj",
+            "a19yYXRlQiEKH19tYXhfY29uY3VycmVudF9hc3NldF90cmFuc2ZlcnNCFAoS",
+            "X3VzZXJuYW1lX292ZXJyaWRlIjUKCFJlY29yZElkEg4KAmlkGAEgASgJUgJp",
+            "ZBIZCghvd25lcl9pZBgCIAEoCVIHb3duZXJJZCrSAQoLQWNjZXNzTGV2ZWwS",
+            "HAoYQUNDRVNTX0xFVkVMX1VOU1BFQ0lGSUVEEAASGAoUQUNDRVNTX0xFVkVM",
+            "X1BSSVZBVEUQARIUChBBQ0NFU1NfTEVWRUxfTEFOEAISGQoVQUNDRVNTX0xF",
+            "VkVMX0NPTlRBQ1RTEAMSHgoaQUNDRVNTX0xFVkVMX0NPTlRBQ1RTX1BMVVMQ",
+            "BBIhCh1BQ0NFU1NfTEVWRUxfUkVHSVNURVJFRF9VU0VSUxAFEhcKE0FDQ0VT",
+            "U19MRVZFTF9BTllPTkUQBirgAQoWQ29udGFjdENoYXRNZXNzYWdlVHlwZRIp",
+            "CiVDT05UQUNUX0NIQVRfTUVTU0FHRV9UWVBFX1VOU1BFQ0lGSUVEEAASIgoe",
+            "Q09OVEFDVF9DSEFUX01FU1NBR0VfVFlQRV9URVhUEAESJAogQ09OVEFDVF9D",
+            "SEFUX01FU1NBR0VfVFlQRV9PQkpFQ1QQAhIjCh9DT05UQUNUX0NIQVRfTUVT",
+            "U0FHRV9UWVBFX1NPVU5EEAMSLAooQ09OVEFDVF9DSEFUX01FU1NBR0VfVFlQ",
+            "RV9TRVNTSU9OX0lOVklURRAEMrETChZIZWFkbGVzc0NvbnRyb2xTZXJ2aWNl",
+            "EkcKCEdldEFib3V0EhwuaGVhZGxlc3MudjEuR2V0QWJvdXRSZXF1ZXN0Gh0u",
+            "aGVhZGxlc3MudjEuR2V0QWJvdXRSZXNwb25zZRJKCglHZXRTdGF0dXMSHS5o",
+            "ZWFkbGVzcy52MS5HZXRTdGF0dXNSZXF1ZXN0Gh4uaGVhZGxlc3MudjEuR2V0",
+            "U3RhdHVzUmVzcG9uc2USRwoIU2h1dGRvd24SHC5oZWFkbGVzcy52MS5TaHV0",
+            "ZG93blJlcXVlc3QaHS5oZWFkbGVzcy52MS5TaHV0ZG93blJlc3BvbnNlElMK",
+            "DExpc3RTZXNzaW9ucxIgLmhlYWRsZXNzLnYxLkxpc3RTZXNzaW9uc1JlcXVl",
+            "c3QaIS5oZWFkbGVzcy52MS5MaXN0U2Vzc2lvbnNSZXNwb25zZRJNCgpHZXRT",
+            "ZXNzaW9uEh4uaGVhZGxlc3MudjEuR2V0U2Vzc2lvblJlcXVlc3QaHy5oZWFk",
+            "bGVzcy52MS5HZXRTZXNzaW9uUmVzcG9uc2USTQoKU3RhcnRXb3JsZBIeLmhl",
+            "YWRsZXNzLnYxLlN0YXJ0V29ybGRSZXF1ZXN0Gh8uaGVhZGxlc3MudjEuU3Rh",
+            "cnRXb3JsZFJlc3BvbnNlElAKC1N0b3BTZXNzaW9uEh8uaGVhZGxlc3MudjEu",
+            "U3RvcFNlc3Npb25SZXF1ZXN0GiAuaGVhZGxlc3MudjEuU3RvcFNlc3Npb25S",
+            "ZXNwb25zZRJfChBTYXZlU2Vzc2lvbldvcmxkEiQuaGVhZGxlc3MudjEuU2F2",
+            "ZVNlc3Npb25Xb3JsZFJlcXVlc3QaJS5oZWFkbGVzcy52MS5TYXZlU2Vzc2lv",
+            "bldvcmxkUmVzcG9uc2USTQoKSW52aXRlVXNlchIeLmhlYWRsZXNzLnYxLklu",
+            "dml0ZVVzZXJSZXF1ZXN0Gh8uaGVhZGxlc3MudjEuSW52aXRlVXNlclJlc3Bv",
+            "bnNlElkKDlVwZGF0ZVVzZXJSb2xlEiIuaGVhZGxlc3MudjEuVXBkYXRlVXNl",
+            "clJvbGVSZXF1ZXN0GiMuaGVhZGxlc3MudjEuVXBkYXRlVXNlclJvbGVSZXNw",
+            "b25zZRJ0ChdVcGRhdGVTZXNzaW9uUGFyYW1ldGVycxIrLmhlYWRsZXNzLnYx",
+            "LlVwZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVxdWVzdBosLmhlYWRsZXNzLnYx",
+            "LlVwZGF0ZVNlc3Npb25QYXJhbWV0ZXJzUmVzcG9uc2USZQoSTGlzdFVzZXJz",
+            "SW5TZXNzaW9uEiYuaGVhZGxlc3MudjEuTGlzdFVzZXJzSW5TZXNzaW9uUmVx",
+            "dWVzdBonLmhlYWRsZXNzLnYxLkxpc3RVc2Vyc0luU2Vzc2lvblJlc3BvbnNl",
+            "EkcKCEtpY2tVc2VyEhwuaGVhZGxlc3MudjEuS2lja1VzZXJSZXF1ZXN0Gh0u",
+            "aGVhZGxlc3MudjEuS2lja1VzZXJSZXNwb25zZRJECgdCYW5Vc2VyEhsuaGVh",
+            "ZGxlc3MudjEuQmFuVXNlclJlcXVlc3QaHC5oZWFkbGVzcy52MS5CYW5Vc2Vy",
+            "UmVzcG9uc2USXAoPR2V0SG9zdFNldHRpbmdzEiMuaGVhZGxlc3MudjEuR2V0",
+            "SG9zdFNldHRpbmdzUmVxdWVzdBokLmhlYWRsZXNzLnYxLkdldEhvc3RTZXR0",
+            "aW5nc1Jlc3BvbnNlEmUKElVwZGF0ZUhvc3RTZXR0aW5ncxImLmhlYWRsZXNz",
+            "LnYxLlVwZGF0ZUhvc3RTZXR0aW5nc1JlcXVlc3QaJy5oZWFkbGVzcy52MS5V",
+            "cGRhdGVIb3N0U2V0dGluZ3NSZXNwb25zZRJcCg9BbGxvd0hvc3RBY2Nlc3MS",
+            "Iy5oZWFkbGVzcy52MS5BbGxvd0hvc3RBY2Nlc3NSZXF1ZXN0GiQuaGVhZGxl",
+            "c3MudjEuQWxsb3dIb3N0QWNjZXNzUmVzcG9uc2USWQoORGVueUhvc3RBY2Nl",
+            "c3MSIi5oZWFkbGVzcy52MS5EZW55SG9zdEFjY2Vzc1JlcXVlc3QaIy5oZWFk",
+            "bGVzcy52MS5EZW55SG9zdEFjY2Vzc1Jlc3BvbnNlEnoKGUdldFN0YXJ0dXBD",
+            "b25maWdUb1Jlc3RvcmUSLS5oZWFkbGVzcy52MS5HZXRTdGFydHVwQ29uZmln",
+            "VG9SZXN0b3JlUmVxdWVzdBouLmhlYWRsZXNzLnYxLkdldFN0YXJ0dXBDb25m",
+            "aWdUb1Jlc3RvcmVSZXNwb25zZRJZCg5HZXRBY2NvdW50SW5mbxIiLmhlYWRs",
+            "ZXNzLnYxLkdldEFjY291bnRJbmZvUmVxdWVzdBojLmhlYWRsZXNzLnYxLkdl",
+            "dEFjY291bnRJbmZvUmVzcG9uc2USWQoORmV0Y2hXb3JsZEluZm8SIi5oZWFk",
+            "bGVzcy52MS5GZXRjaFdvcmxkSW5mb1JlcXVlc3QaIy5oZWFkbGVzcy52MS5G",
+            "ZXRjaFdvcmxkSW5mb1Jlc3BvbnNlElkKDlNlYXJjaFVzZXJJbmZvEiIuaGVh",
+            "ZGxlc3MudjEuU2VhcmNoVXNlckluZm9SZXF1ZXN0GiMuaGVhZGxlc3MudjEu",
+            "U2VhcmNoVXNlckluZm9SZXNwb25zZRJiChFHZXRGcmllbmRSZXF1ZXN0cxIl",
+            "LmhlYWRsZXNzLnYxLkdldEZyaWVuZFJlcXVlc3RzUmVxdWVzdBomLmhlYWRs",
+            "ZXNzLnYxLkdldEZyaWVuZFJlcXVlc3RzUmVzcG9uc2USawoUQWNjZXB0RnJp",
+            "ZW5kUmVxdWVzdHMSKC5oZWFkbGVzcy52MS5BY2NlcHRGcmllbmRSZXF1ZXN0",
+            "c1JlcXVlc3QaKS5oZWFkbGVzcy52MS5BY2NlcHRGcmllbmRSZXF1ZXN0c1Jl",
+            "c3BvbnNlElMKDExpc3RDb250YWN0cxIgLmhlYWRsZXNzLnYxLkxpc3RDb250",
+            "YWN0c1JlcXVlc3QaIS5oZWFkbGVzcy52MS5MaXN0Q29udGFjdHNSZXNwb25z",
+            "ZRJlChJHZXRDb250YWN0TWVzc2FnZXMSJi5oZWFkbGVzcy52MS5HZXRDb250",
+            "YWN0TWVzc2FnZXNSZXF1ZXN0GicuaGVhZGxlc3MudjEuR2V0Q29udGFjdE1l",
+            "c3NhZ2VzUmVzcG9uc2USZQoSU2VuZENvbnRhY3RNZXNzYWdlEiYuaGVhZGxl",
+            "c3MudjEuU2VuZENvbnRhY3RNZXNzYWdlUmVxdWVzdBonLmhlYWRsZXNzLnYx",
+            "LlNlbmRDb250YWN0TWVzc2FnZVJlc3BvbnNlQg+qAgxIZWFkbGVzcy5ScGNi",
+            "BnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Headless.Rpc.AccessLevel), typeof(global::Headless.Rpc.ContactChatMessageType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -334,7 +375,7 @@ namespace Headless.Rpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.InviteUserResponse), global::Headless.Rpc.InviteUserResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleRequest), global::Headless.Rpc.UpdateUserRoleRequest.Parser, new[]{ "SessionId", "UserId", "UserName", "Role" }, new[]{ "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateUserRoleResponse), global::Headless.Rpc.UpdateUserRoleResponse.Parser, new[]{ "Role" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "Name", "Description", "MaxUsers", "AccessLevel", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing", "UpdateTags", "Tags" }, new[]{ "Name", "Description", "MaxUsers", "AccessLevel", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersRequest), global::Headless.Rpc.UpdateSessionParametersRequest.Parser, new[]{ "SessionId", "Name", "Description", "MaxUsers", "AccessLevel", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing", "UpdateTags", "Tags", "UseCustomJoinVerifier", "MobileFriendly", "OverrideCorrespondingWorldId", "RoleCloudVariable", "AllowUserCloudVariable", "DenyUserCloudVariable", "RequiredUserJoinCloudVariable", "RequiredUserJoinCloudVariableDenyMessage", "AutoInviteMessage" }, new[]{ "Name", "Description", "MaxUsers", "AccessLevel", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing", "UseCustomJoinVerifier", "MobileFriendly", "OverrideCorrespondingWorldId", "RoleCloudVariable", "AllowUserCloudVariable", "DenyUserCloudVariable", "RequiredUserJoinCloudVariable", "RequiredUserJoinCloudVariableDenyMessage", "AutoInviteMessage" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UpdateSessionParametersResponse), global::Headless.Rpc.UpdateSessionParametersResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionRequest), global::Headless.Rpc.ListUsersInSessionRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ListUsersInSessionResponse), global::Headless.Rpc.ListUsersInSessionResponse.Parser, new[]{ "Users" }, null, null, null, null),
@@ -342,10 +383,11 @@ namespace Headless.Rpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.UserInfo), global::Headless.Rpc.UserInfo.Parser, new[]{ "Id", "Name", "IconUrl" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.Session), global::Headless.Rpc.Session.Parser, new[]{ "Id", "Name", "Description", "AccessLevel", "UsersCount", "MaxUsers", "ThumbnailUrl", "StartupParameters", "SessionUrl", "TimeRunningMs", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "HideFromPublicListing", "Tags", "LastSavedAt", "CanSave", "WorldUrl", "StartedAt" }, new[]{ "ThumbnailUrl", "LastSavedAt" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.DefaultUserRole), global::Headless.Rpc.DefaultUserRole.Parser, new[]{ "Role", "UserName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "Name", "CustomSessionId", "Description", "Tags", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames", "HideFromPublicListing", "DefaultUserRoles", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "InviteRequestHandlerUsernames", "ForcePort", "ParentSessionIds", "AutoRecover", "ForcedRestartIntervalSeconds" }, new[]{ "LoadWorld", "Name", "CustomSessionId", "Description", "MaxUsers" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.WorldStartupParameters), global::Headless.Rpc.WorldStartupParameters.Parser, new[]{ "Name", "CustomSessionId", "Description", "Tags", "MaxUsers", "AccessLevel", "LoadWorldUrl", "LoadWorldPresetName", "AutoInviteUsernames", "HideFromPublicListing", "DefaultUserRoles", "AwayKickMinutes", "IdleRestartIntervalSeconds", "SaveOnExit", "AutoSaveIntervalSeconds", "AutoSleep", "InviteRequestHandlerUsernames", "ForcePort", "ParentSessionIds", "AutoRecover", "ForcedRestartIntervalSeconds", "UseCustomJoinVerifier", "MobileFriendly", "OverrideCorrespondingWorldId", "KeepOriginalRoles", "RoleCloudVariable", "AllowUserCloudVariable", "DenyUserCloudVariable", "RequiredUserJoinCloudVariable", "RequiredUserJoinCloudVariableDenyMessage", "AutoInviteMessage" }, new[]{ "LoadWorld", "Name", "CustomSessionId", "Description", "MaxUsers", "OverrideCorrespondingWorldId", "RoleCloudVariable", "AllowUserCloudVariable", "DenyUserCloudVariable", "RequiredUserJoinCloudVariable", "RequiredUserJoinCloudVariableDenyMessage", "AutoInviteMessage" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.ContactChatMessage), global::Headless.Rpc.ContactChatMessage.Parser, new[]{ "Id", "Type", "Content", "SendTime", "ReadTime" }, new[]{ "ReadTime" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.AllowedAccessEntry), global::Headless.Rpc.AllowedAccessEntry.Parser, new[]{ "Host", "Ports", "AccessTypes" }, null, new[]{ typeof(global::Headless.Rpc.AllowedAccessEntry.Types.AccessType) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.StartupConfig), global::Headless.Rpc.StartupConfig.Parser, new[]{ "UniverseId", "TickRate", "MaxConcurrentAssetTransfers", "UsernameOverride", "StartWorlds", "AllowedUrlHosts", "AutoSpawnItems" }, new[]{ "UniverseId", "TickRate", "MaxConcurrentAssetTransfers", "UsernameOverride" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.StartupConfig), global::Headless.Rpc.StartupConfig.Parser, new[]{ "UniverseId", "TickRate", "MaxConcurrentAssetTransfers", "UsernameOverride", "StartWorlds", "AllowedUrlHosts", "AutoSpawnItems" }, new[]{ "UniverseId", "TickRate", "MaxConcurrentAssetTransfers", "UsernameOverride" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.RecordId), global::Headless.Rpc.RecordId.Parser, new[]{ "Id", "OwnerId" }, null, null, null, null)
           }));
     }
     #endregion
@@ -11499,6 +11541,15 @@ namespace Headless.Rpc {
       hideFromPublicListing_ = other.hideFromPublicListing_;
       updateTags_ = other.updateTags_;
       tags_ = other.tags_.Clone();
+      useCustomJoinVerifier_ = other.useCustomJoinVerifier_;
+      mobileFriendly_ = other.mobileFriendly_;
+      overrideCorrespondingWorldId_ = other.overrideCorrespondingWorldId_ != null ? other.overrideCorrespondingWorldId_.Clone() : null;
+      roleCloudVariable_ = other.roleCloudVariable_;
+      allowUserCloudVariable_ = other.allowUserCloudVariable_;
+      denyUserCloudVariable_ = other.denyUserCloudVariable_;
+      requiredUserJoinCloudVariable_ = other.requiredUserJoinCloudVariable_;
+      requiredUserJoinCloudVariableDenyMessage_ = other.requiredUserJoinCloudVariableDenyMessage_;
+      autoInviteMessage_ = other.autoInviteMessage_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -11811,6 +11862,228 @@ namespace Headless.Rpc {
       get { return tags_; }
     }
 
+    /// <summary>Field number for the "use_custom_join_verifier" field.</summary>
+    public const int UseCustomJoinVerifierFieldNumber = 14;
+    private readonly static bool UseCustomJoinVerifierDefaultValue = false;
+
+    private bool useCustomJoinVerifier_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool UseCustomJoinVerifier {
+      get { if ((_hasBits0 & 256) != 0) { return useCustomJoinVerifier_; } else { return UseCustomJoinVerifierDefaultValue; } }
+      set {
+        _hasBits0 |= 256;
+        useCustomJoinVerifier_ = value;
+      }
+    }
+    /// <summary>Gets whether the "use_custom_join_verifier" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasUseCustomJoinVerifier {
+      get { return (_hasBits0 & 256) != 0; }
+    }
+    /// <summary>Clears the value of the "use_custom_join_verifier" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearUseCustomJoinVerifier() {
+      _hasBits0 &= ~256;
+    }
+
+    /// <summary>Field number for the "mobile_friendly" field.</summary>
+    public const int MobileFriendlyFieldNumber = 15;
+    private readonly static bool MobileFriendlyDefaultValue = false;
+
+    private bool mobileFriendly_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool MobileFriendly {
+      get { if ((_hasBits0 & 512) != 0) { return mobileFriendly_; } else { return MobileFriendlyDefaultValue; } }
+      set {
+        _hasBits0 |= 512;
+        mobileFriendly_ = value;
+      }
+    }
+    /// <summary>Gets whether the "mobile_friendly" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasMobileFriendly {
+      get { return (_hasBits0 & 512) != 0; }
+    }
+    /// <summary>Clears the value of the "mobile_friendly" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearMobileFriendly() {
+      _hasBits0 &= ~512;
+    }
+
+    /// <summary>Field number for the "override_corresponding_world_id" field.</summary>
+    public const int OverrideCorrespondingWorldIdFieldNumber = 16;
+    private global::Headless.Rpc.RecordId overrideCorrespondingWorldId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Headless.Rpc.RecordId OverrideCorrespondingWorldId {
+      get { return overrideCorrespondingWorldId_; }
+      set {
+        overrideCorrespondingWorldId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "role_cloud_variable" field.</summary>
+    public const int RoleCloudVariableFieldNumber = 17;
+    private readonly static string RoleCloudVariableDefaultValue = "";
+
+    private string roleCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RoleCloudVariable {
+      get { return roleCloudVariable_ ?? RoleCloudVariableDefaultValue; }
+      set {
+        roleCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "role_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasRoleCloudVariable {
+      get { return roleCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "role_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearRoleCloudVariable() {
+      roleCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "allow_user_cloud_variable" field.</summary>
+    public const int AllowUserCloudVariableFieldNumber = 18;
+    private readonly static string AllowUserCloudVariableDefaultValue = "";
+
+    private string allowUserCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string AllowUserCloudVariable {
+      get { return allowUserCloudVariable_ ?? AllowUserCloudVariableDefaultValue; }
+      set {
+        allowUserCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "allow_user_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAllowUserCloudVariable {
+      get { return allowUserCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "allow_user_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAllowUserCloudVariable() {
+      allowUserCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "deny_user_cloud_variable" field.</summary>
+    public const int DenyUserCloudVariableFieldNumber = 19;
+    private readonly static string DenyUserCloudVariableDefaultValue = "";
+
+    private string denyUserCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string DenyUserCloudVariable {
+      get { return denyUserCloudVariable_ ?? DenyUserCloudVariableDefaultValue; }
+      set {
+        denyUserCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "deny_user_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasDenyUserCloudVariable {
+      get { return denyUserCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "deny_user_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearDenyUserCloudVariable() {
+      denyUserCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "required_user_join_cloud_variable" field.</summary>
+    public const int RequiredUserJoinCloudVariableFieldNumber = 20;
+    private readonly static string RequiredUserJoinCloudVariableDefaultValue = "";
+
+    private string requiredUserJoinCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RequiredUserJoinCloudVariable {
+      get { return requiredUserJoinCloudVariable_ ?? RequiredUserJoinCloudVariableDefaultValue; }
+      set {
+        requiredUserJoinCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "required_user_join_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasRequiredUserJoinCloudVariable {
+      get { return requiredUserJoinCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "required_user_join_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearRequiredUserJoinCloudVariable() {
+      requiredUserJoinCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "required_user_join_cloud_variable_deny_message" field.</summary>
+    public const int RequiredUserJoinCloudVariableDenyMessageFieldNumber = 21;
+    private readonly static string RequiredUserJoinCloudVariableDenyMessageDefaultValue = "";
+
+    private string requiredUserJoinCloudVariableDenyMessage_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RequiredUserJoinCloudVariableDenyMessage {
+      get { return requiredUserJoinCloudVariableDenyMessage_ ?? RequiredUserJoinCloudVariableDenyMessageDefaultValue; }
+      set {
+        requiredUserJoinCloudVariableDenyMessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "required_user_join_cloud_variable_deny_message" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasRequiredUserJoinCloudVariableDenyMessage {
+      get { return requiredUserJoinCloudVariableDenyMessage_ != null; }
+    }
+    /// <summary>Clears the value of the "required_user_join_cloud_variable_deny_message" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearRequiredUserJoinCloudVariableDenyMessage() {
+      requiredUserJoinCloudVariableDenyMessage_ = null;
+    }
+
+    /// <summary>Field number for the "auto_invite_message" field.</summary>
+    public const int AutoInviteMessageFieldNumber = 22;
+    private readonly static string AutoInviteMessageDefaultValue = "";
+
+    private string autoInviteMessage_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string AutoInviteMessage {
+      get { return autoInviteMessage_ ?? AutoInviteMessageDefaultValue; }
+      set {
+        autoInviteMessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "auto_invite_message" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAutoInviteMessage {
+      get { return autoInviteMessage_ != null; }
+    }
+    /// <summary>Clears the value of the "auto_invite_message" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAutoInviteMessage() {
+      autoInviteMessage_ = null;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -11839,6 +12112,15 @@ namespace Headless.Rpc {
       if (HideFromPublicListing != other.HideFromPublicListing) return false;
       if (UpdateTags != other.UpdateTags) return false;
       if(!tags_.Equals(other.tags_)) return false;
+      if (UseCustomJoinVerifier != other.UseCustomJoinVerifier) return false;
+      if (MobileFriendly != other.MobileFriendly) return false;
+      if (!object.Equals(OverrideCorrespondingWorldId, other.OverrideCorrespondingWorldId)) return false;
+      if (RoleCloudVariable != other.RoleCloudVariable) return false;
+      if (AllowUserCloudVariable != other.AllowUserCloudVariable) return false;
+      if (DenyUserCloudVariable != other.DenyUserCloudVariable) return false;
+      if (RequiredUserJoinCloudVariable != other.RequiredUserJoinCloudVariable) return false;
+      if (RequiredUserJoinCloudVariableDenyMessage != other.RequiredUserJoinCloudVariableDenyMessage) return false;
+      if (AutoInviteMessage != other.AutoInviteMessage) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -11859,6 +12141,15 @@ namespace Headless.Rpc {
       if (HasHideFromPublicListing) hash ^= HideFromPublicListing.GetHashCode();
       if (UpdateTags != false) hash ^= UpdateTags.GetHashCode();
       hash ^= tags_.GetHashCode();
+      if (HasUseCustomJoinVerifier) hash ^= UseCustomJoinVerifier.GetHashCode();
+      if (HasMobileFriendly) hash ^= MobileFriendly.GetHashCode();
+      if (overrideCorrespondingWorldId_ != null) hash ^= OverrideCorrespondingWorldId.GetHashCode();
+      if (HasRoleCloudVariable) hash ^= RoleCloudVariable.GetHashCode();
+      if (HasAllowUserCloudVariable) hash ^= AllowUserCloudVariable.GetHashCode();
+      if (HasDenyUserCloudVariable) hash ^= DenyUserCloudVariable.GetHashCode();
+      if (HasRequiredUserJoinCloudVariable) hash ^= RequiredUserJoinCloudVariable.GetHashCode();
+      if (HasRequiredUserJoinCloudVariableDenyMessage) hash ^= RequiredUserJoinCloudVariableDenyMessage.GetHashCode();
+      if (HasAutoInviteMessage) hash ^= AutoInviteMessage.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -11926,6 +12217,42 @@ namespace Headless.Rpc {
         output.WriteBool(UpdateTags);
       }
       tags_.WriteTo(output, _repeated_tags_codec);
+      if (HasUseCustomJoinVerifier) {
+        output.WriteRawTag(112);
+        output.WriteBool(UseCustomJoinVerifier);
+      }
+      if (HasMobileFriendly) {
+        output.WriteRawTag(120);
+        output.WriteBool(MobileFriendly);
+      }
+      if (overrideCorrespondingWorldId_ != null) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(OverrideCorrespondingWorldId);
+      }
+      if (HasRoleCloudVariable) {
+        output.WriteRawTag(138, 1);
+        output.WriteString(RoleCloudVariable);
+      }
+      if (HasAllowUserCloudVariable) {
+        output.WriteRawTag(146, 1);
+        output.WriteString(AllowUserCloudVariable);
+      }
+      if (HasDenyUserCloudVariable) {
+        output.WriteRawTag(154, 1);
+        output.WriteString(DenyUserCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariable) {
+        output.WriteRawTag(162, 1);
+        output.WriteString(RequiredUserJoinCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariableDenyMessage) {
+        output.WriteRawTag(170, 1);
+        output.WriteString(RequiredUserJoinCloudVariableDenyMessage);
+      }
+      if (HasAutoInviteMessage) {
+        output.WriteRawTag(178, 1);
+        output.WriteString(AutoInviteMessage);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -11985,6 +12312,42 @@ namespace Headless.Rpc {
         output.WriteBool(UpdateTags);
       }
       tags_.WriteTo(ref output, _repeated_tags_codec);
+      if (HasUseCustomJoinVerifier) {
+        output.WriteRawTag(112);
+        output.WriteBool(UseCustomJoinVerifier);
+      }
+      if (HasMobileFriendly) {
+        output.WriteRawTag(120);
+        output.WriteBool(MobileFriendly);
+      }
+      if (overrideCorrespondingWorldId_ != null) {
+        output.WriteRawTag(130, 1);
+        output.WriteMessage(OverrideCorrespondingWorldId);
+      }
+      if (HasRoleCloudVariable) {
+        output.WriteRawTag(138, 1);
+        output.WriteString(RoleCloudVariable);
+      }
+      if (HasAllowUserCloudVariable) {
+        output.WriteRawTag(146, 1);
+        output.WriteString(AllowUserCloudVariable);
+      }
+      if (HasDenyUserCloudVariable) {
+        output.WriteRawTag(154, 1);
+        output.WriteString(DenyUserCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariable) {
+        output.WriteRawTag(162, 1);
+        output.WriteString(RequiredUserJoinCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariableDenyMessage) {
+        output.WriteRawTag(170, 1);
+        output.WriteString(RequiredUserJoinCloudVariableDenyMessage);
+      }
+      if (HasAutoInviteMessage) {
+        output.WriteRawTag(178, 1);
+        output.WriteString(AutoInviteMessage);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -12032,6 +12395,33 @@ namespace Headless.Rpc {
         size += 1 + 1;
       }
       size += tags_.CalculateSize(_repeated_tags_codec);
+      if (HasUseCustomJoinVerifier) {
+        size += 1 + 1;
+      }
+      if (HasMobileFriendly) {
+        size += 1 + 1;
+      }
+      if (overrideCorrespondingWorldId_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(OverrideCorrespondingWorldId);
+      }
+      if (HasRoleCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(RoleCloudVariable);
+      }
+      if (HasAllowUserCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(AllowUserCloudVariable);
+      }
+      if (HasDenyUserCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(DenyUserCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(RequiredUserJoinCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariableDenyMessage) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(RequiredUserJoinCloudVariableDenyMessage);
+      }
+      if (HasAutoInviteMessage) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(AutoInviteMessage);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -12081,6 +12471,36 @@ namespace Headless.Rpc {
         UpdateTags = other.UpdateTags;
       }
       tags_.Add(other.tags_);
+      if (other.HasUseCustomJoinVerifier) {
+        UseCustomJoinVerifier = other.UseCustomJoinVerifier;
+      }
+      if (other.HasMobileFriendly) {
+        MobileFriendly = other.MobileFriendly;
+      }
+      if (other.overrideCorrespondingWorldId_ != null) {
+        if (overrideCorrespondingWorldId_ == null) {
+          OverrideCorrespondingWorldId = new global::Headless.Rpc.RecordId();
+        }
+        OverrideCorrespondingWorldId.MergeFrom(other.OverrideCorrespondingWorldId);
+      }
+      if (other.HasRoleCloudVariable) {
+        RoleCloudVariable = other.RoleCloudVariable;
+      }
+      if (other.HasAllowUserCloudVariable) {
+        AllowUserCloudVariable = other.AllowUserCloudVariable;
+      }
+      if (other.HasDenyUserCloudVariable) {
+        DenyUserCloudVariable = other.DenyUserCloudVariable;
+      }
+      if (other.HasRequiredUserJoinCloudVariable) {
+        RequiredUserJoinCloudVariable = other.RequiredUserJoinCloudVariable;
+      }
+      if (other.HasRequiredUserJoinCloudVariableDenyMessage) {
+        RequiredUserJoinCloudVariableDenyMessage = other.RequiredUserJoinCloudVariableDenyMessage;
+      }
+      if (other.HasAutoInviteMessage) {
+        AutoInviteMessage = other.AutoInviteMessage;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -12152,6 +12572,45 @@ namespace Headless.Rpc {
             tags_.AddEntriesFrom(input, _repeated_tags_codec);
             break;
           }
+          case 112: {
+            UseCustomJoinVerifier = input.ReadBool();
+            break;
+          }
+          case 120: {
+            MobileFriendly = input.ReadBool();
+            break;
+          }
+          case 130: {
+            if (overrideCorrespondingWorldId_ == null) {
+              OverrideCorrespondingWorldId = new global::Headless.Rpc.RecordId();
+            }
+            input.ReadMessage(OverrideCorrespondingWorldId);
+            break;
+          }
+          case 138: {
+            RoleCloudVariable = input.ReadString();
+            break;
+          }
+          case 146: {
+            AllowUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 154: {
+            DenyUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 162: {
+            RequiredUserJoinCloudVariable = input.ReadString();
+            break;
+          }
+          case 170: {
+            RequiredUserJoinCloudVariableDenyMessage = input.ReadString();
+            break;
+          }
+          case 178: {
+            AutoInviteMessage = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -12221,6 +12680,45 @@ namespace Headless.Rpc {
           }
           case 106: {
             tags_.AddEntriesFrom(ref input, _repeated_tags_codec);
+            break;
+          }
+          case 112: {
+            UseCustomJoinVerifier = input.ReadBool();
+            break;
+          }
+          case 120: {
+            MobileFriendly = input.ReadBool();
+            break;
+          }
+          case 130: {
+            if (overrideCorrespondingWorldId_ == null) {
+              OverrideCorrespondingWorldId = new global::Headless.Rpc.RecordId();
+            }
+            input.ReadMessage(OverrideCorrespondingWorldId);
+            break;
+          }
+          case 138: {
+            RoleCloudVariable = input.ReadString();
+            break;
+          }
+          case 146: {
+            AllowUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 154: {
+            DenyUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 162: {
+            RequiredUserJoinCloudVariable = input.ReadString();
+            break;
+          }
+          case 170: {
+            RequiredUserJoinCloudVariableDenyMessage = input.ReadString();
+            break;
+          }
+          case 178: {
+            AutoInviteMessage = input.ReadString();
             break;
           }
         }
@@ -14617,6 +15115,16 @@ namespace Headless.Rpc {
       parentSessionIds_ = other.parentSessionIds_.Clone();
       autoRecover_ = other.autoRecover_;
       forcedRestartIntervalSeconds_ = other.forcedRestartIntervalSeconds_;
+      useCustomJoinVerifier_ = other.useCustomJoinVerifier_;
+      mobileFriendly_ = other.mobileFriendly_;
+      overrideCorrespondingWorldId_ = other.overrideCorrespondingWorldId_ != null ? other.overrideCorrespondingWorldId_.Clone() : null;
+      keepOriginalRoles_ = other.keepOriginalRoles_;
+      roleCloudVariable_ = other.roleCloudVariable_;
+      allowUserCloudVariable_ = other.allowUserCloudVariable_;
+      denyUserCloudVariable_ = other.denyUserCloudVariable_;
+      requiredUserJoinCloudVariable_ = other.requiredUserJoinCloudVariable_;
+      requiredUserJoinCloudVariableDenyMessage_ = other.requiredUserJoinCloudVariableDenyMessage_;
+      autoInviteMessage_ = other.autoInviteMessage_;
       switch (other.LoadWorldCase) {
         case LoadWorldOneofCase.LoadWorldUrl:
           LoadWorldUrl = other.LoadWorldUrl;
@@ -14967,6 +15475,210 @@ namespace Headless.Rpc {
       }
     }
 
+    /// <summary>Field number for the "use_custom_join_verifier" field.</summary>
+    public const int UseCustomJoinVerifierFieldNumber = 22;
+    private bool useCustomJoinVerifier_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool UseCustomJoinVerifier {
+      get { return useCustomJoinVerifier_; }
+      set {
+        useCustomJoinVerifier_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "mobile_friendly" field.</summary>
+    public const int MobileFriendlyFieldNumber = 23;
+    private bool mobileFriendly_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool MobileFriendly {
+      get { return mobileFriendly_; }
+      set {
+        mobileFriendly_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "override_corresponding_world_id" field.</summary>
+    public const int OverrideCorrespondingWorldIdFieldNumber = 24;
+    private global::Headless.Rpc.RecordId overrideCorrespondingWorldId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Headless.Rpc.RecordId OverrideCorrespondingWorldId {
+      get { return overrideCorrespondingWorldId_; }
+      set {
+        overrideCorrespondingWorldId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "keep_original_roles" field.</summary>
+    public const int KeepOriginalRolesFieldNumber = 25;
+    private bool keepOriginalRoles_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool KeepOriginalRoles {
+      get { return keepOriginalRoles_; }
+      set {
+        keepOriginalRoles_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "role_cloud_variable" field.</summary>
+    public const int RoleCloudVariableFieldNumber = 26;
+    private readonly static string RoleCloudVariableDefaultValue = "";
+
+    private string roleCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RoleCloudVariable {
+      get { return roleCloudVariable_ ?? RoleCloudVariableDefaultValue; }
+      set {
+        roleCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "role_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasRoleCloudVariable {
+      get { return roleCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "role_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearRoleCloudVariable() {
+      roleCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "allow_user_cloud_variable" field.</summary>
+    public const int AllowUserCloudVariableFieldNumber = 27;
+    private readonly static string AllowUserCloudVariableDefaultValue = "";
+
+    private string allowUserCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string AllowUserCloudVariable {
+      get { return allowUserCloudVariable_ ?? AllowUserCloudVariableDefaultValue; }
+      set {
+        allowUserCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "allow_user_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAllowUserCloudVariable {
+      get { return allowUserCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "allow_user_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAllowUserCloudVariable() {
+      allowUserCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "deny_user_cloud_variable" field.</summary>
+    public const int DenyUserCloudVariableFieldNumber = 28;
+    private readonly static string DenyUserCloudVariableDefaultValue = "";
+
+    private string denyUserCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string DenyUserCloudVariable {
+      get { return denyUserCloudVariable_ ?? DenyUserCloudVariableDefaultValue; }
+      set {
+        denyUserCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "deny_user_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasDenyUserCloudVariable {
+      get { return denyUserCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "deny_user_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearDenyUserCloudVariable() {
+      denyUserCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "required_user_join_cloud_variable" field.</summary>
+    public const int RequiredUserJoinCloudVariableFieldNumber = 29;
+    private readonly static string RequiredUserJoinCloudVariableDefaultValue = "";
+
+    private string requiredUserJoinCloudVariable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RequiredUserJoinCloudVariable {
+      get { return requiredUserJoinCloudVariable_ ?? RequiredUserJoinCloudVariableDefaultValue; }
+      set {
+        requiredUserJoinCloudVariable_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "required_user_join_cloud_variable" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasRequiredUserJoinCloudVariable {
+      get { return requiredUserJoinCloudVariable_ != null; }
+    }
+    /// <summary>Clears the value of the "required_user_join_cloud_variable" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearRequiredUserJoinCloudVariable() {
+      requiredUserJoinCloudVariable_ = null;
+    }
+
+    /// <summary>Field number for the "required_user_join_cloud_variable_deny_message" field.</summary>
+    public const int RequiredUserJoinCloudVariableDenyMessageFieldNumber = 30;
+    private readonly static string RequiredUserJoinCloudVariableDenyMessageDefaultValue = "";
+
+    private string requiredUserJoinCloudVariableDenyMessage_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RequiredUserJoinCloudVariableDenyMessage {
+      get { return requiredUserJoinCloudVariableDenyMessage_ ?? RequiredUserJoinCloudVariableDenyMessageDefaultValue; }
+      set {
+        requiredUserJoinCloudVariableDenyMessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "required_user_join_cloud_variable_deny_message" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasRequiredUserJoinCloudVariableDenyMessage {
+      get { return requiredUserJoinCloudVariableDenyMessage_ != null; }
+    }
+    /// <summary>Clears the value of the "required_user_join_cloud_variable_deny_message" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearRequiredUserJoinCloudVariableDenyMessage() {
+      requiredUserJoinCloudVariableDenyMessage_ = null;
+    }
+
+    /// <summary>Field number for the "auto_invite_message" field.</summary>
+    public const int AutoInviteMessageFieldNumber = 31;
+    private readonly static string AutoInviteMessageDefaultValue = "";
+
+    private string autoInviteMessage_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string AutoInviteMessage {
+      get { return autoInviteMessage_ ?? AutoInviteMessageDefaultValue; }
+      set {
+        autoInviteMessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "auto_invite_message" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasAutoInviteMessage {
+      get { return autoInviteMessage_ != null; }
+    }
+    /// <summary>Clears the value of the "auto_invite_message" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearAutoInviteMessage() {
+      autoInviteMessage_ = null;
+    }
+
     private object loadWorld_;
     /// <summary>Enum of possible cases for the "load_world" oneof.</summary>
     public enum LoadWorldOneofCase {
@@ -15024,6 +15736,16 @@ namespace Headless.Rpc {
       if(!parentSessionIds_.Equals(other.parentSessionIds_)) return false;
       if (AutoRecover != other.AutoRecover) return false;
       if (ForcedRestartIntervalSeconds != other.ForcedRestartIntervalSeconds) return false;
+      if (UseCustomJoinVerifier != other.UseCustomJoinVerifier) return false;
+      if (MobileFriendly != other.MobileFriendly) return false;
+      if (!object.Equals(OverrideCorrespondingWorldId, other.OverrideCorrespondingWorldId)) return false;
+      if (KeepOriginalRoles != other.KeepOriginalRoles) return false;
+      if (RoleCloudVariable != other.RoleCloudVariable) return false;
+      if (AllowUserCloudVariable != other.AllowUserCloudVariable) return false;
+      if (DenyUserCloudVariable != other.DenyUserCloudVariable) return false;
+      if (RequiredUserJoinCloudVariable != other.RequiredUserJoinCloudVariable) return false;
+      if (RequiredUserJoinCloudVariableDenyMessage != other.RequiredUserJoinCloudVariableDenyMessage) return false;
+      if (AutoInviteMessage != other.AutoInviteMessage) return false;
       if (LoadWorldCase != other.LoadWorldCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -15053,6 +15775,16 @@ namespace Headless.Rpc {
       hash ^= parentSessionIds_.GetHashCode();
       if (AutoRecover != false) hash ^= AutoRecover.GetHashCode();
       if (ForcedRestartIntervalSeconds != 0) hash ^= ForcedRestartIntervalSeconds.GetHashCode();
+      if (UseCustomJoinVerifier != false) hash ^= UseCustomJoinVerifier.GetHashCode();
+      if (MobileFriendly != false) hash ^= MobileFriendly.GetHashCode();
+      if (overrideCorrespondingWorldId_ != null) hash ^= OverrideCorrespondingWorldId.GetHashCode();
+      if (KeepOriginalRoles != false) hash ^= KeepOriginalRoles.GetHashCode();
+      if (HasRoleCloudVariable) hash ^= RoleCloudVariable.GetHashCode();
+      if (HasAllowUserCloudVariable) hash ^= AllowUserCloudVariable.GetHashCode();
+      if (HasDenyUserCloudVariable) hash ^= DenyUserCloudVariable.GetHashCode();
+      if (HasRequiredUserJoinCloudVariable) hash ^= RequiredUserJoinCloudVariable.GetHashCode();
+      if (HasRequiredUserJoinCloudVariableDenyMessage) hash ^= RequiredUserJoinCloudVariableDenyMessage.GetHashCode();
+      if (HasAutoInviteMessage) hash ^= AutoInviteMessage.GetHashCode();
       hash ^= (int) loadWorldCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -15141,6 +15873,46 @@ namespace Headless.Rpc {
         output.WriteRawTag(168, 1);
         output.WriteInt32(ForcedRestartIntervalSeconds);
       }
+      if (UseCustomJoinVerifier != false) {
+        output.WriteRawTag(176, 1);
+        output.WriteBool(UseCustomJoinVerifier);
+      }
+      if (MobileFriendly != false) {
+        output.WriteRawTag(184, 1);
+        output.WriteBool(MobileFriendly);
+      }
+      if (overrideCorrespondingWorldId_ != null) {
+        output.WriteRawTag(194, 1);
+        output.WriteMessage(OverrideCorrespondingWorldId);
+      }
+      if (KeepOriginalRoles != false) {
+        output.WriteRawTag(200, 1);
+        output.WriteBool(KeepOriginalRoles);
+      }
+      if (HasRoleCloudVariable) {
+        output.WriteRawTag(210, 1);
+        output.WriteString(RoleCloudVariable);
+      }
+      if (HasAllowUserCloudVariable) {
+        output.WriteRawTag(218, 1);
+        output.WriteString(AllowUserCloudVariable);
+      }
+      if (HasDenyUserCloudVariable) {
+        output.WriteRawTag(226, 1);
+        output.WriteString(DenyUserCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariable) {
+        output.WriteRawTag(234, 1);
+        output.WriteString(RequiredUserJoinCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariableDenyMessage) {
+        output.WriteRawTag(242, 1);
+        output.WriteString(RequiredUserJoinCloudVariableDenyMessage);
+      }
+      if (HasAutoInviteMessage) {
+        output.WriteRawTag(250, 1);
+        output.WriteString(AutoInviteMessage);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -15220,6 +15992,46 @@ namespace Headless.Rpc {
         output.WriteRawTag(168, 1);
         output.WriteInt32(ForcedRestartIntervalSeconds);
       }
+      if (UseCustomJoinVerifier != false) {
+        output.WriteRawTag(176, 1);
+        output.WriteBool(UseCustomJoinVerifier);
+      }
+      if (MobileFriendly != false) {
+        output.WriteRawTag(184, 1);
+        output.WriteBool(MobileFriendly);
+      }
+      if (overrideCorrespondingWorldId_ != null) {
+        output.WriteRawTag(194, 1);
+        output.WriteMessage(OverrideCorrespondingWorldId);
+      }
+      if (KeepOriginalRoles != false) {
+        output.WriteRawTag(200, 1);
+        output.WriteBool(KeepOriginalRoles);
+      }
+      if (HasRoleCloudVariable) {
+        output.WriteRawTag(210, 1);
+        output.WriteString(RoleCloudVariable);
+      }
+      if (HasAllowUserCloudVariable) {
+        output.WriteRawTag(218, 1);
+        output.WriteString(AllowUserCloudVariable);
+      }
+      if (HasDenyUserCloudVariable) {
+        output.WriteRawTag(226, 1);
+        output.WriteString(DenyUserCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariable) {
+        output.WriteRawTag(234, 1);
+        output.WriteString(RequiredUserJoinCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariableDenyMessage) {
+        output.WriteRawTag(242, 1);
+        output.WriteString(RequiredUserJoinCloudVariableDenyMessage);
+      }
+      if (HasAutoInviteMessage) {
+        output.WriteRawTag(250, 1);
+        output.WriteString(AutoInviteMessage);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -15283,6 +16095,36 @@ namespace Headless.Rpc {
       if (ForcedRestartIntervalSeconds != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(ForcedRestartIntervalSeconds);
       }
+      if (UseCustomJoinVerifier != false) {
+        size += 2 + 1;
+      }
+      if (MobileFriendly != false) {
+        size += 2 + 1;
+      }
+      if (overrideCorrespondingWorldId_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(OverrideCorrespondingWorldId);
+      }
+      if (KeepOriginalRoles != false) {
+        size += 2 + 1;
+      }
+      if (HasRoleCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(RoleCloudVariable);
+      }
+      if (HasAllowUserCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(AllowUserCloudVariable);
+      }
+      if (HasDenyUserCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(DenyUserCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariable) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(RequiredUserJoinCloudVariable);
+      }
+      if (HasRequiredUserJoinCloudVariableDenyMessage) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(RequiredUserJoinCloudVariableDenyMessage);
+      }
+      if (HasAutoInviteMessage) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(AutoInviteMessage);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -15341,6 +16183,39 @@ namespace Headless.Rpc {
       }
       if (other.ForcedRestartIntervalSeconds != 0) {
         ForcedRestartIntervalSeconds = other.ForcedRestartIntervalSeconds;
+      }
+      if (other.UseCustomJoinVerifier != false) {
+        UseCustomJoinVerifier = other.UseCustomJoinVerifier;
+      }
+      if (other.MobileFriendly != false) {
+        MobileFriendly = other.MobileFriendly;
+      }
+      if (other.overrideCorrespondingWorldId_ != null) {
+        if (overrideCorrespondingWorldId_ == null) {
+          OverrideCorrespondingWorldId = new global::Headless.Rpc.RecordId();
+        }
+        OverrideCorrespondingWorldId.MergeFrom(other.OverrideCorrespondingWorldId);
+      }
+      if (other.KeepOriginalRoles != false) {
+        KeepOriginalRoles = other.KeepOriginalRoles;
+      }
+      if (other.HasRoleCloudVariable) {
+        RoleCloudVariable = other.RoleCloudVariable;
+      }
+      if (other.HasAllowUserCloudVariable) {
+        AllowUserCloudVariable = other.AllowUserCloudVariable;
+      }
+      if (other.HasDenyUserCloudVariable) {
+        DenyUserCloudVariable = other.DenyUserCloudVariable;
+      }
+      if (other.HasRequiredUserJoinCloudVariable) {
+        RequiredUserJoinCloudVariable = other.RequiredUserJoinCloudVariable;
+      }
+      if (other.HasRequiredUserJoinCloudVariableDenyMessage) {
+        RequiredUserJoinCloudVariableDenyMessage = other.RequiredUserJoinCloudVariableDenyMessage;
+      }
+      if (other.HasAutoInviteMessage) {
+        AutoInviteMessage = other.AutoInviteMessage;
       }
       switch (other.LoadWorldCase) {
         case LoadWorldOneofCase.LoadWorldUrl:
@@ -15454,6 +16329,49 @@ namespace Headless.Rpc {
             ForcedRestartIntervalSeconds = input.ReadInt32();
             break;
           }
+          case 176: {
+            UseCustomJoinVerifier = input.ReadBool();
+            break;
+          }
+          case 184: {
+            MobileFriendly = input.ReadBool();
+            break;
+          }
+          case 194: {
+            if (overrideCorrespondingWorldId_ == null) {
+              OverrideCorrespondingWorldId = new global::Headless.Rpc.RecordId();
+            }
+            input.ReadMessage(OverrideCorrespondingWorldId);
+            break;
+          }
+          case 200: {
+            KeepOriginalRoles = input.ReadBool();
+            break;
+          }
+          case 210: {
+            RoleCloudVariable = input.ReadString();
+            break;
+          }
+          case 218: {
+            AllowUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 226: {
+            DenyUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 234: {
+            RequiredUserJoinCloudVariable = input.ReadString();
+            break;
+          }
+          case 242: {
+            RequiredUserJoinCloudVariableDenyMessage = input.ReadString();
+            break;
+          }
+          case 250: {
+            AutoInviteMessage = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -15555,6 +16473,49 @@ namespace Headless.Rpc {
           }
           case 168: {
             ForcedRestartIntervalSeconds = input.ReadInt32();
+            break;
+          }
+          case 176: {
+            UseCustomJoinVerifier = input.ReadBool();
+            break;
+          }
+          case 184: {
+            MobileFriendly = input.ReadBool();
+            break;
+          }
+          case 194: {
+            if (overrideCorrespondingWorldId_ == null) {
+              OverrideCorrespondingWorldId = new global::Headless.Rpc.RecordId();
+            }
+            input.ReadMessage(OverrideCorrespondingWorldId);
+            break;
+          }
+          case 200: {
+            KeepOriginalRoles = input.ReadBool();
+            break;
+          }
+          case 210: {
+            RoleCloudVariable = input.ReadString();
+            break;
+          }
+          case 218: {
+            AllowUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 226: {
+            DenyUserCloudVariable = input.ReadString();
+            break;
+          }
+          case 234: {
+            RequiredUserJoinCloudVariable = input.ReadString();
+            break;
+          }
+          case 242: {
+            RequiredUserJoinCloudVariableDenyMessage = input.ReadString();
+            break;
+          }
+          case 250: {
+            AutoInviteMessage = input.ReadString();
             break;
           }
         }
@@ -16636,6 +17597,241 @@ namespace Headless.Rpc {
           }
           case 58: {
             autoSpawnItems_.AddEntriesFrom(ref input, _repeated_autoSpawnItems_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class RecordId : pb::IMessage<RecordId>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<RecordId> _parser = new pb::MessageParser<RecordId>(() => new RecordId());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<RecordId> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[62]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RecordId() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RecordId(RecordId other) : this() {
+      id_ = other.id_;
+      ownerId_ = other.ownerId_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public RecordId Clone() {
+      return new RecordId(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private string id_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Id {
+      get { return id_; }
+      set {
+        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "owner_id" field.</summary>
+    public const int OwnerIdFieldNumber = 2;
+    private string ownerId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string OwnerId {
+      get { return ownerId_; }
+      set {
+        ownerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as RecordId);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(RecordId other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (OwnerId != other.OwnerId) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id.Length != 0) hash ^= Id.GetHashCode();
+      if (OwnerId.Length != 0) hash ^= OwnerId.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Id.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Id);
+      }
+      if (OwnerId.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(OwnerId);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Id.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Id);
+      }
+      if (OwnerId.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(OwnerId);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Id.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+      }
+      if (OwnerId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(OwnerId);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(RecordId other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Id.Length != 0) {
+        Id = other.Id;
+      }
+      if (other.OwnerId.Length != 0) {
+        OwnerId = other.OwnerId;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Id = input.ReadString();
+            break;
+          }
+          case 18: {
+            OwnerId = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Id = input.ReadString();
+            break;
+          }
+          case 18: {
+            OwnerId = input.ReadString();
             break;
           }
         }
