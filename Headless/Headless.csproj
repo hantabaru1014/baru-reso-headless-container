@@ -46,6 +46,9 @@
     <Reference Include="PhotonDust">
       <HintPath>$(ResonitePath)/PhotonDust.dll</HintPath>
     </Reference>
+    <Reference Include="Awwdio">
+      <HintPath>$(ResonitePath)/Awwdio.dll</HintPath>
+    </Reference>
     <Reference Include="Hardware.Info">
       <HintPath>$(ResonitePath)/Hardware.Info.dll</HintPath>
     </Reference>
