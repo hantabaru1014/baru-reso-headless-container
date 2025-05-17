@@ -35,7 +35,20 @@ public class RunningSession
     /// </summary>
     public TimeSpan ForceRestartInterval { get; set; }
 
+    /// <summary>
+    /// セッション開始時間
+    /// </summary>
     public DateTimeOffset StartedAt => new DateTimeOffset(Instance.Time.LocalSessionBeginTime);
+
+    /// <summary>
+    /// HostUserを除く最後に入ったユーザのID
+    /// </summary>
+    public string? LastJoinedUserId { get; private set; }
+
+    /// <summary>
+    /// ワールド保存後にユーザがいたかどうか
+    /// </summary>
+    public bool IsDirty => Instance.UserCount > 1 || (LastJoinedUserId != null && (IdleBeganAt ?? DateTimeOffset.MinValue) > (LastSavedAt ?? DateTimeOffset.MinValue));
 
     /// <summary>
     /// Gets the uptime of the session.
@@ -77,6 +90,15 @@ public class RunningSession
         AutoRecover = startInfo.AutoRecover;
         IdleRestartInterval = TimeSpan.FromSeconds(startInfo.IdleRestartInterval);
         ForceRestartInterval = TimeSpan.FromSeconds(startInfo.ForcedRestartInterval);
+
+        worldInstance.UserJoined += OnUserJoined;
+    }
+
+    private void OnUserJoined(FrooxEngine.User user)
+    {
+        if (user.IsLocalUser) return;
+
+        LastJoinedUserId = user.UserID;
     }
 
     public WorldStartupParameters GenerateStartupParameters()

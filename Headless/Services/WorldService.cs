@@ -205,7 +205,15 @@ public class WorldService
             var world = runningSession.Instance;
             if (world.SaveOnExit)
             {
-                await SaveWorldAsync(runningSession);
+                if (runningSession.IsDirty)
+                {
+                    await SaveWorldAsync(runningSession);
+                }
+                else
+                {
+                    // TODO: SaveOnExitForceを作る?
+                    _logger.LogInformation("Skipped world save due to world isnot dirty!");
+                }
             }
             world.WorldManager.WorldFailed -= MarkAutoRecoverRestart;
             // これを待機したら一生終わらないので待たない。 Userspace.SaveWorldAuto でも待ってない。
@@ -272,7 +280,7 @@ public class WorldService
             };
 
             // ユーザがいなくなったタイミングで保存する
-            // TODO: 一旦、SaveOnExitで判断するが後から専用設定項目を追加
+            // saveOnExitのタイミングをずらすことでshutdown時にコンテナをできるだけ早く終了させたい
             if (world.SaveOnExit && world.UserCount == 1 && runningSession.LastUserCount > 1)
             {
                 _ = SaveWorldAsync(runningSession);
