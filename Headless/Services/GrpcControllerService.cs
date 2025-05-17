@@ -680,7 +680,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             foreach (var session in _worldService.ListAll())
             {
-                config.StartWorlds.Add(session.StartInfo.ToProto());
+                config.StartWorlds.Add(session.GenerateStartupParameters().ToProto());
             }
         }
 

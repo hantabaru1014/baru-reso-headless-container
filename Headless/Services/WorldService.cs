@@ -61,7 +61,7 @@ public class WorldService
         CancellationToken ct = default
     )
     {
-        startupParameters.CustomSessionId = SanitizeSessionID(startupParameters.CustomSessionId);
+        startupParameters.CustomSessionId = ValidateAndSanitizeSessionID(startupParameters.CustomSessionId);
         World? startedWorld;
         try
         {
@@ -157,7 +157,7 @@ public class WorldService
         }
     }
 
-    private string? SanitizeSessionID(string sessionId)
+    private string? ValidateAndSanitizeSessionID(string sessionId)
     {
         var id = sessionId;
         if (string.IsNullOrWhiteSpace(id))
@@ -174,14 +174,12 @@ public class WorldService
             }
             if (!SessionInfo.IsValidSessionId(id))
             {
-                _logger.LogWarning($"Invalid custom session ID: {id}");
-                id = null;
+                throw new Exception($"Invalid custom session ID: {id}");
             }
             var sessionIDOwner = SessionInfo.GetCustomSessionIdOwner(id);
             if (sessionIDOwner != _engine.Cloud.CurrentUser?.Id)
             {
-                _logger.LogWarning($"Cannot use session ID that's owned by another user. Trying to use {id}, currently logged in as {_engine.Cloud.CurrentUser?.Id ?? "anonymous"}");
-                id = null;
+                throw new Exception($"Cannot use session ID that's owned by another user. Trying to use {id}, currently logged in as {_engine.Cloud.CurrentUser?.Id ?? "anonymous"}");
             }
         }
         return id;
@@ -199,7 +197,7 @@ public class WorldService
                 world.Destroy();
             }
             await default(NextUpdate);
-            await StartWorldAsync(runningSession.StartInfo, cancellationToken);
+            await StartWorldAsync(runningSession.GenerateStartupParameters(), cancellationToken);
         }
 
         async Task StopSessionAsync(RunningSession runningSession)
@@ -207,7 +205,15 @@ public class WorldService
             var world = runningSession.Instance;
             if (world.SaveOnExit)
             {
-                await SaveWorldAsync(runningSession);
+                if (runningSession.IsDirty)
+                {
+                    await SaveWorldAsync(runningSession);
+                }
+                else
+                {
+                    // TODO: SaveOnExitForceを作る?
+                    _logger.LogInformation("Skipped world save due to world isnot dirty!");
+                }
             }
             world.WorldManager.WorldFailed -= MarkAutoRecoverRestart;
             // これを待機したら一生終わらないので待たない。 Userspace.SaveWorldAuto でも待ってない。
@@ -220,7 +226,6 @@ public class WorldService
 
         var restart = false;
         var world = runningSession.Instance;
-        var autoRecover = runningSession.StartInfo.AutoRecover;
 
         void MarkAutoRecoverRestart(World failedWorld)
         {
@@ -234,7 +239,7 @@ public class WorldService
                 return;
             }
 
-            if (autoRecover)
+            if (runningSession.AutoRecover)
             {
                 restart = true;
                 _logger.LogWarning("World {World} has crashed! Restarting...", failedWorld.RawName);
@@ -275,7 +280,7 @@ public class WorldService
             };
 
             // ユーザがいなくなったタイミングで保存する
-            // TODO: 一旦、SaveOnExitで判断するが後から専用設定項目を追加
+            // saveOnExitのタイミングをずらすことでshutdown時にコンテナをできるだけ早く終了させたい
             if (world.SaveOnExit && world.UserCount == 1 && runningSession.LastUserCount > 1)
             {
                 _ = SaveWorldAsync(runningSession);
