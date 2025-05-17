@@ -175,7 +175,14 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
             if (!world.IsEnabled) continue;
 
             _logger.LogInformation($"Starting world : {world.SessionName ?? "NoName"} ({world.LoadWorldURL})");
-            await _worldService.StartWorldAsync(world, ct);
+            try
+            {
+                await _worldService.StartWorldAsync(world, ct);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed start world: {0}", ex.Message);
+            }
         }
 
         _applicationStartupComplete = true;

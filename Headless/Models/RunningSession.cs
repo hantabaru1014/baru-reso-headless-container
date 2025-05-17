@@ -9,7 +9,7 @@ public class RunningSession
 
     internal Task? Handler { get; set; }
 
-    public WorldStartupParameters StartInfo { get; init; }
+    private WorldStartupParameters StartInfo { get; init; }
 
     public World Instance { get; init; }
 
@@ -21,29 +21,19 @@ public class RunningSession
 
     public int LastUserCount { get; internal set; } = 0;
 
-    public TimeSpan AutosaveInterval
-    {
-        get => TimeSpan.FromSeconds(StartInfo.AutoSaveInterval);
-        set => StartInfo.AutoSaveInterval = value.TotalSeconds;
-    }
+    public TimeSpan AutosaveInterval { get; set; }
+
+    public bool AutoRecover { get; set; }
 
     /// <summary>
     /// the time after which an idle world should restart.
     /// </summary>
-    public TimeSpan IdleRestartInterval
-    {
-        get => TimeSpan.FromSeconds(StartInfo.IdleRestartInterval);
-        set => StartInfo.IdleRestartInterval = value.TotalSeconds;
-    }
+    public TimeSpan IdleRestartInterval { get; set; }
 
     /// <summary>
     /// Gets the absolute time after which a world should unconditionally restart.
     /// </summary>
-    public TimeSpan ForceRestartInterval
-    {
-        get => TimeSpan.FromSeconds(StartInfo.ForcedRestartInterval);
-        set => StartInfo.ForcedRestartInterval = value.TotalSeconds;
-    }
+    public TimeSpan ForceRestartInterval { get; set; }
 
     public DateTimeOffset StartedAt => new DateTimeOffset(Instance.Time.LocalSessionBeginTime);
 
@@ -82,6 +72,53 @@ public class RunningSession
         StartInfo = startInfo;
         Instance = worldInstance;
         CancellationTokenSource = cancellationTokenSource;
+
+        AutosaveInterval = TimeSpan.FromSeconds(startInfo.AutoSaveInterval);
+        AutoRecover = startInfo.AutoRecover;
+        IdleRestartInterval = TimeSpan.FromSeconds(startInfo.IdleRestartInterval);
+        ForceRestartInterval = TimeSpan.FromSeconds(startInfo.ForcedRestartInterval);
+    }
+
+    public WorldStartupParameters GenerateStartupParameters()
+    {
+        var info = Instance.GenerateSessionInfo();
+        return new WorldStartupParameters
+        {
+            IsEnabled = true,
+            SessionName = info.Name,
+            CustomSessionId = StartInfo.CustomSessionId,
+            Description = info.Description,
+            MaxUsers = info.MaximumUsers,
+            AccessLevel = info.AccessLevel,
+            UseCustomJoinVerifier = Instance.UseCustomJoinVerifier,
+            HideFromPublicListing = info.HideFromListing,
+            Tags = info.Tags.ToList(),
+            MobileFriendly = Instance.MobileFriendly,
+            LoadWorldURL = StartInfo.LoadWorldURL,
+            LoadWorldPresetName = StartInfo.LoadWorldPresetName,
+            OverrideCorrespondingWorldId = StartInfo.OverrideCorrespondingWorldId,
+            ForcePort = StartInfo.ForcePort,
+            KeepOriginalRoles = StartInfo.KeepOriginalRoles,
+            DefaultUserRoles = StartInfo.DefaultUserRoles, // TODO: Instance.Permissions.DefaultUserPermissions から作るか決める
+            RoleCloudVariable = Instance.Permissions.DefaultRoleCloudVariable,
+            AllowUserCloudVariable = Instance.AllowUserCloudVariable,
+            DenyUserCloudVariable = Instance.DenyUserCloudVariable,
+            RequiredUserJoinCloudVariable = Instance.RequiredUserJoinCloudVariable,
+            RequiredUserJoinCloudVariableDenyMessage = Instance.RequiredUserJoinCloudVariableDenyMessage,
+            AwayKickMinutes = info.AwayKickEnabled ? info.AwayKickMinutes : -1,
+            ParentSessionIds = Instance.ParentSessionIds.ToList(),
+            AutoInviteUsernames = StartInfo.AutoInviteUsernames,
+            InviteRequestHandlerUsernames = StartInfo.InviteRequestHandlerUsernames,
+            AutoInviteMessage = StartInfo.AutoInviteMessage,
+            SaveAsOwner = null,
+            AutoRecover = AutoRecover,
+            IdleRestartInterval = IdleRestartInterval.TotalSeconds,
+            ForcedRestartInterval = ForceRestartInterval.TotalSeconds,
+            SaveOnExit = Instance.SaveOnExit,
+            AutoSaveInterval = AutosaveInterval.TotalSeconds,
+            AutoSleep = !Instance.ForceFullUpdateCycle,
+            WaitForLogin = StartInfo.WaitForLogin,
+        };
     }
 
     public Task<bool> InviteUser(string userId) => Instance.Coroutines.StartTask(async () =>

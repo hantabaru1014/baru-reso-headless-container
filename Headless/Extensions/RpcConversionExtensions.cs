@@ -229,7 +229,7 @@ public static class RpcConversionExtensions
             Description = info.Description ?? "",
             Tags = { info.Tags ?? [] },
             AccessLevel = info.AccessLevel.ToProto(),
-            StartupParameters = session.StartInfo.ToProto(),
+            StartupParameters = session.GenerateStartupParameters().ToProto(),
             UsersCount = info.JoinedUsers,
             MaxUsers = info.MaximumUsers,
             SessionUrl = CloudUtils.MakeSessionGoURL(info.SessionId),
