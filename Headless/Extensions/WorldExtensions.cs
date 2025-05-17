@@ -38,6 +38,10 @@ public static class WorldExtensions
 
         world.SetCloudVariableParameters(startupParameters, logger);
         world.ConfigureParentSessions(startupParameters, logger);
+        if (startupParameters.InviteRequestHandlerUsernames != null && startupParameters.InviteRequestHandlerUsernames.Count() > 0)
+        {
+            world.ConfigureInviteRequestHandlerUsernames(startupParameters.InviteRequestHandlerUsernames, logger);
+        }
 
         await world.ConfigurePermissionsAsync(startupParameters, logger);
         await world.SendAutomaticInvitesAsync(startupParameters, logger);
@@ -66,6 +70,35 @@ public static class WorldExtensions
         }
 
         world.ParentSessionIds = sessionIDs;
+    }
+
+    public static void ConfigureInviteRequestHandlerUsernames(this World world, IEnumerable<string> usernames, ILogger logger)
+    {
+        if (world.Engine.Cloud.CurrentUser is null)
+        {
+            logger.LogWarning("Not logged in, cannot forward invite requests!");
+            return;
+        }
+
+        world.RunSynchronously(() =>
+        {
+            var currentUsers = world.GetInviteHandlerUsers();
+            foreach (var username in usernames)
+            {
+                if (currentUsers.Contains(username)) continue;
+
+                var contact = world.Engine.Cloud.Contacts.FindContact((c) => c.ContactUsername.Equals(username, StringComparison.InvariantCultureIgnoreCase));
+                if (contact is null)
+                {
+                    logger.LogWarning(username + " is not in the contacts list, cannot setup as invite request handler");
+                }
+                else
+                {
+                    world.AddInviteRequestHandler(contact.ContactUserId);
+                    logger.LogInformation("{0} ({1}) added as invite handler.", username, contact.ContactUserId);
+                }
+            }
+        }, true);
     }
 
     public static async Task SendAutomaticInvitesAsync
