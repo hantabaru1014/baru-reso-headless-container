@@ -57,7 +57,7 @@ public class WorldService
 
     public async Task<RunningSession?> StartWorldAsync
     (
-        WorldStartupParameters startupParameters,
+        ExtendedWorldStartupParameters startupParameters,
         CancellationToken ct = default
     )
     {

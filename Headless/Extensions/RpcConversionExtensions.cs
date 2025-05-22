@@ -1,6 +1,7 @@
 using FrooxEngine;
 using Google.Protobuf.WellKnownTypes;
 using Headless.Libs;
+using Headless.Models;
 using Headless.Rpc;
 using SkyFrost.Base;
 
@@ -123,9 +124,17 @@ public static class RpcConversionExtensions
         return result;
     }
 
-    public static SkyFrost.Base.WorldStartupParameters ToResonite(this Rpc.WorldStartupParameters parameters)
+    public static Rpc.WorldStartupParameters ToProto(this ExtendedWorldStartupParameters parameters)
     {
-        var result = new SkyFrost.Base.WorldStartupParameters
+        var result = (parameters as SkyFrost.Base.WorldStartupParameters).ToProto();
+        result.JoinAllowedUserIds.AddRange(parameters.JoinAllowedUserIds);
+
+        return result;
+    }
+
+    public static ExtendedWorldStartupParameters ToResonite(this Rpc.WorldStartupParameters parameters)
+    {
+        var result = new ExtendedWorldStartupParameters
         {
             IsEnabled = true,
             AccessLevel = parameters.AccessLevel.ToResonite(),
@@ -145,7 +154,8 @@ public static class RpcConversionExtensions
             InviteRequestHandlerUsernames = parameters.InviteRequestHandlerUsernames.ToList(),
             UseCustomJoinVerifier = parameters.UseCustomJoinVerifier,
             MobileFriendly = parameters.MobileFriendly,
-            KeepOriginalRoles = parameters.KeepOriginalRoles
+            KeepOriginalRoles = parameters.KeepOriginalRoles,
+            JoinAllowedUserIds = parameters.JoinAllowedUserIds.ToList(),
         };
 
         if (!string.IsNullOrEmpty(parameters.Name))
@@ -233,6 +243,7 @@ public static class RpcConversionExtensions
             UsersCount = info.JoinedUsers,
             MaxUsers = info.MaximumUsers,
             SessionUrl = CloudUtils.MakeSessionGoURL(info.SessionId),
+            ConnectUris = { session.Instance.SessionURLs.Select(u => u.ToString()).ToList() },
             StartedAt = Timestamp.FromDateTime(info.SessionBeginTime),
             AwayKickMinutes = info.AwayKickEnabled ? info.AwayKickMinutes : -1,
             IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
