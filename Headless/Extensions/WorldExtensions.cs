@@ -1,11 +1,12 @@
 using FrooxEngine;
+using Headless.Models;
 using SkyFrost.Base;
 
 namespace Headless.Extensions;
 
 public static class WorldExtensions
 {
-    public static async Task<WorldStartupParameters> SetParametersAsync(this World world, WorldStartupParameters startupParameters, ILogger logger)
+    public static async Task<ExtendedWorldStartupParameters> SetParametersAsync(this World world, ExtendedWorldStartupParameters startupParameters, ILogger logger)
     {
         if (startupParameters.SessionName is not null)
         {
@@ -104,10 +105,16 @@ public static class WorldExtensions
     public static async Task SendAutomaticInvitesAsync
     (
         this World world,
-        WorldStartupParameters startupParameters,
+        ExtendedWorldStartupParameters startupParameters,
         ILogger logger
     )
     {
+        foreach (var userId in startupParameters.JoinAllowedUserIds)
+        {
+            world.AllowUserToJoin(userId);
+            logger.LogInformation("Allow join to {id}", userId);
+        }
+        
         if (startupParameters.AutoInviteUsernames is null)
         {
             return;

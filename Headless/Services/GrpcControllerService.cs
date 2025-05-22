@@ -156,6 +156,18 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         return new InviteUserResponse();
     }
 
+    public override Task<AllowUserToJoinResponse> AllowUserToJoin(AllowUserToJoinRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        session.AllowUserToJoin(request.UserId);
+        
+        return Task.FromResult(new AllowUserToJoinResponse());
+    }
+
     public override async Task<UpdateUserRoleResponse> UpdateUserRole(UpdateUserRoleRequest request, ServerCallContext context)
     {
         var session = _worldService.GetSession(request.SessionId);

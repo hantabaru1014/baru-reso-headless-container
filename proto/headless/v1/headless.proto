@@ -16,6 +16,7 @@ service HeadlessControlService {
   rpc StopSession(StopSessionRequest) returns (StopSessionResponse);
   rpc SaveSessionWorld(SaveSessionWorldRequest) returns (SaveSessionWorldResponse);
   rpc InviteUser(InviteUserRequest) returns (InviteUserResponse);
+  rpc AllowUserToJoin(AllowUserToJoinRequest) returns (AllowUserToJoinResponse);
   rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse);
   rpc UpdateSessionParameters(UpdateSessionParametersRequest) returns (UpdateSessionParametersResponse);
   rpc ListUsersInSession(ListUsersInSessionRequest) returns (ListUsersInSessionResponse);
@@ -240,6 +241,13 @@ message InviteUserRequest {
 
 message InviteUserResponse {}
 
+message AllowUserToJoinRequest {
+  string session_id = 1;
+  string user_id = 2;
+}
+
+message AllowUserToJoinResponse {}
+
 message UpdateUserRoleRequest {
   string session_id = 1;
   oneof user {
@@ -376,6 +384,7 @@ message WorldStartupParameters {
   optional string required_user_join_cloud_variable = 29;
   optional string required_user_join_cloud_variable_deny_message = 30;
   optional string auto_invite_message = 31;
+  repeated string join_allowed_user_ids = 32;
 }
 
 enum ContactChatMessageType {

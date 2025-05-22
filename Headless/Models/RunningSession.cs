@@ -9,7 +9,7 @@ public class RunningSession
 
     internal Task? Handler { get; set; }
 
-    private WorldStartupParameters StartInfo { get; init; }
+    private ExtendedWorldStartupParameters StartInfo { get; init; }
 
     public World Instance { get; init; }
 
@@ -80,7 +80,7 @@ public class RunningSession
     public bool HasIdleTimeElapsed => IdleRestartInterval > TimeSpan.Zero &&
                                         TimeSpentIdle > IdleRestartInterval;
 
-    public RunningSession(WorldStartupParameters startInfo, World worldInstance, CancellationTokenSource cancellationTokenSource)
+    public RunningSession(ExtendedWorldStartupParameters startInfo, World worldInstance, CancellationTokenSource cancellationTokenSource)
     {
         StartInfo = startInfo;
         Instance = worldInstance;
@@ -101,10 +101,10 @@ public class RunningSession
         LastJoinedUserId = user.UserID;
     }
 
-    public WorldStartupParameters GenerateStartupParameters()
+    public ExtendedWorldStartupParameters GenerateStartupParameters()
     {
         var info = Instance.GenerateSessionInfo();
-        return new WorldStartupParameters
+        return new ExtendedWorldStartupParameters
         {
             IsEnabled = true,
             SessionName = info.Name,
@@ -140,6 +140,7 @@ public class RunningSession
             AutoSaveInterval = AutosaveInterval.TotalSeconds,
             AutoSleep = !Instance.ForceFullUpdateCycle,
             WaitForLogin = StartInfo.WaitForLogin,
+            JoinAllowedUserIds = StartInfo.JoinAllowedUserIds,
         };
     }
 
@@ -153,6 +154,12 @@ public class RunningSession
         }
         return true;
     });
+
+    public void AllowUserToJoin(string userId)
+    {
+        Instance.AllowUserToJoin(userId);
+        StartInfo.JoinAllowedUserIds.Add(userId);
+    }
 
     /// <summary>
     /// ワールドを保存中かどうか
