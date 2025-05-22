@@ -343,6 +343,7 @@ message Session {
   bool can_save = 19;
   string world_url = 20;
   google.protobuf.Timestamp started_at = 21;
+  repeated string connect_uris = 22;
 }
 
 message DefaultUserRole {

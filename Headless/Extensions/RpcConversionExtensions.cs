@@ -243,6 +243,7 @@ public static class RpcConversionExtensions
             UsersCount = info.JoinedUsers,
             MaxUsers = info.MaximumUsers,
             SessionUrl = CloudUtils.MakeSessionGoURL(info.SessionId),
+            ConnectUris = { session.Instance.SessionURLs.Select(u => u.ToString()).ToList() },
             StartedAt = Timestamp.FromDateTime(info.SessionBeginTime),
             AwayKickMinutes = info.AwayKickEnabled ? info.AwayKickMinutes : -1,
             IdleRestartIntervalSeconds = (int)session.IdleRestartInterval.TotalSeconds,
