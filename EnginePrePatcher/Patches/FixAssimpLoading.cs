@@ -7,6 +7,8 @@ public class FixAssimpLoading : IAssemblyPatch
 {
     public string TargetAssemblyPath => "AssimpNet.dll";
 
+    public IEnumerable<string> RemoveFiles => Enumerable.Empty<string>();
+
     public bool Patch(AssemblyDefinition assembly)
     {
         var libImplTypes = assembly.MainModule.Types.Where(t => t.Name.StartsWith("UnmanagedLinuxLib"));

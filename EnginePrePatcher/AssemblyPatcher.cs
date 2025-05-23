@@ -93,6 +93,33 @@ public static class AssemblyPatcher
             }
         }
 
+        foreach (var patchList in patchesByAssemblies.Values)
+        {
+            foreach (var patch in patchList)
+            {
+                foreach (var fileName in patch.RemoveFiles)
+                {
+                    var file = Path.Combine(targetDirectoryPath, fileName);
+                    if (!File.Exists(file))
+                    {
+                        Console.WriteLine($"Not found file: {file}");
+                        continue;
+                    }
+
+                    try
+                    {
+                        File.Move(file, file + ".original");
+                        Console.WriteLine($"Removed file: {file}");
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine($"Failed to remove file: {file}");
+                        return false;
+                    }
+                }
+            }
+        }
+
         return true;
     }
 

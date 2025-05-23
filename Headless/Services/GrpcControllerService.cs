@@ -164,7 +164,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
         session.AllowUserToJoin(request.UserId);
-        
+
         return Task.FromResult(new AllowUserToJoinResponse());
     }
 
