@@ -18,7 +18,7 @@ COPY --from=build-patcher /app/publish ./bin/prepatch
 COPY ./Headless ./Headless
 WORKDIR "/src/Headless"
 RUN --mount=type=bind,source=Resonite/Headless,target=../Resonite/Headless,rw \
-    dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+    dotnet ../bin/prepatch/EnginePrePatcher.dll ../Resonite/Headless && dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 ARG TARGETARCH
