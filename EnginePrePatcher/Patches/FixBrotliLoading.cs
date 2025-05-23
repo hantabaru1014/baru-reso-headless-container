@@ -8,6 +8,8 @@ public class FixBrotliLoading : IAssemblyPatch
 {
     public string TargetAssemblyPath => "Brotli.Core.dll";
 
+    public IEnumerable<string> RemoveFiles => Enumerable.Empty<string>();
+
     public bool Patch(AssemblyDefinition assembly)
     {
         var module = assembly.MainModule;

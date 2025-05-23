@@ -114,7 +114,7 @@ public static class WorldExtensions
             world.AllowUserToJoin(userId);
             logger.LogInformation("Allow join to {id}", userId);
         }
-        
+
         if (startupParameters.AutoInviteUsernames is null)
         {
             return;
