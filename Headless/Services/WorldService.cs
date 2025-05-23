@@ -116,6 +116,7 @@ public class WorldService
             {
                 foreach (var item in AutoSpawnItems)
                 {
+                    await default(NextUpdate);
                     await startedWorld.RootSlot.AddSlot("Headless Auto-Spawn").LoadObjectAsync(item);
                 }
             });
