@@ -193,16 +193,18 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
         }
-        session.Instance.RunSynchronously(() =>
+        var updated = await session.Instance.Coroutines.StartTask(async () =>
         {
+            await default(ToWorld);
             user.Role = permissionSet;
             session.Instance.Permissions.AssignDefaultRole(user, permissionSet);
+
+            return user.Role;
         });
 
-        await Task.CompletedTask;
         return new UpdateUserRoleResponse
         {
-            Role = user.Role.RoleName.Value
+            Role = updated.RoleName.Value
         };
     }
 
@@ -231,11 +233,27 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         }
         if (request.HasAwayKickMinutes)
         {
-            session.Instance.AwayKickMinutes = request.AwayKickMinutes;
+            if (request.AwayKickMinutes > 0)
+            {
+                session.Instance.AwayKickEnabled = true;
+                session.Instance.AwayKickMinutes = request.AwayKickMinutes;
+            }
+            else
+            {
+                session.Instance.AwayKickEnabled = false;
+                session.Instance.AwayKickMinutes = -1;
+            }
         }
         if (request.HasIdleRestartIntervalSeconds)
         {
-            session.IdleRestartInterval = TimeSpan.FromSeconds(request.IdleRestartIntervalSeconds);
+            if (request.IdleRestartIntervalSeconds > 0)
+            {
+                session.IdleRestartInterval = TimeSpan.FromSeconds(request.IdleRestartIntervalSeconds);
+            }
+            else
+            {
+                session.IdleRestartInterval = TimeSpan.FromSeconds(-1);
+            }
         }
         if (request.HasSaveOnExit)
         {
@@ -243,7 +261,14 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         }
         if (request.HasAutoSaveIntervalSeconds)
         {
-            session.AutosaveInterval = TimeSpan.FromSeconds(request.AutoSaveIntervalSeconds);
+            if (request.AutoSaveIntervalSeconds > 0)
+            {
+                session.AutosaveInterval = TimeSpan.FromSeconds(request.AutoSaveIntervalSeconds);
+            }
+            else
+            {
+                session.AutosaveInterval = TimeSpan.FromSeconds(-1);
+            }
         }
         if (request.HasHideFromPublicListing)
         {

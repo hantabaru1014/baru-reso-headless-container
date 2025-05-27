@@ -36,6 +36,11 @@ public static class WorldExtensions
             world.AwayKickEnabled = true;
             world.AwayKickMinutes = (float)startupParameters.AwayKickMinutes;
         }
+        else
+        {
+            world.AwayKickEnabled = false;
+            world.AwayKickMinutes = -1;
+        }
 
         world.SetCloudVariableParameters(startupParameters, logger);
         world.ConfigureParentSessions(startupParameters, logger);
