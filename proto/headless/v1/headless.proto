@@ -15,6 +15,7 @@ service HeadlessControlService {
   rpc StartWorld(StartWorldRequest) returns (StartWorldResponse);
   rpc StopSession(StopSessionRequest) returns (StopSessionResponse);
   rpc SaveSessionWorld(SaveSessionWorldRequest) returns (SaveSessionWorldResponse);
+  rpc SaveAsSessionWorld(SaveAsSessionWorldRequest) returns (SaveAsSessionWorldResponse);
   rpc InviteUser(InviteUserRequest) returns (InviteUserResponse);
   rpc AllowUserToJoin(AllowUserToJoinRequest) returns (AllowUserToJoinResponse);
   rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse);
@@ -231,6 +232,20 @@ message SaveSessionWorldRequest {
 
 message SaveSessionWorldResponse {}
 
+message SaveAsSessionWorldRequest {
+  enum SaveAsType {
+    SAVE_AS_TYPE_UNSPECIFIED = 0;
+    SAVE_AS_TYPE_SAVE_AS = 1;
+    SAVE_AS_TYPE_COPY = 2;
+  }
+  string session_id = 1;
+  SaveAsType type = 2;
+}
+
+message SaveAsSessionWorldResponse {
+  string saved_record_url = 1;
+}
+
 message InviteUserRequest {
   string session_id = 1;
   oneof user {
@@ -344,6 +359,7 @@ message Session {
   string world_url = 20;
   google.protobuf.Timestamp started_at = 21;
   repeated string connect_uris = 22;
+  bool can_save_as = 23;
 }
 
 message DefaultUserRole {

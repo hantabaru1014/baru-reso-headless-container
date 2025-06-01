@@ -129,6 +129,25 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         return new SaveSessionWorldResponse();
     }
 
+    public override async Task<SaveAsSessionWorldResponse> SaveAsSessionWorld(SaveAsSessionWorldRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        var saved = await _worldService.SaveWorldAsAsync(session, request.Type == SaveAsSessionWorldRequest.Types.SaveAsType.SaveAs);
+        if (saved is null)
+        {
+            throw new RpcException(new Status(StatusCode.Internal, "Failed save world"));
+        }
+
+        return new SaveAsSessionWorldResponse
+        {
+            SavedRecordUrl = saved.GetUrl(session.Instance.Engine.Cloud.Platform).ToString()
+        };
+    }
+
     public override async Task<InviteUserResponse> InviteUser(InviteUserRequest request, ServerCallContext context)
     {
         var session = _worldService.GetSession(request.SessionId);

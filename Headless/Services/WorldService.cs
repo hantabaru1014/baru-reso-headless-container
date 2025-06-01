@@ -156,6 +156,29 @@ public class WorldService
         {
             _logger.LogInformation("World({World}) saved successfully!", runningSession.Instance.RawName);
         }
+        else
+        {
+            _logger.LogError("Failed world({World}) saving", runningSession.Instance.RawName);
+        }
+    }
+
+    public async Task<FrooxEngine.Store.Record?> SaveWorldAsAsync(RunningSession runningSession, bool updateCurrentWorldRecord)
+    {
+        _logger.LogInformation("Saving As {World}", runningSession.Instance.RawName);
+        var saved = await runningSession.SaveWorldCopy(runningSession.Instance.Engine.Cloud.CurrentUserID);
+        if (saved != null)
+        {
+            if (updateCurrentWorldRecord)
+            {
+                runningSession.Instance.CorrespondingRecord = saved;
+            }
+            _logger.LogInformation("World({World}) saved as successfully!", runningSession.Instance.RawName);
+        }
+        else
+        {
+            _logger.LogError("Failed world({World}) saving as", runningSession.Instance.RawName);
+        }
+        return saved;
     }
 
     private string? ValidateAndSanitizeSessionID(string sessionId)
