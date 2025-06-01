@@ -184,12 +184,6 @@ public class RunningSession
                     record = Instance.CreateNewRecord(cloud.CurrentUserID);
                     Instance.CorrespondingRecord = record;
                 }
-                else if (!cloud.HasPotentialAccess(record.OwnerId))
-                {
-                    // 保存権限のない公開ワールド
-                    record.OwnerId = cloud.CurrentUserID;
-                    record.RecordId = RecordHelper.GenerateRecordID();
-                }
                 var savedRecord = await Userspace.SaveWorld(Instance);
                 LastSavedAt = DateTimeOffset.UtcNow;
                 StartInfo.LoadWorldURL = savedRecord.GetUrl(cloud.Platform).ToString();
@@ -205,5 +199,45 @@ public class RunningSession
             return true;
         }
         return false;
+    }
+
+    public async Task<FrooxEngine.Store.Record?> SaveWorldCopy(string? ownerId)
+    {
+        if (!Instance.IsAllowedToSaveWorld()
+            || IsWorldSaving
+            || (ownerId != null && !Instance.Engine.Cloud.HasPotentialAccess(ownerId))) return null;
+
+        await _saveLock.WaitAsync();
+        try
+        {
+            string? originalOwnerId = null;
+            var record = Instance.CorrespondingRecord;
+            if (record != null)
+            {
+                originalOwnerId = record.OwnerId;
+                record = record.Clone<FrooxEngine.Store.Record>();
+                record.OwnerId = ownerId ?? Instance.GetCorrespondingOwnerId();
+                record.RecordId = RecordHelper.GenerateRecordID();
+                record.ClearRecordSpecificMetadata();
+            }
+            else
+            {
+                record = Instance.CreateNewRecord(ownerId);
+            }
+
+            var transfer = new RecordOwnerTransferer(Instance.Engine, record.OwnerId, originalOwnerId);
+            var savedRecord = await Userspace.SaveWorld(Instance, record, transfer);
+            LastSavedAt = DateTimeOffset.UtcNow;
+
+            return savedRecord;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            _saveLock.Release();
+        }
     }
 }
