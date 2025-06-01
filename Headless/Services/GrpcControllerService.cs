@@ -180,14 +180,18 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid role name"));
         }
+        if (permissionSet > session.Instance.HostUser.Role)
+        {
+            permissionSet = session.Instance.HostUser.Role;
+        }
         FrooxEngine.User? user = null;
         if (request.HasUserId)
         {
-            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+            user = session.Instance.AllUsers.Where(u => !u.IsHost).FirstOrDefault(u => u.UserID == request.UserId);
         }
         else if (request.HasUserName)
         {
-            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+            user = session.Instance.AllUsers.Where(u => !u.IsHost).FirstOrDefault(u => u.UserName == request.UserName);
         }
         if (user is null)
         {
