@@ -145,9 +145,9 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
 
         await _engine.Initialize(
             AppDomain.CurrentDomain.BaseDirectory,
+            false,
             launchOptions,
             _systemInfo,
-            null!,
             new EngineInitProgressLogger(_logger)
         );
 
