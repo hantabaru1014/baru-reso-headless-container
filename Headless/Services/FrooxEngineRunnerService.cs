@@ -232,6 +232,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
             {
                 _engine.RunUpdateLoop();
                 _systemInfo.FrameFinished();
+                _engine.PerfStats.Update(_systemInfo);
             }
             catch (Exception e)
             {
