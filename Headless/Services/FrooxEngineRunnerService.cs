@@ -124,6 +124,11 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
     {
         LoadTypes();
 
+        var appVersion = Assembly.GetEntryAssembly()
+            ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion ?? "Unknown";
+        _logger.LogInformation($"AppVersion: {appVersion}, ResoniteVersion: {_engine.VersionString}");
+
         if (_startupConfig.HasUsernameOverride && _startupConfig.UsernameOverride.Length > 0)
         {
             _engine.UsernameOverride = _startupConfig.UsernameOverride;
