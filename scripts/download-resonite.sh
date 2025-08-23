@@ -54,12 +54,17 @@ else
   echo "Resoniteのダウンロードが完了しました"
 fi
 
+mkdir -p ./native-libs/arm64
+wget https://i.j4.lc/resonite/libraries-arm.zip
+unzip libraries-arm.zip -d libraries-arm
+find libraries-arm -type f \( -name "*.dll" -o -name "*.so" -o -name "*.h" \) -exec cp {} ./native-libs/arm64/ \;
+cp ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
+
+mkdir -p ./native-libs/amd64
+cp ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
+
 if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
-  mkdir -p ./native-libs/arm64
-  cp ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
   cp ./native-libs/arm64/* ./Resonite/Headless/
 else
-  mkdir -p ./native-libs/amd64
-  cp ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
   cp ./native-libs/amd64/* ./Resonite/Headless/
 fi
