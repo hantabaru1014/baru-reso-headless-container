@@ -23,9 +23,6 @@ public class RemoveUnusedConnectors : IAssemblyPatch
                 case "SteamNetworkManager":
                 // 依存しているネイティブライブラリが邪魔
                 case "DiscordConnector":
-                // こいつらが依存しているGoogle.Protobuf.dllが謎に超古い&使っているGrpcライブラリと競合して邪魔
-                case "OmniceptTrackingDriver":
-                case "GliaHandler":
                     return true;
             }
             return false;

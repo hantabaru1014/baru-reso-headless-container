@@ -133,6 +133,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         _engine.OnShutdownRequest += OnShutdownRequest;
         var launchOptions = new LaunchOptions
         {
+            OutputDevice = Renderite.Shared.HeadOutputDevice.Headless,
             DataDirectory = Path.Combine(_appConfig.DataDirectoryPath, "Data"),
             CacheDirectory = Path.Combine(_appConfig.DataDirectoryPath, "Cache"),
             LogsDirectory = null!,
@@ -145,16 +146,16 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
 
         await _engine.Initialize(
             AppDomain.CurrentDomain.BaseDirectory,
+            false,
             launchOptions,
             _systemInfo,
-            null!,
             new EngineInitProgressLogger(_logger)
         );
 
-        var userspcaeWorld = Userspace.SetupUserspace(_engine);
+        var userspaceWorld = Userspace.SetupUserspace(_engine);
         var engineLoop = EngineLoopAsync(ct);
 
-        await userspcaeWorld.Coroutines.StartTask(async () => await default(ToWorld));
+        await userspaceWorld.Coroutines.StartTask(async () => await default(ToWorld));
 
         if (_startupConfig.HasUniverseId && _startupConfig.UniverseId.Length > 0)
         {
@@ -232,6 +233,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
             {
                 _engine.RunUpdateLoop();
                 _systemInfo.FrameFinished();
+                _engine.PerfStats.Update(_systemInfo);
             }
             catch (Exception e)
             {

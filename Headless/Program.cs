@@ -14,8 +14,6 @@ public class Program
             .AddEnvironmentVariables()
             .Build();
 
-        var assemblyResolver = new ResoniteAssemblyResolver();
-
         builder.Logging.ClearProviders().AddConsole();
 
         builder.Host.ConfigureServices((hostContext, services) =>
@@ -33,7 +31,6 @@ public class Program
             services.AddGrpc();
 
             services
-                .AddSingleton(assemblyResolver)
                 .AddSingleton<SystemInfo>()
                 .AddSingleton<Engine>()
                 .AddSingleton<WorldService>()

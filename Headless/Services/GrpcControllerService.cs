@@ -49,7 +49,7 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
     {
         return Task.FromResult(new GetStatusResponse
         {
-            Fps = _engine.SystemInfo.FPS,
+            Fps = ((SystemInfo)_engine.SystemInfo).FPS, // TODO: もっといい感じにする
             TotalEngineUpdateTime = _engine.TotalEngineUpdateTime,
             SyncingRecordsCount = _engine.RecordManager.SyncingRecordsCount,
         });
