@@ -59,6 +59,7 @@ wget https://i.j4.lc/resonite/libraries-arm.zip
 unzip libraries-arm.zip -d libraries-arm
 find libraries-arm -type f \( -name "*.dll" -o -name "*.so" -o -name "*.h" \) -exec cp {} ./native-libs/arm64/ \;
 cp ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
+chmod a+x ./native-libs/arm64/*
 
 mkdir -p ./native-libs/amd64
 cp ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/

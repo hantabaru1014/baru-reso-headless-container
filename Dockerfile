@@ -25,5 +25,5 @@ ARG TARGETARCH
 USER app
 WORKDIR /app
 COPY --from=build --chown=app:app /app/publish .
-COPY ./native-libs/${TARGETARCH}/* ./
+COPY --chown=app:app ./native-libs/${TARGETARCH}/* ./
 CMD ["dotnet", "Headless.dll"]
