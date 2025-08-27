@@ -30,17 +30,32 @@ fi
 
 chmod 777 "$PWD/Resonite"
 
-echo "アーキテクチャ: $(uname -m)"
-echo "使用するイメージ: $IMAGE_NAME"
+if [ "${USE_DEPOT_DOWNLOADER}" = "true" ]; then
+  if [ ! -e "./DepotDownloader" ]; then
+    if [ "$(arch)" == "aarch64" ]; then
+      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-arm64.zip -O ./DepotDownloader.zip
+    else
+      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-x64.zip -O ./DepotDownloader.zip
+    fi
+    unzip ./DepotDownloader.zip
+    chmod +x ./DepotDownloader
+    rm ./DepotDownloader.*
+  fi
 
-docker run \
-  -v "$PWD/Resonite:$INSTALL_DIR" \
-  --entrypoint "$ENTRYPOINT" \
-  "$IMAGE_NAME" \
-  +force_install_dir "$INSTALL_DIR" \
-  +login "$STEAM_USERNAME" "$STEAM_PASSWORD" \
-  "$APP_BRANCH" \
-  +quit
+  ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+else
+  echo "アーキテクチャ: $(uname -m)"
+  echo "使用するイメージ: $IMAGE_NAME"
+  
+  docker run \
+    -v "$PWD/Resonite:$INSTALL_DIR" \
+    --entrypoint "$ENTRYPOINT" \
+    "$IMAGE_NAME" \
+    +force_install_dir "$INSTALL_DIR" \
+    +login "$STEAM_USERNAME" "$STEAM_PASSWORD" \
+    "$APP_BRANCH" \
+    +quit
+fi
 
 if ! sudo chown -R "$USER:$USER" Resonite; then
   echo "警告: 所有者の変更に失敗しました"
@@ -58,6 +73,7 @@ mkdir -p ./native-libs/arm64
 wget https://i.j4.lc/resonite/libraries-arm.zip
 unzip libraries-arm.zip -d libraries-arm
 find libraries-arm -type f \( -name "*.dll" -o -name "*.so" -o -name "*.h" \) -exec cp {} ./native-libs/arm64/ \;
+rm -r libraries-arm.zip libraries-arm
 mv ./native-libs/arm64/libfreetype.so ./native-libs/arm64/libfreetype6.so
 cp ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
 chmod a+x ./native-libs/arm64/*

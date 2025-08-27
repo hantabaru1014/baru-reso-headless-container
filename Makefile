@@ -46,6 +46,14 @@ download.resonite:
 download.resonite-pre:
 	USE_PRERELEASE=true ./scripts/download-resonite.sh
 
+.PHONY: download.resonite-depot
+download.resonite-depot:
+	USE_DEPOT_DOWNLOADER=true ./scripts/download-resonite.sh
+
+.PHONY: download.resonite-pre-depot
+download.resonite-pre-depot:
+	USE_PRERELEASE=true USE_DEPOT_DOWNLOADER=true ./scripts/download-resonite.sh
+
 .PHONY: evans
 evans:
 	evans --proto proto/headless/v1/headless.proto --host localhost -p 5000 repl
