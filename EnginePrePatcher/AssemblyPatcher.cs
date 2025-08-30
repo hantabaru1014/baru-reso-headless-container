@@ -108,12 +108,18 @@ public static class AssemblyPatcher
 
                     try
                     {
-                        File.Move(file, file + ".original");
+                        var altName = file + ".original";
+                        if (File.Exists(altName))
+                        {
+                            File.Delete(altName);
+                        }
+
+                        File.Move(file, altName);
                         Console.WriteLine($"Removed file: {file}");
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        Console.WriteLine($"Failed to remove file: {file}");
+                        Console.WriteLine($"Failed to remove file: {file}\n{ex}");
                         return false;
                     }
                 }
