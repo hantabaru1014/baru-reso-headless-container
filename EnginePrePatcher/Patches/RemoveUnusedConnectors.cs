@@ -6,7 +6,7 @@ public class RemoveUnusedConnectors : IAssemblyPatch
 {
     public string TargetAssemblyPath => "FrooxEngine.dll";
 
-    public IEnumerable<string> RemoveFiles => new List<string> { "lib-client-csharp.dll", "Google.Protobuf.dll" };
+    public IEnumerable<string> RemoveFiles => new List<string> { "Google.Protobuf.dll" };
 
     public bool Patch(AssemblyDefinition assembly)
     {
