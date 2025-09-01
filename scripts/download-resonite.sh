@@ -75,6 +75,7 @@ unzip libraries-arm.zip -d libraries-arm
 find libraries-arm -type f \( -name "*.dll" -o -name "*.so" -o -name "*.h" \) -exec cp {} ./native-libs/arm64/ \;
 rm -r libraries-arm.zip libraries-arm
 mv ./native-libs/arm64/libfreetype.so ./native-libs/arm64/libfreetype6.so
+rm ./native-libs/arm64/libFreeImage.so ./native-libs/arm64/libassimp.so
 cp ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
 chmod a+x ./native-libs/arm64/*
 
