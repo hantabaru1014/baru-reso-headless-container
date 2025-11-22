@@ -1,0 +1,88 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        type: choice
+        required: true
+        description: "Version type to bump"
+        options:
+          - "patch"
+          - "minor"
+          - "major"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Read and increment version
+        id: version
+        run: |
+          CURRENT_VERSION=$(cat ./Headless/AppVersion)
+          echo "Current version: $CURRENT_VERSION"
+
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+
+          case "${{ github.event.inputs.version_type }}" in
+            major)
+              major=$((major + 1))
+              minor=0
+              patch=0
+              ;;
+            minor)
+              minor=$((minor + 1))
+              patch=0
+              ;;
+            patch)
+              patch=$((patch + 1))
+              ;;
+          esac
+
+          NEW_VERSION="${major}.${minor}.${patch}"
+          echo "New version: $NEW_VERSION"
+          echo "$NEW_VERSION" > ./Headless/AppVersion
+          echo "old_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OLD_VERSION: ${{ steps.version.outputs.old_version }}
+          NEW_VERSION: ${{ steps.version.outputs.new_version }}
+          VERSION_TYPE: ${{ github.event.inputs.version_type }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH_NAME="version-bump-${NEW_VERSION}"
+          git checkout -b "$BRANCH_NAME"
+          git add ./Headless/AppVersion
+          git commit -m "Bump version to ${NEW_VERSION} (${VERSION_TYPE})"
+          git push origin "$BRANCH_NAME"
+
+          PR_BODY=$(printf '%s\n' \
+            "## Summary" \
+            "- Bump version from ${OLD_VERSION} to ${NEW_VERSION}" \
+            "- Version type: **${VERSION_TYPE}**" \
+            "" \
+            "## Next Steps" \
+            "1. Review and merge this PR" \
+            "2. Create a new Release with tag \`v${NEW_VERSION}\` on GitHub" \
+            "3. Container build will be triggered automatically")
+
+          gh pr create \
+            --title "Bump version to ${NEW_VERSION}" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH_NAME" \
+            --reviewer "${{ github.actor }}"

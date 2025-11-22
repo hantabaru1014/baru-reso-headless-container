@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  update-release-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update release branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Get the commit SHA that the release tag points to
+          TAG_NAME="${{ github.event.release.tag_name }}"
+          TARGET_COMMIT="${{ github.event.release.target_commitish }}"
+
+          echo "Release tag: $TAG_NAME"
+          echo "Target commit: $TARGET_COMMIT"
+
+          # Update release branch to point to the release commit
+          git checkout -B release "$TARGET_COMMIT"
+          git push origin release --force
+
+  build-and-push:
+    needs: update-release-branch
+    uses: ./.github/workflows/build-and-push-image.yml
+    with:
+      resonite_branch: headless
+      git_branch: release
+    secrets: inherit
