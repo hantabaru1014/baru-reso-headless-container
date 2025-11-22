@@ -23,10 +23,16 @@ jobs:
 
           # Get the commit SHA that the release tag points to
           TAG_NAME="${{ github.event.release.tag_name }}"
-          TARGET_COMMIT="${{ github.event.release.target_commitish }}"
+          TARGET_COMMIT_REF="${{ github.event.release.target_commitish }}"
 
           echo "Release tag: $TAG_NAME"
-          echo "Target commit: $TARGET_COMMIT"
+          echo "Target commit ref: $TARGET_COMMIT_REF"
+
+          # Resolve the target to an actual commit SHA
+          # Try origin/$TARGET_COMMIT_REF first (for branch names), fall back to $TARGET_COMMIT_REF (for tags/SHAs)
+          TARGET_COMMIT=$(git rev-parse "origin/$TARGET_COMMIT_REF" 2>/dev/null || git rev-parse "$TARGET_COMMIT_REF")
+
+          echo "Resolved commit SHA: $TARGET_COMMIT"
 
           # Update release branch to point to the release commit
           git checkout -B release "$TARGET_COMMIT"
