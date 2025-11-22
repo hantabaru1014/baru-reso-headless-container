@@ -16,8 +16,18 @@ on:
         required: false
         description: "Source git branch"
         default: "release"
-  # push:
-  #   branches: [ "main" ]
+  workflow_call:
+    inputs:
+      resonite_branch:
+        type: string
+        required: false
+        description: "Resonite branch(beta)"
+        default: "headless"
+      git_branch:
+        type: string
+        required: false
+        description: "Source git branch"
+        default: "release"
 
 env:
   # github.repository as <account>/<repo>
@@ -30,7 +40,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.git_branch }}
+          ref: ${{ inputs.git_branch }}
 
       - name: Download Resonite
         env:
@@ -38,9 +48,9 @@ jobs:
           STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
           HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
         run: |
-          if [ "${{ github.event.inputs.resonite_branch }}" == "prerelease" ]; then
+          if [ "${{ inputs.resonite_branch }}" == "prerelease" ]; then
             USE_PRERELEASE=true bash ${GITHUB_WORKSPACE}/scripts/download-resonite.sh
-          elif [ "${{ github.event.inputs.resonite_branch }}" == "headless" ]; then
+          elif [ "${{ inputs.resonite_branch }}" == "headless" ]; then
             bash ${GITHUB_WORKSPACE}/scripts/download-resonite.sh
           fi
 
@@ -66,7 +76,7 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
-        if: github.event.inputs.resonite_branch == 'headless'
+        if: inputs.resonite_branch == 'headless'
         with:
           context: .
           push: true
@@ -77,7 +87,7 @@ jobs:
       
       - name: Build and push Docker image (prerelease)
         uses: docker/build-push-action@v6
-        if: github.event.inputs.resonite_branch == 'prerelease'
+        if: inputs.resonite_branch == 'prerelease'
         with:
           context: .
           push: true
