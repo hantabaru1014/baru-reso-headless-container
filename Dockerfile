@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build-patcher
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build-patcher
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["EnginePrePatcher/EnginePrePatcher.csproj", "EnginePrePatcher/"]
@@ -9,7 +9,7 @@ COPY ./EnginePrePatcher ./EnginePrePatcher
 WORKDIR "/src/EnginePrePatcher"
 RUN dotnet publish "./EnginePrePatcher.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Headless/Headless.csproj", "Headless/"]
@@ -20,7 +20,7 @@ WORKDIR "/src/Headless"
 RUN --mount=type=bind,source=Resonite/Headless,target=../Resonite/Headless,rw \
     dotnet ../bin/prepatch/EnginePrePatcher.dll ../Resonite/Headless && dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 ARG TARGETARCH
 RUN apt-get update && apt-get install -y --no-install-recommends libassimp5 libfreeimage3 libfreetype6 libopus0 libbrotli1 zlib1g && rm -rf /var/lib/apt/lists/*
 USER app

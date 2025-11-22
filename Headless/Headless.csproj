@@ -13,7 +13,7 @@
   </Target>
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>70885a6e-8584-456f-beee-337931412754</UserSecretsId>
@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
