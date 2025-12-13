@@ -15,13 +15,13 @@ public class RemoveUnusedConnectors : IAssemblyPatch
         {
             switch (t.Name)
             {
-                // 依存しているネイティブライブラリが邪魔
+                // Steam が入っていないとどうせ動かないので一旦避けとく
                 case "SteamConnector":
                 case "SteamVoiceAudioInputDriver":
                 case "SteamListener":
                 case "SteamConnection":
                 case "SteamNetworkManager":
-                // 依存しているネイティブライブラリが邪魔
+                // 必要ない
                 case "DiscordConnector":
                     return true;
             }
