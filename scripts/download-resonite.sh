@@ -32,14 +32,18 @@ chmod 777 "$PWD/Resonite"
 
 if [ "${USE_DEPOT_DOWNLOADER}" = "true" ]; then
   if [ ! -e "./DepotDownloader" ]; then
+    TEMP_DIR=$(mktemp -d)
+    trap 'rm -rf "$TEMP_DIR"' EXIT
     if [ "$(arch)" == "aarch64" ]; then
-      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-arm64.zip -O ./DepotDownloader.zip
+      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-arm64.zip -O "$TEMP_DIR/DepotDownloader.zip"
     else
-      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-x64.zip -O ./DepotDownloader.zip
+      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-x64.zip -O "$TEMP_DIR/DepotDownloader.zip"
     fi
-    unzip ./DepotDownloader.zip
+    unzip "$TEMP_DIR/DepotDownloader.zip" -d "$TEMP_DIR"
+    cp "$TEMP_DIR/DepotDownloader" ./
     chmod +x ./DepotDownloader
-    rm ./DepotDownloader.*
+    trap - EXIT
+    rm -rf "$TEMP_DIR"
   fi
 
   ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
@@ -69,18 +73,13 @@ else
   echo "Resoniteのダウンロードが完了しました"
 fi
 
+rm -rf ./native-libs/arm64
 mkdir -p ./native-libs/arm64
-wget https://i.j4.lc/resonite/libraries-arm.zip
-unzip libraries-arm.zip -d libraries-arm
-find libraries-arm -type f \( -name "*.dll" -o -name "*.so" -o -name "*.h" \) -exec cp {} ./native-libs/arm64/ \;
-rm -r libraries-arm.zip libraries-arm
-mv ./native-libs/arm64/libfreetype.so ./native-libs/arm64/libfreetype6.so
-rm ./native-libs/arm64/libFreeImage.so ./native-libs/arm64/libassimp.so
-cp ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
-chmod a+x ./native-libs/arm64/*
+cp ./Resonite/Headless/runtimes/linux-arm64/lib/**/* ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
 
+rm -rf ./native-libs/amd64
 mkdir -p ./native-libs/amd64
-cp ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
+cp ./Resonite/Headless/runtimes/linux-x64/lib/**/* ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
 
 if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
   cp ./native-libs/arm64/* ./Resonite/Headless/
