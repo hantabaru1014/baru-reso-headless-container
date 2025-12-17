@@ -20,6 +20,9 @@ outputs:
   resonite_version:
     description: 'Downloaded Resonite version'
     value: ${{ steps.versions.outputs.resonite_version }}
+  cache_key:
+    description: 'Cache key for Resonite Headless files'
+    value: ${{ steps.versions.outputs.cache_key }}
 
 runs:
   using: composite
@@ -28,10 +31,12 @@ runs:
       id: cache-restore
       uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
-        path: ./Resonite
-        key: resonite-${{ inputs.resonite_branch }}-dummy
+        path: |
+          ./Resonite/Headless
+          ./native-libs
+        key: resonite-headless-${{ inputs.resonite_branch }}-dummy
         restore-keys: |
-          resonite-${{ inputs.resonite_branch }}-
+          resonite-headless-${{ inputs.resonite_branch }}-
 
     - name: Download Resonite
       shell: bash
@@ -49,19 +54,17 @@ runs:
     - name: Read Resonite Version
       id: versions
       shell: bash
+      env:
+        RESONITE_BRANCH: ${{ inputs.resonite_branch }}
       run: |
-        RESO_VERSION=$(cat ./Resonite/Build.version)
+        RESO_VERSION=$(cat ./Resonite/Headless/Build.version)
         echo "resonite_version=$RESO_VERSION" >> $GITHUB_OUTPUT
+        echo "cache_key=resonite-headless-${RESONITE_BRANCH}-${RESO_VERSION}" >> $GITHUB_OUTPUT
 
     - name: Save Resonite cache
       uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
-        path: ./Resonite
-        key: resonite-${{ inputs.resonite_branch }}-${{ steps.versions.outputs.resonite_version }}
-
-    - name: Upload Resonite artifact
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-      with:
-        name: resonite-files
-        path: ./Resonite
-        retention-days: 1
+        path: |
+          ./Resonite/Headless
+          ./native-libs
+        key: ${{ steps.versions.outputs.cache_key }}

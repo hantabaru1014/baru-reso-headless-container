@@ -10,11 +10,14 @@ env:
 jobs:
   download:
     runs-on: ubuntu-latest
+    outputs:
+      cache_key: ${{ steps.download.outputs.cache_key }}
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Download Resonite
+        id: download
         uses: ./.github/actions/download-resonite
         with:
           steam_username: ${{ secrets.STEAM_USERNAME }}
@@ -38,18 +41,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
-      - name: Download Resonite artifact
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+      - name: Restore Resonite cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
-          name: resonite-files
-          path: ./Resonite
-
-      - name: Copy native libs from Resonite
-        run: |
-          mkdir -p ./native-libs/arm64
-          cp ./Resonite/Headless/runtimes/linux-arm64/lib/**/* ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
-          mkdir -p ./native-libs/amd64
-          cp ./Resonite/Headless/runtimes/linux-x64/lib/**/* ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
+          path: |
+            ./Resonite/Headless
+            ./native-libs
+          key: ${{ needs.download.outputs.cache_key }}
+          fail-on-cache-miss: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1

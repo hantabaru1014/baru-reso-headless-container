@@ -50,7 +50,9 @@ download_with_depot_downloader() {
   unzip "$TEMP_DIR/DepotDownloader.zip" -d "$TEMP_DIR"
   chmod +x "$TEMP_DIR/DepotDownloader"
 
-  "$TEMP_DIR/DepotDownloader" -app 2519830 -beta $DEPOT_BETA $DEPOT_BETA_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  FILELIST="${SCRIPT_DIR}/../depot-dl-list.txt"
+  "$TEMP_DIR/DepotDownloader" -app 2519830 -beta $DEPOT_BETA $DEPOT_BETA_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux -filelist "$FILELIST"
 }
 
 # SteamCMDでダウンロードする関数
