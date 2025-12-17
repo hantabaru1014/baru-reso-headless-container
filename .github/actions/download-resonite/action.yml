@@ -1,0 +1,67 @@
+name: Download Resonite
+description: Download Resonite headless client using SteamCMD with caching
+
+inputs:
+  resonite_branch:
+    description: 'Resonite branch (headless or prerelease)'
+    required: false
+    default: 'headless'
+  steam_username:
+    description: 'Steam username'
+    required: true
+  steam_password:
+    description: 'Steam password'
+    required: true
+  headless_password:
+    description: 'Headless password'
+    required: true
+
+outputs:
+  resonite_version:
+    description: 'Downloaded Resonite version'
+    value: ${{ steps.versions.outputs.resonite_version }}
+
+runs:
+  using: composite
+  steps:
+    - name: Restore Resonite cache
+      id: cache-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: ./Resonite
+        key: resonite-${{ inputs.resonite_branch }}-dummy
+        restore-keys: |
+          resonite-${{ inputs.resonite_branch }}-
+
+    - name: Download Resonite
+      shell: bash
+      env:
+        STEAM_USERNAME: ${{ inputs.steam_username }}
+        STEAM_PASSWORD: ${{ inputs.steam_password }}
+        HEADLESS_PASSWORD: ${{ inputs.headless_password }}
+      run: |
+        if [ "${{ inputs.resonite_branch }}" == "prerelease" ]; then
+          USE_PRERELEASE=true bash ${GITHUB_WORKSPACE}/scripts/download-resonite.sh
+        else
+          bash ${GITHUB_WORKSPACE}/scripts/download-resonite.sh
+        fi
+
+    - name: Read Resonite Version
+      id: versions
+      shell: bash
+      run: |
+        RESO_VERSION=$(cat ./Resonite/Build.version)
+        echo "resonite_version=$RESO_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Save Resonite cache
+      uses: actions/cache/save@v4
+      with:
+        path: ./Resonite
+        key: resonite-${{ inputs.resonite_branch }}-${{ steps.versions.outputs.resonite_version }}
+
+    - name: Upload Resonite artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: resonite-files
+        path: ./Resonite
+        retention-days: 1

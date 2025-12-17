@@ -1,0 +1,28 @@
+name: Run Integration Tests
+description: Run integration tests against a Docker image
+
+inputs:
+  image_tag:
+    description: 'Docker image tag to test'
+    required: true
+  dotnet_version:
+    description: '.NET SDK version'
+    required: false
+    default: '10.0.x'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.dotnet_version }}
+
+    - name: Run integration tests
+      shell: bash
+      env:
+        TEST_IMAGE_TAG: ${{ inputs.image_tag }}
+      run: |
+        dotnet test ./Headless.Tests/Headless.Tests.csproj \
+          --logger "console;verbosity=detailed" \
+          --timeout 600000

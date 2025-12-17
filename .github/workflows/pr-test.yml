@@ -1,0 +1,62 @@
+name: PR Test
+
+on:
+  pull_request:
+    branches: [main]
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Resonite
+        uses: ./.github/actions/download-resonite
+        with:
+          steam_username: ${{ secrets.STEAM_USERNAME }}
+          steam_password: ${{ secrets.STEAM_PASSWORD }}
+          headless_password: ${{ secrets.HEADLESS_PASSWORD }}
+
+  test:
+    needs: download
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+            platform: linux/amd64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Resonite artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: resonite-files
+          path: ./Resonite
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image for testing (${{ matrix.arch }})
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: ${{ env.IMAGE_NAME }}:test-${{ matrix.arch }}
+          platforms: ${{ matrix.platform }}
+          cache-from: type=gha,scope=${{ matrix.arch }}
+
+      - name: Run integration tests
+        uses: ./.github/actions/run-tests
+        with:
+          image_tag: ${{ env.IMAGE_NAME }}:test-${{ matrix.arch }}

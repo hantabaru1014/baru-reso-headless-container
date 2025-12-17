@@ -57,3 +57,15 @@ download.resonite-pre-depot:
 .PHONY: evans
 evans:
 	evans --proto proto/headless/v1/headless.proto --host localhost -p 5000 repl
+
+# Integration tests
+# Note: Cross-architecture testing via QEMU is not supported.
+#       Resonite crashes with SIGSEGV under QEMU emulation.
+#       Run tests on native architecture only. CI uses native runners for both amd64 and arm64.
+TEST_IMAGE_TAG ?= ghcr.io/hantabaru1014/baru-reso-headless-container:test
+NATIVE_ARCH := $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
+
+.PHONY: test
+test:
+	docker build --platform linux/$(NATIVE_ARCH) -t $(TEST_IMAGE_TAG)-$(NATIVE_ARCH) .
+	TEST_IMAGE_TAG=$(TEST_IMAGE_TAG)-$(NATIVE_ARCH) dotnet test ./Headless.Tests/Headless.Tests.csproj --logger "console;verbosity=detailed"
