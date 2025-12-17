@@ -20,7 +20,7 @@ public class ContainerStartupTests
     public async Task Container_ShouldLogEngineReady_WithinTimeout()
     {
         // Act
-        var result = await LogPollingHelper.WaitForEngineReadyAsync(
+        var result = await LogPollingHelper.WaitForApplicationStartupAsync(
             _fixture.GetLogsAsync,
             TimeSpan.FromMinutes(5));
 

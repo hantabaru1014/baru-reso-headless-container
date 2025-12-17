@@ -21,8 +21,8 @@ public class ListSessionsTests
     [Fact]
     public async Task ListSessions_ShouldReturnResponse()
     {
-        // Arrange - Wait for engine to be ready
-        var ready = await LogPollingHelper.WaitForEngineReadyAsync(
+        // Arrange - Wait for application startup to complete
+        var ready = await LogPollingHelper.WaitForApplicationStartupAsync(
             _fixture.GetLogsAsync,
             TimeSpan.FromMinutes(5));
         Assert.True(ready, "Engine did not become ready in time");

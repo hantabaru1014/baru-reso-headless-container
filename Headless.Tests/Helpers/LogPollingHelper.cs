@@ -32,16 +32,17 @@ public static class LogPollingHelper
     }
 
     /// <summary>
-    /// Waits for the "Engine Ready!" log message from FrooxEngineRunnerService.
+    /// Waits for the "Application startup complete" log message.
+    /// This indicates that Engine, Userspace, login, and initial world setup are all complete.
     /// </summary>
     /// <param name="getLogsFunc">Function to retrieve logs</param>
     /// <param name="timeout">Maximum time to wait (default: 5 minutes)</param>
-    /// <returns>True if engine is ready, false if timeout was reached</returns>
-    public static Task<bool> WaitForEngineReadyAsync(
+    /// <returns>True if application startup is complete, false if timeout was reached</returns>
+    public static Task<bool> WaitForApplicationStartupAsync(
         Func<Task<string>> getLogsFunc,
         TimeSpan? timeout = null)
     {
-        const string pattern = "Engine Ready!";
+        const string pattern = "Application startup complete";
         return WaitForLogPatternAsync(
             getLogsFunc,
             pattern,

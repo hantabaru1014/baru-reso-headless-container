@@ -21,11 +21,11 @@ public class StartWorldTests
     [Fact]
     public async Task StartWorld_WithGridPreset_ShouldIncreaseSessionCount()
     {
-        // Arrange - Wait for engine to be ready
-        var ready = await LogPollingHelper.WaitForEngineReadyAsync(
+        // Arrange - Wait for application startup to complete
+        var ready = await LogPollingHelper.WaitForApplicationStartupAsync(
             _fixture.GetLogsAsync,
             TimeSpan.FromMinutes(5));
-        Assert.True(ready, "Engine did not become ready in time");
+        Assert.True(ready, "Application startup did not complete in time");
 
         using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
