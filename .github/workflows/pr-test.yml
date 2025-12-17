@@ -44,6 +44,13 @@ jobs:
           name: resonite-files
           path: ./Resonite
 
+      - name: Copy native libs from Resonite
+        run: |
+          mkdir -p ./native-libs/arm64
+          cp ./Resonite/Headless/runtimes/linux-arm64/lib/**/* ./Resonite/Headless/runtimes/linux-arm64/native/* ./native-libs/arm64/
+          mkdir -p ./native-libs/amd64
+          cp ./Resonite/Headless/runtimes/linux-x64/lib/**/* ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
