@@ -11,7 +11,17 @@ if [ -z "$STEAM_USERNAME" ] || [ -z "$STEAM_PASSWORD" ] || [ -z "$HEADLESS_PASSW
 fi
 
 mkdir -p "$PWD/Resonite"
+chmod 777 "$PWD/Resonite"
 
+# DepotDownloader用のbetaオプション
+DEPOT_BETA="headless"
+DEPOT_BETA_PASSWORD="-betapassword $HEADLESS_PASSWORD"
+if [ "${USE_PRERELEASE}" = "true" ]; then
+  DEPOT_BETA="prerelease"
+  DEPOT_BETA_PASSWORD=""
+fi
+
+# SteamCMD用の設定
 IMAGE_NAME="steamcmd/steamcmd:latest"
 ENTRYPOINT="steamcmd"
 INSTALL_DIR="/data"
@@ -20,7 +30,6 @@ APP_BRANCH="+app_update 2519830 -beta headless -betapassword $HEADLESS_PASSWORD"
 if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
   IMAGE_NAME="ghcr.io/sonroyaalmerol/steamcmd-arm64:latest"
   ENTRYPOINT="./steamcmd.sh"
-  # ARM64の場合は異なるインストールディレクトリを使用
   INSTALL_DIR="/home/steam/Steam/steamapps/common/Resonite"
 fi
 
@@ -28,29 +37,28 @@ if [ "${USE_PRERELEASE}" = "true" ]; then
   APP_BRANCH="+app_update 2519830 -beta prerelease"
 fi
 
-chmod 777 "$PWD/Resonite"
+# DepotDownloaderでダウンロードを試みる関数
+download_with_depot_downloader() {
+  TEMP_DIR=$(mktemp -d)
+  trap 'rm -rf "$TEMP_DIR"' RETURN
 
-if [ "${USE_DEPOT_DOWNLOADER}" = "true" ]; then
-  if [ ! -e "./DepotDownloader" ]; then
-    TEMP_DIR=$(mktemp -d)
-    trap 'rm -rf "$TEMP_DIR"' EXIT
-    if [ "$(arch)" == "aarch64" ]; then
-      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-arm64.zip -O "$TEMP_DIR/DepotDownloader.zip"
-    else
-      wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-x64.zip -O "$TEMP_DIR/DepotDownloader.zip"
-    fi
-    unzip "$TEMP_DIR/DepotDownloader.zip" -d "$TEMP_DIR"
-    cp "$TEMP_DIR/DepotDownloader" ./
-    chmod +x ./DepotDownloader
-    trap - EXIT
-    rm -rf "$TEMP_DIR"
+  if [ "$(arch)" == "aarch64" ]; then
+    wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-arm64.zip -O "$TEMP_DIR/DepotDownloader.zip"
+  else
+    wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-x64.zip -O "$TEMP_DIR/DepotDownloader.zip"
   fi
+  unzip "$TEMP_DIR/DepotDownloader.zip" -d "$TEMP_DIR"
+  chmod +x "$TEMP_DIR/DepotDownloader"
 
-  ./DepotDownloader -app 2519830 -beta headless -betapassword $HEADLESS_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
-else
+  "$TEMP_DIR/DepotDownloader" -app 2519830 -beta $DEPOT_BETA $DEPOT_BETA_PASSWORD -username $STEAM_USERNAME -password $STEAM_PASSWORD -dir ./Resonite -os linux
+}
+
+# SteamCMDでダウンロードする関数
+download_with_steamcmd() {
+  echo "SteamCMDでダウンロードを試みます..."
   echo "アーキテクチャ: $(uname -m)"
   echo "使用するイメージ: $IMAGE_NAME"
-  
+
   docker run \
     -v "$PWD/Resonite:$INSTALL_DIR" \
     --entrypoint "$ENTRYPOINT" \
@@ -59,6 +67,27 @@ else
     +login "$STEAM_USERNAME" "$STEAM_PASSWORD" \
     "$APP_BRANCH" \
     +quit
+}
+
+# まずDepotDownloaderを試し、失敗したらSteamCMDにフォールバック
+DOWNLOAD_SUCCESS=false
+
+if download_with_depot_downloader; then
+  if [ -d "$PWD/Resonite" ] && [ -n "$(ls -A "$PWD/Resonite")" ]; then
+    echo "DepotDownloaderでのダウンロードが成功しました"
+    DOWNLOAD_SUCCESS=true
+  fi
+fi
+
+if [ "$DOWNLOAD_SUCCESS" = "false" ]; then
+  echo "DepotDownloaderでのダウンロードに失敗しました。SteamCMDにフォールバックします..."
+  rm -rf "$PWD/Resonite"/*
+  if download_with_steamcmd; then
+    if [ -d "$PWD/Resonite" ] && [ -n "$(ls -A "$PWD/Resonite")" ]; then
+      echo "SteamCMDでのダウンロードが成功しました"
+      DOWNLOAD_SUCCESS=true
+    fi
+  fi
 fi
 
 if ! sudo chown -R "$USER:$USER" Resonite; then
