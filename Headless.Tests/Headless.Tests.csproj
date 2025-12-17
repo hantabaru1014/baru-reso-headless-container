@@ -23,19 +23,15 @@
     <!-- gRPC Client -->
     <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
     <PackageReference Include="Google.Protobuf" Version="3.29.2" />
-    <PackageReference Include="Grpc.Tools" Version="2.71.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
 
     <!-- Docker Client -->
     <PackageReference Include="Docker.DotNet" Version="3.125.15" />
   </ItemGroup>
 
+  <!-- Use pre-generated protobuf files from Headless project to avoid arm64 protoc issues -->
   <ItemGroup>
-    <Protobuf Include="../proto/headless/v1/headless.proto" GrpcServices="Client">
-      <Link>Protos/headless.proto</Link>
-    </Protobuf>
+    <Compile Include="../Headless/Protos/Headless.cs" Link="Protos/Headless.cs" />
+    <Compile Include="../Headless/Protos/HeadlessGrpc.cs" Link="Protos/HeadlessGrpc.cs" />
   </ItemGroup>
 
 </Project>
