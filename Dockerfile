@@ -22,7 +22,7 @@ RUN --mount=type=bind,source=Resonite/Headless,target=../Resonite/Headless,rw \
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 ARG TARGETARCH
-RUN apt-get update && apt-get install -y --no-install-recommends libassimp5 libbrotli1 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends libpng16-16t64 && rm -rf /var/lib/apt/lists/*
 USER app
 WORKDIR /app
 COPY --from=build --chown=app:app /app/publish .
