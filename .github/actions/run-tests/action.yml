@@ -25,4 +25,4 @@ runs:
       run: |
         dotnet test ./Headless.Tests/Headless.Tests.csproj \
           --logger "console;verbosity=detailed" \
-          --timeout 600000
+          -- RunConfiguration.TestSessionTimeout=600000
