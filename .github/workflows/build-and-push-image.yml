@@ -30,68 +30,146 @@ on:
         default: "release"
 
 env:
-  # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push:
+  download:
     runs-on: ubuntu-latest
+    outputs:
+      resonite_version: ${{ steps.download.outputs.resonite_version }}
+      cache_key: ${{ steps.download.outputs.cache_key }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           ref: ${{ inputs.git_branch }}
 
       - name: Download Resonite
-        env:
-          STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
-          STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
-          HEADLESS_PASSWORD: ${{ secrets.HEADLESS_PASSWORD }}
-        run: |
-          if [ "${{ inputs.resonite_branch }}" == "prerelease" ]; then
-            USE_PRERELEASE=true bash ${GITHUB_WORKSPACE}/scripts/download-resonite.sh
-          elif [ "${{ inputs.resonite_branch }}" == "headless" ]; then
-            bash ${GITHUB_WORKSPACE}/scripts/download-resonite.sh
-          fi
+        id: download
+        uses: ./.github/actions/download-resonite
+        with:
+          resonite_branch: ${{ inputs.resonite_branch }}
+          steam_username: ${{ secrets.STEAM_USERNAME }}
+          steam_password: ${{ secrets.STEAM_PASSWORD }}
+          headless_password: ${{ secrets.HEADLESS_PASSWORD }}
 
-      - name: Read Versions
-        run: |
-          RESO_VERSION=$(cat ./Resonite/Build.version)
-          echo "RESONITE_VERSION=$RESO_VERSION" >> $GITHUB_ENV
-          APP_VERSION=$(cat ./Headless/AppVersion)
-          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+  test:
+    needs: download
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+            platform: linux/amd64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ inputs.git_branch }}
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      - name: Restore Resonite cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: |
+            ./Resonite/Headless
+            ./native-libs
+          key: ${{ needs.download.outputs.cache_key }}
+          fail-on-cache-miss: true
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        if: inputs.resonite_branch == 'headless'
+      - name: Build and push Docker image for testing (${{ matrix.arch }})
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.IMAGE_NAME }}:latest, ghcr.io/${{ env.IMAGE_NAME }}:${{ env.RESONITE_VERSION }}-v${{ env.APP_VERSION }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      
-      - name: Build and push Docker image (prerelease)
-        uses: docker/build-push-action@v6
-        if: inputs.resonite_branch == 'prerelease'
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:test-${{ matrix.arch }}-${{ github.run_id }}
+          platforms: ${{ matrix.platform }}
+          cache-from: type=gha,scope=${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.arch }}
+
+      - name: Pull test image
+        run: docker pull ghcr.io/${{ env.IMAGE_NAME }}:test-${{ matrix.arch }}-${{ github.run_id }}
+
+      - name: Run integration tests
+        uses: ./.github/actions/run-tests
         with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ env.IMAGE_NAME }}:prerelease, ghcr.io/${{ env.IMAGE_NAME }}:prerelease-${{ env.RESONITE_VERSION }}-v${{ env.APP_VERSION }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          image_tag: ghcr.io/${{ env.IMAGE_NAME }}:test-${{ matrix.arch }}-${{ github.run_id }}
+
+  push:
+    needs: [download, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ inputs.git_branch }}
+
+      - name: Read App Version
+        id: app-version
+        run: echo "app_version=$(cat ./Headless/AppVersion)" >> $GITHUB_OUTPUT
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and push multi-arch manifest
+        env:
+          RESO_VERSION: ${{ needs.download.outputs.resonite_version }}
+          APP_VERSION: ${{ steps.app-version.outputs.app_version }}
+          TAG_NAME: ${{ inputs.resonite_branch == 'prerelease' && 'prerelease' || 'latest' }}
+          VERSION_PREFIX: ${{ inputs.resonite_branch == 'prerelease' && 'prerelease-' || '' }}
+        run: |
+          docker buildx imagetools create \
+            -t ghcr.io/${{ env.IMAGE_NAME }}:${TAG_NAME} \
+            -t ghcr.io/${{ env.IMAGE_NAME }}:${VERSION_PREFIX}${RESO_VERSION}-v${APP_VERSION} \
+            ghcr.io/${{ env.IMAGE_NAME }}:test-amd64-${{ github.run_id }} \
+            ghcr.io/${{ env.IMAGE_NAME }}:test-arm64-${{ github.run_id }}
+
+  cleanup:
+    needs: [test, push]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete temporary test images
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          PACKAGE_NAME=$(echo "$REPO_LOWER" | cut -d'/' -f2)
+
+          # Delete test-amd64 version
+          VERSION_ID=$(gh api "/user/packages/container/${PACKAGE_NAME}/versions" --jq ".[] | select(.metadata.container.tags[] == \"test-amd64-${{ github.run_id }}\") | .id" 2>/dev/null || true)
+          if [ -n "$VERSION_ID" ]; then
+            gh api --method DELETE "/user/packages/container/${PACKAGE_NAME}/versions/${VERSION_ID}" || true
+          fi
+
+          # Delete test-arm64 version
+          VERSION_ID=$(gh api "/user/packages/container/${PACKAGE_NAME}/versions" --jq ".[] | select(.metadata.container.tags[] == \"test-arm64-${{ github.run_id }}\") | .id" 2>/dev/null || true)
+          if [ -n "$VERSION_ID" ]; then
+            gh api --method DELETE "/user/packages/container/${PACKAGE_NAME}/versions/${VERSION_ID}" || true
+          fi

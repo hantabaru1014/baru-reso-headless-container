@@ -192,6 +192,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         }
 
         _applicationStartupComplete = true;
+        _logger.LogInformation("Application startup complete");
         await engineLoop;
         _tickTimer.Dispose();
         _applicationLifetime.StopApplication();
