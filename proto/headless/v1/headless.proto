@@ -87,19 +87,25 @@ message DenyHostAccessResponse {}
 
 message ListContactsRequest {
   int32 limit = 1;
+  optional string cursor = 2;
 }
 
 message ListContactsResponse {
   repeated UserInfo users = 1;
+  optional string next_cursor = 2;
 }
 
 message GetContactMessagesRequest {
   string user_id = 1;
   int32 limit = 2;
+  optional string before_id = 3;
+  optional string after_id = 4;
 }
 
 message GetContactMessagesResponse {
   repeated ContactChatMessage messages = 1;
+  bool has_more_before = 2;
+  bool has_more_after = 3;
 }
 
 message SendContactMessageRequest {
@@ -418,6 +424,7 @@ message ContactChatMessage {
   string content = 3;
   google.protobuf.Timestamp send_time = 4;
   optional google.protobuf.Timestamp read_time = 5;
+  string sender_id = 6;
 }
 
 message AllowedAccessEntry {
