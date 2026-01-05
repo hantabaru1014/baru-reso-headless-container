@@ -1,6 +1,7 @@
 using Google.Protobuf;
 using Headless.Extensions;
 using Newtonsoft.Json;
+using Path = System.IO.Path;
 
 namespace Headless.Configuration;
 
