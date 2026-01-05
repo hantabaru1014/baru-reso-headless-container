@@ -42,11 +42,19 @@ download_with_depot_downloader() {
   TEMP_DIR=$(mktemp -d)
   trap 'rm -rf "$TEMP_DIR"' RETURN
 
-  if [ "$(arch)" == "aarch64" ]; then
-    wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-arm64.zip -O "$TEMP_DIR/DepotDownloader.zip"
+  if [ "$(uname -s)" = "Darwin" ]; then
+    DEPOT_OS="macos"
   else
-    wget https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-linux-x64.zip -O "$TEMP_DIR/DepotDownloader.zip"
+    DEPOT_OS="linux"
   fi
+
+  if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
+    DEPOT_ARCH="arm64"
+  else
+    DEPOT_ARCH="x64"
+  fi
+
+  wget "https://github.com/SteamRE/DepotDownloader/releases/latest/download/DepotDownloader-${DEPOT_OS}-${DEPOT_ARCH}.zip" -O "$TEMP_DIR/DepotDownloader.zip"
   unzip "$TEMP_DIR/DepotDownloader.zip" -d "$TEMP_DIR"
   chmod +x "$TEMP_DIR/DepotDownloader"
 
