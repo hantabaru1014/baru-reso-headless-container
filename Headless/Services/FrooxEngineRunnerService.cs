@@ -139,8 +139,8 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         var launchOptions = new LaunchOptions
         {
             OutputDevice = Renderite.Shared.HeadOutputDevice.Headless,
-            DataDirectory = Path.Combine(_appConfig.DataDirectoryPath, "Data"),
-            CacheDirectory = Path.Combine(_appConfig.DataDirectoryPath, "Cache"),
+            DataDirectory = System.IO.Path.Combine(_appConfig.DataDirectoryPath, "Data"),
+            CacheDirectory = System.IO.Path.Combine(_appConfig.DataDirectoryPath, "Cache"),
             LogsDirectory = null!,
             VerboseInit = true,
             NeverSaveSettings = true,
