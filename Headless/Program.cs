@@ -27,9 +27,14 @@ public class Program
         var appConfigInstance = appConfig.Get<ApplicationConfig>() ?? new ApplicationConfig();
         var graphqlConfig = appConfig.GetSection("GraphQL").Get<GraphQLConfig>() ?? new GraphQLConfig();
 
-        // Parse gRPC port from RpcHostUrl
-        var grpcUri = new Uri(appConfigInstance.RpcHostUrl);
-        var grpcPort = grpcUri.Port > 0 ? grpcUri.Port : 5014;
+        // Parse gRPC port from RpcHostUrl (default to 5014 if invalid or empty)
+        var grpcPort = 5014;
+        if (!string.IsNullOrEmpty(appConfigInstance.RpcHostUrl) &&
+            Uri.TryCreate(appConfigInstance.RpcHostUrl, UriKind.Absolute, out var grpcUri) &&
+            grpcUri.Port > 0)
+        {
+            grpcPort = grpcUri.Port;
+        }
 
         // Configure Kestrel with separate ports for gRPC (HTTP/2) and GraphQL (HTTP/1.1)
         builder.WebHost.ConfigureKestrel(options =>
