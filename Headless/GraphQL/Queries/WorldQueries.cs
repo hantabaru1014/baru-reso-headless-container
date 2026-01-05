@@ -29,9 +29,10 @@ public class WorldQueries
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(refId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(refId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             return slot != null ? new SlotType(slot) : null;
         });
@@ -45,9 +46,10 @@ public class WorldQueries
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(refId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(refId);
             var component = service.FindComponentByRefId(session.Instance, parsedRefId);
             return component != null ? new ComponentType(component) : null;
         });

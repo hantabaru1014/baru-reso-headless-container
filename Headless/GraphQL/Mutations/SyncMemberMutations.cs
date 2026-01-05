@@ -22,9 +22,13 @@ public class SyncMemberMutations
             return new SetSyncFieldResult(false, null, null, "Session not found");
         }
 
+        if (!service.TryParseRefId(componentRefId, out var parsedRefId))
+        {
+            return new SetSyncFieldResult(false, null, null, "Invalid RefID format");
+        }
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(componentRefId);
             var component = service.FindComponentByRefId(session.Instance, parsedRefId);
             if (component == null)
             {
@@ -67,9 +71,23 @@ public class SyncMemberMutations
             return new SetSyncRefResult(false, null, null, "Session not found");
         }
 
+        if (!service.TryParseRefId(componentRefId, out var parsedRefId))
+        {
+            return new SetSyncRefResult(false, null, null, "Invalid RefID format");
+        }
+
+        RefID? parsedTargetRefId = null;
+        if (!string.IsNullOrEmpty(targetRefId))
+        {
+            if (!service.TryParseRefId(targetRefId, out var targetParsed))
+            {
+                return new SetSyncRefResult(false, null, null, "Invalid target RefID format");
+            }
+            parsedTargetRefId = targetParsed;
+        }
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(componentRefId);
             var component = service.FindComponentByRefId(session.Instance, parsedRefId);
             if (component == null)
             {
@@ -90,10 +108,6 @@ public class SyncMemberMutations
             var valueProperty = syncRef.GetType().GetProperty("Value");
             var previousRefId = valueProperty?.GetValue(syncRef) as RefID?;
             var previousRefIdStr = previousRefId?.ToString();
-
-            RefID? parsedTargetRefId = string.IsNullOrEmpty(targetRefId)
-                ? null
-                : RefID.Parse(targetRefId);
 
             if (service.SetSyncRefTarget(syncRef, parsedTargetRefId, session.Instance))
             {

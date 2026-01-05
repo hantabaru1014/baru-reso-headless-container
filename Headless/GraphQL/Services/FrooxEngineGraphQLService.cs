@@ -66,6 +66,20 @@ public class FrooxEngineGraphQLService
         return world.ReferenceController.GetObjectOrNull(refId);
     }
 
+    public bool TryParseRefId(string refIdString, out RefID refId)
+    {
+        try
+        {
+            refId = RefID.Parse(refIdString);
+            return true;
+        }
+        catch
+        {
+            refId = default;
+            return false;
+        }
+    }
+
     public object? GetSyncMemberValue(ISyncMember member)
     {
         if (member is IField field)
@@ -80,7 +94,16 @@ public class FrooxEngineGraphQLService
         try
         {
             var value = DeserializeValue(field.ValueType, jsonValue);
-            field.BoxedValue = value;
+            if (value == null)
+            {
+                var underlyingType = Nullable.GetUnderlyingType(field.ValueType);
+                if (underlyingType == null && field.ValueType.IsValueType)
+                {
+                    _logger.LogWarning("Cannot set null to non-nullable value type field");
+                    return false;
+                }
+            }
+            field.BoxedValue = value!;
             return true;
         }
         catch (Exception ex)

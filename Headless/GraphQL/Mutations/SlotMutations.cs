@@ -18,9 +18,10 @@ public class SlotMutations
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(slotRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(slotRefId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (slot == null) return null;
 
@@ -38,9 +39,10 @@ public class SlotMutations
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(slotRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(slotRefId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (slot == null) return null;
 
@@ -61,9 +63,10 @@ public class SlotMutations
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(slotRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(slotRefId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (slot == null) return null;
 
@@ -93,9 +96,10 @@ public class SlotMutations
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(slotRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(slotRefId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (slot == null) return null;
 
@@ -124,9 +128,10 @@ public class SlotMutations
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(slotRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(slotRefId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (slot == null) return null;
 
@@ -152,9 +157,10 @@ public class SlotMutations
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(parentSlotRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(parentSlotRefId);
             var parentSlot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (parentSlot == null) return null;
 
@@ -175,9 +181,13 @@ public class SlotMutations
             return new DeleteSlotResult(false, slotRefId, "Session not found");
         }
 
+        if (!service.TryParseRefId(slotRefId, out var parsedRefId))
+        {
+            return new DeleteSlotResult(false, slotRefId, "Invalid RefID format");
+        }
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(slotRefId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (slot == null)
             {

@@ -20,9 +20,10 @@ public class ComponentMutations
         var componentType = service.FindComponentType(componentTypeName);
         if (componentType == null) return null;
 
+        if (!service.TryParseRefId(slotRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(slotRefId);
             var slot = service.FindSlotByRefId(session.Instance, parsedRefId);
             if (slot == null) return null;
 
@@ -42,9 +43,13 @@ public class ComponentMutations
             return new RemoveComponentResult(false, componentRefId, null, "Session not found");
         }
 
+        if (!service.TryParseRefId(componentRefId, out var parsedRefId))
+        {
+            return new RemoveComponentResult(false, componentRefId, null, "Invalid RefID format");
+        }
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(componentRefId);
             var component = service.FindComponentByRefId(session.Instance, parsedRefId);
             if (component == null)
             {
@@ -67,9 +72,10 @@ public class ComponentMutations
         var session = service.GetSession(sessionId);
         if (session == null) return null;
 
+        if (!service.TryParseRefId(componentRefId, out var parsedRefId)) return null;
+
         return await service.ExecuteOnWorldThread(session.Instance, () =>
         {
-            var parsedRefId = RefID.Parse(componentRefId);
             var component = service.FindComponentByRefId(session.Instance, parsedRefId);
             if (component == null) return null;
 

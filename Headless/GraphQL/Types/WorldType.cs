@@ -34,7 +34,8 @@ public class WorldType
         string refId,
         [Service] FrooxEngineGraphQLService service)
     {
-        var parsedRefId = RefID.Parse(refId);
+        if (!service.TryParseRefId(refId, out var parsedRefId)) return null;
+
         var slot = service.FindSlotByRefId(_world, parsedRefId);
         return slot != null ? new SlotType(slot) : null;
     }
