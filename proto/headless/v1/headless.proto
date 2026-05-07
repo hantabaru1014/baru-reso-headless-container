@@ -28,6 +28,7 @@ service HeadlessControlService {
   rpc AllowHostAccess(AllowHostAccessRequest) returns (AllowHostAccessResponse);
   rpc DenyHostAccess(DenyHostAccessRequest) returns (DenyHostAccessResponse);
   rpc GetStartupConfigToRestore(GetStartupConfigToRestoreRequest) returns (GetStartupConfigToRestoreResponse);
+  rpc DownloadSessionWorld(DownloadSessionWorldRequest) returns (stream DownloadSessionWorldResponse);
 
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
@@ -252,6 +253,19 @@ message SaveAsSessionWorldResponse {
   string saved_record_url = 1;
 }
 
+message DownloadSessionWorldRequest {
+  string session_id = 1;
+  WorldBinaryFormat format = 2;
+  // resonitepackage 用。他フォーマットでは無視
+  optional bool include_variants = 3;
+  // BRSON 用 quality (0-11)。未指定時はデフォルト値を使用
+  optional int32 brotli_quality = 4;
+}
+
+message DownloadSessionWorldResponse {
+  bytes chunk = 1;
+}
+
 message InviteUserRequest {
   string session_id = 1;
   oneof user {
@@ -318,6 +332,13 @@ message ListUsersInSessionResponse {
 }
 
 // models
+
+enum WorldBinaryFormat {
+  WORLD_BINARY_FORMAT_UNSPECIFIED = 0;
+  WORLD_BINARY_FORMAT_7ZBSON = 1;
+  WORLD_BINARY_FORMAT_BRSON = 2;
+  WORLD_BINARY_FORMAT_RESONITEPACKAGE = 3;
+}
 
 enum AccessLevel {
   ACCESS_LEVEL_UNSPECIFIED = 0;
