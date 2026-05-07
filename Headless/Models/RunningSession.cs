@@ -1,4 +1,6 @@
+using Elements.Core;
 using FrooxEngine;
+using Headless.Rpc;
 using SkyFrost.Base;
 
 namespace Headless.Models;
@@ -199,6 +201,55 @@ public class RunningSession
             return true;
         }
         return false;
+    }
+
+    public async Task ExportWorldBinaryAsync(
+        WorldBinaryFormat format,
+        System.IO.Stream destination,
+        bool includeVariants,
+        int? brotliQuality,
+        CancellationToken ct = default)
+    {
+        if (!Instance.IsAllowedToSaveWorld())
+        {
+            throw new InvalidOperationException("World is not allowed to be saved");
+        }
+
+        var graph = await Instance.Coroutines.StartTask(async () =>
+        {
+            await default(NextUpdate);
+            // resonitepackage は SDK の PackageImporter が record.RecordType == "object" のみ受け付けるため
+            // (FrooxEngine.PackageImporter.ImportPackage の "Currently only object packages are supported")、
+            // RootSlot を Object として保存する。7zbson / brson は世界として開けるので World.SaveWorld() を使う。
+            return format == WorldBinaryFormat.Resonitepackage
+                ? Instance.RootSlot.SaveObject(DependencyHandling.CollectAssets)
+                : Instance.SaveWorld();
+        });
+        if (graph is null)
+        {
+            throw new InvalidOperationException("Failed to capture world snapshot");
+        }
+
+        ct.ThrowIfCancellationRequested();
+
+        switch (format)
+        {
+            case WorldBinaryFormat._7Zbson:
+                DataTreeConverter.To7zBSON(graph.Root, destination);
+                break;
+            case WorldBinaryFormat.Brson:
+                DataTreeConverter.ToBRSON(graph.Root, destination, brotliQuality ?? 9);
+                break;
+            case WorldBinaryFormat.Resonitepackage:
+                // PackageExportable.Export と同じ作り方: フレッシュな object レコード。
+                var worldName = !string.IsNullOrWhiteSpace(Instance.RawName) ? Instance.RawName : "World";
+                var ownerId = Instance.Engine.Cloud.CurrentUserID ?? Instance.Engine.LocalDB.MachineID;
+                var packageRecord = RecordHelper.CreateForObject<Record>(worldName, ownerId, null);
+                await PackageCreator.BuildPackage(Instance.Engine, packageRecord, graph, destination, includeVariants);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(format), format, "Unsupported world binary format");
+        }
     }
 
     public async Task<FrooxEngine.Store.Record?> SaveWorldCopy(string? ownerId)

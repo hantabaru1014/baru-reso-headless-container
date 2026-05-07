@@ -1,4 +1,5 @@
 using FrooxEngine;
+using Google.Protobuf;
 using Grpc.Core;
 using SkyFrost.Base;
 using Headless.Rpc;
@@ -146,6 +147,71 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             SavedRecordUrl = saved.GetUrl(session.Instance.Engine.Cloud.Platform).ToString()
         };
+    }
+
+    public override async Task DownloadSessionWorld(
+        DownloadSessionWorldRequest request,
+        IServerStreamWriter<DownloadSessionWorldResponse> responseStream,
+        ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        if (request.Format == WorldBinaryFormat.Unspecified)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Require valid format"));
+        }
+        if (!session.Instance.IsAllowedToSaveWorld())
+        {
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, "World is not allowed to be saved"));
+        }
+
+        var ct = context.CancellationToken;
+        // SDK の書き出し API (LZMAHelper.Compress / PackageCreator.BuildPackage) は
+        // 出力ストリームに対し Position/SetLength を要求するためシーク可能なバッキングが必須。
+        // テンポラリファイルへ書き出してからチャンク送信する。
+        var tmpPath = Path.Combine(Path.GetTempPath(), $"headless-export-{Guid.NewGuid():N}.bin");
+        try
+        {
+            try
+            {
+                await using (var fs = new FileStream(tmpPath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None, 81920, FileOptions.SequentialScan))
+                {
+                    await session.ExportWorldBinaryAsync(
+                        request.Format,
+                        fs,
+                        request.HasIncludeVariants && request.IncludeVariants,
+                        request.HasBrotliQuality ? request.BrotliQuality : null,
+                        ct);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Internal, $"Failed to export world: {ex.Message}"));
+            }
+
+            await using var read = new FileStream(tmpPath, FileMode.Open, FileAccess.Read, FileShare.None, 81920, FileOptions.SequentialScan | FileOptions.Asynchronous);
+            var buffer = new byte[64 * 1024];
+            while (true)
+            {
+                var n = await read.ReadAsync(buffer.AsMemory(0, buffer.Length), ct);
+                if (n == 0) break;
+                await responseStream.WriteAsync(new DownloadSessionWorldResponse
+                {
+                    Chunk = ByteString.CopyFrom(buffer, 0, n),
+                }, ct);
+            }
+        }
+        finally
+        {
+            try { File.Delete(tmpPath); } catch { /* swallow */ }
+        }
     }
 
     public override async Task<InviteUserResponse> InviteUser(InviteUserRequest request, ServerCallContext context)
