@@ -25,8 +25,13 @@ public class ContainerStartupTests
             TimeSpan.FromMinutes(5));
 
         // Assert
-        Assert.True(result,
-            "Engine Ready! message was not found in container logs within 5 minutes. " +
-            "This may indicate the container failed to start or the Resonite engine initialization failed.");
+        if (!result)
+        {
+            var logs = await _fixture.GetLogsAsync();
+            Assert.Fail(
+                "Engine Ready! message was not found in container logs within 5 minutes. " +
+                "This may indicate the container failed to start or the Resonite engine initialization failed.\n" +
+                $"Container logs:\n{logs}");
+        }
     }
 }
