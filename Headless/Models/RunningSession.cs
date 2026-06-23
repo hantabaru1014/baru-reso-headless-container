@@ -1,6 +1,7 @@
 using Elements.Core;
 using FrooxEngine;
 using Headless.Rpc;
+using Headless.Services;
 using SkyFrost.Base;
 
 namespace Headless.Models;
@@ -8,6 +9,8 @@ namespace Headless.Models;
 public class RunningSession
 {
     private readonly SemaphoreSlim _saveLock = new SemaphoreSlim(1, 1);
+    private readonly object _linkBridgeLock = new();
+    private ResoniteLinkBridge? _linkBridge;
 
     internal Task? Handler { get; set; }
 
@@ -94,6 +97,35 @@ public class RunningSession
         ForceRestartInterval = TimeSpan.FromSeconds(startInfo.ForcedRestartInterval);
 
         worldInstance.UserJoined += OnUserJoined;
+    }
+
+    /// <summary>
+    /// 現在この session に紐付いている ResoniteLink bridge 上のクライアント数。
+    /// </summary>
+    public int ResoniteLinkClientsCount => _linkBridge?.ClientsCount ?? 0;
+
+    /// <summary>
+    /// ResoniteLink ブリッジを取得 (未生成なら作成)。
+    /// </summary>
+    public ResoniteLinkBridge GetOrCreateLinkBridge(ILogger logger)
+    {
+        if (_linkBridge is not null) return _linkBridge;
+        lock (_linkBridgeLock)
+        {
+            _linkBridge ??= new ResoniteLinkBridge(Instance, logger);
+            return _linkBridge;
+        }
+    }
+
+    internal void DisposeLinkBridge()
+    {
+        ResoniteLinkBridge? bridge;
+        lock (_linkBridgeLock)
+        {
+            bridge = _linkBridge;
+            _linkBridge = null;
+        }
+        bridge?.Dispose();
     }
 
     private void OnUserJoined(FrooxEngine.User user)
