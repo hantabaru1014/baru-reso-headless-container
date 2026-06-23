@@ -345,6 +345,8 @@ public class WorldService
 
         _logger.LogInformation("World {World} has stopped", world.Name);
 
+        runningSession.DisposeLinkBridge();
+
         // always remove us first
         _runningWorlds.TryRemove(runningSession.Instance.SessionId, out _);
 

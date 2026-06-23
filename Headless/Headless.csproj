@@ -82,6 +82,9 @@
     <Reference Include="Renderite.Shared">
       <HintPath>$(ResonitePath)/Renderite.Shared.dll</HintPath>
     </Reference>
+    <Reference Include="WatsonWebsocket">
+      <HintPath>$(ResonitePath)/WatsonWebsocket.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

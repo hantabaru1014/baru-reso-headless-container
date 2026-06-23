@@ -252,6 +252,7 @@ public static class RpcConversionExtensions
             HideFromPublicListing = info.HideFromListing,
             CanSave = Userspace.ShouldSave(session.Instance),
             CanSaveAs = session.Instance.IsAllowedToSaveWorld(),
+            ResoniteLinkClientsCount = session.ResoniteLinkClientsCount,
         };
         if (session.Instance.RecordURL is not null)
         {

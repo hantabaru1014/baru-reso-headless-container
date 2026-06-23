@@ -29,6 +29,7 @@ service HeadlessControlService {
   rpc DenyHostAccess(DenyHostAccessRequest) returns (DenyHostAccessResponse);
   rpc GetStartupConfigToRestore(GetStartupConfigToRestoreRequest) returns (GetStartupConfigToRestoreResponse);
   rpc DownloadSessionWorld(DownloadSessionWorldRequest) returns (stream DownloadSessionWorldResponse);
+  rpc ResoniteLinkStream(stream ResoniteLinkStreamRequest) returns (stream ResoniteLinkStreamResponse);
 
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
@@ -387,6 +388,8 @@ message Session {
   google.protobuf.Timestamp started_at = 21;
   repeated string connect_uris = 22;
   bool can_save_as = 23;
+  // 現在この session に張られている ResoniteLink ブリッジ stream の本数
+  int32 resonite_link_clients_count = 24;
 }
 
 message DefaultUserRole {
@@ -476,3 +479,28 @@ message RecordId {
   string id = 1;
   string owner_id = 2;
 }
+
+// ResoniteLink を gRPC bidi stream で中継する。
+// クライアントは stream 開始直後に必ず ResoniteLinkInit を送り、以降は
+// ResoniteLink の JSON テキスト/バイナリペイロードをそのまま流す。
+message ResoniteLinkStreamRequest {
+  oneof payload {
+    ResoniteLinkInit init = 1;
+    string text_frame = 2;
+    bytes binary_frame = 3;
+  }
+}
+
+message ResoniteLinkInit {
+  string session_id = 1;
+}
+
+message ResoniteLinkStreamResponse {
+  oneof payload {
+    ResoniteLinkReady ready = 1;
+    string text_frame = 2;
+    bytes binary_frame = 3;
+  }
+}
+
+message ResoniteLinkReady {}
