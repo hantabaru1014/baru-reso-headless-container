@@ -119,6 +119,9 @@ cp ./Resonite/Headless/runtimes/linux-arm64/lib/**/* ./Resonite/Headless/runtime
 rm -rf ./native-libs/amd64
 mkdir -p ./native-libs/amd64
 cp ./Resonite/Headless/runtimes/linux-x64/lib/**/* ./Resonite/Headless/runtimes/linux-x64/native/* ./native-libs/amd64/
+# Resonite 配布の runtimes/linux-x64/native/libbrolib.so は aarch64 バイナリで amd64 では dlopen 対象にもならない死蔵ファイル
+# (Brotli.LibPathBootStrapper は IsArm のときだけ libbrolib.so を選び、それ以外では brolib_x64.so を使う)
+rm -f ./native-libs/amd64/libbrolib.so
 
 if [ "$(uname -m)" = "arm64" ] || [ "$(uname -m)" = "aarch64" ]; then
   cp ./native-libs/arm64/* ./Resonite/Headless/
