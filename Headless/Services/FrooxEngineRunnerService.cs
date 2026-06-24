@@ -29,16 +29,13 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
     private bool _applicationStartupComplete;
     private bool _engineShutdownComplete;
     private float _tickRate = 60f;
-    private PeriodicTimer _tickTimer = new PeriodicTimer(TimeSpan.FromSeconds(1.0 / 60f));
+    private Thread? _engineThread;
+    private readonly TaskCompletionSource _engineLoopCompletion = new();
 
     public float TickRate
     {
         get => _tickRate;
-        set
-        {
-            _tickRate = value;
-            _tickTimer.Period = TimeSpan.FromSeconds(1.0 / value);
-        }
+        set => _tickRate = value;
     }
 
     private class EngineInitProgressLogger : IEngineInitProgress
@@ -158,7 +155,16 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         );
 
         var userspaceWorld = Userspace.SetupUserspace(_engine);
-        var engineLoop = EngineLoopAsync(ct);
+
+        // FrooxEngine の update ループは [ThreadStatic] や mainThread への書き込みなどスレッドアフィニティを前提とする箇所が
+        // あり、ThreadPool で毎 tick スレッドが変わると race の温床になるため、専用 Thread に固定する。
+        // また InitializeUpdateLoop を呼ばないと _update / _lastElapsed が未初期化となり Watchdog や UpdateInput が NRE を吐く。
+        _engineThread = new Thread(() => RunEngineLoop(ct))
+        {
+            Name = "FrooxEngine Update Loop",
+            IsBackground = true,
+        };
+        _engineThread.Start();
 
         await userspaceWorld.Coroutines.StartTask(async () => await default(ToWorld));
 
@@ -193,8 +199,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
 
         _applicationStartupComplete = true;
         _logger.LogInformation("Application startup complete");
-        await engineLoop;
-        _tickTimer.Dispose();
+        await _engineLoopCompletion.Task;
         _applicationLifetime.StopApplication();
     }
 
@@ -228,35 +233,66 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         await _engine.Cloud.FinalizeSession();
     }
 
-    private async Task EngineLoopAsync(CancellationToken ct = default)
+    private void RunEngineLoop(CancellationToken ct)
     {
         Task? shutdownEngineTask = null;
         var isShuttingDown = false;
 
-        while (!ct.IsCancellationRequested || !_engineShutdownComplete || !_applicationStartupComplete)
+        try
+        {
+            _engine.InitializeUpdateLoop();
+
+            var nextTick = DateTime.UtcNow;
+            while (!ct.IsCancellationRequested || !_engineShutdownComplete || !_applicationStartupComplete)
+            {
+                try
+                {
+                    _engine.RunUpdateLoop();
+                    _systemInfo.FrameFinished();
+                    _engine.PerfStats.Update(_systemInfo);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Unexpected error during engine update loop");
+                }
+
+                var period = _tickRate > 0f ? TimeSpan.FromSeconds(1.0 / _tickRate) : TimeSpan.Zero;
+                nextTick += period;
+                var sleep = nextTick - DateTime.UtcNow;
+                if (sleep > TimeSpan.Zero)
+                {
+                    Thread.Sleep(sleep);
+                }
+                else
+                {
+                    // 1 tick の処理が period を超えた場合、過去基準で連続発火し続けないよう基準をリセットする
+                    nextTick = DateTime.UtcNow;
+                }
+
+                if (!ct.IsCancellationRequested || isShuttingDown || !_applicationStartupComplete)
+                {
+                    continue;
+                }
+                isShuttingDown = true;
+                shutdownEngineTask = ShutdownEngineAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Engine loop terminated unexpectedly");
+        }
+        finally
         {
             try
             {
-                _engine.RunUpdateLoop();
-                _systemInfo.FrameFinished();
-                _engine.PerfStats.Update(_systemInfo);
+                shutdownEngineTask?.Wait();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError(e, "Unexpected error during engine update loop");
+                _logger.LogError(ex, "Engine shutdown task threw");
             }
-
-            await _tickTimer.WaitForNextTickAsync(CancellationToken.None);
-
-            if (!ct.IsCancellationRequested || isShuttingDown || !_applicationStartupComplete)
-            {
-                continue;
-            }
-            isShuttingDown = true;
-            shutdownEngineTask = ShutdownEngineAsync();
+            _engineLoopCompletion.TrySetResult();
         }
-
-        await (shutdownEngineTask ?? Task.CompletedTask);
     }
 
     private Task LoginAsync(string? credential, string? password, string? token = null) => _engine.GlobalCoroutineManager.StartTask(

@@ -114,10 +114,17 @@ public static class WorldExtensions
         ILogger logger
     )
     {
-        foreach (var userId in startupParameters.JoinAllowedUserIds)
+        if (startupParameters.JoinAllowedUserIds.Any())
         {
-            world.AllowUserToJoin(userId);
-            logger.LogInformation("Allow join to {id}", userId);
+            await world.Coroutines.StartTask(async () =>
+            {
+                await default(ToWorld);
+                foreach (var userId in startupParameters.JoinAllowedUserIds)
+                {
+                    world.AllowUserToJoin(userId);
+                    logger.LogInformation("Allow join to {id}", userId);
+                }
+            });
         }
 
         if (startupParameters.AutoInviteUsernames is null)
@@ -153,7 +160,13 @@ public static class WorldExtensions
                 }
             }
 
-            world.AllowUserToJoin(contact.ContactUserId);
+            // network await の継続スレッドは engine context とは限らないので、World への書き込みは engine context にスケジュールする
+            await world.Coroutines.StartTask(async () =>
+            {
+                await default(ToWorld);
+                world.AllowUserToJoin(contact.ContactUserId);
+            });
+
             var inviteMessage = await messages.CreateInviteMessage(world);
             if (!await messages.SendMessage(inviteMessage))
             {
