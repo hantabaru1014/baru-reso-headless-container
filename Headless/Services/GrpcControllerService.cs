@@ -335,16 +335,20 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         return new InviteUserResponse();
     }
 
-    public override Task<AllowUserToJoinResponse> AllowUserToJoin(AllowUserToJoinRequest request, ServerCallContext context)
+    public override async Task<AllowUserToJoinResponse> AllowUserToJoin(AllowUserToJoinRequest request, ServerCallContext context)
     {
         var session = _worldService.GetSession(request.SessionId);
         if (session is null)
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        session.AllowUserToJoin(request.UserId);
+        await session.Instance.Coroutines.StartTask(async () =>
+        {
+            await default(ToWorld);
+            session.AllowUserToJoin(request.UserId);
+        });
 
-        return Task.FromResult(new AllowUserToJoinResponse());
+        return new AllowUserToJoinResponse();
     }
 
     public override async Task<UpdateUserRoleResponse> UpdateUserRole(UpdateUserRoleRequest request, ServerCallContext context)
@@ -354,34 +358,38 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        var permissionSet = session.Instance.Permissions.Roles.FirstOrDefault(r => r.RoleName.Value.Equals(request.Role, StringComparison.InvariantCultureIgnoreCase));
-        if (permissionSet is null)
-        {
-            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid role name"));
-        }
-        if (permissionSet > session.Instance.HostUser.Role)
-        {
-            permissionSet = session.Instance.HostUser.Role;
-        }
-        FrooxEngine.User? user = null;
-        if (request.HasUserId)
-        {
-            user = session.Instance.AllUsers.Where(u => !u.IsHost).FirstOrDefault(u => u.UserID == request.UserId);
-        }
-        else if (request.HasUserName)
-        {
-            user = session.Instance.AllUsers.Where(u => !u.IsHost).FirstOrDefault(u => u.UserName == request.UserName);
-        }
-        if (user is null)
-        {
-            throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
-        }
+        // Permissions.Roles / AllUsers の参照と user.Role の書き込みを engine update スレッドにまとめる。
+        // gRPC スレッドから直接読むと iter 中の collection mutation で例外を踏みうる。
         var updated = await session.Instance.Coroutines.StartTask(async () =>
         {
             await default(ToWorld);
+
+            var permissionSet = session.Instance.Permissions.Roles.FirstOrDefault(r => r.RoleName.Value.Equals(request.Role, StringComparison.InvariantCultureIgnoreCase));
+            if (permissionSet is null)
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid role name"));
+            }
+            if (permissionSet > session.Instance.HostUser.Role)
+            {
+                permissionSet = session.Instance.HostUser.Role;
+            }
+
+            FrooxEngine.User? user = null;
+            if (request.HasUserId)
+            {
+                user = session.Instance.AllUsers.Where(u => !u.IsHost).FirstOrDefault(u => u.UserID == request.UserId);
+            }
+            else if (request.HasUserName)
+            {
+                user = session.Instance.AllUsers.Where(u => !u.IsHost).FirstOrDefault(u => u.UserName == request.UserName);
+            }
+            if (user is null)
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "The user does not appear to be in a session!"));
+            }
+
             user.Role = permissionSet;
             session.Instance.Permissions.AssignDefaultRole(user, permissionSet);
-
             return user.Role;
         });
 
@@ -398,143 +406,87 @@ public class GrpcControllerService : HeadlessControlService.HeadlessControlServi
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        if (request.HasName)
-        {
-            session.Instance.Name = request.Name;
-        }
-        if (request.HasDescription)
-        {
-            session.Instance.Description = request.Description;
-        }
-        if (request.HasMaxUsers)
-        {
-            session.Instance.MaxUsers = request.MaxUsers;
-        }
-        if (request.HasAccessLevel)
-        {
-            session.Instance.AccessLevel = request.AccessLevel.ToResonite();
-        }
-        if (request.HasAwayKickMinutes)
-        {
-            if (request.AwayKickMinutes > 0)
-            {
-                session.Instance.AwayKickEnabled = true;
-                session.Instance.AwayKickMinutes = request.AwayKickMinutes;
-            }
-            else
-            {
-                session.Instance.AwayKickEnabled = false;
-                session.Instance.AwayKickMinutes = -1;
-            }
-        }
-        if (request.HasIdleRestartIntervalSeconds)
-        {
-            if (request.IdleRestartIntervalSeconds > 0)
-            {
-                session.IdleRestartInterval = TimeSpan.FromSeconds(request.IdleRestartIntervalSeconds);
-            }
-            else
-            {
-                session.IdleRestartInterval = TimeSpan.FromSeconds(-1);
-            }
-        }
-        if (request.HasSaveOnExit)
-        {
-            session.Instance.SaveOnExit = request.SaveOnExit;
-        }
-        if (request.HasAutoSaveIntervalSeconds)
-        {
-            if (request.AutoSaveIntervalSeconds > 0)
-            {
-                session.AutosaveInterval = TimeSpan.FromSeconds(request.AutoSaveIntervalSeconds);
-            }
-            else
-            {
-                session.AutosaveInterval = TimeSpan.FromSeconds(-1);
-            }
-        }
-        if (request.HasHideFromPublicListing)
-        {
-            session.Instance.HideFromListing = request.HideFromPublicListing;
-        }
-        if (request.HasAutoSleep)
-        {
-            session.Instance.ForceFullUpdateCycle = !request.AutoSleep;
-        }
-        if (request.HasUseCustomJoinVerifier)
-        {
-            session.Instance.UseCustomJoinVerifier = request.UseCustomJoinVerifier;
-        }
-        if (request.HasMobileFriendly)
-        {
-            session.Instance.MobileFriendly = request.MobileFriendly;
-        }
+
+        // World に触らない validation を先に済ませる。RpcException は engine スレッドの外で投げたい。
+        SkyFrost.Base.RecordId? correspondingWorldId = null;
         if (request.OverrideCorrespondingWorldId is not null && !string.IsNullOrEmpty(request.OverrideCorrespondingWorldId.Id))
         {
             var id = request.OverrideCorrespondingWorldId;
-            var correspondingWorldId = new SkyFrost.Base.RecordId(id.OwnerId, id.Id);
-            if (correspondingWorldId is not null && correspondingWorldId.IsValid)
-            {
-                session.Instance.CorrespondingWorldId = correspondingWorldId.ToString();
-            }
-            else
+            correspondingWorldId = new SkyFrost.Base.RecordId(id.OwnerId, id.Id);
+            if (!correspondingWorldId.IsValid)
             {
                 throw new RpcException(new Status(StatusCode.InvalidArgument, "invalid CorrespondingWorldId"));
             }
         }
-        if (request.HasRoleCloudVariable)
+        if (request.HasRoleCloudVariable && !CloudVariableHelper.IsValidPath(request.RoleCloudVariable))
         {
-            if (CloudVariableHelper.IsValidPath(request.RoleCloudVariable))
-            {
-                session.Instance.Permissions.DefaultRoleCloudVariable = request.RoleCloudVariable;
-            }
-            else
-            {
-                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid RoleCloudVariable"));
-            }
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid RoleCloudVariable"));
         }
-        if (request.HasAllowUserCloudVariable)
+        if (request.HasAllowUserCloudVariable && !CloudVariableHelper.IsValidPath(request.AllowUserCloudVariable))
         {
-            if (CloudVariableHelper.IsValidPath(request.AllowUserCloudVariable))
-            {
-                session.Instance.AllowUserCloudVariable = request.AllowUserCloudVariable;
-            }
-            else
-            {
-                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid AllowUserCloudVariable"));
-            }
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid AllowUserCloudVariable"));
         }
-        if (request.HasDenyUserCloudVariable)
+        if (request.HasDenyUserCloudVariable && !CloudVariableHelper.IsValidPath(request.DenyUserCloudVariable))
         {
-            if (CloudVariableHelper.IsValidPath(request.DenyUserCloudVariable))
-            {
-                session.Instance.DenyUserCloudVariable = request.DenyUserCloudVariable;
-            }
-            else
-            {
-                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid DenyUserCloudVariable"));
-            }
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid DenyUserCloudVariable"));
         }
-        if (request.HasRequiredUserJoinCloudVariable)
+        if (request.HasRequiredUserJoinCloudVariable && !CloudVariableHelper.IsValidPath(request.RequiredUserJoinCloudVariable))
         {
-            if (CloudVariableHelper.IsValidPath(request.RequiredUserJoinCloudVariable))
-            {
-                session.Instance.RequiredUserJoinCloudVariable = request.RequiredUserJoinCloudVariable;
-            }
-            else
-            {
-                throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid RequiredUserJoinCloudVariable"));
-            }
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid RequiredUserJoinCloudVariable"));
         }
-        if (request.HasRequiredUserJoinCloudVariableDenyMessage)
+
+        // RunningSession ローカルのフィールドは sync 不要
+        if (request.HasIdleRestartIntervalSeconds)
         {
-            session.Instance.RequiredUserJoinCloudVariableDenyMessage = request.RequiredUserJoinCloudVariableDenyMessage;
+            session.IdleRestartInterval = request.IdleRestartIntervalSeconds > 0
+                ? TimeSpan.FromSeconds(request.IdleRestartIntervalSeconds)
+                : TimeSpan.FromSeconds(-1);
         }
-        if (request.UpdateTags)
+        if (request.HasAutoSaveIntervalSeconds)
         {
-            session.Instance.Tags = request.Tags;
+            session.AutosaveInterval = request.AutoSaveIntervalSeconds > 0
+                ? TimeSpan.FromSeconds(request.AutoSaveIntervalSeconds)
+                : TimeSpan.FromSeconds(-1);
         }
-        await Task.CompletedTask;
+
+        // World への書き込みは engine update スレッドにまとめる。
+        // Tags は List 代入、Permissions/Cloud variable 系も内部で collection を触るため、
+        // gRPC スレッドから直接代入すると engine 側で iter 中の mutation 例外で落ちうる。
+        await session.Instance.Coroutines.StartTask(async () =>
+        {
+            await default(ToWorld);
+
+            if (request.HasName) session.Instance.Name = request.Name;
+            if (request.HasDescription) session.Instance.Description = request.Description;
+            if (request.HasMaxUsers) session.Instance.MaxUsers = request.MaxUsers;
+            if (request.HasAccessLevel) session.Instance.AccessLevel = request.AccessLevel.ToResonite();
+            if (request.HasAwayKickMinutes)
+            {
+                if (request.AwayKickMinutes > 0)
+                {
+                    session.Instance.AwayKickEnabled = true;
+                    session.Instance.AwayKickMinutes = request.AwayKickMinutes;
+                }
+                else
+                {
+                    session.Instance.AwayKickEnabled = false;
+                    session.Instance.AwayKickMinutes = -1;
+                }
+            }
+            if (request.HasSaveOnExit) session.Instance.SaveOnExit = request.SaveOnExit;
+            if (request.HasHideFromPublicListing) session.Instance.HideFromListing = request.HideFromPublicListing;
+            if (request.HasAutoSleep) session.Instance.ForceFullUpdateCycle = !request.AutoSleep;
+            if (request.HasUseCustomJoinVerifier) session.Instance.UseCustomJoinVerifier = request.UseCustomJoinVerifier;
+            if (request.HasMobileFriendly) session.Instance.MobileFriendly = request.MobileFriendly;
+            if (correspondingWorldId is not null) session.Instance.CorrespondingWorldId = correspondingWorldId.ToString();
+            if (request.HasRoleCloudVariable) session.Instance.Permissions.DefaultRoleCloudVariable = request.RoleCloudVariable;
+            if (request.HasAllowUserCloudVariable) session.Instance.AllowUserCloudVariable = request.AllowUserCloudVariable;
+            if (request.HasDenyUserCloudVariable) session.Instance.DenyUserCloudVariable = request.DenyUserCloudVariable;
+            if (request.HasRequiredUserJoinCloudVariable) session.Instance.RequiredUserJoinCloudVariable = request.RequiredUserJoinCloudVariable;
+            if (request.HasRequiredUserJoinCloudVariableDenyMessage) session.Instance.RequiredUserJoinCloudVariableDenyMessage = request.RequiredUserJoinCloudVariableDenyMessage;
+            if (request.UpdateTags) session.Instance.Tags = request.Tags;
+        });
+
         return new UpdateSessionParametersResponse();
     }
 
