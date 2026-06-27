@@ -176,6 +176,11 @@ public sealed class HostEventBus
         EmitInternal(ev => ev.WorldSaved = payload);
     }
 
+    public void Emit(SessionParametersChanged payload)
+    {
+        EmitInternal(ev => ev.SessionParametersChanged = payload);
+    }
+
     private void EmitInternal(Action<HostEvent> setPayload)
     {
         // Build the event outside the lock — ULID generation +

@@ -46,7 +46,11 @@ internal sealed class WorldSavedHook : IWorldEventReceiver, IDisposable
         // propagate back into FrooxEngine's receiver loop.
         try
         {
-            _eventBus.Emit(new WorldSaved { SessionId = _world.SessionId });
+            _eventBus.Emit(new WorldSaved
+            {
+                SessionId = _world.SessionId,
+                WorldUrl = _world.RecordURL?.ToString() ?? "",
+            });
         }
         catch (Exception ex)
         {

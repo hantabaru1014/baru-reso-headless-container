@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using FrooxEngine;
+using Google.Protobuf.WellKnownTypes;
 using SkyFrost.Base;
 using Headless.Extensions;
 using Microsoft.Extensions.Options;
@@ -119,6 +120,7 @@ public class WorldService
         {
             SessionId = startedWorld.SessionId,
             SessionName = startedWorld.RawName ?? "",
+            StartedAt = Timestamp.FromDateTimeOffset(session.StartedAt),
         });
         session.AttachEventBus(_eventBus);
 

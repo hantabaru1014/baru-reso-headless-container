@@ -242,6 +242,10 @@ public partial class GrpcControllerService
             if (request.UpdateTags) session.Instance.Tags = request.Tags;
         });
 
+        // SaveOnExit / IdleRestartInterval / ForceFullUpdateCycle / Tags(List 代入) などは
+        // Sync の OnValueChange を踏まないため、明示的にスナップショット送信をキックする。
+        session.NotifyParametersChanged();
+
         return new UpdateSessionParametersResponse();
     }
 }

@@ -13,6 +13,7 @@ public class RunningSession
     private readonly object _linkBridgeLock = new();
     private HostEventBus? _eventBus;
     private WorldSavedHook? _worldSavedHook;
+    private SessionParametersChangedHook? _parametersChangedHook;
     private ResoniteLinkBridge? _linkBridge;
 
     internal Task? Handler { get; set; }
@@ -117,6 +118,7 @@ public class RunningSession
     {
         _eventBus = eventBus;
         _worldSavedHook = new WorldSavedHook(Instance, eventBus);
+        _parametersChangedHook = new SessionParametersChangedHook(this, eventBus);
     }
 
     /// <summary>
@@ -128,8 +130,18 @@ public class RunningSession
     {
         _worldSavedHook?.Dispose();
         _worldSavedHook = null;
+        _parametersChangedHook?.Dispose();
+        _parametersChangedHook = null;
         _eventBus = null;
     }
+
+    /// <summary>
+    /// Force the parameters-changed debouncer to emit. Used when a
+    /// non-sync setter (SaveOnExit / IdleRestartInterval /
+    /// ForceFullUpdateCycle) is updated and won't otherwise trigger
+    /// Changed on a sync member.
+    /// </summary>
+    internal void NotifyParametersChanged() => _parametersChangedHook?.RequestEmit();
 
     /// <summary>
     /// 現在この session に紐付いている ResoniteLink bridge 上のクライアント数。
