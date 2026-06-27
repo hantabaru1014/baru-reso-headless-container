@@ -4,7 +4,9 @@ using SkyFrost.Base;
 using Headless.Extensions;
 using Microsoft.Extensions.Options;
 using Headless.Configuration;
+using Headless.Events;
 using Headless.Models;
+using Headless.Rpc;
 
 namespace Headless.Services;
 
@@ -12,6 +14,7 @@ public class WorldService
 {
     private readonly ILogger<WorldService> _logger;
     private readonly Engine _engine;
+    private readonly HostEventBus _eventBus;
     private readonly ConcurrentDictionary<string, RunningSession> _runningWorlds;
 
     public IEnumerable<Uri> AutoSpawnItems { get; set; }
@@ -20,11 +23,13 @@ public class WorldService
     (
         ILogger<WorldService> logger,
         IOptions<HeadlessStartupConfig> startupConfig,
-        Engine engine
+        Engine engine,
+        HostEventBus eventBus
     )
     {
         _logger = logger;
         _engine = engine;
+        _eventBus = eventBus;
         _runningWorlds = new();
 
         if (startupConfig.Value.Value.AutoSpawnItems is not null)
@@ -107,6 +112,16 @@ public class WorldService
             throw new InvalidOperationException("Duplicate session ids");
         }
 
+        // SessionStarted must be emitted before the session starts emitting
+        // user-join/leave events so that consumers iterating events in
+        // id-order see "session opened" first.
+        _eventBus.Emit(new SessionStarted
+        {
+            SessionId = startedWorld.SessionId,
+            SessionName = startedWorld.RawName ?? "",
+        });
+        session.AttachEventBus(_eventBus);
+
         var handler = _engine.GlobalCoroutineManager.StartTask(() => SessionHandlerAsync(session, sessionCancellation.Token));
         session.Handler = handler;
 
@@ -152,6 +167,10 @@ public class WorldService
         if (!Userspace.ShouldSave(runningSession.Instance) || runningSession.IsWorldSaving) return;
 
         _logger.LogInformation("Saving {World}", runningSession.Instance.RawName);
+        // WorldSaved is emitted from the WorldSavedHook attached to the
+        // engine — that way every save path (in-world UI, autosave, our
+        // SaveWorld call, ...) produces exactly one event without us
+        // having to enumerate them here.
         if (await runningSession.SaveWorld())
         {
             _logger.LogInformation("World({World}) saved successfully!", runningSession.Instance.RawName);
@@ -276,6 +295,10 @@ public class WorldService
 
         world.WorldManager.WorldFailed += MarkAutoRecoverRestart;
 
+        // UserJoinedSession / UserLeftSession events are emitted directly
+        // from RunningSession's FrooxEngine UserJoined / UserLeft handlers,
+        // so this loop no longer has to maintain a snapshot diff.
+
         while (!ct.IsCancellationRequested && !world.IsDestroyed)
         {
             try
@@ -345,7 +368,16 @@ public class WorldService
 
         _logger.LogInformation("World {World} has stopped", world.Name);
 
+        // Detach engine hooks BEFORE the final SessionEnded emit so a
+        // late WorldSaved triggered during teardown cannot slip between
+        // SessionEnded and the actual world destroy.
+        runningSession.DetachEventBus();
         runningSession.DisposeLinkBridge();
+
+        _eventBus.Emit(new SessionEnded
+        {
+            SessionId = runningSession.Instance.SessionId,
+        });
 
         // always remove us first
         _runningWorlds.TryRemove(runningSession.Instance.SessionId, out _);

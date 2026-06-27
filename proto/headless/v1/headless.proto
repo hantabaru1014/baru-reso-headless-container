@@ -30,6 +30,8 @@ service HeadlessControlService {
   rpc GetStartupConfigToRestore(GetStartupConfigToRestoreRequest) returns (GetStartupConfigToRestoreResponse);
   rpc DownloadSessionWorld(DownloadSessionWorldRequest) returns (stream DownloadSessionWorldResponse);
   rpc ResoniteLinkStream(stream ResoniteLinkStreamRequest) returns (stream ResoniteLinkStreamResponse);
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  rpc WatchHostEvents(WatchHostEventsRequest) returns (stream HostEvent);
 
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
@@ -330,6 +332,65 @@ message ListUsersInSessionRequest {
 
 message ListUsersInSessionResponse {
   repeated UserInSession users = 1;
+}
+
+message WatchHostEventsRequest {
+  // Empty string (default) means deliver only events from this point
+  // forward. Otherwise the server replays buffered events with id strictly
+  // greater than after_event_id (lexicographic / ULID order) before
+  // resuming live delivery. If after_event_id is older than the oldest
+  // buffered event, the server fails with OUT_OF_RANGE so the client
+  // knows it must do a full state resync.
+  string after_event_id = 1;
+}
+
+// HostEvent represents a single event emitted by this headless host
+// (= container). Ids are ULIDs (Crockford-base32, 26 chars); they are
+// monotonically increasing and survive container restarts, so controllers
+// can persist the last-seen id and resume safely after either a
+// controller or container restart.
+//
+// The monotonic guarantee is only as strong as the system clock — a
+// backwards NTP step (within a single run, or after a restart that
+// rewinds wall-clock) can make a freshly emitted id sort *below* a
+// persisted resume token, which would silently filter out the new
+// events. Operators should keep ntpd / chrony in slew mode rather than
+// allowing step adjustments.
+message HostEvent {
+  string id = 1;
+  google.protobuf.Timestamp occurred_at = 2;
+  oneof payload {
+    SessionStarted session_started = 10;
+    SessionEnded session_ended = 11;
+    UserJoinedSession user_joined_session = 12;
+    UserLeftSession user_left_session = 13;
+    WorldSaved world_saved = 14;
+  }
+}
+
+message SessionStarted {
+  string session_id = 1;
+  string session_name = 2;
+}
+
+message SessionEnded {
+  string session_id = 1;
+}
+
+message UserJoinedSession {
+  string session_id = 1;
+  string user_id = 2;
+  string user_name = 3;
+}
+
+message UserLeftSession {
+  string session_id = 1;
+  string user_id = 2;
+  string user_name = 3;
+}
+
+message WorldSaved {
+  string session_id = 1;
 }
 
 // models

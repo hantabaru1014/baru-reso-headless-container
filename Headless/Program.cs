@@ -1,6 +1,7 @@
 using Elements.Core;
 using FrooxEngine;
 using Headless.Configuration;
+using Headless.Events;
 using Headless.Services;
 
 namespace Headless;
@@ -34,6 +35,7 @@ public class Program
                 .AddSingleton<SystemInfo>()
                 .AddSingleton<Engine>()
                 .AddSingleton<WorldService>()
+                .AddSingleton<HostEventBus>()
                 .AddSingleton<FrooxEngineRunnerService>()
                 .AddSingleton<IHostedService>(p => p.GetRequiredService<FrooxEngineRunnerService>())
                 .AddSingleton<IFrooxEngineRunnerService>(p => p.GetRequiredService<FrooxEngineRunnerService>());

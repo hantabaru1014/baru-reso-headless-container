@@ -26,12 +26,25 @@
 
     <!-- Docker Client -->
     <PackageReference Include="Docker.DotNet" Version="3.125.15" />
+
+    <!-- Logging abstractions for unit tests that exercise Headless code directly -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <!-- HostEventBus uses NUlid for monotonic ULID generation -->
+    <PackageReference Include="NUlid" Version="1.7.3" />
   </ItemGroup>
 
   <!-- Use pre-generated protobuf files from Headless project to avoid arm64 protoc issues -->
   <ItemGroup>
     <Compile Include="../Headless/Protos/Headless.cs" Link="Protos/Headless.cs" />
     <Compile Include="../Headless/Protos/HeadlessGrpc.cs" Link="Protos/HeadlessGrpc.cs" />
+  </ItemGroup>
+
+  <!-- Pull in the HostEventBus sources directly (rather than referencing the
+       Headless project, which would drag in FrooxEngine and friends). -->
+  <ItemGroup>
+    <Compile Include="../Headless/Events/HostEventBus.cs" Link="Events/HostEventBus.cs" />
+    <Compile Include="../Headless/Events/EventBufferOverflowException.cs" Link="Events/EventBufferOverflowException.cs" />
+    <Compile Include="../Headless/Events/SubscriberDroppedException.cs" Link="Events/SubscriberDroppedException.cs" />
   </ItemGroup>
 
 </Project>
