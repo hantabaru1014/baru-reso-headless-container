@@ -39,4 +39,29 @@ public class ListSessionsTests
         // At startup with no worlds configured, sessions list should be empty
         // (unless StartWorldTests runs first in which case there may be a session)
     }
+
+    [Fact]
+    public async Task ListSessions_WithActiveSession_PopulatesSessionFields()
+    {
+        // Drives the same code path as the smoke test above but with an
+        // active session so we can sanity-check the ToProto() mapping —
+        // any rename of RunningSession / World properties shows up here.
+        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        var client = await Helpers.GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
+
+        var sessionId = await Helpers.GrpcTestHelpers.StartGridSessionAsync(client);
+        try
+        {
+            var resp = await client.ListSessionsAsync(new ListSessionsRequest());
+            var match = resp.Sessions.FirstOrDefault(s => s.Id == sessionId);
+            Assert.NotNull(match);
+            Assert.False(string.IsNullOrEmpty(match!.SessionUrl));
+            Assert.NotNull(match.StartupParameters);
+            Assert.NotNull(match.StartedAt);
+        }
+        finally
+        {
+            await Helpers.GrpcTestHelpers.TryStopSessionAsync(client, sessionId);
+        }
+    }
 }
