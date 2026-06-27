@@ -14,9 +14,13 @@ namespace Headless.Tests.IntegrationTests;
 /// The container runs in guest mode so we cannot drive real user
 /// join/leave traffic, but every handler still walks the FrooxEngine
 /// World/AllUsers/Permissions APIs to validate input — that's exactly
-/// the surface area that breaks on SDK updates. Most tests therefore
-/// drive a real session and assert the engine-side validation produces
-/// the expected status code.
+/// the surface area that breaks on SDK updates.
+///
+/// To keep CI stable, all "needs a live session" assertions are
+/// consolidated into a single test that drives one shared session
+/// through every SessionUser RPC sequentially. Starting many short
+/// Grid sessions in a single shared container fixture has been observed
+/// to destabilise downstream tests in CI.
 /// </summary>
 [Collection("Container")]
 public class SessionUserTests
@@ -44,13 +48,6 @@ public class SessionUserTests
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
     }
 
-    // Note: a "ListUsersInSession returns the host user" happy-path test
-    // is intentionally NOT included. In guest mode the headless's host
-    // FrooxEngine.User has a null UserID, which makes the controller
-    // throw an NRE when constructing the UserInSession proto (string
-    // fields cannot be null). A meaningful happy path requires a
-    // logged-in fixture; see ContainerCollection's coverage note.
-
     [Fact]
     public async Task InviteUser_NonExistentSession_ReturnsInvalidArgument()
     {
@@ -69,36 +66,6 @@ public class SessionUserTests
     }
 
     [Fact]
-    public async Task InviteUser_UnknownUserName_FailsCleanly()
-    {
-        // Guest container: contacts list is empty so FindContact returns
-        // null. Whether the controller surfaces that as InvalidArgument
-        // or Unknown (NRE on the null Contact) is an implementation
-        // detail of the controller and the SDK — what matters here is
-        // that we exercise Cloud.Contacts.FindContact end-to-end and
-        // surface a failure rather than silently succeeding.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
-        var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
-
-        var sessionId = await GrpcTestHelpers.StartGridSessionAsync(client);
-        try
-        {
-            await Assert.ThrowsAsync<RpcException>(async () =>
-            {
-                await client.InviteUserAsync(new InviteUserRequest
-                {
-                    SessionId = sessionId,
-                    UserName = "definitely-not-a-real-contact",
-                });
-            });
-        }
-        finally
-        {
-            await GrpcTestHelpers.TryStopSessionAsync(client, sessionId);
-        }
-    }
-
-    [Fact]
     public async Task AllowUserToJoin_NonExistentSession_ReturnsInvalidArgument()
     {
         using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
@@ -113,30 +80,6 @@ public class SessionUserTests
             });
         });
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
-    }
-
-    [Fact]
-    public async Task AllowUserToJoin_OnLiveSession_DoesNotThrow()
-    {
-        // World.AllowUserToJoin is a fire-and-forget engine call when the
-        // user isn't present yet. We expect no error to be raised.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
-        var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
-
-        var sessionId = await GrpcTestHelpers.StartGridSessionAsync(client);
-        try
-        {
-            var resp = await client.AllowUserToJoinAsync(new AllowUserToJoinRequest
-            {
-                SessionId = sessionId,
-                UserId = "U-test-allowed",
-            });
-            Assert.NotNull(resp);
-        }
-        finally
-        {
-            await GrpcTestHelpers.TryStopSessionAsync(client, sessionId);
-        }
     }
 
     [Fact]
@@ -158,35 +101,6 @@ public class SessionUserTests
     }
 
     [Fact]
-    public async Task UpdateUserRole_InvalidRoleName_ReturnsInvalidArgument()
-    {
-        // Role lookup happens inside the engine coroutine; the controller
-        // wraps the missing-role case in an RpcException. This catches
-        // renames of Permissions.Roles / RoleName API surface.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
-        var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
-
-        var sessionId = await GrpcTestHelpers.StartGridSessionAsync(client);
-        try
-        {
-            var ex = await Assert.ThrowsAsync<RpcException>(async () =>
-            {
-                await client.UpdateUserRoleAsync(new UpdateUserRoleRequest
-                {
-                    SessionId = sessionId,
-                    UserId = "U-test",
-                    Role = "absolutely-not-a-real-role",
-                });
-            });
-            Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
-        }
-        finally
-        {
-            await GrpcTestHelpers.TryStopSessionAsync(client, sessionId);
-        }
-    }
-
-    [Fact]
     public async Task KickUser_NonExistentSession_ReturnsInvalidArgument()
     {
         using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
@@ -201,33 +115,6 @@ public class SessionUserTests
             });
         });
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
-    }
-
-    [Fact]
-    public async Task KickUser_UnknownUserInSession_ReturnsInvalidArgument()
-    {
-        // No matching FrooxEngine.User in AllUsers → controller returns
-        // InvalidArgument. Walks the AllUsers enumeration code path.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
-        var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
-
-        var sessionId = await GrpcTestHelpers.StartGridSessionAsync(client);
-        try
-        {
-            var ex = await Assert.ThrowsAsync<RpcException>(async () =>
-            {
-                await client.KickUserAsync(new KickUserRequest
-                {
-                    SessionId = sessionId,
-                    UserId = "U-not-in-session",
-                });
-            });
-            Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
-        }
-        finally
-        {
-            await GrpcTestHelpers.TryStopSessionAsync(client, sessionId);
-        }
     }
 
     [Fact]
@@ -248,15 +135,66 @@ public class SessionUserTests
     }
 
     [Fact]
-    public async Task BanUser_UnknownUserInSession_ReturnsInvalidArgument()
+    public async Task SessionUserRpcs_AgainstLiveSession_ExerciseEngineValidation()
     {
+        // Single shared session is reused for every "needs a live session"
+        // assertion below. Starting one Grid world per assertion would
+        // multiply test runtime by ~6 and has been observed to destabilise
+        // downstream tests in CI.
         using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var sessionId = await GrpcTestHelpers.StartGridSessionAsync(client);
         try
         {
-            var ex = await Assert.ThrowsAsync<RpcException>(async () =>
+            // AllowUserToJoin: fire-and-forget engine call when the user
+            // is not present yet — should not throw.
+            var allowResp = await client.AllowUserToJoinAsync(new AllowUserToJoinRequest
+            {
+                SessionId = sessionId,
+                UserId = "U-test-allowed",
+            });
+            Assert.NotNull(allowResp);
+
+            // InviteUser by username: contacts list is empty in guest mode,
+            // FindContact returns null. The controller either maps that to
+            // InvalidArgument or surfaces the NRE as Unknown — either way
+            // we walk Cloud.Contacts.FindContact end-to-end.
+            await Assert.ThrowsAsync<RpcException>(async () =>
+            {
+                await client.InviteUserAsync(new InviteUserRequest
+                {
+                    SessionId = sessionId,
+                    UserName = "definitely-not-a-real-contact",
+                });
+            });
+
+            // UpdateUserRole with an invalid role name: the engine coroutine
+            // looks up Permissions.Roles and returns InvalidArgument when
+            // the role is missing.
+            var roleEx = await Assert.ThrowsAsync<RpcException>(async () =>
+            {
+                await client.UpdateUserRoleAsync(new UpdateUserRoleRequest
+                {
+                    SessionId = sessionId,
+                    UserId = "U-test",
+                    Role = "absolutely-not-a-real-role",
+                });
+            });
+            Assert.Equal(StatusCode.InvalidArgument, roleEx.StatusCode);
+
+            // KickUser / BanUser with an unknown user: walks AllUsers.
+            var kickEx = await Assert.ThrowsAsync<RpcException>(async () =>
+            {
+                await client.KickUserAsync(new KickUserRequest
+                {
+                    SessionId = sessionId,
+                    UserId = "U-not-in-session",
+                });
+            });
+            Assert.Equal(StatusCode.InvalidArgument, kickEx.StatusCode);
+
+            var banEx = await Assert.ThrowsAsync<RpcException>(async () =>
             {
                 await client.BanUserAsync(new BanUserRequest
                 {
@@ -264,11 +202,18 @@ public class SessionUserTests
                     UserId = "U-not-in-session",
                 });
             });
-            Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
+            Assert.Equal(StatusCode.InvalidArgument, banEx.StatusCode);
         }
         finally
         {
             await GrpcTestHelpers.TryStopSessionAsync(client, sessionId);
         }
     }
+
+    // Note: a "ListUsersInSession returns the host user" happy-path test
+    // is intentionally NOT included. In guest mode the headless's host
+    // FrooxEngine.User has a null UserID, which makes the controller
+    // throw an NRE when constructing the UserInSession proto. A
+    // meaningful happy path requires a logged-in fixture; see
+    // ContainerCollection's coverage note.
 }

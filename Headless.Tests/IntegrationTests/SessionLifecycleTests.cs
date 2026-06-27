@@ -66,47 +66,31 @@ public class SessionLifecycleTests
     }
 
     [Fact]
-    public async Task GetSession_ReturnsStartedSession()
+    public async Task SessionLifecycleHappyPath_ExerciseGetAndUpdateAndCloudVariableValidation()
     {
-        // Happy path companion to GetSession_NonExistentId. Catches
-        // ToProto() regressions when the Session message gains fields
-        // or when RunningSession property bindings drift from the SDK.
+        // Consolidated happy-path test that drives GetSession +
+        // UpdateSessionParameters (multi-field round-trip) + cloud-variable
+        // validation against a SINGLE live Grid session. Originally three
+        // separate tests; merged because spinning up a fresh Grid world
+        // per test destabilises the shared container fixture in CI.
         using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
         var client = await ReadyClientAsync(channel);
 
         var sessionId = await StartGridSessionAsync(client);
         try
         {
-            var resp = await client.GetSessionAsync(new GetSessionRequest { SessionId = sessionId });
-            Assert.NotNull(resp.Session);
-            Assert.Equal(sessionId, resp.Session.Id);
-            Assert.NotNull(resp.Session.StartupParameters);
-            // started_at is populated from RunningSession.StartedAt; must be
-            // non-null even for guest sessions.
-            Assert.NotNull(resp.Session.StartedAt);
-        }
-        finally
-        {
-            await client.StopSessionAsync(new StopSessionRequest { SessionId = sessionId });
-        }
-    }
+            // GetSession round-trip — catches ToProto() / RunningSession
+            // property binding drift.
+            var getResp = await client.GetSessionAsync(new GetSessionRequest { SessionId = sessionId });
+            Assert.NotNull(getResp.Session);
+            Assert.Equal(sessionId, getResp.Session.Id);
+            Assert.NotNull(getResp.Session.StartupParameters);
+            Assert.NotNull(getResp.Session.StartedAt);
 
-    [Fact]
-    public async Task UpdateSessionParameters_MultipleScalarFields_RoundTripThroughGetSession()
-    {
-        // Exercises more of the engine setters than the Name-only happy
-        // path: description / max_users / hide_from_public_listing /
-        // save_on_exit / access_level. Any of those property names
-        // changing in the SDK would surface here.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
-        var client = await ReadyClientAsync(channel);
-
-        var sessionId = await StartGridSessionAsync(client);
-        try
-        {
+            // Multi-scalar UpdateSessionParameters round-trip — catches
+            // engine setter renames.
             const string newDescription = "description-by-test";
             const int newMax = 16;
-
             await client.UpdateSessionParametersAsync(new UpdateSessionParametersRequest
             {
                 SessionId = sessionId,
@@ -116,9 +100,6 @@ public class SessionLifecycleTests
                 SaveOnExit = false,
                 AccessLevel = AccessLevel.Lan,
             });
-
-            // Engine update thread is asynchronous w.r.t. the RPC reply.
-            // Poll for description (the easiest-to-observe field).
             var ok = await PollUntilAsync(async () =>
             {
                 var r = await client.GetSessionAsync(new GetSessionRequest { SessionId = sessionId });
@@ -129,23 +110,10 @@ public class SessionLifecycleTests
                        && !r.Session.SaveOnExit;
             }, TimeSpan.FromSeconds(10));
             Assert.True(ok, "UpdateSessionParameters did not propagate to GetSession");
-        }
-        finally
-        {
-            await client.StopSessionAsync(new StopSessionRequest { SessionId = sessionId });
-        }
-    }
 
-    [Fact]
-    public async Task UpdateSessionParameters_InvalidCloudVariablePath_ReturnsInvalidArgument()
-    {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
-        var client = await ReadyClientAsync(channel);
-
-        var sessionId = await StartGridSessionAsync(client);
-        try
-        {
-            var ex = await Assert.ThrowsAsync<RpcException>(async () =>
+            // Cloud-variable path validation — controller rejects invalid
+            // paths before touching the engine.
+            var cvEx = await Assert.ThrowsAsync<RpcException>(async () =>
             {
                 await client.UpdateSessionParametersAsync(new UpdateSessionParametersRequest
                 {
@@ -153,7 +121,7 @@ public class SessionLifecycleTests
                     RoleCloudVariable = "@@@ definitely not a valid cloud variable path",
                 });
             });
-            Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
+            Assert.Equal(StatusCode.InvalidArgument, cvEx.StatusCode);
         }
         finally
         {
