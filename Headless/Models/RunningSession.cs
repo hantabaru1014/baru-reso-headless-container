@@ -1,5 +1,6 @@
 using Elements.Core;
 using FrooxEngine;
+using Headless.Events;
 using Headless.Rpc;
 using Headless.Services;
 using SkyFrost.Base;
@@ -10,6 +11,8 @@ public class RunningSession
 {
     private readonly SemaphoreSlim _saveLock = new SemaphoreSlim(1, 1);
     private readonly object _linkBridgeLock = new();
+    private HostEventBus? _eventBus;
+    private WorldSavedHook? _worldSavedHook;
     private ResoniteLinkBridge? _linkBridge;
 
     internal Task? Handler { get; set; }
@@ -97,6 +100,35 @@ public class RunningSession
         ForceRestartInterval = TimeSpan.FromSeconds(startInfo.ForcedRestartInterval);
 
         worldInstance.UserJoined += OnUserJoined;
+        worldInstance.UserLeft += OnUserLeft;
+    }
+
+    /// <summary>
+    /// Wire this session to a HostEventBus so engine UserJoined/UserLeft
+    /// callbacks emit UserJoinedSession / UserLeftSession events, and so
+    /// every save (including those initiated from inside the running
+    /// world) emits WorldSaved. Must be called AFTER the session's
+    /// SessionStarted event has been emitted — otherwise a user that
+    /// joins between OpenWorld and SessionStarted would produce a join
+    /// event with an id that sorts before the session-start id,
+    /// confusing event-order consumers.
+    /// </summary>
+    internal void AttachEventBus(HostEventBus eventBus)
+    {
+        _eventBus = eventBus;
+        _worldSavedHook = new WorldSavedHook(Instance, eventBus);
+    }
+
+    /// <summary>
+    /// Detach the bus, unregister engine hooks. Called when the session
+    /// is winding down so the bus does not receive late events for a
+    /// world that is about to be destroyed.
+    /// </summary>
+    internal void DetachEventBus()
+    {
+        _worldSavedHook?.Dispose();
+        _worldSavedHook = null;
+        _eventBus = null;
     }
 
     /// <summary>
@@ -133,6 +165,45 @@ public class RunningSession
         if (user.IsLocalUser) return;
 
         LastJoinedUserId = user.UserID;
+
+        if (user.IsHost || string.IsNullOrEmpty(user.UserID)) return;
+
+        // The handler runs on the FrooxEngine update thread; any throw
+        // here would propagate through FrooxEngine's multicast dispatcher
+        // and skip the remaining UserJoined subscribers (and worse, could
+        // destabilise the engine update tick). Trap and log instead.
+        try
+        {
+            _eventBus?.Emit(new UserJoinedSession
+            {
+                SessionId = Instance.SessionId,
+                UserId = user.UserID,
+                UserName = user.UserName ?? "",
+            });
+        }
+        catch (Exception ex)
+        {
+            UniLog.Warning($"HostEventBus.Emit(UserJoinedSession) threw: {ex}");
+        }
+    }
+
+    private void OnUserLeft(FrooxEngine.User user)
+    {
+        if (user.IsLocalUser || user.IsHost || string.IsNullOrEmpty(user.UserID)) return;
+
+        try
+        {
+            _eventBus?.Emit(new UserLeftSession
+            {
+                SessionId = Instance.SessionId,
+                UserId = user.UserID,
+                UserName = user.UserName ?? "",
+            });
+        }
+        catch (Exception ex)
+        {
+            UniLog.Warning($"HostEventBus.Emit(UserLeftSession) threw: {ex}");
+        }
     }
 
     public ExtendedWorldStartupParameters GenerateStartupParameters()

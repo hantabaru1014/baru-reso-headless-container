@@ -138,6 +138,10 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ResoniteLinkStreamResponse> __Marshaller_headless_v1_ResoniteLinkStreamResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ResoniteLinkStreamResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.WatchHostEventsRequest> __Marshaller_headless_v1_WatchHostEventsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.WatchHostEventsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.HostEvent> __Marshaller_headless_v1_HostEvent = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.HostEvent.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoRequest> __Marshaller_headless_v1_GetAccountInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoResponse> __Marshaller_headless_v1_GetAccountInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoResponse.Parser));
@@ -355,6 +359,14 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_ResoniteLinkStreamResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.WatchHostEventsRequest, global::Headless.Rpc.HostEvent> __Method_WatchHostEvents = new grpc::Method<global::Headless.Rpc.WatchHostEventsRequest, global::Headless.Rpc.HostEvent>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "WatchHostEvents",
+        __Marshaller_headless_v1_WatchHostEventsRequest,
+        __Marshaller_headless_v1_HostEvent);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse> __Method_GetAccountInfo = new grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
@@ -562,6 +574,19 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task ResoniteLinkStream(grpc::IAsyncStreamReader<global::Headless.Rpc.ResoniteLinkStreamRequest> requestStream, grpc::IServerStreamWriter<global::Headless.Rpc.ResoniteLinkStreamResponse> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task WatchHostEvents(global::Headless.Rpc.WatchHostEventsRequest request, grpc::IServerStreamWriter<global::Headless.Rpc.HostEvent> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -1090,6 +1115,30 @@ namespace Headless.Rpc {
         return CallInvoker.AsyncDuplexStreamingCall(__Method_ResoniteLinkStream, null, options);
       }
       /// <summary>
+      /// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::Headless.Rpc.HostEvent> WatchHostEvents(global::Headless.Rpc.WatchHostEventsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return WatchHostEvents(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::Headless.Rpc.HostEvent> WatchHostEvents(global::Headless.Rpc.WatchHostEventsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_WatchHostEvents, null, options, request);
+      }
+      /// <summary>
       /// Cloud系
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -1314,6 +1363,7 @@ namespace Headless.Rpc {
           .AddMethod(__Method_GetStartupConfigToRestore, serviceImpl.GetStartupConfigToRestore)
           .AddMethod(__Method_DownloadSessionWorld, serviceImpl.DownloadSessionWorld)
           .AddMethod(__Method_ResoniteLinkStream, serviceImpl.ResoniteLinkStream)
+          .AddMethod(__Method_WatchHostEvents, serviceImpl.WatchHostEvents)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
           .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
           .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo)
@@ -1354,6 +1404,7 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_GetStartupConfigToRestore, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetStartupConfigToRestoreRequest, global::Headless.Rpc.GetStartupConfigToRestoreResponse>(serviceImpl.GetStartupConfigToRestore));
       serviceBinder.AddMethod(__Method_DownloadSessionWorld, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Headless.Rpc.DownloadSessionWorldRequest, global::Headless.Rpc.DownloadSessionWorldResponse>(serviceImpl.DownloadSessionWorld));
       serviceBinder.AddMethod(__Method_ResoniteLinkStream, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::Headless.Rpc.ResoniteLinkStreamRequest, global::Headless.Rpc.ResoniteLinkStreamResponse>(serviceImpl.ResoniteLinkStream));
+      serviceBinder.AddMethod(__Method_WatchHostEvents, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Headless.Rpc.WatchHostEventsRequest, global::Headless.Rpc.HostEvent>(serviceImpl.WatchHostEvents));
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));
       serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));

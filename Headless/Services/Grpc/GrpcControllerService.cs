@@ -1,6 +1,7 @@
 using System.Reflection;
 using FrooxEngine;
 using Grpc.Core;
+using Headless.Events;
 using Headless.Libs;
 using Headless.Rpc;
 
@@ -11,6 +12,7 @@ public partial class GrpcControllerService : HeadlessControlService.HeadlessCont
     private readonly Engine _engine;
     private readonly WorldService _worldService;
     private readonly IFrooxEngineRunnerService _runnerService;
+    private readonly HostEventBus _eventBus;
     private readonly ILogger<GrpcControllerService> _logger;
     private readonly ILoggerFactory _loggerFactory;
     private readonly string _appVersion;
@@ -22,6 +24,7 @@ public partial class GrpcControllerService : HeadlessControlService.HeadlessCont
         Engine engine,
         WorldService worldService,
         IFrooxEngineRunnerService runnerService,
+        HostEventBus eventBus,
         ILogger<GrpcControllerService> logger,
         ILoggerFactory loggerFactory
     )
@@ -29,6 +32,7 @@ public partial class GrpcControllerService : HeadlessControlService.HeadlessCont
         _engine = engine;
         _worldService = worldService;
         _runnerService = runnerService;
+        _eventBus = eventBus;
         _logger = logger;
         _loggerFactory = loggerFactory;
 
