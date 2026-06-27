@@ -66,6 +66,102 @@ public class SessionLifecycleTests
     }
 
     [Fact]
+    public async Task GetSession_ReturnsStartedSession()
+    {
+        // Happy path companion to GetSession_NonExistentId. Catches
+        // ToProto() regressions when the Session message gains fields
+        // or when RunningSession property bindings drift from the SDK.
+        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        var client = await ReadyClientAsync(channel);
+
+        var sessionId = await StartGridSessionAsync(client);
+        try
+        {
+            var resp = await client.GetSessionAsync(new GetSessionRequest { SessionId = sessionId });
+            Assert.NotNull(resp.Session);
+            Assert.Equal(sessionId, resp.Session.Id);
+            Assert.NotNull(resp.Session.StartupParameters);
+            // started_at is populated from RunningSession.StartedAt; must be
+            // non-null even for guest sessions.
+            Assert.NotNull(resp.Session.StartedAt);
+        }
+        finally
+        {
+            await client.StopSessionAsync(new StopSessionRequest { SessionId = sessionId });
+        }
+    }
+
+    [Fact]
+    public async Task UpdateSessionParameters_MultipleScalarFields_RoundTripThroughGetSession()
+    {
+        // Exercises more of the engine setters than the Name-only happy
+        // path: description / max_users / hide_from_public_listing /
+        // save_on_exit / access_level. Any of those property names
+        // changing in the SDK would surface here.
+        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        var client = await ReadyClientAsync(channel);
+
+        var sessionId = await StartGridSessionAsync(client);
+        try
+        {
+            const string newDescription = "description-by-test";
+            const int newMax = 16;
+
+            await client.UpdateSessionParametersAsync(new UpdateSessionParametersRequest
+            {
+                SessionId = sessionId,
+                Description = newDescription,
+                MaxUsers = newMax,
+                HideFromPublicListing = true,
+                SaveOnExit = false,
+                AccessLevel = AccessLevel.Lan,
+            });
+
+            // Engine update thread is asynchronous w.r.t. the RPC reply.
+            // Poll for description (the easiest-to-observe field).
+            var ok = await PollUntilAsync(async () =>
+            {
+                var r = await client.GetSessionAsync(new GetSessionRequest { SessionId = sessionId });
+                return r.Session.Description == newDescription
+                       && r.Session.MaxUsers == newMax
+                       && r.Session.HideFromPublicListing
+                       && r.Session.AccessLevel == AccessLevel.Lan
+                       && !r.Session.SaveOnExit;
+            }, TimeSpan.FromSeconds(10));
+            Assert.True(ok, "UpdateSessionParameters did not propagate to GetSession");
+        }
+        finally
+        {
+            await client.StopSessionAsync(new StopSessionRequest { SessionId = sessionId });
+        }
+    }
+
+    [Fact]
+    public async Task UpdateSessionParameters_InvalidCloudVariablePath_ReturnsInvalidArgument()
+    {
+        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        var client = await ReadyClientAsync(channel);
+
+        var sessionId = await StartGridSessionAsync(client);
+        try
+        {
+            var ex = await Assert.ThrowsAsync<RpcException>(async () =>
+            {
+                await client.UpdateSessionParametersAsync(new UpdateSessionParametersRequest
+                {
+                    SessionId = sessionId,
+                    RoleCloudVariable = "@@@ definitely not a valid cloud variable path",
+                });
+            });
+            Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
+        }
+        finally
+        {
+            await client.StopSessionAsync(new StopSessionRequest { SessionId = sessionId });
+        }
+    }
+
+    [Fact]
     public async Task UpdateSessionParameters_UpdatesNameAndReflectsInGetSession()
     {
         using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
@@ -165,6 +261,17 @@ public class SessionLifecycleTests
             await Task.Delay(TimeSpan.FromMilliseconds(200));
         }
         return last;
+    }
+
+    private static async Task<bool> PollUntilAsync(Func<Task<bool>> predicate, TimeSpan timeout)
+    {
+        var deadline = DateTime.UtcNow + timeout;
+        while (DateTime.UtcNow < deadline)
+        {
+            if (await predicate()) return true;
+            await Task.Delay(TimeSpan.FromMilliseconds(200));
+        }
+        return false;
     }
 
     private static async Task WaitForSessionGoneAsync(
