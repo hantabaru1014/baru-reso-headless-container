@@ -45,6 +45,7 @@
     <Compile Include="../Headless/Events/HostEventBus.cs" Link="Events/HostEventBus.cs" />
     <Compile Include="../Headless/Events/EventBufferOverflowException.cs" Link="Events/EventBufferOverflowException.cs" />
     <Compile Include="../Headless/Events/SubscriberDroppedException.cs" Link="Events/SubscriberDroppedException.cs" />
+    <Compile Include="../Headless/Configuration/ApplicationConfig.cs" Link="Configuration/ApplicationConfig.cs" />
   </ItemGroup>
 
 </Project>
