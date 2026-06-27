@@ -156,18 +156,13 @@ public class SessionUserTests
             });
             Assert.NotNull(allowResp);
 
-            // InviteUser by username: contacts list is empty in guest mode,
-            // FindContact returns null. The controller either maps that to
-            // InvalidArgument or surfaces the NRE as Unknown — either way
-            // we walk Cloud.Contacts.FindContact end-to-end.
-            await Assert.ThrowsAsync<RpcException>(async () =>
-            {
-                await client.InviteUserAsync(new InviteUserRequest
-                {
-                    SessionId = sessionId,
-                    UserName = "definitely-not-a-real-contact",
-                });
-            });
+            // (InviteUser-by-username is intentionally NOT asserted here:
+            // in guest mode FindContact returns null and the controller
+            // dereferences it, yielding RpcException(Unknown). Asserting
+            // "any RpcException" would also accept arbitrary handler
+            // crashes, so the test would green even if the SDK removed
+            // FindContact entirely. Needs a logged-in fixture to be
+            // meaningful.)
 
             // UpdateUserRole with an invalid role name: the engine coroutine
             // looks up Permissions.Roles and returns InvalidArgument when
