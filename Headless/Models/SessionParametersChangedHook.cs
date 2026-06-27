@@ -12,11 +12,20 @@ namespace Headless.Models;
 /// changes. Coalesces bursts with a short debounce so a single user-driven
 /// edit doesn't fan out into N events.
 ///
-/// Non-sync world fields (SaveOnExit / IdleRestartInterval /
-/// ForceFullUpdateCycle on World itself) can't fire Changed, so the only
-/// path that observes them is an explicit <see cref="RequestEmit"/> call
-/// from whoever applied the change (the gRPC UpdateSessionParameters
-/// handler is the in-tree caller).
+/// Two notification paths feed the same debounce timer:
+///   - Sync fields on <c>WorldConfiguration</c> (Name / Description /
+///     AccessLevel / MaxUsers / HideFromListing / AwayKick* /
+///     AutoSave* / Tags) fire Changed automatically.
+///   - Non-sync world setters (SaveOnExit / IdleRestartInterval /
+///     ForceFullUpdateCycle (= !AutoSleep) on <c>World</c> itself; also
+///     <c>World.Tags = ...</c> which performs a list reassignment that
+///     bypasses the SyncFieldList) won't fire — callers that mutate
+///     them must invoke <see cref="RequestEmit"/>. Today the only such
+///     caller is the gRPC UpdateSessionParameters handler.
+///
+/// When both paths fire for the same logical edit, the
+/// <c>System.Threading.Timer.Change</c> call collapses them into a
+/// single emit at the end of the debounce window.
 /// </summary>
 internal sealed class SessionParametersChangedHook : IDisposable
 {
@@ -42,7 +51,6 @@ internal sealed class SessionParametersChangedHook : IDisposable
         _timer = new Timer(OnDebounceElapsed, null, Timeout.Infinite, Timeout.Infinite);
 
         var cfg = session.Instance.Configuration;
-        // 値を持つ Sync<T> 系。Configuration の Sync field を直接購読する
         Subscribe(cfg.WorldName);
         Subscribe(cfg.WorldDescription);
         Subscribe(cfg.AccessLevel);
@@ -52,7 +60,6 @@ internal sealed class SessionParametersChangedHook : IDisposable
         Subscribe(cfg.AwayKickMinutes);
         Subscribe(cfg.AutoSaveEnabled);
         Subscribe(cfg.AutoSaveInterval);
-        // IList 系
         Subscribe(cfg.WorldTags);
     }
 
@@ -79,6 +86,23 @@ internal sealed class SessionParametersChangedHook : IDisposable
 
     private void OnDebounceElapsed(object? _)
     {
+        if (_disposed != 0) return;
+        // ToProto reads Tags (sync list) and other world state; engine の update
+        // スレッドで mutate される最中に列挙すると inconsistent な snapshot に
+        // なりうるので、世界の update スレッドに乗せてからスナップショットを取る
+        try
+        {
+            _ = _session.Instance.Coroutines.StartTask(EmitSnapshotAsync);
+        }
+        catch (Exception ex)
+        {
+            UniLog.Warning($"SessionParametersChangedHook: failed to schedule snapshot task: {ex}");
+        }
+    }
+
+    private async Task EmitSnapshotAsync()
+    {
+        await default(ToWorld);
         if (_disposed != 0) return;
         try
         {

@@ -240,7 +240,12 @@ message SaveSessionWorldRequest {
   string session_id = 1;
 }
 
-message SaveSessionWorldResponse {}
+message SaveSessionWorldResponse {
+  // 保存後の世界 record URL。preset 由来で初回 save された場合に
+  // controller が即座に最新 URL を得られるよう、save 完了時点の
+  // World.RecordURL を同期的に返す
+  string saved_world_url = 1;
+}
 
 message SaveAsSessionWorldRequest {
   enum SaveAsType {

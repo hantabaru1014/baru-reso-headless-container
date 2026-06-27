@@ -67,7 +67,13 @@ public partial class GrpcControllerService
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
         await _worldService.SaveWorldAsync(session);
-        return new SaveSessionWorldResponse();
+        // preset 由来で初回 save された world は CorrespondingRecord が新規生成され
+        // World.RecordURL が変わる。WorldSaved event 経由でも届くが、
+        // OVERWRITE 直後の controller 応答に間に合うよう同期的にも返す
+        return new SaveSessionWorldResponse
+        {
+            SavedWorldUrl = session.Instance.RecordURL?.ToString() ?? "",
+        };
     }
 
     public override async Task<SaveAsSessionWorldResponse> SaveAsSessionWorld(SaveAsSessionWorldRequest request, ServerCallContext context)
