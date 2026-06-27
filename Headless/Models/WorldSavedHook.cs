@@ -46,7 +46,19 @@ internal sealed class WorldSavedHook : IWorldEventReceiver, IDisposable
         // propagate back into FrooxEngine's receiver loop.
         try
         {
-            _eventBus.Emit(new WorldSaved { SessionId = _world.SessionId });
+            var worldUrl = _world.RecordURL?.ToString();
+            if (string.IsNullOrEmpty(worldUrl))
+            {
+                // 観測性のため: 通常 save 完了直後に RecordURL が null になるケースは
+                // 想定外。controller の URL 更新が空文字で skip されたときの
+                // 根本原因を辿れるように 1 行残しておく
+                UniLog.Warning($"WorldSavedHook: RecordURL is null after save for session {_world.SessionId}");
+            }
+            _eventBus.Emit(new WorldSaved
+            {
+                SessionId = _world.SessionId,
+                WorldUrl = worldUrl ?? "",
+            });
         }
         catch (Exception ex)
         {

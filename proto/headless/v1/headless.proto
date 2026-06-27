@@ -240,7 +240,12 @@ message SaveSessionWorldRequest {
   string session_id = 1;
 }
 
-message SaveSessionWorldResponse {}
+message SaveSessionWorldResponse {
+  // 保存後の世界 record URL。preset 由来で初回 save された場合に
+  // controller が即座に最新 URL を得られるよう、save 完了時点の
+  // World.RecordURL を同期的に返す
+  string saved_world_url = 1;
+}
 
 message SaveAsSessionWorldRequest {
   enum SaveAsType {
@@ -365,12 +370,15 @@ message HostEvent {
     UserJoinedSession user_joined_session = 12;
     UserLeftSession user_left_session = 13;
     WorldSaved world_saved = 14;
+    SessionParametersChanged session_parameters_changed = 15;
   }
 }
 
 message SessionStarted {
   string session_id = 1;
   string session_name = 2;
+  // Instance.Time.LocalSessionBeginTime に基づく実際の session 開始時刻
+  google.protobuf.Timestamp started_at = 3;
 }
 
 message SessionEnded {
@@ -391,6 +399,16 @@ message UserLeftSession {
 
 message WorldSaved {
   string session_id = 1;
+  // 保存後のレコードURL。Save as 等で世界の URL が変わった場合があるので毎回送る
+  string world_url = 2;
+}
+
+// session の name/description/access_level/max_users/tags/hide_from_public_listing/
+// away_kick_minutes/idle_restart_interval_seconds/save_on_exit/auto_save_interval_seconds/
+// auto_sleep などが変化したときに emit する。差分通知ではなく現在のスナップショットを送る
+message SessionParametersChanged {
+  string session_id = 1;
+  Session session = 2;
 }
 
 // models
