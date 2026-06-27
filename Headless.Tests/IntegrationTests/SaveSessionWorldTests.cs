@@ -87,27 +87,27 @@ public class SaveSessionWorldTests
     }
 
     [Fact]
-    public async Task SaveAsSessionWorld_GuestMode_ReturnsInternal()
+    public async Task SaveAsSessionWorld_OnLiveSession_ReturnsRecordUrl()
     {
-        // SaveWorldCopy needs a current user id to clone the record under;
-        // in guest mode it returns null and the controller surfaces that
-        // as Internal. Confirms the SDK still rejects the guest path and
-        // we still translate the null to the documented Internal status.
+        // SaveWorldCopy(ownerId: null) is allowed even in guest mode —
+        // the HasPotentialAccess guard is skipped when ownerId is null,
+        // so the engine writes a local record and the controller returns
+        // its URL. Exercises the full Userspace.SaveWorld / RecordHelper
+        // pipeline end-to-end.
         using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var sessionId = await GrpcTestHelpers.StartGridSessionAsync(client);
         try
         {
-            var ex = await Assert.ThrowsAsync<RpcException>(async () =>
+            var resp = await client.SaveAsSessionWorldAsync(new SaveAsSessionWorldRequest
             {
-                await client.SaveAsSessionWorldAsync(new SaveAsSessionWorldRequest
-                {
-                    SessionId = sessionId,
-                    Type = SaveAsSessionWorldRequest.Types.SaveAsType.SaveAs,
-                });
+                SessionId = sessionId,
+                Type = SaveAsSessionWorldRequest.Types.SaveAsType.SaveAs,
             });
-            Assert.Equal(StatusCode.Internal, ex.StatusCode);
+            Assert.NotNull(resp);
+            Assert.False(string.IsNullOrEmpty(resp.SavedRecordUrl),
+                "SaveAs must return the saved record URL");
         }
         finally
         {
