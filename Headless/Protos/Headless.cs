@@ -80,6 +80,8 @@ namespace Headless.Rpc {
             "c2UicQoOQmFuVXNlclJlcXVlc3QSHQoKc2Vzc2lvbl9pZBgBIAEoCVIJc2Vz",
             "c2lvbklkEhkKB3VzZXJfaWQYAiABKAlIAFIGdXNlcklkEh0KCXVzZXJfbmFt",
             "ZRgDIAEoCUgAUgh1c2VyTmFtZUIGCgR1c2VyIhEKD0JhblVzZXJSZXNwb25z",
+            "ZSJDChBTcGF3bkl0ZW1SZXF1ZXN0Eh0KCnNlc3Npb25faWQYASABKAlSCXNl",
+            "c3Npb25JZBIQCgN1cmwYAiABKAlSA3VybCITChFTcGF3bkl0ZW1SZXNwb25z",
             "ZSKoAQoVU2VhcmNoVXNlckluZm9SZXF1ZXN0EhkKB3VzZXJfaWQYASABKAlI",
             "AFIGdXNlcklkEh0KCXVzZXJfbmFtZRgCIAEoCUgAUgh1c2VyTmFtZRIoChBv",
             "bmx5X2luX2NvbnRhY3RzGAMgASgIUg5vbmx5SW5Db250YWN0cxIjCg1wYXJ0",
@@ -330,7 +332,7 @@ namespace Headless.Rpc {
             "Q09OVEFDVF9DSEFUX01FU1NBR0VfVFlQRV9URVhUEAESJAogQ09OVEFDVF9D",
             "SEFUX01FU1NBR0VfVFlQRV9PQkpFQ1QQAhIjCh9DT05UQUNUX0NIQVRfTUVT",
             "U0FHRV9UWVBFX1NPVU5EEAMSLAooQ09OVEFDVF9DSEFUX01FU1NBR0VfVFlQ",
-            "RV9TRVNTSU9OX0lOVklURRAEMqIXChZIZWFkbGVzc0NvbnRyb2xTZXJ2aWNl",
+            "RV9TRVNTSU9OX0lOVklURRAEMu4XChZIZWFkbGVzc0NvbnRyb2xTZXJ2aWNl",
             "EkcKCEdldEFib3V0EhwuaGVhZGxlc3MudjEuR2V0QWJvdXRSZXF1ZXN0Gh0u",
             "aGVhZGxlc3MudjEuR2V0QWJvdXRSZXNwb25zZRJKCglHZXRTdGF0dXMSHS5o",
             "ZWFkbGVzcy52MS5HZXRTdGF0dXNSZXF1ZXN0Gh4uaGVhZGxlc3MudjEuR2V0",
@@ -361,43 +363,44 @@ namespace Headless.Rpc {
             "SW5TZXNzaW9uUmVzcG9uc2USRwoIS2lja1VzZXISHC5oZWFkbGVzcy52MS5L",
             "aWNrVXNlclJlcXVlc3QaHS5oZWFkbGVzcy52MS5LaWNrVXNlclJlc3BvbnNl",
             "EkQKB0JhblVzZXISGy5oZWFkbGVzcy52MS5CYW5Vc2VyUmVxdWVzdBocLmhl",
-            "YWRsZXNzLnYxLkJhblVzZXJSZXNwb25zZRJcCg9HZXRIb3N0U2V0dGluZ3MS",
-            "Iy5oZWFkbGVzcy52MS5HZXRIb3N0U2V0dGluZ3NSZXF1ZXN0GiQuaGVhZGxl",
-            "c3MudjEuR2V0SG9zdFNldHRpbmdzUmVzcG9uc2USZQoSVXBkYXRlSG9zdFNl",
-            "dHRpbmdzEiYuaGVhZGxlc3MudjEuVXBkYXRlSG9zdFNldHRpbmdzUmVxdWVz",
-            "dBonLmhlYWRsZXNzLnYxLlVwZGF0ZUhvc3RTZXR0aW5nc1Jlc3BvbnNlElwK",
-            "D0FsbG93SG9zdEFjY2VzcxIjLmhlYWRsZXNzLnYxLkFsbG93SG9zdEFjY2Vz",
-            "c1JlcXVlc3QaJC5oZWFkbGVzcy52MS5BbGxvd0hvc3RBY2Nlc3NSZXNwb25z",
-            "ZRJZCg5EZW55SG9zdEFjY2VzcxIiLmhlYWRsZXNzLnYxLkRlbnlIb3N0QWNj",
-            "ZXNzUmVxdWVzdBojLmhlYWRsZXNzLnYxLkRlbnlIb3N0QWNjZXNzUmVzcG9u",
-            "c2USegoZR2V0U3RhcnR1cENvbmZpZ1RvUmVzdG9yZRItLmhlYWRsZXNzLnYx",
-            "LkdldFN0YXJ0dXBDb25maWdUb1Jlc3RvcmVSZXF1ZXN0Gi4uaGVhZGxlc3Mu",
-            "djEuR2V0U3RhcnR1cENvbmZpZ1RvUmVzdG9yZVJlc3BvbnNlEm0KFERvd25s",
-            "b2FkU2Vzc2lvbldvcmxkEiguaGVhZGxlc3MudjEuRG93bmxvYWRTZXNzaW9u",
-            "V29ybGRSZXF1ZXN0GikuaGVhZGxlc3MudjEuRG93bmxvYWRTZXNzaW9uV29y",
-            "bGRSZXNwb25zZTABEmkKElJlc29uaXRlTGlua1N0cmVhbRImLmhlYWRsZXNz",
-            "LnYxLlJlc29uaXRlTGlua1N0cmVhbVJlcXVlc3QaJy5oZWFkbGVzcy52MS5S",
-            "ZXNvbml0ZUxpbmtTdHJlYW1SZXNwb25zZSgBMAESUAoPV2F0Y2hIb3N0RXZl",
-            "bnRzEiMuaGVhZGxlc3MudjEuV2F0Y2hIb3N0RXZlbnRzUmVxdWVzdBoWLmhl",
-            "YWRsZXNzLnYxLkhvc3RFdmVudDABElkKDkdldEFjY291bnRJbmZvEiIuaGVh",
-            "ZGxlc3MudjEuR2V0QWNjb3VudEluZm9SZXF1ZXN0GiMuaGVhZGxlc3MudjEu",
-            "R2V0QWNjb3VudEluZm9SZXNwb25zZRJZCg5GZXRjaFdvcmxkSW5mbxIiLmhl",
-            "YWRsZXNzLnYxLkZldGNoV29ybGRJbmZvUmVxdWVzdBojLmhlYWRsZXNzLnYx",
-            "LkZldGNoV29ybGRJbmZvUmVzcG9uc2USWQoOU2VhcmNoVXNlckluZm8SIi5o",
-            "ZWFkbGVzcy52MS5TZWFyY2hVc2VySW5mb1JlcXVlc3QaIy5oZWFkbGVzcy52",
-            "MS5TZWFyY2hVc2VySW5mb1Jlc3BvbnNlEmIKEUdldEZyaWVuZFJlcXVlc3Rz",
-            "EiUuaGVhZGxlc3MudjEuR2V0RnJpZW5kUmVxdWVzdHNSZXF1ZXN0GiYuaGVh",
-            "ZGxlc3MudjEuR2V0RnJpZW5kUmVxdWVzdHNSZXNwb25zZRJrChRBY2NlcHRG",
-            "cmllbmRSZXF1ZXN0cxIoLmhlYWRsZXNzLnYxLkFjY2VwdEZyaWVuZFJlcXVl",
-            "c3RzUmVxdWVzdBopLmhlYWRsZXNzLnYxLkFjY2VwdEZyaWVuZFJlcXVlc3Rz",
-            "UmVzcG9uc2USUwoMTGlzdENvbnRhY3RzEiAuaGVhZGxlc3MudjEuTGlzdENv",
-            "bnRhY3RzUmVxdWVzdBohLmhlYWRsZXNzLnYxLkxpc3RDb250YWN0c1Jlc3Bv",
-            "bnNlEmUKEkdldENvbnRhY3RNZXNzYWdlcxImLmhlYWRsZXNzLnYxLkdldENv",
-            "bnRhY3RNZXNzYWdlc1JlcXVlc3QaJy5oZWFkbGVzcy52MS5HZXRDb250YWN0",
-            "TWVzc2FnZXNSZXNwb25zZRJlChJTZW5kQ29udGFjdE1lc3NhZ2USJi5oZWFk",
-            "bGVzcy52MS5TZW5kQ29udGFjdE1lc3NhZ2VSZXF1ZXN0GicuaGVhZGxlc3Mu",
-            "djEuU2VuZENvbnRhY3RNZXNzYWdlUmVzcG9uc2VCD6oCDEhlYWRsZXNzLlJw",
-            "Y2IGcHJvdG8z"));
+            "YWRsZXNzLnYxLkJhblVzZXJSZXNwb25zZRJKCglTcGF3bkl0ZW0SHS5oZWFk",
+            "bGVzcy52MS5TcGF3bkl0ZW1SZXF1ZXN0Gh4uaGVhZGxlc3MudjEuU3Bhd25J",
+            "dGVtUmVzcG9uc2USXAoPR2V0SG9zdFNldHRpbmdzEiMuaGVhZGxlc3MudjEu",
+            "R2V0SG9zdFNldHRpbmdzUmVxdWVzdBokLmhlYWRsZXNzLnYxLkdldEhvc3RT",
+            "ZXR0aW5nc1Jlc3BvbnNlEmUKElVwZGF0ZUhvc3RTZXR0aW5ncxImLmhlYWRs",
+            "ZXNzLnYxLlVwZGF0ZUhvc3RTZXR0aW5nc1JlcXVlc3QaJy5oZWFkbGVzcy52",
+            "MS5VcGRhdGVIb3N0U2V0dGluZ3NSZXNwb25zZRJcCg9BbGxvd0hvc3RBY2Nl",
+            "c3MSIy5oZWFkbGVzcy52MS5BbGxvd0hvc3RBY2Nlc3NSZXF1ZXN0GiQuaGVh",
+            "ZGxlc3MudjEuQWxsb3dIb3N0QWNjZXNzUmVzcG9uc2USWQoORGVueUhvc3RB",
+            "Y2Nlc3MSIi5oZWFkbGVzcy52MS5EZW55SG9zdEFjY2Vzc1JlcXVlc3QaIy5o",
+            "ZWFkbGVzcy52MS5EZW55SG9zdEFjY2Vzc1Jlc3BvbnNlEnoKGUdldFN0YXJ0",
+            "dXBDb25maWdUb1Jlc3RvcmUSLS5oZWFkbGVzcy52MS5HZXRTdGFydHVwQ29u",
+            "ZmlnVG9SZXN0b3JlUmVxdWVzdBouLmhlYWRsZXNzLnYxLkdldFN0YXJ0dXBD",
+            "b25maWdUb1Jlc3RvcmVSZXNwb25zZRJtChREb3dubG9hZFNlc3Npb25Xb3Js",
+            "ZBIoLmhlYWRsZXNzLnYxLkRvd25sb2FkU2Vzc2lvbldvcmxkUmVxdWVzdBop",
+            "LmhlYWRsZXNzLnYxLkRvd25sb2FkU2Vzc2lvbldvcmxkUmVzcG9uc2UwARJp",
+            "ChJSZXNvbml0ZUxpbmtTdHJlYW0SJi5oZWFkbGVzcy52MS5SZXNvbml0ZUxp",
+            "bmtTdHJlYW1SZXF1ZXN0GicuaGVhZGxlc3MudjEuUmVzb25pdGVMaW5rU3Ry",
+            "ZWFtUmVzcG9uc2UoATABElAKD1dhdGNoSG9zdEV2ZW50cxIjLmhlYWRsZXNz",
+            "LnYxLldhdGNoSG9zdEV2ZW50c1JlcXVlc3QaFi5oZWFkbGVzcy52MS5Ib3N0",
+            "RXZlbnQwARJZCg5HZXRBY2NvdW50SW5mbxIiLmhlYWRsZXNzLnYxLkdldEFj",
+            "Y291bnRJbmZvUmVxdWVzdBojLmhlYWRsZXNzLnYxLkdldEFjY291bnRJbmZv",
+            "UmVzcG9uc2USWQoORmV0Y2hXb3JsZEluZm8SIi5oZWFkbGVzcy52MS5GZXRj",
+            "aFdvcmxkSW5mb1JlcXVlc3QaIy5oZWFkbGVzcy52MS5GZXRjaFdvcmxkSW5m",
+            "b1Jlc3BvbnNlElkKDlNlYXJjaFVzZXJJbmZvEiIuaGVhZGxlc3MudjEuU2Vh",
+            "cmNoVXNlckluZm9SZXF1ZXN0GiMuaGVhZGxlc3MudjEuU2VhcmNoVXNlcklu",
+            "Zm9SZXNwb25zZRJiChFHZXRGcmllbmRSZXF1ZXN0cxIlLmhlYWRsZXNzLnYx",
+            "LkdldEZyaWVuZFJlcXVlc3RzUmVxdWVzdBomLmhlYWRsZXNzLnYxLkdldEZy",
+            "aWVuZFJlcXVlc3RzUmVzcG9uc2USawoUQWNjZXB0RnJpZW5kUmVxdWVzdHMS",
+            "KC5oZWFkbGVzcy52MS5BY2NlcHRGcmllbmRSZXF1ZXN0c1JlcXVlc3QaKS5o",
+            "ZWFkbGVzcy52MS5BY2NlcHRGcmllbmRSZXF1ZXN0c1Jlc3BvbnNlElMKDExp",
+            "c3RDb250YWN0cxIgLmhlYWRsZXNzLnYxLkxpc3RDb250YWN0c1JlcXVlc3Qa",
+            "IS5oZWFkbGVzcy52MS5MaXN0Q29udGFjdHNSZXNwb25zZRJlChJHZXRDb250",
+            "YWN0TWVzc2FnZXMSJi5oZWFkbGVzcy52MS5HZXRDb250YWN0TWVzc2FnZXNS",
+            "ZXF1ZXN0GicuaGVhZGxlc3MudjEuR2V0Q29udGFjdE1lc3NhZ2VzUmVzcG9u",
+            "c2USZQoSU2VuZENvbnRhY3RNZXNzYWdlEiYuaGVhZGxlc3MudjEuU2VuZENv",
+            "bnRhY3RNZXNzYWdlUmVxdWVzdBonLmhlYWRsZXNzLnYxLlNlbmRDb250YWN0",
+            "TWVzc2FnZVJlc3BvbnNlQg+qAgxIZWFkbGVzcy5ScGNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Headless.Rpc.WorldBinaryFormat), typeof(global::Headless.Rpc.AccessLevel), typeof(global::Headless.Rpc.ContactChatMessageType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -425,6 +428,8 @@ namespace Headless.Rpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.KickUserResponse), global::Headless.Rpc.KickUserResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.BanUserRequest), global::Headless.Rpc.BanUserRequest.Parser, new[]{ "SessionId", "UserId", "UserName" }, new[]{ "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.BanUserResponse), global::Headless.Rpc.BanUserResponse.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.SpawnItemRequest), global::Headless.Rpc.SpawnItemRequest.Parser, new[]{ "SessionId", "Url" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.SpawnItemResponse), global::Headless.Rpc.SpawnItemResponse.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.SearchUserInfoRequest), global::Headless.Rpc.SearchUserInfoRequest.Parser, new[]{ "UserId", "UserName", "OnlyInContacts", "PartialMatch" }, new[]{ "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.SearchUserInfoResponse), global::Headless.Rpc.SearchUserInfoResponse.Parser, new[]{ "Users" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Headless.Rpc.GetAccountInfoRequest), global::Headless.Rpc.GetAccountInfoRequest.Parser, null, null, null, null, null),
@@ -6062,6 +6067,405 @@ namespace Headless.Rpc {
   }
 
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class SpawnItemRequest : pb::IMessage<SpawnItemRequest>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SpawnItemRequest> _parser = new pb::MessageParser<SpawnItemRequest>(() => new SpawnItemRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SpawnItemRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[24]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SpawnItemRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SpawnItemRequest(SpawnItemRequest other) : this() {
+      sessionId_ = other.sessionId_;
+      url_ = other.url_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SpawnItemRequest Clone() {
+      return new SpawnItemRequest(this);
+    }
+
+    /// <summary>Field number for the "session_id" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string SessionId {
+      get { return sessionId_; }
+      set {
+        sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "url" field.</summary>
+    public const int UrlFieldNumber = 2;
+    private string url_ = "";
+    /// <summary>
+    /// Resonite Record URL (resrec:// または https://)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Url {
+      get { return url_; }
+      set {
+        url_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as SpawnItemRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(SpawnItemRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (SessionId != other.SessionId) return false;
+      if (Url != other.Url) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+      if (Url.Length != 0) hash ^= Url.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (SessionId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SessionId);
+      }
+      if (Url.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Url);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (SessionId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SessionId);
+      }
+      if (Url.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Url);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (SessionId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+      }
+      if (Url.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Url);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(SpawnItemRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.SessionId.Length != 0) {
+        SessionId = other.SessionId;
+      }
+      if (other.Url.Length != 0) {
+        Url = other.Url;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            SessionId = input.ReadString();
+            break;
+          }
+          case 18: {
+            Url = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            SessionId = input.ReadString();
+            break;
+          }
+          case 18: {
+            Url = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class SpawnItemResponse : pb::IMessage<SpawnItemResponse>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SpawnItemResponse> _parser = new pb::MessageParser<SpawnItemResponse>(() => new SpawnItemResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SpawnItemResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[25]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SpawnItemResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SpawnItemResponse(SpawnItemResponse other) : this() {
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SpawnItemResponse Clone() {
+      return new SpawnItemResponse(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as SpawnItemResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(SpawnItemResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(SpawnItemResponse other) {
+      if (other == null) {
+        return;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class SearchUserInfoRequest : pb::IMessage<SearchUserInfoRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6076,7 +6480,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[24]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6446,7 +6850,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[25]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6633,7 +7037,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6794,7 +7198,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7103,7 +7507,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7301,7 +7705,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7784,7 +8188,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7945,7 +8349,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[31]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8180,7 +8584,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[32]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[34]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8341,7 +8745,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[33]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[35]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8613,7 +9017,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[34]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[36]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8774,7 +9178,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[35]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[37]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8935,7 +9339,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[36]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[38]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9096,7 +9500,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[37]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[39]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9283,7 +9687,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[38]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[40]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9481,7 +9885,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[39]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[41]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9688,7 +10092,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[40]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[42]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9895,7 +10299,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[41]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[43]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10102,7 +10506,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[42]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[44]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10300,7 +10704,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[43]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[45]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10461,7 +10865,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[44]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[46]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10659,7 +11063,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[45]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[47]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10862,7 +11266,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[46]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[48]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11111,7 +11515,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[47]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[49]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11310,7 +11714,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[48]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[50]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11656,7 +12060,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[49]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[51]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11854,7 +12258,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[50]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[52]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12187,7 +12591,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[51]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[53]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12348,7 +12752,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[52]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[54]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12583,7 +12987,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[53]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[55]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12744,7 +13148,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[54]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[56]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13114,7 +13518,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[55]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[57]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13316,7 +13720,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[56]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[58]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14501,7 +14905,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[57]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[59]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14662,7 +15066,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[58]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[60]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14860,7 +15264,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[59]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[61]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15047,7 +15451,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[60]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[62]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15267,7 +15671,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[61]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[63]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15856,7 +16260,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[62]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[64]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16140,7 +16544,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[63]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[65]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16338,7 +16742,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[64]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[66]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16610,7 +17014,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[65]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[67]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16882,7 +17286,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[66]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[68]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17125,7 +17529,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[67]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[69]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17369,7 +17773,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[68]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[70]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17678,7 +18082,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[69]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[71]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17950,7 +18354,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[70]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[72]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19022,7 +19426,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[71]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[73]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19258,7 +19662,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[72]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[74]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20749,7 +21153,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[73]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[75]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -21150,7 +21554,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[74]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[76]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -21421,7 +21825,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[75]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[77]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -21867,7 +22271,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[76]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[78]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -22107,7 +22511,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[77]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[79]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -22456,7 +22860,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[78]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[80]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -22654,7 +23058,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[79]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[81]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23003,7 +23407,7 @@ namespace Headless.Rpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[80]; }
+      get { return global::Headless.Rpc.HeadlessReflection.Descriptor.MessageTypes[82]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
