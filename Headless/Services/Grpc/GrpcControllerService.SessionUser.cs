@@ -175,4 +175,69 @@ public partial class GrpcControllerService
 
         return Task.FromResult(new BanUserResponse());
     }
+
+    public override async Task<ListBansResponse> ListBans(ListBansRequest request, ServerCallContext context)
+    {
+        // Ban はホスト単位の UserRestrictionsSettings に保持されているためセッション ID は不要
+        var restrictions = await Settings.GetActiveSettingAsync<UserRestrictionsSettings>();
+        var bans = restrictions.Entries
+            .Where(entry => entry.IsFullyBanned.Value)
+            .Select(entry => new Rpc.BanEntry
+            {
+                UserId = entry.UserId.Value ?? string.Empty,
+                UserName = entry.Username.Value ?? string.Empty,
+                MachineIds = { entry.MachineIDs },
+            });
+        return new ListBansResponse
+        {
+            Bans = { bans }
+        };
+    }
+
+    public override async Task<UnbanUserResponse> UnbanUser(UnbanUserRequest request, ServerCallContext context)
+    {
+        var restrictions = await Settings.GetActiveSettingAsync<UserRestrictionsSettings>();
+        UserFingerprint? fingerprint = null;
+        if (request.HasUserId)
+        {
+            // user_id で ban entry を特定して fingerprint を組む
+            var entry = restrictions.Entries.FirstOrDefault(e =>
+                e.IsFullyBanned.Value &&
+                !string.IsNullOrEmpty(e.UserId.Value) &&
+                e.UserId.Value == request.UserId);
+            if (entry is not null)
+            {
+                fingerprint = new UserFingerprint(entry.Username.Value, entry.UserId.Value, null!, null!);
+            }
+        }
+        else if (request.HasUserName)
+        {
+            // Entry の Username は Ban 発行時点のもので、user_id が未セットのこともあるため
+            // username で ban entry を検索する
+            var entry = restrictions.Entries.FirstOrDefault(e =>
+                e.IsFullyBanned.Value &&
+                !string.IsNullOrEmpty(e.Username.Value) &&
+                e.Username.Value.Equals(request.UserName, StringComparison.InvariantCultureIgnoreCase));
+            if (entry is not null)
+            {
+                fingerprint = new UserFingerprint(entry.Username.Value, entry.UserId.Value, null!, null!);
+            }
+        }
+        else
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Require valid user_id or user_name"));
+        }
+        if (fingerprint is null)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, "No matching ban entry found"));
+        }
+
+        // UserspaceWorld 上で BanManager 経由の変更を engine スレッドで実行する
+        Userspace.UserspaceWorld.RunSynchronously(() =>
+        {
+            BanManager.RemoveBan(fingerprint);
+        });
+
+        return new UnbanUserResponse();
+    }
 }
