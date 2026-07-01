@@ -162,10 +162,6 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.RunGarbageCollectionResponse> __Marshaller_headless_v1_RunGarbageCollectionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.RunGarbageCollectionResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Headless.Rpc.ForceSyncSessionRequest> __Marshaller_headless_v1_ForceSyncSessionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ForceSyncSessionRequest.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Headless.Rpc.ForceSyncSessionResponse> __Marshaller_headless_v1_ForceSyncSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ForceSyncSessionResponse.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetWorldDebugStateRequest> __Marshaller_headless_v1_GetWorldDebugStateRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetWorldDebugStateRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetWorldDebugStateResponse> __Marshaller_headless_v1_GetWorldDebugStateResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetWorldDebugStateResponse.Parser));
@@ -435,14 +431,6 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_RunGarbageCollectionResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Headless.Rpc.ForceSyncSessionRequest, global::Headless.Rpc.ForceSyncSessionResponse> __Method_ForceSyncSession = new grpc::Method<global::Headless.Rpc.ForceSyncSessionRequest, global::Headless.Rpc.ForceSyncSessionResponse>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "ForceSyncSession",
-        __Marshaller_headless_v1_ForceSyncSessionRequest,
-        __Marshaller_headless_v1_ForceSyncSessionResponse);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetWorldDebugStateRequest, global::Headless.Rpc.GetWorldDebugStateResponse> __Method_GetWorldDebugState = new grpc::Method<global::Headless.Rpc.GetWorldDebugStateRequest, global::Headless.Rpc.GetWorldDebugStateResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
@@ -707,12 +695,6 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.RunGarbageCollectionResponse> RunGarbageCollection(global::Headless.Rpc.RunGarbageCollectionRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.ForceSyncSessionResponse> ForceSyncSession(global::Headless.Rpc.ForceSyncSessionRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -1399,26 +1381,6 @@ namespace Headless.Rpc {
         return CallInvoker.AsyncUnaryCall(__Method_RunGarbageCollection, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Headless.Rpc.ForceSyncSessionResponse ForceSyncSession(global::Headless.Rpc.ForceSyncSessionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return ForceSyncSession(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Headless.Rpc.ForceSyncSessionResponse ForceSyncSession(global::Headless.Rpc.ForceSyncSessionRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_ForceSyncSession, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.ForceSyncSessionResponse> ForceSyncSessionAsync(global::Headless.Rpc.ForceSyncSessionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return ForceSyncSessionAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.ForceSyncSessionResponse> ForceSyncSessionAsync(global::Headless.Rpc.ForceSyncSessionRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_ForceSyncSession, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::Headless.Rpc.GetWorldDebugStateResponse GetWorldDebugState(global::Headless.Rpc.GetWorldDebugStateRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetWorldDebugState(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -1669,7 +1631,6 @@ namespace Headless.Rpc {
           .AddMethod(__Method_WatchHostEvents, serviceImpl.WatchHostEvents)
           .AddMethod(__Method_SendDynamicImpulse, serviceImpl.SendDynamicImpulse)
           .AddMethod(__Method_RunGarbageCollection, serviceImpl.RunGarbageCollection)
-          .AddMethod(__Method_ForceSyncSession, serviceImpl.ForceSyncSession)
           .AddMethod(__Method_GetWorldDebugState, serviceImpl.GetWorldDebugState)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
           .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
@@ -1717,7 +1678,6 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_WatchHostEvents, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Headless.Rpc.WatchHostEventsRequest, global::Headless.Rpc.HostEvent>(serviceImpl.WatchHostEvents));
       serviceBinder.AddMethod(__Method_SendDynamicImpulse, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SendDynamicImpulseRequest, global::Headless.Rpc.SendDynamicImpulseResponse>(serviceImpl.SendDynamicImpulse));
       serviceBinder.AddMethod(__Method_RunGarbageCollection, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.RunGarbageCollectionRequest, global::Headless.Rpc.RunGarbageCollectionResponse>(serviceImpl.RunGarbageCollection));
-      serviceBinder.AddMethod(__Method_ForceSyncSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ForceSyncSessionRequest, global::Headless.Rpc.ForceSyncSessionResponse>(serviceImpl.ForceSyncSession));
       serviceBinder.AddMethod(__Method_GetWorldDebugState, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetWorldDebugStateRequest, global::Headless.Rpc.GetWorldDebugStateResponse>(serviceImpl.GetWorldDebugState));
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));

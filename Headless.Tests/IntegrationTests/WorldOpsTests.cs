@@ -8,8 +8,7 @@ namespace Headless.Tests.IntegrationTests;
 
 /// <summary>
 /// Coverage for the world-manipulation gRPC handlers:
-///   SendDynamicImpulse / RunGarbageCollection / ForceSyncSession /
-///   GetWorldDebugState.
+///   SendDynamicImpulse / RunGarbageCollection / GetWorldDebugState.
 ///
 /// The container runs in guest mode without a live session for most
 /// tests here — we're mostly asserting the InvalidArgument path on
@@ -68,22 +67,6 @@ public class WorldOpsTests
             {
                 SessionId = "S-U-does-not-exist:nope",
                 Tag = "",
-            });
-        });
-        Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
-    }
-
-    [Fact]
-    public async Task ForceSyncSession_NonExistentSession_ReturnsInvalidArgument()
-    {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
-        var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
-
-        var ex = await Assert.ThrowsAsync<RpcException>(async () =>
-        {
-            await client.ForceSyncSessionAsync(new ForceSyncSessionRequest
-            {
-                SessionId = "S-U-does-not-exist:nope",
             });
         });
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
