@@ -36,7 +36,6 @@ service HeadlessControlService {
   // World 内操作系
   rpc SendDynamicImpulse(SendDynamicImpulseRequest) returns (SendDynamicImpulseResponse);
   rpc RunGarbageCollection(RunGarbageCollectionRequest) returns (RunGarbageCollectionResponse);
-  rpc ForceSyncSession(ForceSyncSessionRequest) returns (ForceSyncSessionResponse);
   rpc GetWorldDebugState(GetWorldDebugStateRequest) returns (GetWorldDebugStateResponse);
 
   // Cloud系
@@ -589,15 +588,6 @@ message SendDynamicImpulseResponse {
 message RunGarbageCollectionRequest {}
 
 message RunGarbageCollectionResponse {}
-
-// 指定セッションの World 状態を強制的に再同期する。
-// 現在の実装は SyncController.EncodeFullBatch() で組んだ FullBatch を
-// 非ホストユーザ全員に対して再送する best-effort な挙動。
-message ForceSyncSessionRequest {
-  string session_id = 1;
-}
-
-message ForceSyncSessionResponse {}
 
 // 公式 headless の debugWorldState 相当。指定セッションの World / Session
 // の内部状態スナップショットを返す。エンジン診断用途。
