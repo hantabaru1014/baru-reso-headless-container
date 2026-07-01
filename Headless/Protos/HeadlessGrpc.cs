@@ -190,6 +190,10 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.AcceptFriendRequestsResponse> __Marshaller_headless_v1_AcceptFriendRequestsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.AcceptFriendRequestsResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.SendFriendRequestRequest> __Marshaller_headless_v1_SendFriendRequestRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SendFriendRequestRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.SendFriendRequestResponse> __Marshaller_headless_v1_SendFriendRequestResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SendFriendRequestResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ListContactsRequest> __Marshaller_headless_v1_ListContactsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListContactsRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.ListContactsResponse> __Marshaller_headless_v1_ListContactsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.ListContactsResponse.Parser));
@@ -491,6 +495,14 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_AcceptFriendRequestsResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.SendFriendRequestRequest, global::Headless.Rpc.SendFriendRequestResponse> __Method_SendFriendRequest = new grpc::Method<global::Headless.Rpc.SendFriendRequestRequest, global::Headless.Rpc.SendFriendRequestResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SendFriendRequest",
+        __Marshaller_headless_v1_SendFriendRequestRequest,
+        __Marshaller_headless_v1_SendFriendRequestResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.ListContactsRequest, global::Headless.Rpc.ListContactsResponse> __Method_ListContacts = new grpc::Method<global::Headless.Rpc.ListContactsRequest, global::Headless.Rpc.ListContactsResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
@@ -755,6 +767,12 @@ namespace Headless.Rpc {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.AcceptFriendRequestsResponse> AcceptFriendRequests(global::Headless.Rpc.AcceptFriendRequestsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.SendFriendRequestResponse> SendFriendRequest(global::Headless.Rpc.SendFriendRequestRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -1567,6 +1585,26 @@ namespace Headless.Rpc {
         return CallInvoker.AsyncUnaryCall(__Method_AcceptFriendRequests, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.SendFriendRequestResponse SendFriendRequest(global::Headless.Rpc.SendFriendRequestRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SendFriendRequest(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.SendFriendRequestResponse SendFriendRequest(global::Headless.Rpc.SendFriendRequestRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SendFriendRequest, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.SendFriendRequestResponse> SendFriendRequestAsync(global::Headless.Rpc.SendFriendRequestRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SendFriendRequestAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.SendFriendRequestResponse> SendFriendRequestAsync(global::Headless.Rpc.SendFriendRequestRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SendFriendRequest, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::Headless.Rpc.ListContactsResponse ListContacts(global::Headless.Rpc.ListContactsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return ListContacts(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -1676,6 +1714,7 @@ namespace Headless.Rpc {
           .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo)
           .AddMethod(__Method_GetFriendRequests, serviceImpl.GetFriendRequests)
           .AddMethod(__Method_AcceptFriendRequests, serviceImpl.AcceptFriendRequests)
+          .AddMethod(__Method_SendFriendRequest, serviceImpl.SendFriendRequest)
           .AddMethod(__Method_ListContacts, serviceImpl.ListContacts)
           .AddMethod(__Method_GetContactMessages, serviceImpl.GetContactMessages)
           .AddMethod(__Method_SendContactMessage, serviceImpl.SendContactMessage).Build();
@@ -1724,6 +1763,7 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));
       serviceBinder.AddMethod(__Method_GetFriendRequests, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetFriendRequestsRequest, global::Headless.Rpc.GetFriendRequestsResponse>(serviceImpl.GetFriendRequests));
       serviceBinder.AddMethod(__Method_AcceptFriendRequests, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.AcceptFriendRequestsRequest, global::Headless.Rpc.AcceptFriendRequestsResponse>(serviceImpl.AcceptFriendRequests));
+      serviceBinder.AddMethod(__Method_SendFriendRequest, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SendFriendRequestRequest, global::Headless.Rpc.SendFriendRequestResponse>(serviceImpl.SendFriendRequest));
       serviceBinder.AddMethod(__Method_ListContacts, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.ListContactsRequest, global::Headless.Rpc.ListContactsResponse>(serviceImpl.ListContacts));
       serviceBinder.AddMethod(__Method_GetContactMessages, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetContactMessagesRequest, global::Headless.Rpc.GetContactMessagesResponse>(serviceImpl.GetContactMessages));
       serviceBinder.AddMethod(__Method_SendContactMessage, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SendContactMessageRequest, global::Headless.Rpc.SendContactMessageResponse>(serviceImpl.SendContactMessage));

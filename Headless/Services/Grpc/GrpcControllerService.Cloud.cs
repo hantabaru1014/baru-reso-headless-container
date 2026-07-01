@@ -143,6 +143,88 @@ public partial class GrpcControllerService
         return Task.FromResult(new AcceptFriendRequestsResponse { });
     }
 
+    public override async Task<SendFriendRequestResponse> SendFriendRequest(SendFriendRequestRequest request, ServerCallContext context)
+    {
+        var cloud = _engine.Cloud;
+        if (cloud.CurrentUser is null)
+        {
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, "Headless is not login"));
+        }
+
+        string? userId = null;
+        string? userName = null;
+
+        if (request.HasUserId)
+        {
+            if (string.IsNullOrWhiteSpace(request.UserId))
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "user_id must not be empty"));
+            }
+            userId = request.UserId;
+            // 既存の Contact から username を引ければそれを使う
+            var existingContact = cloud.Contacts.GetContact(userId);
+            if (existingContact is not null)
+            {
+                userName = existingContact.ContactUsername;
+            }
+            else
+            {
+                var userResult = await cloud.Users.GetUser(userId);
+                if (!userResult.IsOK || userResult.Entity is null)
+                {
+                    throw new RpcException(new Status(StatusCode.NotFound, $"User with id '{userId}' not found"));
+                }
+                userName = userResult.Entity.Username;
+            }
+        }
+        else if (request.HasUserName)
+        {
+            if (string.IsNullOrWhiteSpace(request.UserName))
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "user_name must not be empty"));
+            }
+            // まず contacts から探す (すでに関係があるユーザ)
+            var existingContact = cloud.Contacts.FindContact(c => c.ContactUsername.Equals(request.UserName, StringComparison.InvariantCultureIgnoreCase));
+            if (existingContact is not null)
+            {
+                userId = existingContact.ContactUserId;
+                userName = existingContact.ContactUsername;
+            }
+            else
+            {
+                var userResult = await cloud.Users.GetUserByName(request.UserName);
+                if (!userResult.IsOK || userResult.Entity is null)
+                {
+                    throw new RpcException(new Status(StatusCode.NotFound, $"User with name '{request.UserName}' not found"));
+                }
+                userId = userResult.Entity.Id;
+                userName = userResult.Entity.Username;
+            }
+        }
+        else
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Require valid user_id or user_name"));
+        }
+
+        if (userId is null || userName is null)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, "Failed to resolve target user"));
+        }
+
+        if (string.Equals(userId, cloud.CurrentUserID, StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Cannot send friend request to yourself"));
+        }
+
+        var result = await cloud.Contacts.AddContact(userId, userName);
+        if (!result)
+        {
+            throw new RpcException(new Status(StatusCode.Internal, "Failed to send friend request"));
+        }
+
+        return new SendFriendRequestResponse();
+    }
+
     public override Task<ListContactsResponse> ListContacts(ListContactsRequest request, ServerCallContext context)
     {
         var contacts = new List<Contact>();
