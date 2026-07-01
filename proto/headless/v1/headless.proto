@@ -33,6 +33,12 @@ service HeadlessControlService {
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   rpc WatchHostEvents(WatchHostEventsRequest) returns (stream HostEvent);
 
+  // World 内操作系
+  rpc SendDynamicImpulse(SendDynamicImpulseRequest) returns (SendDynamicImpulseResponse);
+  rpc RunGarbageCollection(RunGarbageCollectionRequest) returns (RunGarbageCollectionResponse);
+  rpc ForceSyncSession(ForceSyncSessionRequest) returns (ForceSyncSessionResponse);
+  rpc GetWorldDebugState(GetWorldDebugStateRequest) returns (GetWorldDebugStateResponse);
+
   // Cloud系
   rpc GetAccountInfo(GetAccountInfoRequest) returns (GetAccountInfoResponse);
   rpc FetchWorldInfo(FetchWorldInfoRequest) returns (FetchWorldInfoResponse);
@@ -557,6 +563,68 @@ message StartupConfig {
 message RecordId {
   string id = 1;
   string owner_id = 2;
+}
+
+// World 内操作系 RPC のメッセージ定義
+
+// 公式 headless の dynamicImpulse / dynamicImpulseString / dynamicImpulseInt /
+// dynamicImpulseFloat 相当。value oneof で挙動を切り替える (未指定なら
+// 引数なしの impulse を送る)。
+message SendDynamicImpulseRequest {
+  string session_id = 1;
+  string tag = 2;
+  oneof value {
+    string string_value = 3;
+    int32 int_value = 4;
+    float float_value = 5;
+  }
+}
+
+message SendDynamicImpulseResponse {
+  // TriggerDynamicImpulse(WithArgument) の返り値 (発火したレシーバ数)
+  int32 triggered_receivers = 1;
+}
+
+// 公式 headless の gc 相当。System.GC.Collect() をトリガする。
+message RunGarbageCollectionRequest {}
+
+message RunGarbageCollectionResponse {}
+
+// 指定セッションの World 状態を強制的に再同期する。
+// 現在の実装は SyncController.EncodeFullBatch() で組んだ FullBatch を
+// 非ホストユーザ全員に対して再送する best-effort な挙動。
+message ForceSyncSessionRequest {
+  string session_id = 1;
+}
+
+message ForceSyncSessionResponse {}
+
+// 公式 headless の debugWorldState 相当。指定セッションの World / Session
+// の内部状態スナップショットを返す。エンジン診断用途。
+message GetWorldDebugStateRequest {
+  string session_id = 1;
+}
+
+message GetWorldDebugStateResponse {
+  string world_name = 1;
+  int32 local_world_handle = 2;
+  // FrooxEngine.World.RefreshStage の文字列表現
+  string stage = 3;
+  uint64 sync_tick = 4;
+  uint64 state_version = 5;
+  // Session が未初期化なら以下 session_* は 0 / 空文字列
+  // FrooxEngine.SyncLoopStage の文字列表現
+  string session_sync_loop_stage = 6;
+  bool session_stop_processing_flag = 7;
+  int32 session_messages_to_process_count = 8;
+  int32 session_total_processed_messages = 9;
+  int32 session_messages_to_transmit_count = 10;
+  // World.SlotCount (全 slot 数)
+  int32 slot_count = 11;
+  int32 user_count = 12;
+  int32 active_user_count = 13;
+  optional string currently_processing_sync_message = 14;
+  optional string currently_decoding_stream = 15;
 }
 
 // ResoniteLink を gRPC bidi stream で中継する。
