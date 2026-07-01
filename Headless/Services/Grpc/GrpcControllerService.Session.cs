@@ -254,4 +254,28 @@ public partial class GrpcControllerService
 
         return new UpdateSessionParametersResponse();
     }
+
+    public override async Task<SpawnItemResponse> SpawnItem(SpawnItemRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        if (string.IsNullOrWhiteSpace(request.Url) || !Uri.TryCreate(request.Url, UriKind.Absolute, out var uri))
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"Invalid item URL: {request.Url}"));
+        }
+
+        // ロード完了を待たずに応答するため fire-and-forget。
+        // world への書き込み (RootSlot.AddSlot / LoadObjectAsync) は engine スレッドで行う必要があるので
+        // ToWorld で切り替えてから実行する。AutoSpawnItems の実装 (WorldService) と同じパターン。
+        _ = session.Instance.Coroutines.StartTask(async () =>
+        {
+            await default(ToWorld);
+            await session.Instance.RootSlot.AddSlot("Headless Spawn").LoadObjectAsync(uri);
+        });
+
+        return await Task.FromResult(new SpawnItemResponse());
+    }
 }

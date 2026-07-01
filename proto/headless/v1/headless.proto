@@ -26,6 +26,7 @@ service HeadlessControlService {
   rpc ListBans(ListBansRequest) returns (ListBansResponse);
   rpc UnbanUser(UnbanUserRequest) returns (UnbanUserResponse);
   rpc RespawnUser(RespawnUserRequest) returns (RespawnUserResponse);
+  rpc SpawnItem(SpawnItemRequest) returns (SpawnItemResponse);
   rpc GetHostSettings(GetHostSettingsRequest) returns (GetHostSettingsResponse);
   rpc UpdateHostSettings(UpdateHostSettingsRequest) returns (UpdateHostSettingsResponse);
   rpc AllowHostAccess(AllowHostAccessRequest) returns (AllowHostAccessResponse);
@@ -191,6 +192,14 @@ message RespawnUserRequest {
 }
 
 message RespawnUserResponse {}
+
+message SpawnItemRequest {
+  string session_id = 1;
+  // Resonite Record URL (resrec:// または https://)
+  string url = 2;
+}
+
+message SpawnItemResponse {}
 
 message SearchUserInfoRequest {
   oneof user {
