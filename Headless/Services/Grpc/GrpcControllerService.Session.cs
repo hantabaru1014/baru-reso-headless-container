@@ -266,16 +266,35 @@ public partial class GrpcControllerService
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"Invalid item URL: {request.Url}"));
         }
+        // file:// / javascript: / data: 等の想定外 scheme を弾く。
+        if (uri.Scheme != "https" && uri.Scheme != "resrec")
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"URL scheme must be https or resrec: {uri.Scheme}"));
+        }
 
         // ロード完了を待たずに応答するため fire-and-forget。
         // world への書き込み (RootSlot.AddSlot / LoadObjectAsync) は engine スレッドで行う必要があるので
-        // ToWorld で切り替えてから実行する。AutoSpawnItems の実装 (WorldService) と同じパターン。
+        // ToWorld で切り替えてから実行する (UpdateSessionParameters と同じ pattern)。
         _ = session.Instance.Coroutines.StartTask(async () =>
         {
             await default(ToWorld);
-            await session.Instance.RootSlot.AddSlot("Headless Spawn").LoadObjectAsync(uri);
+            var slot = session.Instance.RootSlot.AddSlot("Headless Spawn");
+            try
+            {
+                var ok = await slot.LoadObjectAsync(uri);
+                if (!ok)
+                {
+                    _logger.LogWarning("SpawnItem: LoadObjectAsync returned false for {Url}", uri);
+                    slot.Destroy();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "SpawnItem: exception loading {Url}", uri);
+                try { slot.Destroy(); } catch { }
+            }
         });
 
-        return await Task.FromResult(new SpawnItemResponse());
+        return new SpawnItemResponse();
     }
 }
