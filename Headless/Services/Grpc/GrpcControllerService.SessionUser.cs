@@ -175,4 +175,35 @@ public partial class GrpcControllerService
 
         return Task.FromResult(new BanUserResponse());
     }
+
+    public override Task<RespawnUserResponse> RespawnUser(RespawnUserRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        FrooxEngine.User? user = null;
+        if (request.HasUserId)
+        {
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserID == request.UserId);
+        }
+        else if (request.HasUserName)
+        {
+            user = session.Instance.AllUsers.FirstOrDefault(u => u.UserName == request.UserName);
+        }
+        if (user is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"The user does not appear to be in a session!"));
+        }
+
+        // Vanilla SessionUserController.OnRespawn と同じく、対象ユーザーの Root を
+        // DestroyPreservingAssets することでゲーム側の respawn 経路を起動する。
+        session.Instance.RunSynchronously(() =>
+        {
+            user.Root?.Slot?.DestroyPreservingAssets();
+        });
+
+        return Task.FromResult(new RespawnUserResponse());
+    }
 }
