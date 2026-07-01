@@ -142,6 +142,18 @@ namespace Headless.Rpc {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.HostEvent> __Marshaller_headless_v1_HostEvent = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.HostEvent.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.SendDynamicImpulseRequest> __Marshaller_headless_v1_SendDynamicImpulseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SendDynamicImpulseRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.SendDynamicImpulseResponse> __Marshaller_headless_v1_SendDynamicImpulseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.SendDynamicImpulseResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.RunGarbageCollectionRequest> __Marshaller_headless_v1_RunGarbageCollectionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.RunGarbageCollectionRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.RunGarbageCollectionResponse> __Marshaller_headless_v1_RunGarbageCollectionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.RunGarbageCollectionResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetWorldDebugStateRequest> __Marshaller_headless_v1_GetWorldDebugStateRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetWorldDebugStateRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Headless.Rpc.GetWorldDebugStateResponse> __Marshaller_headless_v1_GetWorldDebugStateResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetWorldDebugStateResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoRequest> __Marshaller_headless_v1_GetAccountInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Headless.Rpc.GetAccountInfoResponse> __Marshaller_headless_v1_GetAccountInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Headless.Rpc.GetAccountInfoResponse.Parser));
@@ -367,6 +379,30 @@ namespace Headless.Rpc {
         __Marshaller_headless_v1_HostEvent);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.SendDynamicImpulseRequest, global::Headless.Rpc.SendDynamicImpulseResponse> __Method_SendDynamicImpulse = new grpc::Method<global::Headless.Rpc.SendDynamicImpulseRequest, global::Headless.Rpc.SendDynamicImpulseResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SendDynamicImpulse",
+        __Marshaller_headless_v1_SendDynamicImpulseRequest,
+        __Marshaller_headless_v1_SendDynamicImpulseResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.RunGarbageCollectionRequest, global::Headless.Rpc.RunGarbageCollectionResponse> __Method_RunGarbageCollection = new grpc::Method<global::Headless.Rpc.RunGarbageCollectionRequest, global::Headless.Rpc.RunGarbageCollectionResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "RunGarbageCollection",
+        __Marshaller_headless_v1_RunGarbageCollectionRequest,
+        __Marshaller_headless_v1_RunGarbageCollectionResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Headless.Rpc.GetWorldDebugStateRequest, global::Headless.Rpc.GetWorldDebugStateResponse> __Method_GetWorldDebugState = new grpc::Method<global::Headless.Rpc.GetWorldDebugStateRequest, global::Headless.Rpc.GetWorldDebugStateResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetWorldDebugState",
+        __Marshaller_headless_v1_GetWorldDebugStateRequest,
+        __Marshaller_headless_v1_GetWorldDebugStateResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse> __Method_GetAccountInfo = new grpc::Method<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
@@ -587,6 +623,30 @@ namespace Headless.Rpc {
       /// <returns>A task indicating completion of the handler.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task WatchHostEvents(global::Headless.Rpc.WatchHostEventsRequest request, grpc::IServerStreamWriter<global::Headless.Rpc.HostEvent> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// World 内操作系
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.SendDynamicImpulseResponse> SendDynamicImpulse(global::Headless.Rpc.SendDynamicImpulseRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.RunGarbageCollectionResponse> RunGarbageCollection(global::Headless.Rpc.RunGarbageCollectionRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Headless.Rpc.GetWorldDebugStateResponse> GetWorldDebugState(global::Headless.Rpc.GetWorldDebugStateRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -1139,6 +1199,94 @@ namespace Headless.Rpc {
         return CallInvoker.AsyncServerStreamingCall(__Method_WatchHostEvents, null, options, request);
       }
       /// <summary>
+      /// World 内操作系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.SendDynamicImpulseResponse SendDynamicImpulse(global::Headless.Rpc.SendDynamicImpulseRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SendDynamicImpulse(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// World 内操作系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.SendDynamicImpulseResponse SendDynamicImpulse(global::Headless.Rpc.SendDynamicImpulseRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SendDynamicImpulse, null, options, request);
+      }
+      /// <summary>
+      /// World 内操作系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.SendDynamicImpulseResponse> SendDynamicImpulseAsync(global::Headless.Rpc.SendDynamicImpulseRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SendDynamicImpulseAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// World 内操作系
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.SendDynamicImpulseResponse> SendDynamicImpulseAsync(global::Headless.Rpc.SendDynamicImpulseRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SendDynamicImpulse, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.RunGarbageCollectionResponse RunGarbageCollection(global::Headless.Rpc.RunGarbageCollectionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return RunGarbageCollection(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.RunGarbageCollectionResponse RunGarbageCollection(global::Headless.Rpc.RunGarbageCollectionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_RunGarbageCollection, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.RunGarbageCollectionResponse> RunGarbageCollectionAsync(global::Headless.Rpc.RunGarbageCollectionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return RunGarbageCollectionAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.RunGarbageCollectionResponse> RunGarbageCollectionAsync(global::Headless.Rpc.RunGarbageCollectionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_RunGarbageCollection, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetWorldDebugStateResponse GetWorldDebugState(global::Headless.Rpc.GetWorldDebugStateRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetWorldDebugState(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Headless.Rpc.GetWorldDebugStateResponse GetWorldDebugState(global::Headless.Rpc.GetWorldDebugStateRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetWorldDebugState, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetWorldDebugStateResponse> GetWorldDebugStateAsync(global::Headless.Rpc.GetWorldDebugStateRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetWorldDebugStateAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Headless.Rpc.GetWorldDebugStateResponse> GetWorldDebugStateAsync(global::Headless.Rpc.GetWorldDebugStateRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetWorldDebugState, null, options, request);
+      }
+      /// <summary>
       /// Cloud系
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -1364,6 +1512,9 @@ namespace Headless.Rpc {
           .AddMethod(__Method_DownloadSessionWorld, serviceImpl.DownloadSessionWorld)
           .AddMethod(__Method_ResoniteLinkStream, serviceImpl.ResoniteLinkStream)
           .AddMethod(__Method_WatchHostEvents, serviceImpl.WatchHostEvents)
+          .AddMethod(__Method_SendDynamicImpulse, serviceImpl.SendDynamicImpulse)
+          .AddMethod(__Method_RunGarbageCollection, serviceImpl.RunGarbageCollection)
+          .AddMethod(__Method_GetWorldDebugState, serviceImpl.GetWorldDebugState)
           .AddMethod(__Method_GetAccountInfo, serviceImpl.GetAccountInfo)
           .AddMethod(__Method_FetchWorldInfo, serviceImpl.FetchWorldInfo)
           .AddMethod(__Method_SearchUserInfo, serviceImpl.SearchUserInfo)
@@ -1405,6 +1556,9 @@ namespace Headless.Rpc {
       serviceBinder.AddMethod(__Method_DownloadSessionWorld, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Headless.Rpc.DownloadSessionWorldRequest, global::Headless.Rpc.DownloadSessionWorldResponse>(serviceImpl.DownloadSessionWorld));
       serviceBinder.AddMethod(__Method_ResoniteLinkStream, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::Headless.Rpc.ResoniteLinkStreamRequest, global::Headless.Rpc.ResoniteLinkStreamResponse>(serviceImpl.ResoniteLinkStream));
       serviceBinder.AddMethod(__Method_WatchHostEvents, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Headless.Rpc.WatchHostEventsRequest, global::Headless.Rpc.HostEvent>(serviceImpl.WatchHostEvents));
+      serviceBinder.AddMethod(__Method_SendDynamicImpulse, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SendDynamicImpulseRequest, global::Headless.Rpc.SendDynamicImpulseResponse>(serviceImpl.SendDynamicImpulse));
+      serviceBinder.AddMethod(__Method_RunGarbageCollection, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.RunGarbageCollectionRequest, global::Headless.Rpc.RunGarbageCollectionResponse>(serviceImpl.RunGarbageCollection));
+      serviceBinder.AddMethod(__Method_GetWorldDebugState, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetWorldDebugStateRequest, global::Headless.Rpc.GetWorldDebugStateResponse>(serviceImpl.GetWorldDebugState));
       serviceBinder.AddMethod(__Method_GetAccountInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.GetAccountInfoRequest, global::Headless.Rpc.GetAccountInfoResponse>(serviceImpl.GetAccountInfo));
       serviceBinder.AddMethod(__Method_FetchWorldInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.FetchWorldInfoRequest, global::Headless.Rpc.FetchWorldInfoResponse>(serviceImpl.FetchWorldInfo));
       serviceBinder.AddMethod(__Method_SearchUserInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Headless.Rpc.SearchUserInfoRequest, global::Headless.Rpc.SearchUserInfoResponse>(serviceImpl.SearchUserInfo));
