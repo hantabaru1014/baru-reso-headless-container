@@ -175,4 +175,89 @@ public partial class GrpcControllerService
 
         return Task.FromResult(new BanUserResponse());
     }
+
+    public override async Task<ListBansResponse> ListBans(ListBansRequest request, ServerCallContext context)
+    {
+        // Ban はホスト単位の UserRestrictionsSettings に保持されているためセッション ID は不要。
+        // Entries / MachineIDs は UserspaceWorld 側 (engine スレッド) で mutate される SyncList / SyncFieldList
+        // なので、gRPC スレッドから直接列挙すると collection-mutated 例外を踏みうる。
+        // ComputeWithActiveSettingAsync は setting.RunSynchronouslyAsync で compute を engine スレッド上で
+        // 走らせるため、その中で列挙と DTO 化を完結させる。
+        var bans = await Settings.ComputeWithActiveSettingAsync<List<Rpc.BanEntry>, UserRestrictionsSettings>(r =>
+            r.Entries
+                .Where(entry => entry.IsFullyBanned.Value)
+                .Select(entry => new Rpc.BanEntry
+                {
+                    UserId = entry.UserId.Value ?? string.Empty,
+                    UserName = entry.Username.Value ?? string.Empty,
+                    MachineIds = { entry.MachineIDs.ToList() },
+                })
+                .ToList());
+        return new ListBansResponse
+        {
+            Bans = { bans }
+        };
+    }
+
+    public override async Task<UnbanUserResponse> UnbanUser(UnbanUserRequest request, ServerCallContext context)
+    {
+        // HasUserId / HasUserName は空文字列を明示 set しても true になるため、
+        // 中身が空のケースは InvalidArgument に落として NotFound と区別する。
+        string? filterUserId = null;
+        string? filterUserName = null;
+        if (request.HasUserId && !string.IsNullOrEmpty(request.UserId))
+        {
+            filterUserId = request.UserId;
+        }
+        else if (request.HasUserName && !string.IsNullOrEmpty(request.UserName))
+        {
+            filterUserName = request.UserName;
+        }
+        else
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Require valid user_id or user_name"));
+        }
+
+        // UserRestrictionsSettings.FindMatchingEntry は _byUserId / _byMachineId / _byExtraId しか索引しない。
+        // Username のみで作った fingerprint を渡すと GetEntryForUpdate が新規 entry を Entries に追加してしまい、
+        // 元の ban が解除されずに空 entry (IsFullyBanned=false) だけが増える。
+        // 該当 entry を線形検索して直接 IsFullyBanned=false に落とすことで name-only ban も解除できる。
+        //
+        // Settings.UpdateActiveSettingAsync は内部で setting.RunSynchronouslyAsync を呼ぶため、
+        // Userspace.UserspaceWorld.RunSynchronously で二重にラップする必要はない。
+        // 探索と mutation を同じ tick 内で完結させることで SyncList の thread safety も満たす。
+        var found = false;
+        await Settings.UpdateActiveSettingAsync<UserRestrictionsSettings>(r =>
+        {
+            UserRestrictionsSettings.Entry? entry = null;
+            if (filterUserId is not null)
+            {
+                entry = r.Entries.FirstOrDefault(e =>
+                    e.IsFullyBanned.Value &&
+                    string.Equals(e.UserId.Value, filterUserId, StringComparison.Ordinal));
+            }
+            else if (filterUserName is not null)
+            {
+                // Entry の Username は Ban 発行時点のもので、user_id が未セットのこともあるため
+                // username で ban entry を検索する
+                entry = r.Entries.FirstOrDefault(e =>
+                    e.IsFullyBanned.Value &&
+                    !string.IsNullOrEmpty(e.Username.Value) &&
+                    e.Username.Value.Equals(filterUserName, StringComparison.InvariantCultureIgnoreCase));
+            }
+            if (entry is null)
+            {
+                return;
+            }
+            entry.IsFullyBanned.Value = false;
+            found = true;
+        });
+
+        if (!found)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, "No matching ban entry found"));
+        }
+
+        return new UnbanUserResponse();
+    }
 }
