@@ -151,8 +151,8 @@ public partial class GrpcControllerService
             throw new RpcException(new Status(StatusCode.FailedPrecondition, "Headless is not login"));
         }
 
-        string? userId = null;
-        string? userName = null;
+        string userId;
+        string userName;
 
         if (request.HasUserId)
         {
@@ -160,22 +160,19 @@ public partial class GrpcControllerService
             {
                 throw new RpcException(new Status(StatusCode.InvalidArgument, "user_id must not be empty"));
             }
+            // Cloud API を叩く前に self チェックを済ませる
+            if (string.Equals(request.UserId, cloud.CurrentUserID, StringComparison.Ordinal))
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Cannot send friend request to yourself"));
+            }
             userId = request.UserId;
-            // 既存の Contact から username を引ければそれを使う
-            var existingContact = cloud.Contacts.GetContact(userId);
-            if (existingContact is not null)
+            // Contact に保存されている username は stale の可能性があるため、常に fresh に取得する
+            var userResult = await cloud.Users.GetUser(userId);
+            if (!userResult.IsOK || userResult.Entity is null)
             {
-                userName = existingContact.ContactUsername;
+                throw new RpcException(new Status(StatusCode.NotFound, $"User with id '{userId}' not found"));
             }
-            else
-            {
-                var userResult = await cloud.Users.GetUser(userId);
-                if (!userResult.IsOK || userResult.Entity is null)
-                {
-                    throw new RpcException(new Status(StatusCode.NotFound, $"User with id '{userId}' not found"));
-                }
-                userName = userResult.Entity.Username;
-            }
+            userName = userResult.Entity.Username;
         }
         else if (request.HasUserName)
         {
@@ -183,8 +180,13 @@ public partial class GrpcControllerService
             {
                 throw new RpcException(new Status(StatusCode.InvalidArgument, "user_name must not be empty"));
             }
-            // まず contacts から探す (すでに関係があるユーザ)
-            var existingContact = cloud.Contacts.FindContact(c => c.ContactUsername.Equals(request.UserName, StringComparison.InvariantCultureIgnoreCase));
+            // Cloud API を叩く前に self チェックを済ませる
+            if (string.Equals(request.UserName, cloud.CurrentUsername, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Cannot send friend request to yourself"));
+            }
+            // まず contacts から探す (すでに関係があるユーザ)。ContactUsername が null でも NRE しないよう静的呼び出しを使う
+            var existingContact = cloud.Contacts.FindContact(c => string.Equals(c.ContactUsername, request.UserName, StringComparison.InvariantCultureIgnoreCase));
             if (existingContact is not null)
             {
                 userId = existingContact.ContactUserId;
@@ -206,14 +208,31 @@ public partial class GrpcControllerService
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Require valid user_id or user_name"));
         }
 
-        if (userId is null || userName is null)
-        {
-            throw new RpcException(new Status(StatusCode.NotFound, "Failed to resolve target user"));
-        }
-
-        if (string.Equals(userId, cloud.CurrentUserID, StringComparison.InvariantCultureIgnoreCase))
+        // user_name パスで大文字小文字違い等により self を解決してしまうケースへの safety net
+        if (string.Equals(userId, cloud.CurrentUserID, StringComparison.Ordinal))
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Cannot send friend request to yourself"));
+        }
+
+        // ContactStatus を事前にチェックする。
+        // ContactManager.AddContact(id, name) は無条件で ContactStatus = Accepted に上書きするため、
+        // このチェック無しでは以下の破壊的挙動が発生する:
+        //  - Blocked な相手を無警告で unblock
+        //  - Requested (相手からの受信リクエスト) を自動 accept して 'send' 扱い
+        //  - Accepted (既にフレンド) をサイレント no-op
+        var existing = cloud.Contacts.GetContact(userId);
+        if (existing is not null)
+        {
+            switch (existing.ContactStatus)
+            {
+                case ContactStatus.Blocked:
+                    throw new RpcException(new Status(StatusCode.FailedPrecondition, "User is blocked; unblock first"));
+                case ContactStatus.Requested:
+                    throw new RpcException(new Status(StatusCode.FailedPrecondition, "This user has already sent you a friend request; use AcceptFriendRequests"));
+                case ContactStatus.Accepted:
+                    throw new RpcException(new Status(StatusCode.AlreadyExists, "Already in contacts"));
+                    // Ignored / None / SearchResult は送信続行
+            }
         }
 
         var result = await cloud.Contacts.AddContact(userId, userName);
