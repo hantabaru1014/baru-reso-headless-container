@@ -49,6 +49,7 @@ service HeadlessControlService {
   rpc GetFriendRequests(GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
   rpc AcceptFriendRequests(AcceptFriendRequestsRequest) returns (AcceptFriendRequestsResponse);
   rpc SendFriendRequest(SendFriendRequestRequest) returns (SendFriendRequestResponse);
+  rpc RemoveContact(RemoveContactRequest) returns (RemoveContactResponse);
   rpc ListContacts(ListContactsRequest) returns (ListContactsResponse);
   rpc GetContactMessages(GetContactMessagesRequest) returns (GetContactMessagesResponse);
   rpc SendContactMessage(SendContactMessageRequest) returns (SendContactMessageResponse);
@@ -143,6 +144,12 @@ message SendFriendRequestRequest {
 }
 
 message SendFriendRequestResponse {}
+
+message RemoveContactRequest {
+  string user_id = 1;
+}
+
+message RemoveContactResponse {}
 
 message GetFriendRequestsRequest {}
 

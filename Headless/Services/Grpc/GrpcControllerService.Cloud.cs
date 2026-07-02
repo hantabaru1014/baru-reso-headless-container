@@ -244,6 +244,27 @@ public partial class GrpcControllerService
         return new SendFriendRequestResponse();
     }
 
+    public override async Task<RemoveContactResponse> RemoveContact(RemoveContactRequest request, ServerCallContext context)
+    {
+        if (string.IsNullOrEmpty(request.UserId))
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "user_id is required"));
+        }
+        if (_engine.Cloud.CurrentUser is null)
+        {
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, "Headless is not login"));
+        }
+
+        var contact = _engine.Cloud.Contacts.GetContact(request.UserId);
+        if (contact is null)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, $"Contact not found: {request.UserId}"));
+        }
+
+        await _engine.Cloud.Contacts.RemoveContact(contact);
+        return new RemoveContactResponse();
+    }
+
     public override Task<ListContactsResponse> ListContacts(ListContactsRequest request, ServerCallContext context)
     {
         var contacts = new List<Contact>();
