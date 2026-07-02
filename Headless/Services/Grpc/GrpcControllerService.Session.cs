@@ -1,3 +1,4 @@
+using Elements.Core;
 using FrooxEngine;
 using Google.Protobuf;
 using Grpc.Core;
@@ -253,5 +254,52 @@ public partial class GrpcControllerService
         session.NotifyParametersChanged();
 
         return new UpdateSessionParametersResponse();
+    }
+
+    public override async Task<SpawnItemResponse> SpawnItem(SpawnItemRequest request, ServerCallContext context)
+    {
+        var session = _worldService.GetSession(request.SessionId);
+        if (session is null)
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
+        }
+        if (string.IsNullOrWhiteSpace(request.Url) || !Uri.TryCreate(request.Url, UriKind.Absolute, out var uri))
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"Invalid item URL: {request.Url}"));
+        }
+        // file:// / javascript: / data: 等の想定外 scheme を弾く。
+        if (uri.Scheme != "https" && uri.Scheme != "resrec")
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"URL scheme must be https or resrec: {uri.Scheme}"));
+        }
+
+        // ロード完了を待たずに応答するため fire-and-forget。
+        // world への書き込み (RootSlot.AddSlot / LoadObjectAsync) は engine スレッドで行う必要があるので
+        // ToWorld で切り替えてから実行する (UpdateSessionParameters と同じ pattern)。
+        _ = session.Instance.Coroutines.StartTask(async () =>
+        {
+            await default(ToWorld);
+            var slot = session.Instance.RootSlot.AddSlot("Headless Spawn");
+            if (request.Position is not null)
+            {
+                slot.LocalPosition = new float3(request.Position.X, request.Position.Y, request.Position.Z);
+            }
+            try
+            {
+                var ok = await slot.LoadObjectAsync(uri);
+                if (!ok)
+                {
+                    _logger.LogWarning("SpawnItem: LoadObjectAsync returned false for {Url}", uri);
+                    slot.Destroy();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "SpawnItem: exception loading {Url}", uri);
+                try { slot.Destroy(); } catch { }
+            }
+        });
+
+        return new SpawnItemResponse();
     }
 }
