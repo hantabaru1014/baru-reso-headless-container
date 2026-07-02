@@ -23,6 +23,8 @@ service HeadlessControlService {
   rpc ListUsersInSession(ListUsersInSessionRequest) returns (ListUsersInSessionResponse);
   rpc KickUser(KickUserRequest) returns (KickUserResponse);
   rpc BanUser(BanUserRequest) returns (BanUserResponse);
+  rpc ListBans(ListBansRequest) returns (ListBansResponse);
+  rpc UnbanUser(UnbanUserRequest) returns (UnbanUserResponse);
   rpc GetHostSettings(GetHostSettingsRequest) returns (GetHostSettingsResponse);
   rpc UpdateHostSettings(UpdateHostSettingsRequest) returns (UpdateHostSettingsResponse);
   rpc AllowHostAccess(AllowHostAccessRequest) returns (AllowHostAccessResponse);
@@ -150,6 +152,29 @@ message BanUserRequest {
 }
 
 message BanUserResponse {}
+
+// Ban はセッション単位ではなくホスト単位で管理されているため、リクエスト/レスポンスには session_id は含めない
+message ListBansRequest {}
+
+message ListBansResponse {
+  repeated BanEntry bans = 1;
+}
+
+message BanEntry {
+  string user_id = 1;
+  string user_name = 2;
+  // 対象ユーザーに紐付いている machine ID のリスト。0 件のことがある
+  repeated string machine_ids = 3;
+}
+
+message UnbanUserRequest {
+  oneof user {
+    string user_id = 1;
+    string user_name = 2;
+  }
+}
+
+message UnbanUserResponse {}
 
 message SearchUserInfoRequest {
   oneof user {
