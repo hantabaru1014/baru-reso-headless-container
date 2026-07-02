@@ -1,3 +1,4 @@
+using Elements.Core;
 using FrooxEngine;
 using Google.Protobuf;
 using Grpc.Core;
@@ -279,6 +280,10 @@ public partial class GrpcControllerService
         {
             await default(ToWorld);
             var slot = session.Instance.RootSlot.AddSlot("Headless Spawn");
+            if (request.Position is not null)
+            {
+                slot.LocalPosition = new float3(request.Position.X, request.Position.Y, request.Position.Z);
+            }
             try
             {
                 var ok = await slot.LoadObjectAsync(uri);

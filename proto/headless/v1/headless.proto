@@ -197,9 +197,17 @@ message SpawnItemRequest {
   string session_id = 1;
   // Resonite Record URL (resrec:// または https://)
   string url = 2;
+  // スポーン位置 (Slot の LocalPosition)。未指定なら world 原点。
+  optional Vec3 position = 3;
 }
 
 message SpawnItemResponse {}
+
+message Vec3 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
 
 message SearchUserInfoRequest {
   oneof user {
