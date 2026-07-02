@@ -25,6 +25,7 @@ service HeadlessControlService {
   rpc BanUser(BanUserRequest) returns (BanUserResponse);
   rpc ListBans(ListBansRequest) returns (ListBansResponse);
   rpc UnbanUser(UnbanUserRequest) returns (UnbanUserResponse);
+  rpc RespawnUser(RespawnUserRequest) returns (RespawnUserResponse);
   rpc GetHostSettings(GetHostSettingsRequest) returns (GetHostSettingsResponse);
   rpc UpdateHostSettings(UpdateHostSettingsRequest) returns (UpdateHostSettingsResponse);
   rpc AllowHostAccess(AllowHostAccessRequest) returns (AllowHostAccessResponse);
@@ -175,6 +176,16 @@ message UnbanUserRequest {
 }
 
 message UnbanUserResponse {}
+
+message RespawnUserRequest {
+  string session_id = 1;
+  oneof user {
+    string user_id = 2;
+    string user_name = 3;
+  }
+}
+
+message RespawnUserResponse {}
 
 message SearchUserInfoRequest {
   oneof user {

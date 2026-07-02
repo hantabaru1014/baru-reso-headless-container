@@ -9,7 +9,7 @@ namespace Headless.Tests.IntegrationTests;
 /// <summary>
 /// Coverage for the session-user gRPC handlers:
 ///   ListUsersInSession / InviteUser / AllowUserToJoin / UpdateUserRole /
-///   KickUser / BanUser.
+///   KickUser / BanUser / RespawnUser.
 ///
 /// The container runs in guest mode so we cannot drive real user
 /// join/leave traffic, but every handler still walks the FrooxEngine
@@ -135,6 +135,23 @@ public class SessionUserTests
     }
 
     [Fact]
+    public async Task RespawnUser_NonExistentSession_ReturnsInvalidArgument()
+    {
+        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
+
+        var ex = await Assert.ThrowsAsync<RpcException>(async () =>
+        {
+            await client.RespawnUserAsync(new RespawnUserRequest
+            {
+                SessionId = "S-U-does-not-exist:nope",
+                UserId = "U-1",
+            });
+        });
+        Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
+    }
+
+    [Fact]
     public async Task SessionUserRpcs_AgainstLiveSession_ExerciseEngineValidation()
     {
         // Single shared session is reused for every "needs a live session"
@@ -178,7 +195,7 @@ public class SessionUserTests
             });
             Assert.Equal(StatusCode.InvalidArgument, roleEx.StatusCode);
 
-            // KickUser / BanUser with an unknown user: walks AllUsers.
+            // KickUser / BanUser / RespawnUser with an unknown user: walks AllUsers.
             var kickEx = await Assert.ThrowsAsync<RpcException>(async () =>
             {
                 await client.KickUserAsync(new KickUserRequest
@@ -198,6 +215,16 @@ public class SessionUserTests
                 });
             });
             Assert.Equal(StatusCode.InvalidArgument, banEx.StatusCode);
+
+            var respawnEx = await Assert.ThrowsAsync<RpcException>(async () =>
+            {
+                await client.RespawnUserAsync(new RespawnUserRequest
+                {
+                    SessionId = sessionId,
+                    UserId = "U-not-in-session",
+                });
+            });
+            Assert.Equal(StatusCode.InvalidArgument, respawnEx.StatusCode);
         }
         finally
         {
