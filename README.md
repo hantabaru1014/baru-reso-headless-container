@@ -1,38 +1,39 @@
 # baru-reso-headless-container
 
-自分用のカスタムヘッドレス。  
-まだ作成中で中身をわからずに他人が使える状態じゃないですが、Dockerfile, GithubAction, EnginePrePatcher辺りとかarm64で動くカスタムヘッドレスの作成の参考にどうぞ
+An unofficial custom headless client for [Resonite](https://resonite.com/), packaged as a container image and controllable from outside via a gRPC API.
 
-ビルドしたdocker imageはResoniteのアセンブリを含んでるので公開できないです。CIでビルドしたかったらforkしてください。
+It replaces the interactive console of the official headless client with a gRPC API, so external tools such as web dashboards and bots can manage sessions.
 
-## GithubActionの設定
-以下をSecretsで設定。Workflow permissionsを "Read and write permissions" に設定する。
-- STEAM_USERNAME
-- STEAM_PASSWORD
-- HEADLESS_PASSWORD
+## Features
 
-## リリースフロー
+- Control everything via the [gRPC API](./proto/headless/v1/headless.proto): start / stop / save sessions, manage users (kick / ban / role changes), handle friend requests and messages, and more
+- Subscribe to session events and logs via server streaming
+- Inject startup settings (worlds to open on boot, etc.) as JSON through an environment variable — the official headless `Config.json` also works as-is
+- Multi-architecture support: amd64 / arm64
 
-新しいバージョンをリリースする際は以下の手順で行います：
+## Getting Started
 
-### 1. バージョンのインクリメント
-GitHub Actionsから `Bump Version` ワークフローを実行します。
-- **Actions** → **Bump Version** → **Run workflow**
-- バージョンタイプ（major/minor/patch）を選択して実行
-- 自動的にバージョンをインクリメントしたPRが作成されます
-- PRのレビュアーには実行者が自動的にアサインされます
+> [!IMPORTANT]
+> Prebuilt images are not distributed because they contain Resonite assemblies. Build the image locally, or fork this repository to build with GitHub Actions. See [Building the image](./docs/build-image.md) for instructions.
 
-### 2. PRのレビュー＆マージ
-作成されたPRをレビューして `main` ブランチにマージします。
+Run your built image using `docker-compose.sample.yml` as a reference:
 
-### 3. リリースの作成
-GitHubのWeb UIから新しいReleaseを作成します。
-- **Releases** → **Draft a new release**
-- タグ名: `v{バージョン番号}` （例: `v0.3.7`）
-- タイトル、説明を記入して **Publish release**
+```yaml
+services:
+  app:
+    image: <YOUR_IMAGE_HERE>
+    ports:
+      - "5000:5000"
+    environment:
+      - HeadlessUserCredential=<YOUR_HEADLESS_CREDENTIAL_HERE>
+      - HeadlessUserPassword=<YOUR_HEADLESS_PASSWORD_HERE>
+```
 
-### 4. 自動デプロイ
-リリースが作成されると、自動的に以下が実行されます：
-- `release` ブランチがリリースタグのコミットに更新されます
-- Docker imageのビルドとプッシュが自動実行されます
-- ビルドされたimageには `latest` タグと `{RESONITE_VERSION}-v{APP_VERSION}` タグが付与されます
+Once started, the gRPC API listens on port 5000. To open worlds automatically on startup, set the `StartupConfig` environment variable. See the [Configuration reference](./docs/configuration.md) for details.
+
+## Documentation
+
+- [Building the image](./docs/build-image.md) — build locally, or build via CI on your fork
+- [Configuration reference](./docs/configuration.md) — environment variables and StartupConfig
+- [Development guide](./docs/development.md) — dev environment setup, tests, and trying out the gRPC API
+- [Release flow](./docs/release.md) — versioning and release process
