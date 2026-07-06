@@ -2,14 +2,23 @@
 
 An unofficial custom headless client for [Resonite](https://resonite.com/), packaged as a container image and controllable from outside via a gRPC API.
 
-It replaces the interactive console of the official headless client with a gRPC API, so external tools such as web dashboards and bots can manage sessions.
+It replaces the interactive console of the official headless client with a [gRPC API](./proto/headless/v1/headless.proto), so external tools such as web dashboards and bots can manage sessions.
 
 ## Features
 
-- Control everything via the [gRPC API](./proto/headless/v1/headless.proto): start / stop / save sessions, manage users (kick / ban / role changes), handle friend requests and messages, and more
-- Subscribe to session events and logs via server streaming
-- Inject startup settings (worlds to open on boot, etc.) as JSON through an environment variable — the official headless `Config.json` also works as-is
-- Multi-architecture support: amd64 / arm64
+Most of what the official interactive console offers is available as RPCs: starting / stopping / saving sessions, updating session parameters, kick / ban / role management, friend requests and messaging, dynamic impulses, and more. Startup settings are injected as JSON through an environment variable, and the official headless `Config.json` also works as-is.
+
+On top of that, it has several features the official headless client doesn't have:
+
+- **Host event streaming** — session started / ended, user joined / left, world saved, and session parameter changes are delivered as a server-streamed event feed. Events carry monotonically increasing ULID ids and are buffered on the host, so a controller can reconnect and resume from the last id it saw without missing events, even across container restarts.
+- **World export** — download the world of a running session via the API as a `.resonitepackage` or BRSON stream.
+- **Save as** — save a running world as a new record (including worlds started from a preset) and get the resulting record URL back.
+- **Runtime host settings** — change tick rate, max concurrent asset transfers, auto-spawn items, and allow / deny URL host access (HTTP / WebSocket / OSC) while running, without editing the config and restarting.
+- **Startup config snapshot** — fetch the current host state as a `StartupConfig`, so a controller can persist it and restore the same state after a restart.
+- **ResoniteLink over gRPC** — ResoniteLink connections are bridged through a gRPC bidirectional stream, so tools can connect without the per-world WebSocket server (and extra open ports) of the official `enableResoniteLink`.
+- **Cloud queries** — search users, fetch world info, get account info including storage usage, list contacts, and read contact message history.
+- **Per-user join grants** — allow a specific user to join a session on demand via the API, or pre-authorize users with the `joinAllowedUserIds` startup parameter.
+- **arm64 support** — the official headless client only supports x86_64; this image also runs natively on arm64.
 
 ## Getting Started
 
