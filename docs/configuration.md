@@ -44,7 +44,7 @@
 | `allowedUrlHosts` | HTTP / WebSocket / OSC でのアクセスを許可するホスト |
 | `autoSpawnItems` | 各ワールド起動時に自動スポーンするアイテムの URL |
 
-`WorldStartupParameters` は公式ヘッドレスの設定とおおむね互換のパラメータ（`loadWorldUrl` / `loadWorldPresetName`, `maxUsers`, `accessLevel`, `customSessionId`, `defaultUserRoles`, `saveOnExit`, `autoSaveIntervalSeconds` など）に加え、独自の拡張パラメータとして `joinAllowedUserIds`（アクセスレベルに関わらず join を許可するユーザー ID のリスト）を持ちます。全フィールドは proto 定義を参照してください。
+`WorldStartupParameters` は公式ヘッドレスの設定とおおむね互換のパラメータ（`loadWorldUrl` / `loadWorldPresetName`, `maxUsers`, `accessLevel`, `customSessionId`, `defaultUserRoles`, `saveOnExit`, `autoSaveIntervalSeconds` など）に加え、独自の拡張パラメータとして `joinAllowedUserIds`（招待メッセージを送らずに join のアクセス許可だけを与えるユーザー ID のリスト）を持ちます。全フィールドは proto 定義を参照してください。
 
 ### 公式ヘッドレスの Config.json を使う
 

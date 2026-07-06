@@ -6,7 +6,7 @@ It replaces the interactive console of the official headless client with a [gRPC
 
 ## Features
 
-Most of what the official interactive console offers is available as RPCs: starting / stopping / saving sessions, updating session parameters, kick / ban / role management, friend requests and messaging, dynamic impulses, and more. Startup settings are injected as JSON through an environment variable, and the official headless `Config.json` also works as-is.
+Most of what the official interactive console offers is available as RPCs: starting / stopping / saving sessions, updating session parameters, kick / ban / role management, friend requests and messaging, dynamic impulses, and more. Startup settings are injected as JSON through an environment variable, and the official headless `Config.json` also works as-is. Images are built for both amd64 and arm64.
 
 On top of that, it has several features the official headless client doesn't have:
 
@@ -17,8 +17,7 @@ On top of that, it has several features the official headless client doesn't hav
 - **Startup config snapshot** — fetch the current host state as a `StartupConfig`, so a controller can persist it and restore the same state after a restart.
 - **ResoniteLink over gRPC** — ResoniteLink connections are bridged through a gRPC bidirectional stream, so tools can connect without the per-world WebSocket server (and extra open ports) of the official `enableResoniteLink`.
 - **Cloud queries** — search users, fetch world info, get account info including storage usage, list contacts, and read contact message history.
-- **Per-user join grants** — allow a specific user to join a session on demand via the API, or pre-authorize users with the `joinAllowedUserIds` startup parameter.
-- **arm64 support** — the official headless client only supports x86_64; this image also runs natively on arm64.
+- **Per-user join grants** — grant a specific user permission to join a session without sending them an invite message (like an invite, but access-only), via the API or the `joinAllowedUserIds` startup parameter.
 
 ## Getting Started
 
