@@ -46,3 +46,11 @@ jobs:
       resonite_branch: headless
       git_branch: release
     secrets: inherit
+
+  build-builder:
+    needs: update-release-branch
+    uses: ./.github/workflows/build-builder-image.yml
+    with:
+      git_ref: release
+      push_latest: true
+    secrets: inherit

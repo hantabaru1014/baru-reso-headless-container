@@ -1,0 +1,21 @@
+# builder image 用の per-Dockerfile ignore (BuildKit)。
+# repo root の .dockerignore は `**/Dockerfile*` や `**/bin` を除外しており、
+# そのままだと inner build に必要なファイルが /src に入らない。
+# ここでは既定ですべて除外し、inner build と entrypoint が必要とする一式だけを
+# /src に含める。
+
+*
+
+# inner build (docker build /src) と entrypoint が必要とするもの。
+# root の .dockerignore ファイル自体も /src に含める (inner build 時の context 除外に必要)。
+!.dockerignore
+!Dockerfile
+!Headless
+!EnginePrePatcher
+!depot-dl-list.txt
+!scripts
+!builder
+
+# 上で再包含したツリー内のビルド生成物は改めて除外する。
+**/bin
+**/obj
