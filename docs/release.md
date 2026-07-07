@@ -20,6 +20,9 @@ GitHub の Web UI から新しい Release を作成します。
 - タグ名: `v{バージョン番号}` （例: `v0.3.7`）
 - タイトル、説明を記入して **Publish release**
 
+> [!IMPORTANT]
+> タグ名は `Headless/AppVersion` の中身と一致している必要があります（`v{AppVersion}`）。Release CI の `validate-version` ジョブがこれを検証し、不一致（＝手順 1・2 のバージョンインクリメントを飛ばした場合など）ならリリースのビルドは失敗します。
+
 ## 4. 自動デプロイ
 
 リリースが作成されると、自動的に以下が実行されます。

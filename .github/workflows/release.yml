@@ -9,7 +9,38 @@ permissions:
   packages: write
 
 jobs:
+  validate-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Validate tag matches Headless/AppVersion
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          APP_VERSION="$(cat ./Headless/AppVersion)"
+          EXPECTED_TAG="v${APP_VERSION}"
+
+          echo "Release tag: ${TAG_NAME}"
+          echo "Headless/AppVersion: ${APP_VERSION} (expected tag: ${EXPECTED_TAG})"
+
+          if [ "${TAG_NAME}" != "${EXPECTED_TAG}" ]; then
+            echo "::error::Release tag '${TAG_NAME}' does not match Headless/AppVersion. Expected tag '${EXPECTED_TAG}'."
+            echo "Headless/AppVersion at this tag is '${APP_VERSION}', so the release tag must be '${EXPECTED_TAG}'."
+            echo "This usually means the version was not bumped before releasing. Follow the release flow:"
+            echo "  1. Run the 'Bump Version' workflow"
+            echo "  2. Merge the auto-created PR into main"
+            echo "  3. Create the release with tag 'v<new AppVersion>'"
+            exit 1
+          fi
+
+          echo "Version check passed."
+
   update-release-branch:
+    needs: validate-version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -29,9 +60,13 @@ jobs:
           echo "Release tag: $TAG_NAME"
           echo "Target commit ref: $TARGET_COMMIT_REF"
 
-          # Resolve the target to an actual commit SHA
-          # Try origin/$TARGET_COMMIT_REF first (for branch names), fall back to $TARGET_COMMIT_REF (for tags/SHAs)
-          TARGET_COMMIT=$(git rev-parse "origin/$TARGET_COMMIT_REF" 2>/dev/null || git rev-parse "$TARGET_COMMIT_REF")
+          # The release branch must track the commit the tag points to. Resolve the tag first
+          # (dereferencing annotated tags to the underlying commit); fall back to target_commitish
+          # (branch HEAD / SHA) only when the tag is not a resolvable ref. Preferring the tag avoids
+          # publishing a different commit when main advances after the tag is created.
+          TARGET_COMMIT=$(git rev-parse "refs/tags/$TAG_NAME^{commit}" 2>/dev/null \
+            || git rev-parse "origin/$TARGET_COMMIT_REF" 2>/dev/null \
+            || git rev-parse "$TARGET_COMMIT_REF")
 
           echo "Resolved commit SHA: $TARGET_COMMIT"
 
