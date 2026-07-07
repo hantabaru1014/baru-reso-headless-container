@@ -22,7 +22,7 @@ On top of that, it has several features the official headless client doesn't hav
 ## Getting Started
 
 > [!IMPORTANT]
-> Prebuilt headless images are not distributed because they contain Resonite assemblies. Instead, a public **builder image** builds one for you: with Docker and a Steam account that can access the Resonite headless branch, `docker run` it to produce your own image locally. See [Building the image](./docs/build-image.md) for instructions.
+> Prebuilt headless images are not distributed because they contain Resonite assemblies. Instead, a public **builder image** builds one for you: with Docker and a Steam account (create a new dedicated one that can log in with a password and has Steam Guard disabled), `docker run` it to produce your own image locally. See [Building the image](./docs/build-image.md) for instructions.
 
 Run your built image using `docker-compose.sample.yml` as a reference:
 
