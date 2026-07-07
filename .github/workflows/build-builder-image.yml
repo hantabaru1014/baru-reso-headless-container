@@ -1,0 +1,86 @@
+name: Build and Push Builder Image
+
+# builder image (controller のローカルビルド委譲先) を GHCR に発行する。
+# このイメージは Resonite バイナリを含まないため public 配布できる。
+
+on:
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        type: string
+        required: false
+        description: "Source git ref"
+        default: "release"
+      push_latest:
+        type: boolean
+        required: false
+        description: "Push :latest tag"
+        default: true
+  workflow_call:
+    inputs:
+      git_ref:
+        type: string
+        required: false
+        description: "Source git ref"
+        default: "release"
+      push_latest:
+        type: boolean
+        required: false
+        description: "Push :latest tag"
+        default: true
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_NAME: ${{ github.repository }}/builder
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ inputs.git_ref }}
+
+      - name: Read App Version
+        id: app-version
+        run: echo "app_version=$(cat ./Headless/AppVersion)" >> "$GITHUB_OUTPUT"
+
+      - name: Compute tags
+        id: tags
+        env:
+          APP_VERSION: ${{ steps.app-version.outputs.app_version }}
+          PUSH_LATEST: ${{ inputs.push_latest }}
+        run: |
+          TAGS="ghcr.io/${IMAGE_NAME}:${APP_VERSION}"
+          if [ "${PUSH_LATEST}" = "true" ]; then
+            TAGS="${TAGS},ghcr.io/${IMAGE_NAME}:latest"
+          fi
+          echo "tags=${TAGS}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push builder image
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        with:
+          context: .
+          file: builder/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          build-args: |
+            APP_VERSION=${{ steps.app-version.outputs.app_version }}
+          tags: ${{ steps.tags.outputs.tags }}

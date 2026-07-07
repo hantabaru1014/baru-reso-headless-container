@@ -22,7 +22,7 @@ On top of that, it has several features the official headless client doesn't hav
 ## Getting Started
 
 > [!IMPORTANT]
-> Prebuilt images are not distributed because they contain Resonite assemblies. Build the image locally, or fork this repository to build with GitHub Actions. See [Building the image](./docs/build-image.md) for instructions.
+> Prebuilt headless images are not distributed because they contain Resonite assemblies. Instead, a public **builder image** builds one for you: with Docker and a Steam account that can access the Resonite headless branch, `docker run` it to produce your own image locally. See [Building the image](./docs/build-image.md) for instructions.
 
 Run your built image using `docker-compose.sample.yml` as a reference:
 
@@ -41,7 +41,7 @@ Once started, the gRPC API listens on port 5000. To open worlds automatically on
 
 ## Documentation
 
-- [Building the image](./docs/build-image.md) — build locally, or build via CI on your fork
+- [Building the image](./docs/build-image.md) — build your own headless image with the public builder image
 - [Configuration reference](./docs/configuration.md) — environment variables and StartupConfig
 - [Development guide](./docs/development.md) — dev environment setup, tests, and trying out the gRPC API
 - [Release flow](./docs/release.md) — versioning and release process

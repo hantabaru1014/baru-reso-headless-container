@@ -30,6 +30,10 @@ lint.headless:
 build.docker:
 	docker build -t ghcr.io/hantabaru1014/baru-reso-headless-container .
 
+.PHONY: build.builder
+build.builder:
+	docker build -f builder/Dockerfile --build-arg APP_VERSION=$$(cat Headless/AppVersion) -t ghcr.io/hantabaru1014/baru-reso-headless-container/builder:dev .
+
 .PHONY: build.prepatcher
 build.prepatcher:
 	dotnet publish -c Release -o ./bin/prepatch ./EnginePrePatcher/EnginePrePatcher.csproj
