@@ -211,7 +211,8 @@ rm -f "${SRC_DIR}/native-libs/amd64/libbrolib.so"
 shopt -u globstar nullglob
 
 # --- タグ計算 ---
-APP_VERSION="$(tr -d '[:space:]' < "${SRC_DIR}/Headless/AppVersion")"
+# APP_VERSION は builder image ビルド時に ENV として焼き込まれる (release tag 由来)。
+APP_VERSION="${APP_VERSION:?APP_VERSION is not baked into this builder image}"
 
 TAG_PREFIX=""
 if [ "${BRANCH}" = "prerelease" ]; then
@@ -223,6 +224,7 @@ TAG="${TAG_PREFIX}${GAME_VERSION}-${APP_VERSION}"
 build_args=(
   build
   -t "${OUTPUT_IMAGE}:${TAG}"
+  --build-arg "APP_VERSION=${APP_VERSION}"
   --label "brhc.image-tag=${TAG}"
   --label "brhc.resonite-version=${GAME_VERSION}"
   --label "brhc.app-version=${APP_VERSION}"
