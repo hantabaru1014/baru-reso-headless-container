@@ -2,32 +2,28 @@ name: Build and Push Builder Image
 
 # builder image (controller のローカルビルド委譲先) を GHCR に発行する。
 # このイメージは Resonite バイナリを含まないため public 配布できる。
+# GitHub Release の publish で自動実行され、release tag がそのままアプリバージョンになる。
 
 on:
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       git_ref:
         type: string
         required: false
         description: "Source git ref"
-        default: "release"
-      push_latest:
-        type: boolean
-        required: false
-        description: "Push :latest tag"
-        default: true
-  workflow_call:
-    inputs:
-      git_ref:
+        default: "main"
+      app_version:
         type: string
         required: false
-        description: "Source git ref"
-        default: "release"
+        description: "App version to bake in (default: latest release tag)"
+        default: ""
       push_latest:
         type: boolean
         required: false
         description: "Push :latest tag"
-        default: true
+        default: false
 
 permissions:
   contents: read
@@ -43,17 +39,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
-          ref: ${{ inputs.git_ref }}
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.git_ref }}
 
-      - name: Read App Version
+      - name: Resolve app version
         id: app-version
-        run: echo "app_version=$(cat ./Headless/AppVersion)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          INPUT_VERSION: ${{ inputs.app_version }}
+        run: |
+          if [ "${EVENT_NAME}" = "release" ]; then
+            VERSION="${RELEASE_TAG}"
+          elif [ -n "${INPUT_VERSION}" ]; then
+            VERSION="${INPUT_VERSION}"
+          else
+            VERSION="$(gh release view --repo "${GITHUB_REPOSITORY}" --json tagName --jq .tagName)"
+          fi
+          echo "app_version=${VERSION#v}" >> "$GITHUB_OUTPUT"
 
       - name: Compute tags
         id: tags
         env:
           APP_VERSION: ${{ steps.app-version.outputs.app_version }}
-          PUSH_LATEST: ${{ inputs.push_latest }}
+          PUSH_LATEST: ${{ github.event_name == 'release' || inputs.push_latest }}
         run: |
           TAGS="ghcr.io/${IMAGE_NAME}:${APP_VERSION}"
           if [ "${PUSH_LATEST}" = "true" ]; then
