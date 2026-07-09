@@ -11,6 +11,8 @@ RUN dotnet publish "./EnginePrePatcher.csproj" -c $BUILD_CONFIGURATION -o /app/p
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
+# release tag 由来のアプリバージョン。builder image / CI が渡す
+ARG APP_VERSION=0.0.0-dev
 WORKDIR /src
 COPY ["Headless/Headless.csproj", "Headless/"]
 RUN dotnet restore "./Headless/Headless.csproj"
@@ -18,7 +20,7 @@ COPY --from=build-patcher /app/publish ./bin/prepatch
 COPY ./Headless ./Headless
 WORKDIR "/src/Headless"
 RUN --mount=type=bind,source=Resonite/Headless,target=../Resonite/Headless,rw \
-    dotnet ../bin/prepatch/EnginePrePatcher.dll ../Resonite/Headless && dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+    dotnet ../bin/prepatch/EnginePrePatcher.dll ../Resonite/Headless && dotnet publish "./Headless.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false /p:Version=${APP_VERSION}
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 ARG TARGETARCH

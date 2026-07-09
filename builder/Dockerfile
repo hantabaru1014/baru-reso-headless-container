@@ -44,8 +44,10 @@ ENV DOCKER_BUILDKIT=1
 COPY . /src
 WORKDIR /src
 
-# CI (build-builder-image.yml) が Headless/AppVersion の中身を渡す。
-ARG APP_VERSION
+# CI (build-builder-image.yml) が release tag 由来のバージョンを渡す。
+# entrypoint が ENV 経由で読み、inner build の APP_VERSION build-arg に引き継ぐ。
+ARG APP_VERSION=0.0.0-dev
+ENV APP_VERSION="${APP_VERSION}"
 LABEL brhc.app-version="${APP_VERSION}"
 
 RUN chmod +x /src/builder/entrypoint.sh

@@ -32,7 +32,7 @@ build.docker:
 
 .PHONY: build.builder
 build.builder:
-	docker build -f builder/Dockerfile --build-arg APP_VERSION=$$(cat Headless/AppVersion) -t ghcr.io/hantabaru1014/baru-reso-headless-container/builder:dev .
+	docker build -f builder/Dockerfile -t ghcr.io/hantabaru1014/baru-reso-headless-container/builder:dev .
 
 .PHONY: build.prepatcher
 build.prepatcher:
