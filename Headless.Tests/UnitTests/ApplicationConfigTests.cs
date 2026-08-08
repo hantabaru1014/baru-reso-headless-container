@@ -23,6 +23,7 @@ public class ApplicationConfigTests
         Assert.Null(config.BackgroundWorkers);
         Assert.Null(config.PriorityWorkers);
         Assert.Equal(180, config.ShutdownTimeoutSeconds);
+        Assert.Null(config.PublicIp);
     }
 
     [Fact]
@@ -35,7 +36,8 @@ public class ApplicationConfigTests
             HeadlessUserPassword: "p",
             BackgroundWorkers: 4,
             PriorityWorkers: 2,
-            ShutdownTimeoutSeconds: 30);
+            ShutdownTimeoutSeconds: 30,
+            PublicIp: "203.0.113.10");
 
         Assert.Equal("http://127.0.0.1:6000", config.RpcHostUrl);
         Assert.Equal("/data", config.DataDirectoryPath);
@@ -44,6 +46,7 @@ public class ApplicationConfigTests
         Assert.Equal(4, config.BackgroundWorkers);
         Assert.Equal(2, config.PriorityWorkers);
         Assert.Equal(30, config.ShutdownTimeoutSeconds);
+        Assert.Equal("203.0.113.10", config.PublicIp);
     }
 
     [Fact]

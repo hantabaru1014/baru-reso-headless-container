@@ -24,7 +24,13 @@ RUN --mount=type=bind,source=Resonite/Headless,target=../Resonite/Headless,rw \
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 ARG TARGETARCH
-RUN apt-get update && apt-get install -y --no-install-recommends libpng16-16t64 && rm -rf /var/lib/apt/lists/*
+# libmsquic は Microsoft のリポジトリにしか無い。URL は base image の OS (Ubuntu 24.04) に合わせること
+ADD https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb /tmp/packages-microsoft-prod.deb
+RUN dpkg -i /tmp/packages-microsoft-prod.deb \
+    && rm /tmp/packages-microsoft-prod.deb \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends libpng16-16t64 libmsquic \
+    && rm -rf /var/lib/apt/lists/*
 USER app
 WORKDIR /app
 COPY --from=build --chown=app:app /app/publish .

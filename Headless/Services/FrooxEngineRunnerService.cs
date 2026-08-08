@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json;
 using FrooxEngine;
 using PhotonDust;
 using Awwdio;
@@ -133,6 +134,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
 
         _engine.EnvironmentShutdownCallback = () => _engineShutdownComplete = true;
         _engine.OnShutdownRequest += OnShutdownRequest;
+        var appPath = AppDomain.CurrentDomain.BaseDirectory;
         var launchOptions = new LaunchOptions
         {
             OutputDevice = Renderite.Shared.HeadOutputDevice.Headless,
@@ -144,10 +146,11 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
             NeverSaveDash = true,
             BackgroundWorkerCount = _appConfig.BackgroundWorkers,
             PriorityWorkerCount = _appConfig.PriorityWorkers,
+            EngineConfigFile = PrepareEngineConfigFile(appPath)!,
         };
 
         await _engine.Initialize(
-            AppDomain.CurrentDomain.BaseDirectory,
+            appPath,
             false,
             launchOptions,
             _systemInfo,
@@ -201,6 +204,49 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         _logger.LogInformation("Application startup complete");
         await _engineLoopCompletion.Task;
         _applicationLifetime.StopApplication();
+    }
+
+    /// <summary>
+    /// PublicIp を quicConfig.publicIP に反映した Engine 用 Config.json を生成し、そのパスを返す。未設定なら null。
+    /// </summary>
+    /// <remarks>
+    /// Engine.Initialize 内の LoadConfig が Engine.Config を丸ごと差し替えた直後に NetworkManager が
+    /// QUICConfig を掴むため、初期化前にファイルとして用意するしかない。
+    /// </remarks>
+    private string? PrepareEngineConfigFile(string appPath)
+    {
+        var publicIp = _appConfig.PublicIp;
+        if (string.IsNullOrWhiteSpace(publicIp)) return null;
+
+        if (Uri.CheckHostName(publicIp) is UriHostNameType.Unknown)
+        {
+            _logger.LogError("Invalid PublicIp: {0}. Ignoring it", publicIp);
+            return null;
+        }
+
+        // Engine が既定で読むファイルがあれば、それを土台にする
+        var basePath = Path.Combine(appPath, "Config.json");
+        AppConfig config;
+        try
+        {
+            config = File.Exists(basePath)
+                ? JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(basePath)) ?? new AppConfig()
+                : new AppConfig();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning("Failed to read {0}, starting from an empty AppConfig: {1}", basePath, ex.Message);
+            config = new AppConfig();
+        }
+
+        config.QUICConfig ??= new QUICConfig();
+        config.QUICConfig.PublicIP = publicIp;
+
+        var generatedPath = Path.Combine(Path.GetTempPath(), "EngineConfig.generated.json");
+        File.WriteAllText(generatedPath, JsonSerializer.Serialize(config));
+        _logger.LogInformation("QUIC public IP: {0}", publicIp);
+
+        return generatedPath;
     }
 
     private static void LoadTypes()

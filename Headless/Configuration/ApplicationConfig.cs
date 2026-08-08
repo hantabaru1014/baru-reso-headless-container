@@ -8,7 +8,8 @@ public record ApplicationConfig
     string? HeadlessUserPassword = null,
     int? BackgroundWorkers = null,
     int? PriorityWorkers = null,
-    int ShutdownTimeoutSeconds = 180
+    int ShutdownTimeoutSeconds = 180,
+    string? PublicIp = null
 )
 {
     public ApplicationConfig() : this("http://0.0.0.0:5000", Directory.GetCurrentDirectory())
