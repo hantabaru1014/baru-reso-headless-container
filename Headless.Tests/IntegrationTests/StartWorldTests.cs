@@ -35,12 +35,19 @@ public class StartWorldTests
         var initialCount = initialResponse.Sessions.Count;
 
         // Act - Start a world with Grid preset
+        const uint lnlPort = 45678;
+        const uint quicPort = 45679;
         var startRequest = new StartWorldRequest
         {
             Parameters = new WorldStartupParameters
             {
                 LoadWorldPresetName = "Grid",
-                AccessLevel = AccessLevel.Private
+                AccessLevel = AccessLevel.Private,
+                ForcePorts =
+                {
+                    new ForcePort { Protocol = NetworkProtocol.Lnl, Port = lnlPort },
+                    new ForcePort { Protocol = NetworkProtocol.Quic, Port = quicPort },
+                }
             }
         };
 
@@ -64,6 +71,16 @@ public class StartWorldTests
             var foundSession = finalResponse.Sessions
                 .FirstOrDefault(s => s.Id == startResponse.OpenedSession.Id);
             Assert.NotNull(foundSession);
+
+            // Verify force_ports survives the proto -> engine -> proto round trip
+            var startupParameters = foundSession.StartupParameters;
+            Assert.NotNull(startupParameters);
+            var ports = startupParameters.ForcePorts.ToDictionary(p => p.Protocol, p => p.Port);
+            Assert.Equal(lnlPort, ports[NetworkProtocol.Lnl]);
+            Assert.Equal(quicPort, ports[NetworkProtocol.Quic]);
+#pragma warning disable CS0612 // legacy な force_port は LNL のミラーであり続ける
+            Assert.Equal(lnlPort, startupParameters.ForcePort);
+#pragma warning restore CS0612
         }
         catch (Exception ex)
         {

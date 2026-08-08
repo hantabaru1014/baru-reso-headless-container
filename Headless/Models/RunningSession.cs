@@ -236,7 +236,7 @@ public class RunningSession
             LoadWorldURL = StartInfo.LoadWorldURL,
             LoadWorldPresetName = StartInfo.LoadWorldPresetName,
             OverrideCorrespondingWorldId = StartInfo.OverrideCorrespondingWorldId,
-            ForcePort = StartInfo.ForcePort,
+            ForcePorts = StartInfo.ForcePorts,
             KeepOriginalRoles = StartInfo.KeepOriginalRoles,
             DefaultUserRoles = StartInfo.DefaultUserRoles, // TODO: Instance.Permissions.DefaultUserPermissions から作るか決める
             RoleCloudVariable = Instance.Permissions.DefaultRoleCloudVariable,

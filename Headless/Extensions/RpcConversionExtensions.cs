@@ -9,6 +9,64 @@ namespace Headless.Extensions;
 
 public static class RpcConversionExtensions
 {
+    /// <summary>
+    /// ForcePorts のキーは FrooxEngine の各 INetworkManager が CreateListeners で参照するスキーム名。
+    /// </summary>
+    private const string LnlPortKey = "lnl";
+
+    private static string? ToResonitePortKey(this NetworkProtocol protocol)
+    {
+        return protocol switch
+        {
+            NetworkProtocol.Lnl => LnlPortKey,
+            NetworkProtocol.Quic => "quic",
+            NetworkProtocol.Tcp => "tcp",
+            _ => null
+        };
+    }
+
+    private static NetworkProtocol ToProtoProtocol(this string portKey)
+    {
+        return portKey switch
+        {
+            LnlPortKey => NetworkProtocol.Lnl,
+            "quic" => NetworkProtocol.Quic,
+            "tcp" => NetworkProtocol.Tcp,
+            _ => NetworkProtocol.Unspecified
+        };
+    }
+
+    private static IEnumerable<Rpc.ForcePort> ToProtoForcePorts(this SkyFrost.Base.WorldStartupParameters parameters)
+    {
+        return (parameters.ForcePorts ?? [])
+            .Select(p => new Rpc.ForcePort { Protocol = p.Key.ToProtoProtocol(), Port = p.Value })
+            .Where(p => p.Protocol is not NetworkProtocol.Unspecified);
+    }
+
+    /// <summary>
+    /// 未知のプロトコルと範囲外 (ushort に収まらない) のポートは無視する。
+    /// </summary>
+    private static Dictionary<string, ushort>? ToResoniteForcePorts(this Rpc.WorldStartupParameters parameters)
+    {
+        var ports = new Dictionary<string, ushort>();
+        foreach (var entry in parameters.ForcePorts)
+        {
+            if (entry.Port is 0 or > ushort.MaxValue) continue;
+            if (entry.Protocol.ToResonitePortKey() is not { } key) continue;
+
+            ports[key] = (ushort)entry.Port;
+        }
+
+#pragma warning disable CS0612 // 旧クライアントは force_ports を送ってこない
+        if (ports.Count == 0 && parameters.ForcePort is > 0 and <= ushort.MaxValue)
+        {
+            ports[LnlPortKey] = (ushort)parameters.ForcePort;
+        }
+#pragma warning restore CS0612
+
+        return ports.Count > 0 ? ports : null;
+    }
+
     public static AccessLevel ToProto(this SessionAccessLevel level)
     {
         return level switch
@@ -52,7 +110,10 @@ public static class RpcConversionExtensions
             SaveOnExit = parameters.SaveOnExit,
             AutoSaveIntervalSeconds = (int)parameters.AutoSaveInterval,
             AutoSleep = parameters.AutoSleep,
-            ForcePort = parameters.ForcePort ?? 0,
+            ForcePorts = { parameters.ToProtoForcePorts() },
+#pragma warning disable CS0612 // 旧クライアント向けに legacy フィールドも埋める
+            ForcePort = parameters.ForcePorts?.GetValueOrDefault(LnlPortKey) ?? 0,
+#pragma warning restore CS0612
             ParentSessionIds = { parameters.ParentSessionIds ?? [] },
             AutoRecover = parameters.AutoRecover,
             ForcedRestartIntervalSeconds = (int)parameters.ForcedRestartInterval,
@@ -147,7 +208,7 @@ public static class RpcConversionExtensions
             SaveOnExit = parameters.SaveOnExit,
             AutoSaveInterval = parameters.AutoSaveIntervalSeconds == 0 ? -1 : parameters.AutoSaveIntervalSeconds,
             AutoSleep = parameters.AutoSleep,
-            ForcePort = parameters.ForcePort > 0 ? (ushort)parameters.ForcePort : null,
+            ForcePorts = parameters.ToResoniteForcePorts(),
             ParentSessionIds = parameters.ParentSessionIds.ToList(),
             AutoRecover = parameters.AutoRecover,
             ForcedRestartInterval = parameters.ForcedRestartIntervalSeconds == 0 ? -1 : parameters.ForcedRestartIntervalSeconds,
