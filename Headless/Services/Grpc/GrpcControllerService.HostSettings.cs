@@ -10,7 +10,7 @@ public partial class GrpcControllerService
     public override async Task<GetHostSettingsResponse> GetHostSettings(GetHostSettingsRequest request, ServerCallContext context)
     {
         var securitySettings = await Settings.GetActiveSettingAsync<HostAccessSettings>();
-        var allowedList = securitySettings.Entries.Select(entry =>
+        var allowedList = securitySettings.Entries.Elements.Select(entry =>
         {
             var types = new List<AllowedAccessEntry.Types.AccessType>();
             if (entry.Value.AllowHTTP_Requests)
@@ -58,7 +58,7 @@ public partial class GrpcControllerService
     public override async Task<GetStartupConfigToRestoreResponse> GetStartupConfigToRestore(GetStartupConfigToRestoreRequest request, ServerCallContext context)
     {
         var securitySettings = await Settings.GetActiveSettingAsync<HostAccessSettings>();
-        var allowedList = securitySettings.Entries.Select(entry =>
+        var allowedList = securitySettings.Entries.Elements.Select(entry =>
         {
             var types = new List<AllowedAccessEntry.Types.AccessType>();
             if (entry.Value.AllowHTTP_Requests)
