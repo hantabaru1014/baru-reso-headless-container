@@ -2,7 +2,9 @@ using Elements.Core;
 using FrooxEngine;
 using Headless.Configuration;
 using Headless.Events;
+using Headless.Libs;
 using Headless.Services;
+using SkyFrost.Base.Utility;
 
 namespace Headless;
 
@@ -51,6 +53,9 @@ public class Program
         UniLog.OnLog += msg => FilterLogMsg(logger, msg);
         UniLog.OnWarning += msg => logger.LogWarning(msg);
         UniLog.OnError += msg => logger.LogError(msg);
+
+        // Engine 初期化で SkyFrost の HttpClient が作られる前に設定する (フックは EnginePrePatcher の AddHttpHandlerWrapperHook が追加)
+        HttpClientUtilities.HandlerWrapper = inner => new RetryableResponseBufferingHandler(inner, logger);
 
         var appConfigInstance = appConfig.Get<ApplicationConfig>() ?? new ApplicationConfig();
         app.Run(appConfigInstance.RpcHostUrl);
