@@ -15,7 +15,7 @@ On top of that, it has several features the official headless client doesn't hav
 - **Save as** — save a running world as a new record (including worlds started from a preset) and get the resulting record URL back.
 - **Runtime host settings** — change tick rate, max concurrent asset transfers, auto-spawn items, and allow / deny URL host access (HTTP / WebSocket / OSC) while running, without editing the config and restarting.
 - **Startup config snapshot** — fetch the current host state as a `StartupConfig`, so a controller can persist it and restore the same state after a restart.
-- **ResoniteLink over gRPC** — ResoniteLink connections are bridged through a gRPC bidirectional stream, so tools can connect without the per-world WebSocket server (and extra open ports) of the official `enableResoniteLink`.
+- **ResoniteLink over gRPC** — ResoniteLink connections are bridged through a gRPC bidirectional stream, so tools can connect without the per-world WebSocket server (and extra open ports) of the official `enableResoniteLink`. A connection can carry the Resonite user ID of the person using it, so slots guarded by Simple Avatar Protection are checked against that user instead of the headless account (as if they had started ResoniteLink locally).
 - **Cloud queries** — search users, fetch world info, get account info including storage usage, list contacts, and read contact message history.
 - **Per-user join grants** — grant a specific user permission to join a session without sending them an invite message (like an invite, but access-only), via the API or the `joinAllowedUserIds` startup parameter.
 

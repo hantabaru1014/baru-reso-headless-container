@@ -3,6 +3,7 @@ using System.Net.WebSockets;
 using System.Threading.Channels;
 using System.Threading.Tasks.Dataflow;
 using FrooxEngine;
+using FrooxEngine.CommonAvatar;
 using Headless.Rpc;
 using WatsonWebsocket;
 
@@ -11,11 +12,24 @@ namespace Headless.Services;
 /// <summary>
 /// per-World に 1 つ存在し、gRPC bidi stream を「仮想 WatsonWebsocket クライアント」として
 /// ResoniteLinkService に流し込むブリッジ。WatsonWsServer は起動しない。
+/// <para>
+/// ResoniteLinkHost は接続ユーザー (Resonite ユーザー ID) ごとに 1 つ持つ。
+/// 本家の ResoniteLink はスロットのアクセス可否 (SimpleAvatarProtection) を World.LocalUser 基準で
+/// 判定するが、ヘッドレスでは LocalUser がヘッドレスアカウントになるため、他ユーザーのアバターが
+/// 一律で触れなくなる。ユーザーごとの Host で判定をそのユーザー基準に差し替えることで、
+/// そのユーザーがローカルで ResoniteLink を開始したときと同じ挙動にする。
+/// </para>
 /// </summary>
 public sealed class ResoniteLinkBridge : IDisposable
 {
+    /// <summary>
+    /// ユーザー ID 未指定の接続に使う Host のキー。本家同様 LocalUser 基準で判定する。
+    /// </summary>
+    private const string DefaultHostKey = "";
+
+    private readonly World _world;
     private readonly ILogger _logger;
-    private readonly ResoniteLinkHost _host;
+    private readonly ConcurrentDictionary<string, ResoniteLinkHost> _hosts = new();
     private readonly ConcurrentDictionary<Guid, BridgeClient> _clients = new();
     private readonly object _lifecycleLock = new();
     private int _nextSessionId;
@@ -23,12 +37,8 @@ public sealed class ResoniteLinkBridge : IDisposable
 
     public ResoniteLinkBridge(World world, ILogger logger)
     {
+        _world = world;
         _logger = logger;
-        _host = new ResoniteLinkHost(world);
-
-        // Host.Start() を呼ばずに outgoing 経路だけ独自にセットアップする。
-        // 既存の _messageSender (private) は EnginePrePatcher で public 化済み。
-        _host._messageSender = new ActionBlock<ResoniteLinkHost.OutgoingMessage>(DispatchOutgoing);
     }
 
     public int ClientsCount => _clients.Count;
@@ -36,11 +46,17 @@ public sealed class ResoniteLinkBridge : IDisposable
     /// <summary>
     /// gRPC stream 1 本に対応する仮想クライアントを開く。
     /// </summary>
-    public BridgeClient OpenClient()
+    /// <param name="userId">
+    /// 接続を発行した Resonite ユーザー ID。null / 空ならヘッドレスアカウント基準の Host を使う。
+    /// </param>
+    public BridgeClient OpenClient(string? userId = null)
     {
         lock (_lifecycleLock)
         {
             ObjectDisposedException.ThrowIf(_disposed, this);
+
+            var hostKey = string.IsNullOrWhiteSpace(userId) ? DefaultHostKey : userId.Trim();
+            var host = _hosts.GetOrAdd(hostKey, CreateHost);
 
             var metadata = new ClientMetadata
             {
@@ -50,13 +66,13 @@ public sealed class ResoniteLinkBridge : IDisposable
                 Name = "grpc",
             };
             var uniqueSessionId = Interlocked.Increment(ref _nextSessionId).ToString();
-            var service = new ResoniteLinkService(_host, uniqueSessionId, metadata);
+            var service = new ResoniteLinkService(host, uniqueSessionId, metadata);
             var channel = Channel.CreateUnbounded<ResoniteLinkStreamResponse>(new UnboundedChannelOptions
             {
                 SingleReader = true,
                 SingleWriter = false,
             });
-            var client = new BridgeClient(metadata, service, channel);
+            var client = new BridgeClient(metadata, service, channel, hostKey == DefaultHostKey ? null : hostKey);
             if (!_clients.TryAdd(metadata.Guid, client))
             {
                 throw new InvalidOperationException("Failed to register bridge client (duplicate guid)");
@@ -96,6 +112,37 @@ public sealed class ResoniteLinkBridge : IDisposable
         client.Outgoing.Writer.TryComplete();
     }
 
+    private ResoniteLinkHost CreateHost(string hostKey)
+    {
+        var host = new ResoniteLinkHost(_world);
+
+        // Host.Start() を呼ばずに outgoing 経路だけ独自にセットアップする。
+        // 既存の _messageSender (private) は EnginePrePatcher で public 化済み。
+        host._messageSender = new ActionBlock<ResoniteLinkHost.OutgoingMessage>(DispatchOutgoing);
+
+        if (hostKey != DefaultHostKey)
+        {
+            // CanProcessSlotOverride は EnginePrePatcher (AddResoniteLinkSlotAccessHook) で追加したフック。
+            host.Translator.CanProcessSlotOverride = slot => CanProcessSlotAs(slot, hostKey);
+        }
+        return host;
+    }
+
+    /// <summary>
+    /// ResoniteLinkTranslator.CanProcessSlot と同じ判定を、LocalUser の代わりに
+    /// <paramref name="userId"/> を基準に行う (SimpleAvatarProtection.CanUse 相当)。
+    /// </summary>
+    internal static bool CanProcessSlotAs(Slot slot, string userId)
+    {
+        var protection = slot.GetComponent<SimpleAvatarProtection>();
+        if (protection is null)
+        {
+            return true;
+        }
+        var registeredUserId = protection.User.UserId;
+        return string.IsNullOrEmpty(registeredUserId) || registeredUserId == userId;
+    }
+
     private void DispatchOutgoing(ResoniteLinkHost.OutgoingMessage message)
     {
         if (!_clients.TryGetValue(message.client.Guid, out var client))
@@ -122,20 +169,30 @@ public sealed class ResoniteLinkBridge : IDisposable
             client.Outgoing.Writer.TryComplete();
         }
         _clients.Clear();
-        _host._messageSender.Complete();
+        foreach (var host in _hosts.Values)
+        {
+            host._messageSender.Complete();
+        }
+        _hosts.Clear();
     }
 
     public sealed class BridgeClient
     {
-        public BridgeClient(ClientMetadata metadata, ResoniteLinkService service, Channel<ResoniteLinkStreamResponse> outgoing)
+        public BridgeClient(ClientMetadata metadata, ResoniteLinkService service, Channel<ResoniteLinkStreamResponse> outgoing, string? userId)
         {
             Metadata = metadata;
             Service = service;
             Outgoing = outgoing;
+            UserId = userId;
         }
 
         public ClientMetadata Metadata { get; }
         public ResoniteLinkService Service { get; }
         public Channel<ResoniteLinkStreamResponse> Outgoing { get; }
+
+        /// <summary>
+        /// この接続のアクセス判定基準となる Resonite ユーザー ID。null ならヘッドレスアカウント基準。
+        /// </summary>
+        public string? UserId { get; }
     }
 }
