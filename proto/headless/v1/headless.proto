@@ -718,6 +718,11 @@ message ResoniteLinkStreamRequest {
 
 message ResoniteLinkInit {
   string session_id = 1;
+  // 接続を発行した Resonite ユーザー ID (U-xxx)。
+  // 指定するとそのユーザーがローカルで ResoniteLink を開始したときと同様に、
+  // SimpleAvatarProtection によるスロットのアクセス判定がこのユーザーを基準に行われる。
+  // 空ならヘッドレスアカウント (LocalUser) 基準のままになる。
+  string user_id = 2;
 }
 
 message ResoniteLinkStreamResponse {

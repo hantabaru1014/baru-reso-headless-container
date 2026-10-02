@@ -38,7 +38,10 @@ public partial class GrpcControllerService
         }
 
         var bridge = session.GetOrCreateLinkBridge(_loggerFactory.CreateLogger<ResoniteLinkBridge>());
-        var client = bridge.OpenClient();
+        var client = bridge.OpenClient(first.Init.UserId);
+        _logger.LogInformation(
+            "ResoniteLink client connected to session {SessionId} as {UserId}",
+            sessionId, client.UserId ?? "<headless local user>");
         try
         {
             await responseStream.WriteAsync(new ResoniteLinkStreamResponse { Ready = new ResoniteLinkReady() }, ct);

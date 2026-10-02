@@ -138,10 +138,12 @@ public class ResoniteLinkStreamTests
         var sessionId = await StartGridSessionAsync(client);
         try
         {
+            // 別ユーザーとして接続するとユーザーごとに ResoniteLinkHost が分かれるが、
+            // クライアント数はまとめて数えられる。
             using var callA = client.ResoniteLinkStream();
             await callA.RequestStream.WriteAsync(new ResoniteLinkStreamRequest
             {
-                Init = new ResoniteLinkInit { SessionId = sessionId }
+                Init = new ResoniteLinkInit { SessionId = sessionId, UserId = "U-link-user-a" }
             });
             Assert.True(await callA.ResponseStream.MoveNext(default));
             await WaitForCountAsync(client, sessionId, 1, TimeSpan.FromSeconds(5));
@@ -149,10 +151,17 @@ public class ResoniteLinkStreamTests
             using var callB = client.ResoniteLinkStream();
             await callB.RequestStream.WriteAsync(new ResoniteLinkStreamRequest
             {
-                Init = new ResoniteLinkInit { SessionId = sessionId }
+                Init = new ResoniteLinkInit { SessionId = sessionId, UserId = "U-link-user-b" }
             });
             Assert.True(await callB.ResponseStream.MoveNext(default));
             await WaitForCountAsync(client, sessionId, 2, TimeSpan.FromSeconds(5));
+
+            // ユーザー別 Host 経由でも Root slot を読める (CanProcessSlot のフックが通る)
+            const string getRootJson = "{\"$type\":\"getSlot\",\"messageId\":\"m-root\",\"slotId\":\"Root\",\"depth\":0,\"includeComponentData\":false}";
+            await callB.RequestStream.WriteAsync(new ResoniteLinkStreamRequest { TextFrame = getRootJson });
+            var rootResponse = await WaitForTextFrameAsync(callB.ResponseStream, TimeSpan.FromSeconds(10));
+            Assert.NotNull(rootResponse);
+            Assert.Contains("\"success\":true", rootResponse, StringComparison.OrdinalIgnoreCase);
 
             // A だけ閉じる
             await callA.RequestStream.CompleteAsync();
