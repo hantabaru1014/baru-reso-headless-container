@@ -24,6 +24,7 @@ public class ApplicationConfigTests
         Assert.Null(config.PriorityWorkers);
         Assert.Equal(180, config.ShutdownTimeoutSeconds);
         Assert.Null(config.PublicIp);
+        Assert.Equal(300, config.EngineHangTimeoutSeconds);
     }
 
     [Fact]
@@ -37,7 +38,8 @@ public class ApplicationConfigTests
             BackgroundWorkers: 4,
             PriorityWorkers: 2,
             ShutdownTimeoutSeconds: 30,
-            PublicIp: "203.0.113.10");
+            PublicIp: "203.0.113.10",
+            EngineHangTimeoutSeconds: 60);
 
         Assert.Equal("http://127.0.0.1:6000", config.RpcHostUrl);
         Assert.Equal("/data", config.DataDirectoryPath);
@@ -47,6 +49,7 @@ public class ApplicationConfigTests
         Assert.Equal(2, config.PriorityWorkers);
         Assert.Equal(30, config.ShutdownTimeoutSeconds);
         Assert.Equal("203.0.113.10", config.PublicIp);
+        Assert.Equal(60, config.EngineHangTimeoutSeconds);
     }
 
     [Fact]
