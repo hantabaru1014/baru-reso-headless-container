@@ -9,7 +9,8 @@ public record ApplicationConfig
     int? BackgroundWorkers = null,
     int? PriorityWorkers = null,
     int ShutdownTimeoutSeconds = 180,
-    string? PublicIp = null
+    string? PublicIp = null,
+    int EngineHangTimeoutSeconds = 300
 )
 {
     public ApplicationConfig() : this("http://0.0.0.0:5000", Directory.GetCurrentDirectory())

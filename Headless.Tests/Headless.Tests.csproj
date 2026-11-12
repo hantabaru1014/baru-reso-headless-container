@@ -47,6 +47,7 @@
     <Compile Include="../Headless/Events/SubscriberDroppedException.cs" Link="Events/SubscriberDroppedException.cs" />
     <Compile Include="../Headless/Configuration/ApplicationConfig.cs" Link="Configuration/ApplicationConfig.cs" />
     <Compile Include="../Headless/Libs/RetryableResponseBufferingHandler.cs" Link="Libs/RetryableResponseBufferingHandler.cs" />
+    <Compile Include="../Headless/Libs/EngineHangWatchdog.cs" Link="Libs/EngineHangWatchdog.cs" />
   </ItemGroup>
 
 </Project>

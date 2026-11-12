@@ -5,6 +5,7 @@ using PhotonDust;
 using Awwdio;
 using Headless.Configuration;
 using Headless.Extensions;
+using Headless.Libs;
 using Microsoft.Extensions.Options;
 using SkyFrost.Base;
 
@@ -26,6 +27,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
     private readonly SystemInfo _systemInfo;
     private readonly IHostApplicationLifetime _applicationLifetime;
     private readonly WorldService _worldService;
+    private readonly EngineHangWatchdog _hangWatchdog;
 
     private bool _applicationStartupComplete;
     private bool _engineShutdownComplete;
@@ -87,6 +89,12 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         _systemInfo = systemInfo;
         _applicationLifetime = applicationLifetime;
         _worldService = worldService;
+        _hangWatchdog = new EngineHangWatchdog(
+            TimeSpan.FromSeconds(_appConfig.EngineHangTimeoutSeconds),
+            TerminateOnHang,
+            logger,
+            describeEngineState: DescribeWorlds
+        );
 
         var config = startupConfig.Value.Value;
         if (config.HasTickRate && config.TickRate > 0)
@@ -287,6 +295,8 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         try
         {
             _engine.InitializeUpdateLoop();
+            _hangWatchdog.MarkInitialized();
+            _hangWatchdog.Start();
 
             var nextTick = DateTime.UtcNow;
             while (!ct.IsCancellationRequested || !_engineShutdownComplete || !_applicationStartupComplete)
@@ -301,6 +311,7 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
                 {
                     _logger.LogError(e, "Unexpected error during engine update loop");
                 }
+                _hangWatchdog.ReportProgress();
 
                 var period = _tickRate > 0f ? TimeSpan.FromSeconds(1.0 / _tickRate) : TimeSpan.Zero;
                 nextTick += period;
@@ -329,6 +340,8 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
         }
         finally
         {
+            // 更新ループを抜けたらフレームは進まないので、以降の終了処理を誤ってハング扱いしないよう監視を止める
+            _hangWatchdog.Dispose();
             try
             {
                 shutdownEngineTask?.Wait();
@@ -340,6 +353,18 @@ public class FrooxEngineRunnerService : BackgroundService, IFrooxEngineRunnerSer
             _engineLoopCompletion.TrySetResult();
         }
     }
+
+    private static void TerminateOnHang(string message)
+    {
+        // Environment.Exit は Generic Host の ProcessExit ハンドラがホストの停止 (= 固まったエンジン) を待ってしまい
+        // 終了できない可能性があるため、FailFast で即座に落とす。
+        // Console ロガーは非同期に書き出すので、critical ログが出力されるよう少しだけ待つ
+        Thread.Sleep(TimeSpan.FromSeconds(1));
+        Environment.FailFast(message);
+    }
+
+    private string DescribeWorlds() => string.Join(", ", _engine.WorldManager.Worlds.Select(w =>
+        $"{w.RawName} (State: {w.State}, Stage: {w.Stage})"));
 
     private Task LoginAsync(string? credential, string? password, string? token = null) => _engine.GlobalCoroutineManager.StartTask(
         async () =>
