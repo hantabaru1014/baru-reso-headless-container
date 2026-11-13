@@ -37,7 +37,7 @@ Docker で開発する場合は `docker-compose.dev.yml` が使えます。
 
 ### EnginePrePatcher
 
-Resonite のアセンブリをビルド前に書き換えるツールです。パッチは `EnginePrePatcher/Patches/` にあり、不要なコネクタの除去や internal メンバーの公開などを行います。Dockerfile 内のビルドでも自動的に実行されます。
+Resonite のアセンブリをビルド前に書き換えるツールです。パッチは `EnginePrePatcher/Patches/` にあり、不要なコネクタの除去、internal メンバーの公開、エンジンの不具合修正などを行います。Dockerfile 内のビルドでも自動的に実行されます。
 
 ## gRPC API
 
