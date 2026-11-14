@@ -9,33 +9,7 @@ public partial class GrpcControllerService
 {
     public override async Task<GetHostSettingsResponse> GetHostSettings(GetHostSettingsRequest request, ServerCallContext context)
     {
-        var securitySettings = await Settings.GetActiveSettingAsync<HostAccessSettings>();
-        var allowedList = securitySettings.Entries.Elements.Select(entry =>
-        {
-            var types = new List<AllowedAccessEntry.Types.AccessType>();
-            if (entry.Value.AllowHTTP_Requests)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.Http);
-            }
-            if (entry.Value.AllowWebsockets)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.Websocket);
-            }
-            if (entry.Value.AllowOSC_Receiving)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.OscReceiving);
-            }
-            if (entry.Value.AllowOSC_Sending)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.OscSending);
-            }
-            return new AllowedAccessEntry
-            {
-                Host = entry.Key,
-                Ports = { entry.Value.AllowedPorts },
-                AccessTypes = { types },
-            };
-        });
+        var allowedList = await GetAllowedUrlHostsAsync();
         var response = new GetHostSettingsResponse
         {
             TickRate = _runnerService.TickRate,
@@ -57,33 +31,7 @@ public partial class GrpcControllerService
 
     public override async Task<GetStartupConfigToRestoreResponse> GetStartupConfigToRestore(GetStartupConfigToRestoreRequest request, ServerCallContext context)
     {
-        var securitySettings = await Settings.GetActiveSettingAsync<HostAccessSettings>();
-        var allowedList = securitySettings.Entries.Elements.Select(entry =>
-        {
-            var types = new List<AllowedAccessEntry.Types.AccessType>();
-            if (entry.Value.AllowHTTP_Requests)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.Http);
-            }
-            if (entry.Value.AllowWebsockets)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.Websocket);
-            }
-            if (entry.Value.AllowOSC_Receiving)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.OscReceiving);
-            }
-            if (entry.Value.AllowOSC_Sending)
-            {
-                types.Add(AllowedAccessEntry.Types.AccessType.OscSending);
-            }
-            return new AllowedAccessEntry
-            {
-                Host = entry.Key,
-                Ports = { entry.Value.AllowedPorts },
-                AccessTypes = { types },
-            };
-        });
+        var allowedList = await GetAllowedUrlHostsAsync();
         var config = new StartupConfig
         {
             TickRate = _runnerService.TickRate,
@@ -197,4 +145,37 @@ public partial class GrpcControllerService
 
         return Task.FromResult(new DenyHostAccessResponse());
     }
+
+    /// <summary>
+    /// HostAccessSettings.Entries は engine スレッドで mutate される SyncDictionary なので、gRPC スレッドから列挙すると
+    /// AllowHostAccess などの書き込みと競合して "Collection was modified" で落ちる。列挙と DTO 化を engine スレッド上で完結させる
+    /// </summary>
+    private static Task<List<AllowedAccessEntry>> GetAllowedUrlHostsAsync() =>
+        Settings.ComputeWithActiveSettingAsync<List<AllowedAccessEntry>, HostAccessSettings>(settings =>
+            settings.Entries.Elements.Select(entry =>
+            {
+                var types = new List<AllowedAccessEntry.Types.AccessType>();
+                if (entry.Value.AllowHTTP_Requests)
+                {
+                    types.Add(AllowedAccessEntry.Types.AccessType.Http);
+                }
+                if (entry.Value.AllowWebsockets)
+                {
+                    types.Add(AllowedAccessEntry.Types.AccessType.Websocket);
+                }
+                if (entry.Value.AllowOSC_Receiving)
+                {
+                    types.Add(AllowedAccessEntry.Types.AccessType.OscReceiving);
+                }
+                if (entry.Value.AllowOSC_Sending)
+                {
+                    types.Add(AllowedAccessEntry.Types.AccessType.OscSending);
+                }
+                return new AllowedAccessEntry
+                {
+                    Host = entry.Key,
+                    Ports = { entry.Value.AllowedPorts },
+                    AccessTypes = { types },
+                };
+            }).ToList());
 }
