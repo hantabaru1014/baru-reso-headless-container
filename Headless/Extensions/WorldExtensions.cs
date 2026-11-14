@@ -1,4 +1,5 @@
 using FrooxEngine;
+using Headless.Libs;
 using Headless.Models;
 using SkyFrost.Base;
 
@@ -6,6 +7,49 @@ namespace Headless.Extensions;
 
 public static class WorldExtensions
 {
+    /// <summary>
+    /// ワールドの coroutine などワールドの更新に依存する <paramref name="task"/> を待つ。
+    /// ワールドが破棄されるとその coroutine は二度と実行されず Task が完了しないため、破棄を検知したら
+    /// 待つのをやめて <see cref="WorldDestroyedException"/> を投げる
+    /// </summary>
+    public static async Task<T> WaitUnlessDestroyedAsync<T>(this World world, Task<T> task)
+    {
+        var destroyed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        void OnDestroyed(World _) => destroyed.TrySetResult();
+        // 登録時点で破棄済みなら即座に呼ばれる
+        world.WorldDestroyed += OnDestroyed;
+        try
+        {
+            return await task.WaitOrAbortAsync(destroyed.Task, () => new WorldDestroyedException(world.RawName));
+        }
+        finally
+        {
+            world.WorldDestroyed -= OnDestroyed;
+        }
+    }
+
+    /// <inheritdoc cref="WaitUnlessDestroyedAsync{T}(World, Task{T})"/>
+    public static Task WaitUnlessDestroyedAsync(this World world, Task task)
+    {
+        static async Task<bool> ToBoolTask(Task task)
+        {
+            await task;
+            return true;
+        }
+        return world.WaitUnlessDestroyedAsync(ToBoolTask(task));
+    }
+
+    /// <summary>
+    /// <see cref="CoroutineManager.StartTask{T}(Func{Task{T}}, IUpdatable)"/> でワールドの coroutine を開始し、その完了を待つ。
+    /// 完了前にワールドが破棄された場合は <see cref="WorldDestroyedException"/> を投げる
+    /// </summary>
+    public static Task<T> RunCoroutineAsync<T>(this World world, Func<Task<T>> task) =>
+        world.WaitUnlessDestroyedAsync(world.Coroutines.StartTask(task));
+
+    /// <inheritdoc cref="RunCoroutineAsync{T}(World, Func{Task{T}})"/>
+    public static Task RunCoroutineAsync(this World world, Func<Task> task) =>
+        world.WaitUnlessDestroyedAsync(world.Coroutines.StartTask(task));
+
     public static async Task<ExtendedWorldStartupParameters> SetParametersAsync(this World world, ExtendedWorldStartupParameters startupParameters, ILogger logger)
     {
         if (startupParameters.SessionName is not null)

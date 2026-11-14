@@ -48,6 +48,9 @@
     <Compile Include="../Headless/Configuration/ApplicationConfig.cs" Link="Configuration/ApplicationConfig.cs" />
     <Compile Include="../Headless/Libs/RetryableResponseBufferingHandler.cs" Link="Libs/RetryableResponseBufferingHandler.cs" />
     <Compile Include="../Headless/Libs/EngineHangWatchdog.cs" Link="Libs/EngineHangWatchdog.cs" />
+    <Compile Include="../Headless/Libs/TaskAbortExtensions.cs" Link="Libs/TaskAbortExtensions.cs" />
+    <Compile Include="../Headless/Libs/WorldDestroyedException.cs" Link="Libs/WorldDestroyedException.cs" />
+    <Compile Include="../Headless/Services/Grpc/WorldDestroyedExceptionInterceptor.cs" Link="Services/Grpc/WorldDestroyedExceptionInterceptor.cs" />
   </ItemGroup>
 
 </Project>

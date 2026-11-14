@@ -3,6 +3,7 @@ using FrooxEngine;
 using Google.Protobuf.WellKnownTypes;
 using SkyFrost.Base;
 using Headless.Extensions;
+using Headless.Libs;
 using Microsoft.Extensions.Options;
 using Headless.Configuration;
 using Headless.Events;
@@ -86,7 +87,7 @@ public class WorldService
             return null;
         }
 
-        while (startedWorld.State is World.WorldState.Initializing)
+        while (startedWorld.State is World.WorldState.Initializing && !startedWorld.IsDestroyed)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(100), ct);
         }
@@ -96,13 +97,25 @@ public class WorldService
             return null;
         }
 
-        startupParameters = await _engine.GlobalCoroutineManager.StartBackgroundTask(
-            async () =>
-            {
-                await default(NextUpdate);
-                return await startedWorld.SetParametersAsync(startupParameters, _logger);
-            }
-        );
+        try
+        {
+            // 起動直後にワールドが落ちる (更新中の例外で WorldManager に Destroy される) と、SetParametersAsync 内で待っている
+            // ワールドの coroutine が二度と実行されず、StartWorld の RPC が永遠に返らなくなる
+            startupParameters = await startedWorld.WaitUnlessDestroyedAsync(
+                _engine.GlobalCoroutineManager.StartBackgroundTask(
+                    async () =>
+                    {
+                        await default(NextUpdate);
+                        return await startedWorld.SetParametersAsync(startupParameters, _logger);
+                    }
+                )
+            );
+        }
+        catch (WorldDestroyedException ex)
+        {
+            _logger.LogError("Failed world startup: {Message}", ex.Message);
+            return null;
+        }
 
         var sessionCancellation = new CancellationTokenSource();
         var session = new RunningSession(startupParameters, startedWorld, sessionCancellation);
