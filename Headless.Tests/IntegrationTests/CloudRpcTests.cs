@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -30,7 +29,7 @@ public class CloudRpcTests
         // The controller maps "no CurrentUser" to NotFound. Asserting that
         // gives us a signal both that Cloud.CurrentUser is still the
         // discriminator AND that the controller still surfaces it.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -43,7 +42,7 @@ public class CloudRpcTests
     [Fact]
     public async Task GetFriendRequests_GuestMode_ReturnsEmpty()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var resp = await client.GetFriendRequestsAsync(new GetFriendRequestsRequest());
@@ -54,7 +53,7 @@ public class CloudRpcTests
     [Fact]
     public async Task ListContacts_GuestMode_ReturnsEmptyWithNoCursor()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var resp = await client.ListContactsAsync(new ListContactsRequest { Limit = 50 });
@@ -70,7 +69,7 @@ public class CloudRpcTests
         // The controller short-circuits the empty input to an empty
         // response without touching the cloud. This exercises the input
         // validation branch.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var resp = await client.SearchUserInfoAsync(new SearchUserInfoRequest
@@ -86,7 +85,7 @@ public class CloudRpcTests
     public async Task SearchUserInfo_OnlyInContactsForGuest_ReturnsEmpty()
     {
         // Walks Cloud.Contacts.ForeachContact — empty in guest mode.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var resp = await client.SearchUserInfoAsync(new SearchUserInfoRequest
@@ -104,7 +103,7 @@ public class CloudRpcTests
         // Zero-item path is a no-op; verify we still get a clean response
         // back. Catches "Cloud.Contacts.GetContact panics on missing id"
         // style regressions in the SDK (we don't even loop here).
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var resp = await client.AcceptFriendRequestsAsync(new AcceptFriendRequestsRequest());

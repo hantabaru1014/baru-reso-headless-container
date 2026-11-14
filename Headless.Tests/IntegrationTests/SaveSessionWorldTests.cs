@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -28,7 +27,7 @@ public class SaveSessionWorldTests
     [Fact]
     public async Task SaveSessionWorld_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -44,7 +43,7 @@ public class SaveSessionWorldTests
     [Fact]
     public async Task SaveAsSessionWorld_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>

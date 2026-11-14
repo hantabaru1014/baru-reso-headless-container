@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -24,7 +23,7 @@ public class WatchHostEventsTests
         _fixture = fixture;
     }
 
-    private async Task<HeadlessControlService.HeadlessControlServiceClient> ReadyClientAsync(GrpcChannel channel)
+    private async Task<HeadlessControlService.HeadlessControlServiceClient> ReadyClientAsync(ChannelBase channel)
     {
         var ready = await LogPollingHelper.WaitForApplicationStartupAsync(
             _fixture.GetLogsAsync,
@@ -36,7 +35,7 @@ public class WatchHostEventsTests
     [Fact]
     public async Task WatchHostEvents_StartingAWorld_EmitsSessionStartedToLiveSubscriber()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
@@ -103,7 +102,7 @@ public class WatchHostEventsTests
         // (after_event_id=""), wait for an event, capture its id, then
         // open a fresh subscription with after_event_id=<that id> and
         // verify the first thing we observe is NOT the captured event.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         using var topCts = new CancellationTokenSource(TimeSpan.FromSeconds(90));

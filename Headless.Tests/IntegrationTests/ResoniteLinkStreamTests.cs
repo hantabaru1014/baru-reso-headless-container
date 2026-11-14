@@ -1,7 +1,6 @@
 using System.Text.Json;
 using Google.Protobuf;
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -25,7 +24,7 @@ public class ResoniteLinkStreamTests
     public async Task ResoniteLinkStream_RejectsNonExistentSession()
     {
         await EnsureReadyAsync();
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
 
         using var call = client.ResoniteLinkStream();
@@ -49,7 +48,7 @@ public class ResoniteLinkStreamTests
     public async Task ResoniteLinkStream_RejectsMissingInit()
     {
         await EnsureReadyAsync();
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
 
         using var call = client.ResoniteLinkStream();
@@ -73,7 +72,7 @@ public class ResoniteLinkStreamTests
     public async Task ResoniteLinkStream_OpenAndClose_UpdatesClientsCount()
     {
         await EnsureReadyAsync();
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
 
         var sessionId = await StartGridSessionAsync(client);
@@ -132,7 +131,7 @@ public class ResoniteLinkStreamTests
     public async Task ResoniteLinkStream_TwoConcurrentClients_ReflectedInCount()
     {
         await EnsureReadyAsync();
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
 
         var sessionId = await StartGridSessionAsync(client);

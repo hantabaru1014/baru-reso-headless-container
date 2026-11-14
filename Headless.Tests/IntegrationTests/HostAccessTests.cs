@@ -1,4 +1,3 @@
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -25,7 +24,7 @@ public class HostAccessTests
     [Fact]
     public async Task AllowHostAccess_ThenDenyHostAccess_RoundTripsThroughGetHostSettings()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         // Use a unique host name per test run so we don't collide with

@@ -1,4 +1,3 @@
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -30,7 +29,7 @@ public class GetAboutTests
             TimeSpan.FromMinutes(5));
         Assert.True(ready, "Application startup did not complete in time");
 
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
 
         var response = await client.GetAboutAsync(new GetAboutRequest());
