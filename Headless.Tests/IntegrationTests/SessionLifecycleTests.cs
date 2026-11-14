@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -23,7 +22,7 @@ public class SessionLifecycleTests
         _fixture = fixture;
     }
 
-    private async Task<HeadlessControlService.HeadlessControlServiceClient> ReadyClientAsync(GrpcChannel channel)
+    private async Task<HeadlessControlService.HeadlessControlServiceClient> ReadyClientAsync(ChannelBase channel)
     {
         var ready = await LogPollingHelper.WaitForApplicationStartupAsync(
             _fixture.GetLogsAsync,
@@ -35,7 +34,7 @@ public class SessionLifecycleTests
     [Fact]
     public async Task GetSession_NonExistentId_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -49,7 +48,7 @@ public class SessionLifecycleTests
     public async Task StartWorld_WithoutLoadField_ReturnsInvalidArgument()
     {
         // The controller requires either load_world_url or load_world_preset_name.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -73,7 +72,7 @@ public class SessionLifecycleTests
         // validation against a SINGLE live Grid session. Originally three
         // separate tests; merged because spinning up a fresh Grid world
         // per test destabilises the shared container fixture in CI.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var sessionId = await StartGridSessionAsync(client);
@@ -132,7 +131,7 @@ public class SessionLifecycleTests
     [Fact]
     public async Task UpdateSessionParameters_UpdatesNameAndReflectsInGetSession()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var sessionId = await StartGridSessionAsync(client);
@@ -159,7 +158,7 @@ public class SessionLifecycleTests
     [Fact]
     public async Task StopSession_RemovesSessionFromListSessions()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var beforeStart = await client.ListSessionsAsync(new ListSessionsRequest());
@@ -185,7 +184,7 @@ public class SessionLifecycleTests
         // StopWorldAsync is a TryRemove → no-op if missing. The controller
         // surfaces that as success — controllers can fire-and-forget stop
         // without worrying about lost races.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         await client.StopSessionAsync(new StopSessionRequest

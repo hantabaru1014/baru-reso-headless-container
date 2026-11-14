@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -25,7 +24,7 @@ public class DownloadSessionWorldTests
     [Fact]
     public async Task DownloadSessionWorld_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         using var call = client.DownloadSessionWorld(new DownloadSessionWorldRequest

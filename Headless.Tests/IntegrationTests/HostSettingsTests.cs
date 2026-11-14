@@ -1,4 +1,4 @@
-using Grpc.Net.Client;
+using Grpc.Core;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -22,7 +22,7 @@ public class HostSettingsTests
         _fixture = fixture;
     }
 
-    private async Task<HeadlessControlService.HeadlessControlServiceClient> ReadyClientAsync(GrpcChannel channel)
+    private async Task<HeadlessControlService.HeadlessControlServiceClient> ReadyClientAsync(ChannelBase channel)
     {
         var ready = await LogPollingHelper.WaitForApplicationStartupAsync(
             _fixture.GetLogsAsync,
@@ -34,7 +34,7 @@ public class HostSettingsTests
     [Fact]
     public async Task GetHostSettings_ReturnsDefaults()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var response = await client.GetHostSettingsAsync(new GetHostSettingsRequest());
@@ -53,7 +53,7 @@ public class HostSettingsTests
     [Fact]
     public async Task UpdateHostSettings_ChangesAreReflectedInGetHostSettings()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var before = await client.GetHostSettingsAsync(new GetHostSettingsRequest());
@@ -77,7 +77,7 @@ public class HostSettingsTests
     [Fact]
     public async Task UpdateHostSettings_AutoSpawnItems_RejectsInvalidUri()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var request = new UpdateHostSettingsRequest
@@ -96,7 +96,7 @@ public class HostSettingsTests
     [Fact]
     public async Task GetStartupConfigToRestore_ReturnsCurrentTickRate()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await ReadyClientAsync(channel);
 
         var settings = await client.GetHostSettingsAsync(new GetHostSettingsRequest());

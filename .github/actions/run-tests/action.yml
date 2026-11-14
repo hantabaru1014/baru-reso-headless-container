@@ -9,6 +9,10 @@ inputs:
     description: '.NET SDK version'
     required: false
     default: '10.0.x'
+  log_artifact_name:
+    description: 'Artifact name for test container logs uploaded on failure'
+    required: false
+    default: 'test-container-logs'
 
 runs:
   using: composite
@@ -22,7 +26,31 @@ runs:
       shell: bash
       env:
         TEST_IMAGE_TAG: ${{ inputs.image_tag }}
+        TEST_CONTAINER_LOG_DIR: ${{ runner.temp }}/test-container-logs
       run: |
         dotnet test ./Headless.Tests/Headless.Tests.csproj \
           --logger "console;verbosity=detailed" \
           -- RunConfiguration.TestSessionTimeout=600000
+
+    # テストランが Aborted になった場合は fixture の Dispose が走らずコンテナが残るので、ここでログを回収する
+    - name: Collect leftover test container logs
+      if: failure()
+      shell: bash
+      run: |
+        dir="${{ runner.temp }}/test-container-logs"
+        mkdir -p "$dir"
+        for c in $(docker ps -aq --filter name=headless-test-); do
+          name=$(docker inspect --format '{{.Name}}' "$c" | sed 's#^/##')
+          docker logs "$c" > "$dir/$name.leftover.log" 2>&1 || true
+          echo "::group::Logs of $name (last 200 lines)"
+          tail -n 200 "$dir/$name.leftover.log"
+          echo "::endgroup::"
+        done
+
+    - name: Upload test container logs
+      if: failure()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      with:
+        name: ${{ inputs.log_artifact_name }}
+        path: ${{ runner.temp }}/test-container-logs
+        if-no-files-found: ignore

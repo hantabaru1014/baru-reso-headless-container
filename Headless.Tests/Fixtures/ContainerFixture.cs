@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using Headless.Tests.Helpers;
 
 namespace Headless.Tests.Fixtures;
 
@@ -11,6 +12,8 @@ public class ContainerFixture : IAsyncLifetime
     private const string DefaultImageName = "ghcr.io/hantabaru1014/baru-reso-headless-container";
     private const string ContainerNamePrefix = "headless-test-";
     private const int GrpcPort = 5000;
+    // 設定されていれば、Dispose 時にテスト用コンテナのログをこのディレクトリへ保存する (CI で artifact として回収する)
+    private const string ContainerLogDirEnv = "TEST_CONTAINER_LOG_DIR";
 
     private readonly DockerClient _dockerClient;
     private string? _containerId;
@@ -19,6 +22,11 @@ public class ContainerFixture : IAsyncLifetime
     public string GrpcEndpoint => $"http://localhost:{HostPort}";
     public int HostPort { get; private set; }
     public string ContainerId => _containerId ?? throw new InvalidOperationException("Container not started");
+
+    /// <summary>
+    /// テスト用コンテナへの gRPC チャネルを作る。unary 呼び出しには既定の deadline が付く
+    /// </summary>
+    public TestGrpcChannel CreateChannel() => new(GrpcEndpoint);
 
     public ContainerFixture()
     {
@@ -79,6 +87,9 @@ public class ContainerFixture : IAsyncLifetime
                 // Container may already be stopped
             }
 
+            // 停止時 (graceful shutdown) のログも含めるため、停止後・削除前に保存する
+            await SaveLogsAsync();
+
             try
             {
                 await _dockerClient.Containers.RemoveContainerAsync(_containerId,
@@ -122,6 +133,23 @@ public class ContainerFixture : IAsyncLifetime
         }
 
         return result.ToString();
+    }
+
+    private async Task SaveLogsAsync()
+    {
+        var dir = Environment.GetEnvironmentVariable(ContainerLogDirEnv);
+        if (string.IsNullOrEmpty(dir)) return;
+
+        try
+        {
+            Directory.CreateDirectory(dir);
+            await File.WriteAllTextAsync(Path.Combine(dir, $"{_containerName}.log"), await GetLogsAsync());
+        }
+        catch (Exception ex)
+        {
+            // ログ保存の失敗でテスト結果を変えない
+            Console.Error.WriteLine($"Failed to save container logs: {ex}");
+        }
     }
 
     private static string GetImageTag()

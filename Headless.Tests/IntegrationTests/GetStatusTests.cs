@@ -1,4 +1,3 @@
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -27,7 +26,7 @@ public class GetStatusTests
             TimeSpan.FromMinutes(5));
         Assert.True(ready, "Engine did not become ready in time");
 
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
 
         // Act

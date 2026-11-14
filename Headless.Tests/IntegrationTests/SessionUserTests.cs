@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -35,7 +34,7 @@ public class SessionUserTests
     [Fact]
     public async Task ListUsersInSession_NonExistentId_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -51,7 +50,7 @@ public class SessionUserTests
     [Fact]
     public async Task InviteUser_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -68,7 +67,7 @@ public class SessionUserTests
     [Fact]
     public async Task AllowUserToJoin_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -85,7 +84,7 @@ public class SessionUserTests
     [Fact]
     public async Task UpdateUserRole_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -103,7 +102,7 @@ public class SessionUserTests
     [Fact]
     public async Task KickUser_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -120,7 +119,7 @@ public class SessionUserTests
     [Fact]
     public async Task BanUser_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -137,7 +136,7 @@ public class SessionUserTests
     [Fact]
     public async Task RespawnUser_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -158,7 +157,7 @@ public class SessionUserTests
         // assertion below. Starting one Grid world per assertion would
         // multiply test runtime by ~6 and has been observed to destabilise
         // downstream tests in CI.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var sessionId = await GrpcTestHelpers.StartGridSessionAsync(client);

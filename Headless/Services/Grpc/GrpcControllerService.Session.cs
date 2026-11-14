@@ -214,7 +214,7 @@ public partial class GrpcControllerService
         // World への書き込みは engine update スレッドにまとめる。
         // Tags は List 代入、Permissions/Cloud variable 系も内部で collection を触るため、
         // gRPC スレッドから直接代入すると engine 側で iter 中の mutation 例外で落ちうる。
-        await session.Instance.Coroutines.StartTask(async () =>
+        await session.Instance.RunCoroutineAsync(async () =>
         {
             await default(ToWorld);
 

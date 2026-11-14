@@ -1,6 +1,7 @@
 using FrooxEngine;
 using FrooxEngine.ProtoFlux;
 using Grpc.Core;
+using Headless.Extensions;
 using Headless.Rpc;
 
 namespace Headless.Services;
@@ -28,7 +29,7 @@ public partial class GrpcControllerService
         var tag = request.Tag;
         // ProtoFlux Trigger 系は World の Refresh コルーチン上で発火させる必要があるため、
         // 既存 UpdateSessionParameters と同様に ToWorld でスレッドを合わせる。
-        var receivers = await session.Instance.Coroutines.StartTask(async () =>
+        var receivers = await session.Instance.RunCoroutineAsync(async () =>
         {
             await default(ToWorld);
             var root = session.Instance.RootSlot;

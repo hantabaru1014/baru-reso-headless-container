@@ -93,3 +93,4 @@ jobs:
         uses: ./.github/actions/run-tests
         with:
           image_tag: ${{ env.IMAGE_NAME }}:test-${{ matrix.arch }}
+          log_artifact_name: test-container-logs-${{ matrix.arch }}

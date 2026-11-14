@@ -1,4 +1,3 @@
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -27,7 +26,7 @@ public class ListSessionsTests
             TimeSpan.FromMinutes(5));
         Assert.True(ready, "Engine did not become ready in time");
 
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = new HeadlessControlService.HeadlessControlServiceClient(channel);
 
         // Act
@@ -46,7 +45,7 @@ public class ListSessionsTests
         // Drives the same code path as the smoke test above but with an
         // active session so we can sanity-check the ToProto() mapping —
         // any rename of RunningSession / World properties shows up here.
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await Helpers.GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var sessionId = await Helpers.GrpcTestHelpers.StartGridSessionAsync(client);

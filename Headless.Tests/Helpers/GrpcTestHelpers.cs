@@ -1,4 +1,4 @@
-using Grpc.Net.Client;
+using Grpc.Core;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 
@@ -13,7 +13,7 @@ namespace Headless.Tests.Helpers;
 internal static class GrpcTestHelpers
 {
     public static async Task<HeadlessControlService.HeadlessControlServiceClient> CreateReadyClientAsync(
-        GrpcChannel channel,
+        ChannelBase channel,
         ContainerFixture fixture)
     {
         var ready = await LogPollingHelper.WaitForApplicationStartupAsync(

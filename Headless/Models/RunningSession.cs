@@ -1,6 +1,7 @@
 using Elements.Core;
 using FrooxEngine;
 using Headless.Events;
+using Headless.Extensions;
 using Headless.Rpc;
 using Headless.Services;
 using SkyFrost.Base;
@@ -261,7 +262,7 @@ public class RunningSession
         };
     }
 
-    public Task<bool> InviteUser(string userId) => Instance.Coroutines.StartTask(async () =>
+    public Task<bool> InviteUser(string userId) => Instance.RunCoroutineAsync(async () =>
     {
         Instance.AllowUserToJoin(userId);
         var userMessages = Instance.Engine.Cloud.Messages.GetUserMessages(userId);
@@ -330,7 +331,7 @@ public class RunningSession
             throw new InvalidOperationException("World is not allowed to be saved");
         }
 
-        var graph = await Instance.Coroutines.StartTask(async () =>
+        var graph = await Instance.RunCoroutineAsync(async () =>
         {
             await default(NextUpdate);
             // resonitepackage は SDK の PackageImporter が record.RecordType == "object" のみ受け付けるため

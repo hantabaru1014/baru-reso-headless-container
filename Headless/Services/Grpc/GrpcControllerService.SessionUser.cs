@@ -1,5 +1,6 @@
 using FrooxEngine;
 using Grpc.Core;
+using Headless.Extensions;
 using Headless.Rpc;
 
 namespace Headless.Services;
@@ -40,7 +41,7 @@ public partial class GrpcControllerService
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Session not found"));
         }
-        await session.Instance.Coroutines.StartTask(async () =>
+        await session.Instance.RunCoroutineAsync(async () =>
         {
             await default(ToWorld);
             session.AllowUserToJoin(request.UserId);
@@ -58,7 +59,7 @@ public partial class GrpcControllerService
         }
         // Permissions.Roles / AllUsers の参照と user.Role の書き込みを engine update スレッドにまとめる。
         // gRPC スレッドから直接読むと iter 中の collection mutation で例外を踏みうる。
-        var updated = await session.Instance.Coroutines.StartTask(async () =>
+        var updated = await session.Instance.RunCoroutineAsync(async () =>
         {
             await default(ToWorld);
 

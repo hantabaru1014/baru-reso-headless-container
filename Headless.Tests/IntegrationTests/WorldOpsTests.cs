@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Grpc.Net.Client;
 using Headless.Rpc;
 using Headless.Tests.Fixtures;
 using Headless.Tests.Helpers;
@@ -28,7 +27,7 @@ public class WorldOpsTests
     [Fact]
     public async Task RunGarbageCollection_Succeeds()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         // gc は session を要求しないため、単に返れば OK。
@@ -39,7 +38,7 @@ public class WorldOpsTests
     [Fact]
     public async Task SendDynamicImpulse_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>
@@ -56,7 +55,7 @@ public class WorldOpsTests
     [Fact]
     public async Task SendDynamicImpulse_EmptyTag_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         // Session が存在しない側で先に落ちる可能性はあるが、いずれにせよ
@@ -75,7 +74,7 @@ public class WorldOpsTests
     [Fact]
     public async Task GetWorldDebugState_NonExistentSession_ReturnsInvalidArgument()
     {
-        using var channel = GrpcChannel.ForAddress(_fixture.GrpcEndpoint);
+        using var channel = _fixture.CreateChannel();
         var client = await GrpcTestHelpers.CreateReadyClientAsync(channel, _fixture);
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () =>

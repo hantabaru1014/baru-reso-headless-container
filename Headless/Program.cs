@@ -31,7 +31,7 @@ public class Program
                 }
             });
 
-            services.AddGrpc();
+            services.AddGrpc(options => options.Interceptors.Add<WorldDestroyedExceptionInterceptor>());
 
             services
                 .AddSingleton<SystemInfo>()
