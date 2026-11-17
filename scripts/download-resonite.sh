@@ -10,6 +10,13 @@ if [ -z "$STEAM_USERNAME" ] || [ -z "$STEAM_PASSWORD" ] || [ -z "$HEADLESS_PASSW
   exit 1
 fi
 
+for cmd in unzip wget docker; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "エラー: $cmd が見つかりません. $cmd をインストールしてください."
+    exit 1
+  fi
+done
+
 mkdir -p "$PWD/Resonite"
 chmod 777 "$PWD/Resonite"
 
@@ -64,6 +71,9 @@ download_with_depot_downloader() {
 }
 
 # SteamCMDでダウンロードする関数
+# Resonite (2519830) はアプリ全体の oslist が "windows" のみのため、Linux の SteamCMD では
+# "Invalid platform" でインストールを拒否される。Headless を含むデポ (2519832) は windows,linux 共通なので
+# プラットフォームを windows に偽装してダウンロードする。
 download_with_steamcmd() {
   echo "SteamCMDでダウンロードを試みます..."
   echo "アーキテクチャ: $(uname -m)"
@@ -73,6 +83,7 @@ download_with_steamcmd() {
     -v "$PWD/Resonite:$INSTALL_DIR" \
     --entrypoint "$ENTRYPOINT" \
     "$IMAGE_NAME" \
+    +@sSteamCmdForcePlatformType windows \
     +force_install_dir "$INSTALL_DIR" \
     +login "$STEAM_USERNAME" "$STEAM_PASSWORD" \
     "$APP_BRANCH" \
@@ -83,7 +94,7 @@ download_with_steamcmd() {
 DOWNLOAD_SUCCESS=false
 
 if download_with_depot_downloader; then
-  if [ -d "$PWD/Resonite" ] && [ -n "$(ls -A "$PWD/Resonite")" ]; then
+  if [ -d "$PWD/Resonite/Headless" ] && [ -n "$(ls -A "$PWD/Resonite/Headless")" ]; then
     echo "DepotDownloaderでのダウンロードが成功しました"
     DOWNLOAD_SUCCESS=true
   fi
@@ -93,7 +104,7 @@ if [ "$DOWNLOAD_SUCCESS" = "false" ]; then
   echo "DepotDownloaderでのダウンロードに失敗しました。SteamCMDにフォールバックします..."
   rm -rf "$PWD/Resonite"/*
   if download_with_steamcmd; then
-    if [ -d "$PWD/Resonite" ] && [ -n "$(ls -A "$PWD/Resonite")" ]; then
+    if [ -d "$PWD/Resonite/Headless" ] && [ -n "$(ls -A "$PWD/Resonite/Headless")" ]; then
       echo "SteamCMDでのダウンロードが成功しました"
       DOWNLOAD_SUCCESS=true
     fi
@@ -104,9 +115,9 @@ if ! sudo chown -R "$USER:$USER" Resonite; then
   echo "警告: 所有者の変更に失敗しました"
 fi
 
-if [ ! -d "$PWD/Resonite" ] || [ -z "$(ls -A "$PWD/Resonite")" ]; then
+if [ ! -d "$PWD/Resonite/Headless" ] || [ -z "$(ls -A "$PWD/Resonite/Headless")" ]; then
   echo "エラー: Resoniteのダウンロードに失敗した可能性があります"
-  echo "Resoniteディレクトリが空かまたは存在しません"
+  echo "Resonite/Headlessディレクトリが空かまたは存在しません"
   exit 1
 else
   echo "Resoniteのダウンロードが完了しました"
