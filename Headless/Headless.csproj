@@ -3,7 +3,7 @@
   <PropertyGroup>
     <!-- リリースビルドでは release tag 由来のバージョンを /p:Version で上書きする (Dockerfile の APP_VERSION) -->
     <Version>0.0.0-dev</Version>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>70885a6e-8584-456f-beee-337931412754</UserSecretsId>
@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="11.0.0" />
     <PackageReference Include="NUlid" Version="1.7.3" />
   </ItemGroup>
 
@@ -70,6 +70,11 @@
     <Reference Include="Resonite">
       <HintPath>$(ResonitePath)/Resonite.dll</HintPath>
     </Reference>
+    <!-- FrooxEngine.Store は System.Management 8.0.0.0 を参照しているが Resonite 同梱は 11.0.0.0 なので、
+         依存解決で拾われず deps.json に載らない。明示的に参照して実行時に解決できるようにする -->
+    <Reference Include="System.Management">
+      <HintPath>$(ResonitePath)/System.Management.dll</HintPath>
+    </Reference>
     <Reference Include="Renderite.Shared">
       <HintPath>$(ResonitePath)/Renderite.Shared.dll</HintPath>
     </Reference>
@@ -78,15 +83,17 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="$(ResonitePath)/*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(ResonitePath)/*.xml" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(ResonitePath)/*.config" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(ResonitePath)/*.so" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-
   <Target Name="PreBuild" AfterTargets="PreBuildEvent">
     <Exec Command="dotnet ../bin/prepatch/EnginePrePatcher.dll $(ResonitePath)" />
+
+    <!-- prepatcher は一部のファイルを退避 (*.original にリネーム) するので、
+         評価時の glob ではなく patch 後のファイル構成でコピー対象を組み立てる -->
+    <ItemGroup>
+      <None Include="$(ResonitePath)/*.dll" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="$(ResonitePath)/*.xml" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="$(ResonitePath)/*.config" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="$(ResonitePath)/*.so" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
   </Target>
 
 </Project>

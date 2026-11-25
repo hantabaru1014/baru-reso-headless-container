@@ -2,10 +2,12 @@
 
 ## 必要なもの
 
-- .NET SDK 10.0
+- .NET SDK 11.0
 - Docker
-- Go（buf の実行に使用。[mise](https://mise.jdx.dev/) を使う場合は `mise install` で入ります）
+- Go（buf の実行に使用）
 - Resonite の headless ブランチにアクセスできる Steam アカウント
+
+.NET SDK と Go は [mise](https://mise.jdx.dev/) で管理しているので、`mise install` で `mise.toml` に指定したバージョンが入ります。
 
 ## セットアップ
 
