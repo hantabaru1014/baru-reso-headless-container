@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // ターゲット フレームワークを変更した場合は、プログラム パスを更新するようにしてください。
-            "program": "${workspaceFolder}/Headless/bin/Debug/net9.0/Headless.dll",
+            "program": "${workspaceFolder}/Headless/bin/Debug/net11.0/Headless.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Headless",
             "stopAtEntry": false,

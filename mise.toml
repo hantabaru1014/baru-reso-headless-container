@@ -1,4 +1,5 @@
 [tools]
+dotnet = "11.0.100"
 go = "latest"
 
 [env]
